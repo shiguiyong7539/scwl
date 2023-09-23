@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>登录</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<style>
+    .login-bg {
+        background: url("./images/login-bg.png") no-repeat fixed;
+        color: #ffffff;
+        background-size: 100% 100%;
+    }
+</style>
+<body class="login-bg">
+<div class="login-contain" id="dldiv">
+    <div class="login-header">
+        <p>欢迎登录</p>
+    </div>
+    <div class="form-group">
+        <div class="form-item">
+            <label for="username">
+                <img src="./images/user.png">
+            </label>
+            <input id="username" type="text" placeholder="请输入账号" autocomplete="off" onkeyup="value=value.replace(/[^\d.]/g,'')" readonly onfocus="this.removeAttribute('readonly');"/>
+        </div>
+        <div class="form-item">
+            <label for="password">
+                <img src="./images/password.png" alt="">
+            </label>
+            <input id="password" type="password" placeholder="请输入密码" readonly onfocus="this.removeAttribute('readonly');">
+            <span id="showsr" style="display: none">
+            <input id="code" type="text" placeholder="请输入验证码" style="width: 40%">
+                <input type="text" onclick="sendSms('login')" name="login" readonly style="width: 31%;cursor: pointer;background-color: #00b0f0;position: absolute;right: 15px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;text-align: center" placeholder="发送验证码"></span>
+        </div>
+    </div>
+<!--    <span style="float: left;margin-top: 10px" onclick="ljzc()" id="zhuce">[立即注册]</span>-->
+    <span style="float: right;margin-top: 10px" onclick="showyzm()" id="showyzm">[验证码登录]</span>
+    <span style="float: right;display: none;margin-top: 10px" onclick="showmm()" id="showmm">[密码登录]</span>
+    <div class="button-group" style="margin-top: 20px;">
+        <button class="login-btn" id="doLogin" onclick="loginxxl()" value="0">登录</button>
+    </div>
+
+</div>
+
+<script src="./assets/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    $(function(){
+        $(window).resize();
+    });
+    //js设置居中
+    $(window).resize(function(){
+        $(".login-contain").css({
+            position: "absolute",
+            left: ($(window).width() - $(".login-contain").outerWidth())/2,
+            top: ($(window).height() - $(".login-contain").outerHeight())/2
+        });
+    });
+    function loginxxl() {
+        if ($("#doLogin").val()==0){
+            if (''==$("#username").val()) {
+                alert("请输入手机号");
+                return false;
+            }
+            if (''==$("#password").val()) {
+                alert("请输入密码");
+                return false;
+            }
+        $.ajax({
+            url:'/login',
+            type:'get',
+            dataType: 'json',
+            data:{
+                username:$("#username").val(),
+                password:$("#password").val()
+            },
+            success:function(res){
+                   if(res.code==200){
+                       window.localStorage.clear();
+                       window.location.href="/index"
+                   }else {
+                       alert(res.message);
+                   }
+            },
+            error:function(){
+                alert('系统异常,请联系管理员！');
+            }
+        });}else{
+            if (''==$("#username").val()) {
+                alert("请输入手机号");
+                return false;
+            }
+            if (''==$("#code").val()) {
+                alert("请输入验证码");
+                return false;
+            }
+            $.ajax({
+                url:'/loginSms',
+                type:'get',
+                dataType: 'json',
+                data:{
+                    phone:$("#username").val(),
+                    code:$("#code").val()
+                },
+                success:function(res){
+                    if (res.code==200){
+                        window.localStorage.clear();
+                        window.location.href="/"
+                    }else{
+                        alert(res.data)
+                    }
+                },
+                error:function(){
+                    alert('系统异常,请联系管理员！');
+                }
+            });
+        }
+    }
+    function sendSms(type) {
+        var phone = '';
+        if (type=="login"){phone=$("#username").val()} else{phone=$("#phone").val()}
+        if (''==phone) {
+            alert("请输入手机号");
+            return false;
+        } $.ajax({
+            url:'/sendCode',
+            type:'get',
+            dataType: 'json',
+            data:{
+                phone:phone,
+                type:type
+            },
+            success:function(res){
+                    alert(res.data)
+            },
+            error:function(){
+                alert('系统异常,请联系管理员！');
+            }
+        });
+    }
+    function registerxxl() {
+        if (''==$("#phone").val()) {
+            alert("请输入手机号");
+            return false;
+        }
+        if (''==$("#passwordzc").val()) {
+            alert("请输入密码");
+            return false;
+        }
+        if (''==$("#codezc").val()) {
+            alert("请输入验证码");
+            return false;
+        }
+        if (''==$("#nickname").val()) {
+            alert("请输入昵称");
+            return false;
+        }
+        $.ajax({
+            url:'/register',
+            type:'get',
+            dataType: 'json',
+            data:{
+                phone:$("#phone").val(),
+                nickname:$("#nickname").val(),
+                password:$("#passwordzc").val(),
+                code:$("#codezc").val()
+            },
+            success:function(res){
+                    if (res.code==200){
+                        window.localStorage.clear();
+                        window.location.href="/"}
+                    else {alert(res.data)}
+            },
+            error:function(){
+                alert('系统异常,请联系管理员！');
+            }
+        });
+    }
+    function showyzm() {
+        $("#showmm").fadeIn();
+        $("#showyzm").fadeOut();
+        $("#showsr").fadeIn();
+        $("#password").fadeOut();
+        $("#doLogin").val(1)
+    }
+    function showmm() {
+        $("#showmm").fadeOut();
+        $("#showyzm").fadeIn();
+        $("#showsr").fadeOut();
+        $("#password").fadeIn();
+        $("#doLogin").val(0)
+    }
+    function shiwan() {
+        window.localStorage.clear();
+        window.localStorage.setItem("type","2");
+        window.location.href="index?type=2";
+    }
+    function ljzc() {
+        $("#zcdiv").slideDown();
+        $("#dldiv").slideUp();
+    }
+    function dl() {
+        $("#zcdiv").slideUp();
+        $("#dldiv").slideDown();
+    }
+</script>
+</body>
+</html>
