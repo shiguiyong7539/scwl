@@ -13,6 +13,16 @@ public class Menu {
 
     private Integer parentId;
 
+    private Boolean enabled;
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     private List<Role> roles;
 
     public List<Role> getRoles() {

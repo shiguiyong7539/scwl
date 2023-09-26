@@ -7,6 +7,15 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="enabled" property="enabled" jdbcType="BIT" />
+  </resultMap>
+
+  <resultMap id="MenusWithRole" type="com.scwl.pojo.Menu" extends="BaseResultMap">
+    <collection property="roles" ofType="com.scwl.pojo.Role">
+      <id column="rid" property="id"/>
+      <result column="rname" property="name"/>
+      <result column="rnameZh" property="nameZh"/>
+    </collection>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, path, url, name, parent_id
+    id, path, url, name, parent_id, enabled
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.MenuExample" >
     select
@@ -84,7 +93,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from menu
     where id = #{id,jdbcType=INTEGER}
@@ -100,10 +109,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.Menu" >
-    insert into menu (id, path, url, 
-      name, parent_id)
-    values (#{id,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER})
+    insert into menu (id, path, url,
+      name, parent_id, enabled
+      )
+    values (#{id,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{enabled,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.Menu" >
     insert into menu
@@ -123,6 +134,9 @@
       <if test="parentId != null" >
         parent_id,
       </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -139,6 +153,9 @@
       </if>
       <if test="parentId != null" >
         #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -166,6 +183,9 @@
       <if test="record.parentId != null" >
         parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
+      <if test="record.enabled != null" >
+        enabled = #{record.enabled,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -174,10 +194,11 @@
   <update id="updateByExample" parameterType="map" >
     update menu
     set id = #{record.id,jdbcType=INTEGER},
-      path = #{record.path,jdbcType=VARCHAR},
-      url = #{record.url,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      parent_id = #{record.parentId,jdbcType=INTEGER}
+    path = #{record.path,jdbcType=VARCHAR},
+    url = #{record.url,jdbcType=VARCHAR},
+    name = #{record.name,jdbcType=VARCHAR},
+    parent_id = #{record.parentId,jdbcType=INTEGER},
+    enabled = #{record.enabled,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +218,9 @@
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -205,7 +229,25 @@
     set path = #{path,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=INTEGER}
+      parent_id = #{parentId,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 根据角色获取菜单列表 -->
+  <select id="getMenusWithRole" resultMap="MenusWithRole">
+        SELECT
+            m.*,
+            r.id AS rid,
+            r.`name` AS rname,
+            r.nameZh AS rnameZh
+        FROM
+            menu m,
+            menu_role mr,
+            role r
+        WHERE
+            m.id = mr.mid
+            AND r.id = mr.rid
+        ORDER BY
+            m.id
+    </select>
 </mapper>

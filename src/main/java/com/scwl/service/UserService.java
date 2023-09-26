@@ -8,11 +8,19 @@ import com.scwl.pojo.User;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public interface UserService {
+public interface UserService  {
 
   ResBean login(User user);
 
   User getAdminByUserName(String userName);
 
    List<Role> getRoles(int userId);
+
+   ResBean insertBatchUser(List<User> userList);
+
+   ResBean editUser(User user);
+
+   ResBean deleteUser(User user);
+
+
 }

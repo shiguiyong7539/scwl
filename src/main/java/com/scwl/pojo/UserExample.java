@@ -455,52 +455,52 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andEnableEqualTo(Integer value) {
+        public Criteria andEnableEqualTo(Boolean value) {
             addCriterion("enable =", value, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableNotEqualTo(Integer value) {
+        public Criteria andEnableNotEqualTo(Boolean value) {
             addCriterion("enable <>", value, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableGreaterThan(Integer value) {
+        public Criteria andEnableGreaterThan(Boolean value) {
             addCriterion("enable >", value, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableGreaterThanOrEqualTo(Integer value) {
+        public Criteria andEnableGreaterThanOrEqualTo(Boolean value) {
             addCriterion("enable >=", value, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableLessThan(Integer value) {
+        public Criteria andEnableLessThan(Boolean value) {
             addCriterion("enable <", value, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableLessThanOrEqualTo(Integer value) {
+        public Criteria andEnableLessThanOrEqualTo(Boolean value) {
             addCriterion("enable <=", value, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableIn(List<Integer> values) {
+        public Criteria andEnableIn(List<Boolean> values) {
             addCriterion("enable in", values, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableNotIn(List<Integer> values) {
+        public Criteria andEnableNotIn(List<Boolean> values) {
             addCriterion("enable not in", values, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableBetween(Integer value1, Integer value2) {
+        public Criteria andEnableBetween(Boolean value1, Boolean value2) {
             addCriterion("enable between", value1, value2, "enable");
             return (Criteria) this;
         }
 
-        public Criteria andEnableNotBetween(Integer value1, Integer value2) {
+        public Criteria andEnableNotBetween(Boolean value1, Boolean value2) {
             addCriterion("enable not between", value1, value2, "enable");
             return (Criteria) this;
         }

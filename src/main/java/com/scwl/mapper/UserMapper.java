@@ -30,4 +30,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User getAdminByUserName(String userName);
+
+    int insertBatchUser(@Param("list")List<User> userList);
 }

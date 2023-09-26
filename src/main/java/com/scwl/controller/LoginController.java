@@ -2,8 +2,8 @@ package com.scwl.controller;
 
 import com.scwl.pojo.ResBean;
 import com.scwl.pojo.User;
-import com.scwl.mapper.UserMapper;
 import com.scwl.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,12 +32,12 @@ public class LoginController {
      * 登录
      * @return
      */
-    @RequestMapping("/index")
+    @RequestMapping("/admin")
     public String indexHtml(){
-        return "index1";
+        return "admin";
     }
     /**
-     * 已登录
+     * 登录
      * @return
      */
     @RequestMapping("/login")
@@ -45,5 +45,28 @@ public class LoginController {
     public Object login(HttpServletRequest request,User user){
         return userService.login(user);
     }
+
+    /**
+     * 退出
+     * @return
+     */
+    @RequestMapping("/logout")
+    @ResponseBody
+    public Object logout(HttpServletRequest request){
+        return  ResBean.success("已退出");
+    }
+
+    /**
+     * 验证是否登录
+     * 没登录进行提示
+     * @return
+     */
+    @RequestMapping("/isLogin")
+    @ResponseBody
+    public Object isLogin(HttpServletRequest request){
+        return ResBean.success("已登录");
+    }
+
+
 
 }
