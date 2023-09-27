@@ -3,7 +3,10 @@ package com.scwl.controller;
 import com.scwl.pojo.ResBean;
 import com.scwl.pojo.User;
 import com.scwl.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Resource
     UserService userService;
@@ -24,17 +28,37 @@ public class LoginController {
      */
     @RequestMapping("/")
     public String loginHtml(){
+        System.out.println(passwordEncoder.encode("123456"));
         return "login";
     }
 
 
     /**
-     * 登录
+     * 主页
      * @return
      */
     @RequestMapping("/admin")
-    public String indexHtml(){
+    public String admin(){
         return "admin";
+    }
+    /**
+     * 首页
+     * @return
+     */
+    @RequestMapping("/index")
+    public String indexHtml(){
+        return "index";
+    }
+
+    /**
+     * 登录
+     * @return
+     */
+    @RequestMapping("/userInfo")
+    public String userInfo(){
+        return "userInfo";
+
+
     }
     /**
      * 登录
@@ -64,7 +88,11 @@ public class LoginController {
     @RequestMapping("/isLogin")
     @ResponseBody
     public Object isLogin(HttpServletRequest request){
-        return ResBean.success("已登录");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+           return  ResBean.success("已登录",(User) authentication.getPrincipal());
+        }
+        return ResBean.error("未登录");
     }
 
 

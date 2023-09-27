@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResBean login(User user) {
-        System.out.println(user.getUsername());
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
 
         if (null==userDetails||!passwordEncoder.matches(user.getPassword(),userDetails.getPassword())){
@@ -46,6 +46,9 @@ public class UserServiceImpl implements UserService {
         if (!userDetails.isEnabled()){
             return ResBean.error("账号被禁用，请联系管理员！");
         }
+        User user1 = userMapper.getAdminByUserName(user.getUsername());
+        user1.setLastLogin(new Date());
+        userMapper.updateByPrimaryKey(user1);
         //更新security登录用户对象
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
                 ,null,userDetails.getAuthorities());
@@ -78,7 +81,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResBean editUser(User user) {
-        int i = userMapper.updateByPrimaryKey(user);
+        User oldUser = userMapper.selectByPrimaryKey(user.getId());
+        UserExample example = new UserExample();
+        if(null!=user.getPassword()&&"" !=user.getPassword()){
+            oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        if(null!=user.getName()&&""!=user.getName()){
+            oldUser.setName(user.getName());
+        }
+        if(null!=user.getPhone()&&""!=user.getPhone()){
+            oldUser.setPhone(user.getPhone());
+            oldUser.setUsername(user.getPhone());
+        }
+        int i = userMapper.updateByPrimaryKey(oldUser);
         if(i==1){
             return new ResBean(200,"修改成功",null);
         }
