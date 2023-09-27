@@ -77,19 +77,34 @@
     <!-- Left navigation -->
     <ul id="menu" class="nav">
         <li class="dash"><a href="#" onclick="index_html()" class="active"><span>首页</span></a></li>
-        <li class="charts"><a href="#" title="" onclick="toggle('userManage')" class="exp"><span>账户管理</span></a>
+        <li class="charts"><a href="#" title="" onclick="toggle('userManage')" class="exp"><span>系统管理</span></a>
             <ul class="sub ul_hidden" id="userManage">
-                <li><a href="#" title="">任务管理</a></li>
-                <li><a href="门票管理.html" title="">风控管理</a></li>
                 <li><a href="我的团队.html" title="">合同履行</a></li>
                 <li><a href="#" title="">经营管理</a></li>
                 <li><a href="#" title="">成本管理</a></li>
                 <li><a href="#" title="">人事信息</a></li>
                 <li><a href="#" title="">资金情况</a></li>
                 <li><a href="#" title="">建设发展</a></li>
-                <li class="last"><a href="#" title="">注销登录账号</a></li>
             </ul>
         </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
+            <ul class="sub ul_hidden" id="taskManage">
+                <li><a href="#" title="">综合部</a></li>
+                <li><a href="#" title="">市场部</a></li>
+                <li><a href="#" title="">财务部</a></li>
+                <li><a href="#" title="">规建部</a></li>
+                <li><a href="#" title="">金沙艺术中心</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
+            <ul class="sub ul_hidden" id="fengKongManage">
+                <li><a href="#" title="">涉诉情况</a></li>
+                <li><a href="#" title="">监督检查整改情况</a></li>
+            </ul>
+        </li>
+
         <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
             <ul class="sub ul_hidden" id="myInfo">
                 <li><a href="#" title="" onclick="userInfo()" id="idNo"></a></li>
