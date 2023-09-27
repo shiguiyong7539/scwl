@@ -51,15 +51,24 @@ public class LoginController {
     }
 
     /**
-     * 登录
+     * 个人信息页面
      * @return
      */
     @RequestMapping("/userInfo")
     public String userInfo(){
         return "userInfo";
-
-
     }
+
+
+    /**
+     * 人事信息页面
+     * @return
+     */
+    @RequestMapping("/memberList")
+    public String memberList(){
+        return "memberList";
+    }
+
     /**
      * 登录
      * @return

@@ -1,3 +1,25 @@
 .ul_hidden{
     display: none;
 }
+.pagenum{
+    border-bottom: 1px solid;
+}
+.current{
+    background: gray;
+    margin: 1px 1px;
+}
+.page-new{
+    float:right;
+    margin-right:3%;
+    font-size:16px;
+    color:#666;
+    position: relative;
+    margin-top: 5px;
+}
+.fitem{
+    padding: 1px 1px 1px 10px !important;
+}
+.fa, .fas{font-weight: normal !important;}
+.fa-file-download:before {
+    content: "\f56d";
+}

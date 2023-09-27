@@ -79,10 +79,10 @@
         <li class="dash"><a href="#" onclick="index_html()" class="active"><span>首页</span></a></li>
         <li class="charts"><a href="#" title="" onclick="toggle('userManage')" class="exp"><span>系统管理</span></a>
             <ul class="sub ul_hidden" id="userManage">
-                <li><a href="我的团队.html" title="">合同履行</a></li>
+                <li><a href="#" title="">合同履行</a></li>
                 <li><a href="#" title="">经营管理</a></li>
                 <li><a href="#" title="">成本管理</a></li>
-                <li><a href="#" title="">人事信息</a></li>
+                <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
                 <li><a href="#" title="">资金情况</a></li>
                 <li><a href="#" title="">建设发展</a></li>
             </ul>
@@ -466,6 +466,11 @@
         $(this).next("ul").slideToggle();
     });
     $(function () {
+        initData();
+    })
+
+
+    function initData() {
         var token = localStorage.getItem("token");
         if(token){
             $.ajax({
@@ -480,6 +485,10 @@
                         document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
                         document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
                         document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
+                        document.getElementById("userId").value = res.obj.id;
+                        document.getElementById("userName").value = res.obj.name;
+                        // document.getElementById("passWord").value = res.obj.password;
+                        document.getElementById("phone").value = res.obj.phone;
                     }else {
                         alert(res.message)
                     }
@@ -492,7 +501,7 @@
             var info ="您还未登录，暂时无法显示当前页面的敏感数据哟！"+"<a href='#' onclick='login()'>立即登录</a>";
             document.getElementById("messages").innerHTML = info;
         }
-    })
+    }
 
     function logOut() {
         $.ajax({
@@ -519,6 +528,9 @@
     }
     function login() {
         location.href="/";
+    }
+    function memberList() {
+        location.href="/memberList";
     }
 
     function toggle(id) {

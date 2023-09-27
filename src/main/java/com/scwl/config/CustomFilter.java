@@ -5,6 +5,7 @@ import com.scwl.pojo.Menu;
 import com.scwl.pojo.Role;
 import com.scwl.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -23,6 +24,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
+@Order(3)
 public class CustomFilter implements FilterInvocationSecurityMetadataSource {
 
 	@Autowired
