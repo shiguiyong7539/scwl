@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <title>人事信息</title>
+    <title>成本管理</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -213,19 +213,18 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
-                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>员工信息</h6>
-                    <div class="formAddEmp"><input type="submit" id="myBtn" value="添加员工" class="redB"></div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>成本信息</h6>
+                    <div class="formAddEmp"><input type="submit" id="myCostBtn" value="添加成本" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
                         <td width="80">编号</td>
-                        <td width="80">名称</td>
-                        <td width="80">年龄</td>
-                        <td width="80">学历</td>
-                        <td width="80">职称</td>
-                        <td width="80">用工方式</td>
-                        <td width="80">入职时间</td>
+                        <td width="80">工资发放</td>
+                        <td width="80">房租</td>
+                        <td width="80">水电办公等</td>
+                        <td width="80">工会</td>
+                        <td width="80">日期</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -239,57 +238,44 @@
         </div>
 
         <!-- 弹窗 -->
-        <div id="myModal" class="modal">
+        <div id="myCostModal" class="modal">
 
             <!-- 弹窗内容 -->
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="close">&times;</span>
-                    <h2>员工信息</h2>
+                    <h2>成本信息</h2>
                 </div>
                 <div class="modal-body">
                     <div class="formRow">
-                        姓名：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="name"></div><div class="clear"></div>
+                        名称：
+                        <div class="formRight"><input type="text" class="validate[required]" style="width: 162px;"  id="name"></div><div class="clear"></div>
+                   </div>
+                    <div class="formRow">
+                        工资发放：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="payOutWage"></div><div class="clear"></div>
                     </div>
                     <div class="formRow">
-                        年龄：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="age"></div><div class="clear"></div>
+                        房租：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rent"></div><div class="clear"></div>
                     </div>
                     <div class="formRow">
-                        学历：
-                        <div class="formRight"><select id="education">
-                            <option value="高中">高中</option>
-                            <option value="大专">大专</option>
-                            <option value="本科">本科</option>
-                            <option value="博士">博士</option>
-                        </select></div>
+                        水电办公等：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="hydropowerOffice"></div><div class="clear"></div>
                     </div>
                     <div class="formRow">
-                        职称：
-                        <div class="formRight"><select id="rank">
-                            <option value="初级">初级</option>
-                            <option value="中级">中级</option>
-                            <option value="高级">高级</option>
-                        </select></div>
+                        工会：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="laborUnion"></div><div class="clear"></div>
                     </div>
 
                     <div class="formRow">
-                        用工方式：
-                        <div class="formRight"><select id="employmentMode">
-                            <option value="外聘">外聘</option>
-                            <option value="正式">正式</option>
-                        </select></div>
-                    </div>
-
-                    <div class="formRow">
-                        入职时间：
+                        日期：
                         <div class="formRight">
-                            <input type="date"  style="width: 153px;" id="joinTime">
+                            <input type="date"  style="width: 165px;" id="periodicTime">
                         </div>
                     </div>
 
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addEmplyoee()">提交</button></div>
+                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addCostManage()">提交</button></div>
                 </div>
                 <div class="modal-footer">
                     <h3></h3>
@@ -311,7 +297,7 @@
 <script type="text/javascript">
     $(function () {
         initData();
-        menberList(1);
+        costManageList(1);
     } );
 
 
@@ -383,11 +369,11 @@
         }
     }
 
-    function menberList(pageNum) {
+    function costManageList(pageNum) {
 
         $.ajax({
             type: "get",
-            url: "/getEmployeeList",
+            url: "/getAllCost",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
@@ -405,12 +391,11 @@
                     var str_info='';
                     for (var i = 0; i < data1.length; i++) {
                         str_info+='<tr><td align="center">'+data1[i].id+'</td>';
-                        str_info+='<td align="center">'+data1[i].name+'</td>';
-                        str_info+='<td align="center">'+data1[i].age+'</td>';
-                        str_info+='<td align="center">'+data1[i].education+'</td>';
-                        str_info+='<td align="center">'+data1[i].rank+'</td>';
-                        str_info+='<td align="center">'+data1[i].employmentMode+'</td>';
-                        str_info+='<td align="center">'+dateFormat(1,data1[i].joinTime)+'</td></tr>';
+                        str_info+='<td align="center">'+data1[i].payOutWage+'</td>';
+                        str_info+='<td align="center">'+data1[i].rent+'</td>';
+                        str_info+='<td align="center">'+data1[i].hydropowerOffice+'</td>';
+                        str_info+='<td align="center">'+data1[i].laborUnion+'</td>';
+                        str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
 
@@ -418,24 +403,24 @@
                     pagenum1=pageNo+1;
                     pagenum2=pageNo+2;
                     pagenum3=pageNo+3;
-                    var htm="<a  href='#' onclick='menberList(1)'>首页 </a>";
+                    var htm="<a  href='#' onclick='costManageList(1)'>首页 </a>";
                     if(data.pageNum >1){
-                        htm+="<a  href='#' onclick='menberList("+data.prePage+")'>上一页 </a>"
+                        htm+="<a  href='#' onclick='costManageList("+data.prePage+")'>上一页 </a>"
                     }
                     if(pagenum0 >=1){
-                        htm+="<a  href='#' onclick='menberList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        htm+="<a  href='#' onclick='costManageList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
                     }
                     htm+="<button class='current'>"+data.pageNum+"</button>";
                     if(pagenum1 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        htm+="<a  href='#' onclick='costManageList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
                     }
                     if(pagenum2 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        htm+="<a  href='#' onclick='costManageList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
                     }
                     if(pagenum3 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        htm+="<a  href='#' onclick='costManageList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
                     }
-                    htm+="<a  href='#' onclick='menberList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='menberList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                    htm+="<a  href='#' onclick='costManageList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='costManageList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                     $("#pagefoot").html(htm);
                 }
 
@@ -470,10 +455,10 @@
   }
 
 // 获取弹窗
-    var modal = document.getElementById('myModal');
+    var modal = document.getElementById('myCostModal');
 
     // 打开弹窗的按钮对象
-    var btn = document.getElementById("myBtn");
+    var btn = document.getElementById("myCostBtn");
 
     // 获取 <span> 元素，用于关闭弹窗 that closes the modal
     var span = document.getElementsByClassName("close")[0];
@@ -495,26 +480,24 @@
         }
     }
 
-    function addEmplyoee() {
-        var name = document.getElementById("name").value;
-        var age = document.getElementById("age").value;
-        var education = document.getElementById("education").value;
-        var rank = document.getElementById("rank").value;
-        var employmentMode = document.getElementById("employmentMode").value;
-        var joinTime = document.getElementById("joinTime").value;
+    function addCostManage() {
+        var payOutWage = document.getElementById("payOutWage").value;
+        var rent = document.getElementById("rent").value;
+        var hydropowerOffice = document.getElementById("hydropowerOffice").value;
+        var laborUnion = document.getElementById("laborUnion").value;
+        var periodicTime = document.getElementById("periodicTime").value;
         $.ajax({
             type: "post",
-            url: "/addEmployee",
+            url: "/addCost",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
             data:({
-                name:name,
-                age:age,
-                education:education,
-                rank:rank,
-                employmentMode:employmentMode,
-                joinTime:new Date(joinTime)
+                payOutWage:payOutWage,
+                rent:rent,
+                hydropowerOffice:hydropowerOffice,
+                laborUnion:laborUnion,
+                periodicTime:new Date(periodicTime)
             }),
             success: function (res) {
                 if(res && res.code===200){

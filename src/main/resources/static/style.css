@@ -165,3 +165,5 @@ a {
     font-size: 14px;
     color: #ffffff;
 }
+
+.formAddEmp { display: block; float: right; margin: 14px 18px; }

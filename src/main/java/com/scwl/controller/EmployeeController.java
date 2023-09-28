@@ -1,5 +1,6 @@
 package com.scwl.controller;
 
+import com.scwl.pojo.Employee;
 import com.scwl.pojo.User;
 import com.scwl.service.EmployeeService;
 import com.scwl.service.UserService;
@@ -20,13 +21,24 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     /**
-     * 已登录
+     * 获取人事信息一览
      * @return
      */
     @RequestMapping("/getEmployeeList")
     @ResponseBody
     public Object getEmployeeList(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize){
         return employeeService.getEmpList(pageNum,pageSize);
+    }
+
+
+    /**
+     * 人事添加员工信息
+     * @return
+     */
+    @RequestMapping("/addEmployee")
+    @ResponseBody
+    public Object addEmployee(HttpServletRequest request, Employee employee ){
+        return employeeService.addEmployee(employee);
     }
 
 }

@@ -26,4 +26,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageInfo<Employee> pageInfo = new PageInfo<>(employees);
         return  ResBean.success("",pageInfo);
     }
+
+    @Override
+    public ResBean addEmployee(Employee employee) {
+        try{
+            employeeMapper.insert(employee);
+            return  ResBean.success("添加成功");
+        }catch (Exception e){
+                return  ResBean.error("添加失败");
+        }
+
+    }
 }

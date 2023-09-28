@@ -70,6 +70,24 @@ public class LoginController {
     }
 
     /**
+     * 成本管理页面
+     * @return
+     */
+    @RequestMapping("/costManage")
+    public String costManage(){
+        return "costmanage";
+    }
+
+    /**
+     * 经营状况页面
+     * @return
+     */
+    @RequestMapping("/mangeState")
+    public String mangeState(){
+        return "managestate";
+    }
+
+    /**
      * 登录
      * @return
      */

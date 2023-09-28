@@ -79,36 +79,36 @@
         <li class="dash"><a href="#" onclick="index_html()" class="active"><span>首页</span></a></li>
         <li class="charts"><a href="#" title="" onclick="toggle('userManage')" class="exp"><span>系统管理</span></a>
             <ul class="sub ul_hidden" id="userManage">
-                <li><a href="#" title="">合同履行</a></li>
-                <li><a href="#" title="">经营管理</a></li>
-                <li><a href="#" title="">成本管理</a></li>
+                <li><a href="" title="">合同履行</a></li>
+                <li><a href="#" title="" onclick="mangeState()">经营管理</a></li>
+                <li><a href="#" title="" onclick="costManage()">成本管理</a></li>
                 <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
-                <li><a href="#" title="">资金情况</a></li>
-                <li><a href="#" title="">建设发展</a></li>
+                <li><a href="" title="">资金情况</a></li>
+                <li><a href="" title="">建设发展</a></li>
             </ul>
         </li>
 
         <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
             <ul class="sub ul_hidden" id="taskManage">
-                <li><a href="#" title="">综合部</a></li>
-                <li><a href="#" title="">市场部</a></li>
-                <li><a href="#" title="">财务部</a></li>
-                <li><a href="#" title="">规建部</a></li>
-                <li><a href="#" title="">金沙艺术中心</a></li>
+                <li><a href="" title="">综合部</a></li>
+                <li><a href="" title="">市场部</a></li>
+                <li><a href="" title="">财务部</a></li>
+                <li><a href="" title="">规建部</a></li>
+                <li><a href="" title="">金沙艺术中心</a></li>
             </ul>
         </li>
 
         <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
             <ul class="sub ul_hidden" id="fengKongManage">
-                <li><a href="#" title="">涉诉情况</a></li>
-                <li><a href="#" title="">监督检查整改情况</a></li>
+                <li><a href="" title="">涉诉情况</a></li>
+                <li><a href="" title="">监督检查整改情况</a></li>
             </ul>
         </li>
 
         <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
             <ul class="sub ul_hidden" id="myInfo">
-                <li><a href="#" title="" onclick="userInfo()" id="idNo"></a></li>
-                <li><a href="#" title="" onclick="userInfo()" id="idName"></a></li>
+                <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
+                <li><a href="#" title="#" onclick="userInfo()" id="idName"></a></li>
                 <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
             </ul>
         </li>
@@ -233,221 +233,6 @@
         </div>
         <!-- Widgets -->
         <div class="widgets">
-
-            <!-- 2 columns widgets -->
-<!--            <div class="oneTwo">-->
-
-<!--                &lt;!&ndash; Search &ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="searchWidget">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <form action="">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <input type="text" name="search" placeholder="Enter search text..." />&ndash;&gt;-->
-<!--&lt;!&ndash;                        <input type="submit" name="find" value="" />&ndash;&gt;-->
-<!--&lt;!&ndash;                    </form>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-
-<!--                &lt;!&ndash; Purchase info widget &ndash;&gt;-->
-<!--                <div class="widget">-->
-<!--                    <div class="title">-->
-<!--                        <img src="images/icons/dark/money.png" alt="" class="titleIcon" />-->
-<!--                        <h6>高息期中的项目(打款确认后进入高息期)</h6>-->
-<!--                        <div class="topIcons">-->
-<!--                            <a href="#" class="tipS" title="Download statement"><img src="images/icons/downloadTop.png" alt="" /></a>-->
-<!--                            <a href="#" class="tipS" title="Print invoice"><img src="images/icons/printTop.png" alt="" /></a>-->
-<!--                            <a href="#" class="tipS" title="Edit"><img src="images/icons/editTop.png" alt="" /></a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="newOrder">-->
-<!--                        <div class="userRow">-->
-<!--                            <a href="#" title=""><img src="images/user.png" alt="" class="floatL" /></a>-->
-<!--                            <ul class="leftList">-->
-<!--                                <li><a href="#" title=""><strong>提供帮助 T-2 ≌ 接受帮助 J-2</strong></a></li>-->
-<!--                                <li>Order status:</li>-->
-<!--                            </ul>-->
-<!--                            <ul class="rightList">-->
-<!--                                <li>提供金额：<a href="#" title=""><strong>￥1000</strong></a></li>-->
-<!--                                <li>收益总计：<a href="#" title=""><strong>￥44</strong></a></li>-->
-<!--                            </ul>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-
-<!--                        <div class="cLine"></div>-->
-
-<!--                        <div class="orderRow">-->
-<!--                            <ul class="leftList">-->
-<!--                                <li>排队收益:</li>-->
-<!--                                <li>是否转出:</li>-->
-<!--                                <li>提现:</li>-->
-<!--                            </ul>-->
-<!--                            <ul class="rightList">-->
-<!--                                <li><strong>0</strong>天收益+0</li>-->
-<!--                                <li><strong class="green">未转出</strong></li>-->
-<!--                                <li><strong class="orange">您已获得2.2%-X日息  </strong>(可以提现)</li>-->
-<!--                            </ul>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-
-<!--                        <div class="cLine"></div>-->
-<!--                        <div class="totalAmount"><h6 class="floatL blue">交易成功</h6><div class="num" style="margin:0;"><a href="#" class="blueNum">提现</a></div><div class="clear"></div></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; Purchase info widget &ndash;&gt;-->
-<!--                <div class="widget">-->
-<!--                    <div class="title">-->
-<!--                        <img src="images/icons/dark/money.png" alt="" class="titleIcon" />-->
-<!--                        <h6>分享财富的项目</h6>-->
-<!--                        <div class="topIcons">-->
-<!--                            <a href="#" class="tipS" title="Download statement"><img src="images/icons/downloadTop.png" alt="" /></a>-->
-<!--                            <a href="#" class="tipS" title="Print invoice"><img src="images/icons/printTop.png" alt="" /></a>-->
-<!--                            <a href="#" class="tipS" title="Edit"><img src="images/icons/editTop.png" alt="" /></a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="newOrder">-->
-<!--                        <div class="userRow">-->
-<!--                            <a href="#" title=""><img src="images/user.png" alt="" class="floatL" /></a>-->
-<!--                            <ul class="leftList">-->
-<!--                                <li><a href="#" title=""><strong>提供帮助 T-2</strong></a></li>-->
-<!--                                <li>配对时间：2016-09-25 13:51:02 交易时间：2016-09-25 13:51:40</li>-->
-<!--                            </ul>-->
-<!--                            <ul class="rightList">-->
-<!--                                <li>提供金额：<a href="#" title=""><strong>￥1000</strong></a></li>-->
-<!--                            </ul>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-
-<!--                        <div class="cLine"></div>-->
-
-<!--                        <div class="orderRow">-->
-<!--                            <ul class="leftList">-->
-<!--                                <li>付款方式:</li>-->
-<!--                                <li>接受会员:</li>-->
-<!--                            </ul>-->
-<!--                            <ul class="rightList pays">-->
-<!--                                <li><i class="icons bank" title="银行支付"></i><i class="icons alipay ml7" title="支付宝支付"></i><i class="icons wechat ml7" title="微信支付"></i><i class="icons line1 ml7" title="线下同城支付"></i></li>-->
-<!--                                <li><strong class="green">沙磁文旅</strong></li>-->
-<!--                            </ul>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-
-<!--                        <div class="cLine"></div>-->
-<!--                        <div class="totalAmount"><h6 class="floatL blue">已完成</h6>-->
-<!--                            <div class="num" style="margin: 0px 8px 0 0;"><a href="#" class="blueNum">留言</a></div>-->
-<!--                            <div class="num" style="margin: 0px 8px 0 0;"><a href="#" class="blueNum">详细资料</a></div>-->
-<!--                            <div class="num" style="margin: 0px 8px 0 0;"><a href="#" class="blueNum">给Ta评价</a></div>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="clear"></div>-->
-
-<!--            </div>-->
-<!--            <div class="oneTwo">-->
-<!--                &lt;!&ndash; New users widget &ndash;&gt;-->
-<!--                <div class="widget">-->
-<!--                    <div class="title"><img src="images/icons/dark/add.png" alt="" class="titleIcon" /><h6>收获财富的项目</h6></div>-->
-<!--                    <div class="wUserInfo">-->
-<!--                        <a href="#" title="" class="wUserPic"><img src="images/user.png" alt="" /></a>-->
-<!--                        <ul class="leftList">-->
-<!--                            <li><a href="#" title=""><strong>张三</strong></a></li>-->
-<!--                            <li><a href="#" title="">eugene@163.com</a></li>-->
-<!--                        </ul>-->
-<!--                        <ul class="rightList">-->
-<!--                            <li><a href="#" class="green"><strong>$12,248.21</strong></a></li>-->
-<!--                            <li><a href="#" class="red">12 周期</a></li>-->
-<!--                        </ul>-->
-<!--                        <div class="clear"></div>-->
-<!--                    </div>-->
-
-<!--                    <div class="cLine"></div>-->
-
-<!--                    <div class="wUserInfo">-->
-<!--                        <a href="#" title="" class="wUserPic"><img src="images/user.png" alt="" /></a>-->
-<!--                        <ul class="leftList">-->
-<!--                            <li><a href="#" title=""><strong>李四</strong></a></li>-->
-<!--                            <li><a href="#" title="">valery@163.com</a></li>-->
-<!--                        </ul>-->
-<!--                        <ul class="rightList">-->
-<!--                            <li><a href="#" class="green"><strong>$4,048</strong></a></li>-->
-<!--                            <li><a href="#" class="red">96 周期</a></li>-->
-<!--                        </ul>-->
-<!--                        <div class="clear"></div>-->
-<!--                    </div>-->
-
-<!--                    <div class="cLine"></div>-->
-
-<!--                    <div class="wUserInfo">-->
-<!--                        <a href="#" title="" class="wUserPic"><img src="images/user.png" alt="" /></a>-->
-<!--                        <ul class="leftList">-->
-<!--                            <li><a href="#" title=""><strong>王五</strong></a></li>-->
-<!--                            <li><a href="#" title="">liam@168.com</a></li>-->
-<!--                        </ul>-->
-<!--                        <ul class="rightList">-->
-<!--                            <li><a href="#" class="green"><strong>$94,127.20</strong></a></li>-->
-<!--                            <li><a href="#" class="red">128 周期</a></li>-->
-<!--                        </ul>-->
-<!--                        <div class="clear"></div>-->
-<!--                    </div>-->
-
-<!--                    <div class="cLine"></div>-->
-
-<!--                    <div class="wUserInfo">-->
-<!--                        <a href="#" title="" class="wUserPic"><img src="images/user.png" alt="" /></a>-->
-<!--                        <ul class="leftList">-->
-<!--                            <li><a href="#" title=""><strong>周六</strong></a></li>-->
-<!--                            <li><a href="#" title="">steve@186.com</a></li>-->
-<!--                        </ul>-->
-<!--                        <ul class="rightList">-->
-<!--                            <li><a href="#" class="green"><strong>$2,483.02</strong></a></li>-->
-<!--                            <li><a href="#" class="red">0 周期</a></li>-->
-<!--                        </ul>-->
-<!--                        <div class="clear"></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                &lt;!&ndash; Latest update widget &ndash;&gt;-->
-<!--                <div class="widget">-->
-<!--                    <div class="title"><img src="images/icons/dark/refresh4.png" alt="" class="titleIcon" /><h6>平台动态</h6></div>-->
-
-<!--                    <div class="updates">-->
-<!--                        <div class="newUpdate">-->
-<!--                            <div class="uDone">-->
-<!--                                <a href="#" title=""><strong>新闻测试</strong></a>-->
-<!--                                <span>我们刚刚成立了一个新的服务器。我们的大师 ...</span>-->
-<!--                            </div>-->
-<!--                            <div class="uDate"><span class="uDay">08</span>feb</div>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-
-<!--                        <div class="newUpdate">-->
-<!--                            <span class="uAlert">-->
-<!--                                <a href="#" title=""><strong>新闻测试</strong></a>-->
-<!--                                <span>但一切都已经解决了。它将 ...</span>-->
-<!--                            </span>-->
-<!--                            <span class="uDate"><span class="uDay">08</span>feb</span>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-
-<!--                        <div class="newUpdate">-->
-<!--                            <span class="uDone">-->
-<!--                                <a href="#" title=""><strong>新闻测试</strong></a>-->
-<!--                                <span>我们只是通过1000销售!恭喜所有</span>-->
-<!--                            </span>-->
-<!--                            <span class="uDate"><span class="uDay">07</span>feb</span>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-
-<!--                        <div class="newUpdate">-->
-<!--                            <span class="uNotice">-->
-<!--                                <a href="#" title=""><strong>新闻测试</strong></a>-->
-<!--                                <span>非常dyplomatic和灵活的销售经理</span>-->
-<!--                            </span>-->
-<!--                            <span class="uDate"><span class="uDay">06</span>feb</span>-->
-<!--                            <div class="clear"></div>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
             <div class="clear"></div>
         </div>
     </div>
@@ -533,6 +318,12 @@
         location.href="/memberList";
     }
 
+    function costManage() {
+        location.href="/costManage";
+    }
+    function mangeState() {
+        location.href="/mangeState";
+    }
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
