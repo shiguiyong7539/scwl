@@ -96,7 +96,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.Department" >
+  <insert id="insert" parameterType="com.scwl.pojo.Department" useGeneratedKeys="true" keyProperty="id">
     insert into department (id, name)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
   </insert>

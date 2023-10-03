@@ -102,7 +102,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.CostManage" >
+  <insert id="insert" parameterType="com.scwl.pojo.CostManage" useGeneratedKeys="true" keyProperty="id">
     insert into cost_manage (id, name, pay_out_wage, 
       rent, hydropower_office, labor_union, 
       periodic_time, remark)

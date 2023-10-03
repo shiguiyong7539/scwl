@@ -102,7 +102,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.ManageState" >
+  <insert id="insert" parameterType="com.scwl.pojo.ManageState" useGeneratedKeys="true" keyProperty="id">
     insert into manage_state (id, name, type, 
       rent_income, rent_arrears, let_rate, 
       periodic_time, remark)

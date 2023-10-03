@@ -57,6 +57,8 @@
 
     <script type="text/javascript" src="js/plugins/calendar.min.js"></script>
     <script type="text/javascript" src="js/plugins/elfinder.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+    <script type="text/javascript" src="css/layui.css"></script>
 
 <!--    <script type="text/javascript" src="js/custom.js"></script>-->
 
@@ -321,8 +323,11 @@
             success: function (res) {
                 if(res && res.code === 200) {
                     localStorage.removeItem('token');
-                    alert(res.message);
-                    location.href="/admin";
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.href="/admin";
+                    });
+
                 }
             }
         })
@@ -381,11 +386,17 @@
                         // document.getElementById("passWord").value = res.obj.password;
                         document.getElementById("phone").value = res.obj.phone;
                     }else {
-                        alert(res.message)
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
                     }
                 },
                 error:function (res) {
-                    alert(res.message)
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
                 }
             })
         }else {
@@ -414,9 +425,16 @@
              }),
             success: function (res) {
                 if(res.code === 200) {
-                    alert(res.message)
+                    layui.layer.msg(res.message,{time:1000},function(){
+                       layer.close(); //再执行关闭
+                       location.reload();
+                    });
+
                 }else {
-                    alert(res.message)
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
                 }
             }
         })

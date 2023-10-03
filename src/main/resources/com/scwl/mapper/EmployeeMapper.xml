@@ -101,7 +101,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.Employee" >
+  <insert id="insert" parameterType="com.scwl.pojo.Employee" useGeneratedKeys="true" keyProperty="id">
     insert into employee (id, name, age, 
       education, join_time, rank, 
       employment_mode)

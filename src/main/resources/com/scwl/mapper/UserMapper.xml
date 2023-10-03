@@ -101,7 +101,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.User" >
+  <insert id="insert" parameterType="com.scwl.pojo.User" useGeneratedKeys="true" keyProperty="id">
     insert into user (id, name, phone,
       username, password, enable,
       last_login)
