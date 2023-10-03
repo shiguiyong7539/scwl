@@ -98,3 +98,9 @@
 select{
     width: 156px;
 }
+.expent{
+    display: none;
+}
+.income{
+    display: none;
+}

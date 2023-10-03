@@ -83,18 +83,18 @@
                 <li><a href="#" title="" onclick="mangeState()">经营管理</a></li>
                 <li><a href="#" title="" onclick="costManage()">成本管理</a></li>
                 <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
-                <li><a href="" title="">资金情况</a></li>
+                <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
                 <li><a href="" title="">建设发展</a></li>
             </ul>
         </li>
 
         <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
             <ul class="sub ul_hidden" id="taskManage">
-                <li><a href="" title="">综合部</a></li>
-                <li><a href="" title="">市场部</a></li>
-                <li><a href="" title="">财务部</a></li>
-                <li><a href="" title="">规建部</a></li>
-                <li><a href="" title="">金沙艺术中心</a></li>
+                <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
+                <li><a href="#" title="" onclick="tasklist('市场部')">市场部</a></li>
+                <li><a href="#" title="" onclick="tasklist('财务部')">财务部</a></li>
+                <li><a href="#" title="" onclick="tasklist('规建部')">规建部</a></li>
+                <li><a href="#" title="" onclick="tasklist('金沙艺术中心')">金沙艺术中心</a></li>
             </ul>
         </li>
 
@@ -345,7 +345,13 @@
     function mangeState() {
         location.href="/mangeState";
     }
-
+    function capitalposition() {
+        location.href="/capitalList";
+    }
+    function tasklist(project) {
+        localStorage.setItem("project",project);
+        location.href="/taskList";
+    }
 
     function toggle(id) {
         var x = document.getElementById(id);

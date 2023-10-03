@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <title>经营管理</title>
+    <title>资金状况</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -214,18 +214,19 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
-                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>经营状况信息</h6>
-                    <div class="formAddEmp"><input type="submit" id="myStateBtn" value="添加经营状况" class="redB"></div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>资金状况信息</h6>
+                    <div class="formAddEmp"><input type="submit" id="myStateBtn" value="添加资金状况" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
                         <td width="80">编号</td>
-                        <td width="80">经营类型</td>
-                        <td width="80">项目名称</td>
-                        <td width="80">租金收入</td>
-                        <td width="80">欠缴租金</td>
-                        <td width="80">出租率</td>
+                        <td width="80">资金类型</td>
+                        <td width="80">按月租赁收入</td>
+                        <td width="80">每月总收入</td>
+                        <td width="80">合同财务支出</td>
+                        <td width="80">专项债支出</td>
+                        <td width="80">日常报销支出</td>
                         <td width="80">日期</td>
                     </tr>
                     </thead>
@@ -246,50 +247,48 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="close">&times;</span>
-                    <h2>成本信息</h2>
+                    <h2>资金状况信息</h2>
                 </div>
                 <div class="modal-body">
                     <div class="formRow">
-                        经营类型：
-                        <div class="formRight"><select id="name"  style="width: 162px;">
+                        资金类型：
+                        <div class="formRight"><select id="type"  style="width: 162px;" onchange="showColum()">
                             <option value=""></option>
-                            <option value="资产经营">资产经营</option>
-                            <option value="经营业务收入">经营业务收入</option>
-                        </select></div>
-                    </div>
-                    <div class="formRow">
-                        项目名称：
-                        <div class="formRight"><select id="type" style="width: 162px;">
-                            <option value=""></option>
-                            <option value="旧日长轨">旧日长轨</option>
-                            <option value="星河集市">星河集市</option>
-                            <option value="金沙艺术中心">金沙艺术中心</option>
-                            <option value="灿若湖民宿">灿若湖民宿</option>
-                            <option value="活动策划">活动策划</option>
+                            <option value="收入">收入</option>
+                            <option value="支出">支出</option>
                         </select></div>
                     </div>
 
-                    <div class="formRow">
-                        租金收入：
-                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentIncome"></div><div class="clear"></div>
+
+                    <div class="formRow income">
+                        按月租赁收入：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="income"></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
-                        欠缴租金：
-                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentArrears"></div><div class="clear"></div>
+                    <div class="formRow income">
+                        每月总收入：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="incomeTotal"></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
-                        出租率：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="letRate"><span>%</span></div><div class="clear"></div>
+                    <div class="formRow expent">
+                        合同财务支出：
+                        <div class="formRight"><input type="number" step="0.01"   class="validate[required]"  id="contractExpend"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow expent">
+                        专项债支出：
+                        <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="specialExpend"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow expent">
+                        日常报销支出：
+                        <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="dailyExpend"></div><div class="clear"></div>
                     </div>
 
                     <div class="formRow">
                         日期：
                         <div class="formRight">
-                            <input type="date"  style="width: 162px;" id="periodicTime">
+                            <input type="date"  style="width: 162px;" id="term">
                         </div>
                     </div>
 
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addManageState()">提交</button></div>
+                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addCapital()">提交</button></div>
                 </div>
                 <div class="modal-footer">
                     <h3></h3>
@@ -311,7 +310,7 @@
     <script type="text/javascript">
         $(function () {
             initData();
-            manageStateList(1);
+            getCapitalList(1);
         } );
 
 
@@ -390,11 +389,11 @@
             }
         }
 
-        function manageStateList(pageNum) {
+        function getCapitalList(pageNum) {
 
             $.ajax({
                 type: "get",
-                url: "/getAllManageState",
+                url: "/getCapital",
                 headers: {
                     'Authorization': localStorage.getItem("token") // 在请求头中添加token
                 },
@@ -413,11 +412,12 @@
                         for (var i = 0; i < data1.length; i++) {
                             str_info+='<tr><td align="center">'+data1[i].id+'</td>';
                             str_info+='<td align="center">'+data1[i].type+'</td>';
-                            str_info+='<td align="center">'+data1[i].name+'</td>';
-                            str_info+='<td align="center">'+data1[i].rentIncome+'</td>';
-                            str_info+='<td align="center">'+data1[i].rentArrears+'</td>';
-                            str_info+='<td align="center">'+percentage(data1[i].letRate)+'</td>';
-                            str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
+                            str_info+='<td align="center">'+isNull(data1[i].income)+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].incomeTotal)+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].contractExpend)+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].specialExpend)+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].dailyExpend)+'</td>';
+                            str_info+='<td align="center">'+dateFormat(1,data1[i].term)+'</td></tr>';
                         }
                         $("#myTable").html(str_info);
 
@@ -425,24 +425,24 @@
                         pagenum1=pageNo+1;
                         pagenum2=pageNo+2;
                         pagenum3=pageNo+3;
-                        var htm="<a  href='#' onclick='manageStateList(1)'>首页 </a>";
+                        var htm="<a  href='#' onclick='getCapitalList(1)'>首页 </a>";
                         if(data.pageNum >1){
-                            htm+="<a  href='#' onclick='manageStateList("+data.prePage+")'>上一页 </a>"
+                            htm+="<a  href='#' onclick='getCapitalList("+data.prePage+")'>上一页 </a>"
                         }
                         if(pagenum0 >=1){
-                            htm+="<a  href='#' onclick='manageStateList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                            htm+="<a  href='#' onclick='getCapitalList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
                         }
                         htm+="<button class='current'>"+data.pageNum+"</button>";
                         if(pagenum1 <= pages){
-                            htm+="<a  href='#' onclick='manageStateList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                            htm+="<a  href='#' onclick='getCapitalList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
                         }
                         if(pagenum2 <= pages){
-                            htm+="<a  href='#' onclick='manageStateList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                            htm+="<a  href='#' onclick='getCapitalList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
                         }
                         if(pagenum3 <= pages){
-                            htm+="<a  href='#' onclick='manageStateList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                            htm+="<a  href='#' onclick='getCapitalList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
                         }
-                        htm+="<a  href='#' onclick='manageStateList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='manageStateList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                        htm+="<a  href='#' onclick='getCapitalList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='getCapitalList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                         $("#pagefoot").html(htm);
                     }
 
@@ -502,31 +502,34 @@
             }
         }
 
-        function addManageState() {
+        function addCapital() {
             var type = document.getElementById("type").value;
-            var name = document.getElementById("name").value;
-            var rentIncome = document.getElementById("rentIncome").value;
-            var rentArrears = document.getElementById("rentArrears").value;
-            var letRate = document.getElementById("letRate").value;
-            var periodicTime = document.getElementById("periodicTime").value;
+            var income = document.getElementById("income").value;
+            var incomeTotal = document.getElementById("incomeTotal").value;
+            var contractExpend = document.getElementById("contractExpend").value;
+            var specialExpend = document.getElementById("specialExpend").value;
+            var dailyExpend = document.getElementById("dailyExpend").value;
+            var term = document.getElementById("term").value;
             $.ajax({
                 type: "post",
-                url: "/addState",
+                url: "/addCapital",
                 headers: {
                     'Authorization': localStorage.getItem("token") // 在请求头中添加token
                 },
                 data:({
                     type:type,
-                    name:name,
-                    rentIncome:rentIncome,
-                    rentArrears:rentArrears,
-                    letRate:letRate,
-                    periodicTime:new Date(periodicTime)
+                    income:income,
+                    incomeTotal:incomeTotal,
+                    contractExpend:contractExpend,
+                    specialExpend:specialExpend,
+                    dailyExpend:dailyExpend,
+                    term:new Date(term)
                 }),
                 success: function (res) {
                     if(res && res.code===200){
                         alert(res.message);
                         modal.style.display = "none";
+                        capitalposition();
                     }
                 }
 
@@ -559,6 +562,44 @@
             var per = Number(num)*100;
             return per +'%';
 
+        }
+
+        function showColum() {
+            var select = document.getElementById("type").value;
+            var income = document.getElementsByClassName("income");
+            var expent = document.getElementsByClassName("expent");
+            if(select=="收入"){
+                for (var i = 0; i < income.length; i++) {
+                    income[i].style = "display:block"; // 修改为显示
+                }
+                for (var i = 0; i < expent.length; i++) {
+                    expent[i].style = "display:none"; // 修改为隐藏
+                }
+
+            }else if(select=="支出"){
+                for (var i = 0; i < income.length; i++) {
+                    income[i].style = "display:none"; // 修改为隐藏
+                }
+                for (var i = 0; i < expent.length; i++) {
+                    expent[i].style = "display:block"; // 修改为显示
+                }
+
+            }else {
+                for (var i = 0; i < income.length; i++) {
+                    income[i].style = "display:none"; // 修改为隐藏
+                }
+                for (var i = 0; i < expent.length; i++) {
+                    expent[i].style = "display:none"; // 修改为隐藏
+                }
+            }
+        }
+
+        function isNull(number) {
+            if(null==number){
+                return "";
+            }else {
+                return number;
+            }
         }
 
     </script>
