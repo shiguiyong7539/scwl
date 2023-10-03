@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <title>人事信息</title>
+    <title>经营管理</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -58,10 +58,10 @@
     <script type="text/javascript" src="js/plugins/calendar.min.js"></script>
     <script type="text/javascript" src="js/plugins/elfinder.min.js"></script>
 
-   <!-- <script type="text/javascript" src="js/custom.js"></script>-->
+    <!-- <script type="text/javascript" src="js/custom.js"></script>-->
 
-   <!-- <script type="text/javascript" src="js/charts/chart.js"></script>
--->
+    <!-- <script type="text/javascript" src="js/charts/chart.js"></script>
+ -->
     <!-- Shared on MafiaShare.net  --><!-- Shared on MafiaShare.net  --></head>
 
 <body>
@@ -214,19 +214,19 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
-                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>员工信息</h6>
-                    <div class="formAddEmp"><input type="submit" id="myBtn" value="添加员工" class="redB"></div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>经营状况信息</h6>
+                    <div class="formAddEmp"><input type="submit" id="myStateBtn" value="添加经营状况" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
                         <td width="80">编号</td>
-                        <td width="80">名称</td>
-                        <td width="80">年龄</td>
-                        <td width="80">学历</td>
-                        <td width="80">职称</td>
-                        <td width="80">用工方式</td>
-                        <td width="80">入职时间</td>
+                        <td width="80">经营类型</td>
+                        <td width="80">项目名称</td>
+                        <td width="80">租金收入</td>
+                        <td width="80">欠缴租金</td>
+                        <td width="80">出租率</td>
+                        <td width="80">日期</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -240,57 +240,56 @@
         </div>
 
         <!-- 弹窗 -->
-        <div id="myModal" class="modal">
+        <div id="myStateModal" class="modal">
 
             <!-- 弹窗内容 -->
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="close">&times;</span>
-                    <h2>员工信息</h2>
+                    <h2>成本信息</h2>
                 </div>
                 <div class="modal-body">
                     <div class="formRow">
-                        姓名：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="name"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow">
-                        年龄：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="age"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow">
-                        学历：
-                        <div class="formRight"><select id="education">
-                            <option value="高中">高中</option>
-                            <option value="大专">大专</option>
-                            <option value="本科">本科</option>
-                            <option value="博士">博士</option>
+                        经营类型：
+                        <div class="formRight"><select id="name"  style="width: 162px;">
+                            <option value=""></option>
+                            <option value="资产经营">资产经营</option>
+                            <option value="经营业务收入">经营业务收入</option>
                         </select></div>
                     </div>
                     <div class="formRow">
-                        职称：
-                        <div class="formRight"><select id="rank">
-                            <option value="初级">初级</option>
-                            <option value="中级">中级</option>
-                            <option value="高级">高级</option>
+                        项目名称：
+                        <div class="formRight"><select id="type" style="width: 162px;">
+                            <option value=""></option>
+                            <option value="旧日长轨">旧日长轨</option>
+                            <option value="星河集市">星河集市</option>
+                            <option value="金沙艺术中心">金沙艺术中心</option>
+                            <option value="灿若湖民宿">灿若湖民宿</option>
+                            <option value="活动策划">活动策划</option>
                         </select></div>
                     </div>
 
                     <div class="formRow">
-                        用工方式：
-                        <div class="formRight"><select id="employmentMode">
-                            <option value="外聘">外聘</option>
-                            <option value="正式">正式</option>
-                        </select></div>
+                        租金收入：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentIncome"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        欠缴租金：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentArrears"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        出租率：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="letRate"><span>%</span></div><div class="clear"></div>
                     </div>
 
                     <div class="formRow">
-                        入职时间：
+                        日期：
                         <div class="formRight">
-                            <input type="date"  style="width: 153px;" id="joinTime">
+                            <input type="date"  style="width: 162px;" id="periodicTime">
                         </div>
                     </div>
 
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addEmplyoee()">提交</button></div>
+                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addManageState()">提交</button></div>
                 </div>
                 <div class="modal-footer">
                     <h3></h3>
@@ -300,7 +299,7 @@
         </div>
 
 
-</div>
+    </div>
     <!-- Footer line -->
     <div id="footer">
         <div class="wrapper">Copyright © 2023 沙磁文旅版权所有 </div>
@@ -308,228 +307,253 @@
 
 
     <div class="clear"></div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        initData();
-        menberList(1);
-    } );
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            initData();
+            manageStateList(1);
+        } );
 
 
-    function logOut() {
-        $.ajax({
-            type: "GET",
-            url: "/logout",
-            success: function (res) {
-                if(res && res.code === 200) {
-                    localStorage.removeItem('token');
-                    alert(res.message);
-                    location.href="/admin";
-                }
-            }
-        })
-    }
-    function index_html() {
-        location.href="/admin";
-    }
-    function userInfo() {
-        location.href="/userInfo";
-    }
-    function login() {
-        location.href="/";
-    }
-    function memberList() {
-        location.href="/memberList";
-    }
-    function costManage() {
-        location.href="/costManage";
-    }
-    function mangeState() {
-        location.href="/mangeState";
-    }
-    function toggle(id) {
-        var x = document.getElementById(id);
-        if (x.className === "sub ul_hidden") {
-            x.className = "sub";
-        } else {
-            x.className = "sub ul_hidden";
-        }
-    }
-    function initData() {
-        var token = localStorage.getItem("token");
-        if(token){
+        function logOut() {
             $.ajax({
-                type: "get",
-                url: "/isLogin",
-                headers: {
-                    'Authorization': token // 在请求头中添加token
-                },
+                type: "GET",
+                url: "/logout",
                 success: function (res) {
-                    if(res.code === 200) {
-                        document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
-                        document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
-                        document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
-                        document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
-                    }else {
-                        alert(res.message)
+                    if(res && res.code === 200) {
+                        localStorage.removeItem('token');
+                        alert(res.message);
+                        location.href="/admin";
                     }
-                },
-                error:function (res) {
-                    alert(res.message)
                 }
             })
-        }else {
-            var info ="您还未登录，暂时无法显示当前页面的敏感数据哟！"+"<a href='#' onclick='login()'>立即登录</a>";
-            document.getElementById("messages").innerHTML = info;
         }
-    }
+        function index_html() {
+            location.href="/admin";
+        }
+        function userInfo() {
+            location.href="/userInfo";
+        }
+        function login() {
+            location.href="/";
+        }
+        function memberList() {
+            location.href="/memberList";
+        }
+        function costManage() {
+            location.href="/costManage";
+        }
+        function mangeState() {
+            location.href="/mangeState";
+        }
+        function toggle(id) {
+            var x = document.getElementById(id);
+            if (x.className === "sub ul_hidden") {
+                x.className = "sub";
+            } else {
+                x.className = "sub ul_hidden";
+            }
+        }
+        function initData() {
+            var token = localStorage.getItem("token");
+            if(token){
+                $.ajax({
+                    type: "get",
+                    url: "/isLogin",
+                    headers: {
+                        'Authorization': token // 在请求头中添加token
+                    },
+                    success: function (res) {
+                        if(res.code === 200) {
+                            document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
+                            document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
+                            document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
+                            document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
+                        }else {
+                            alert(res.message)
+                        }
+                    },
+                    error:function (res) {
+                        alert(res.message)
+                    }
+                })
+            }else {
+                var info ="您还未登录，暂时无法显示当前页面的敏感数据哟！"+"<a href='#' onclick='login()'>立即登录</a>";
+                document.getElementById("messages").innerHTML = info;
+            }
+        }
 
-    function menberList(pageNum) {
+        function manageStateList(pageNum) {
 
-        $.ajax({
-            type: "get",
-            url: "/getEmployeeList",
-            headers: {
-                'Authorization': localStorage.getItem("token") // 在请求头中添加token
-            },
-            data:({
-                pageNum:pageNum
-            }),
-            success: function (res) {
-                if(res && res.code===200){
-                    var data = res.obj;
-                    var data1 = res.obj.list;
-                    var pageNo = parseInt(res.obj.pageNum);
-                    var pages = parseInt(res.obj.pages);
-                    var total = parseInt(res.obj.total);
-                   // 获取表格元素
-                    var str_info='';
-                    for (var i = 0; i < data1.length; i++) {
-                        str_info+='<tr><td align="center">'+data1[i].id+'</td>';
-                        str_info+='<td align="center">'+data1[i].name+'</td>';
-                        str_info+='<td align="center">'+data1[i].age+'</td>';
-                        str_info+='<td align="center">'+data1[i].education+'</td>';
-                        str_info+='<td align="center">'+data1[i].rank+'</td>';
-                        str_info+='<td align="center">'+data1[i].employmentMode+'</td>';
-                        str_info+='<td align="center">'+dateFormat(1,data1[i].joinTime)+'</td></tr>';
-                    }
-                    $("#myTable").html(str_info);
+            $.ajax({
+                type: "get",
+                url: "/getAllManageState",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    pageNum:pageNum
+                }),
+                success: function (res) {
+                    if(res && res.code===200){
+                        var data = res.obj;
+                        var data1 = res.obj.list;
+                        var pageNo = parseInt(res.obj.pageNum);
+                        var pages = parseInt(res.obj.pages);
+                        var total = parseInt(res.obj.total);
+                        // 获取表格元素
+                        var str_info='';
+                        for (var i = 0; i < data1.length; i++) {
+                            str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                            str_info+='<td align="center">'+data1[i].type+'</td>';
+                            str_info+='<td align="center">'+data1[i].name+'</td>';
+                            str_info+='<td align="center">'+data1[i].rentIncome+'</td>';
+                            str_info+='<td align="center">'+data1[i].rentArrears+'</td>';
+                            str_info+='<td align="center">'+percentage(data1[i].letRate)+'</td>';
+                            str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
+                        }
+                        $("#myTable").html(str_info);
 
-                    pagenum0=pageNo-1;
-                    pagenum1=pageNo+1;
-                    pagenum2=pageNo+2;
-                    pagenum3=pageNo+3;
-                    var htm="<a  href='#' onclick='menberList(1)'>首页 </a>";
-                    if(data.pageNum >1){
-                        htm+="<a  href='#' onclick='menberList("+data.prePage+")'>上一页 </a>"
+                        pagenum0=pageNo-1;
+                        pagenum1=pageNo+1;
+                        pagenum2=pageNo+2;
+                        pagenum3=pageNo+3;
+                        var htm="<a  href='#' onclick='manageStateList(1)'>首页 </a>";
+                        if(data.pageNum >1){
+                            htm+="<a  href='#' onclick='manageStateList("+data.prePage+")'>上一页 </a>"
+                        }
+                        if(pagenum0 >=1){
+                            htm+="<a  href='#' onclick='manageStateList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        }
+                        htm+="<button class='current'>"+data.pageNum+"</button>";
+                        if(pagenum1 <= pages){
+                            htm+="<a  href='#' onclick='manageStateList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        }
+                        if(pagenum2 <= pages){
+                            htm+="<a  href='#' onclick='manageStateList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        }
+                        if(pagenum3 <= pages){
+                            htm+="<a  href='#' onclick='manageStateList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        }
+                        htm+="<a  href='#' onclick='manageStateList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='manageStateList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                        $("#pagefoot").html(htm);
                     }
-                    if(pagenum0 >=1){
-                        htm+="<a  href='#' onclick='menberList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
-                    }
-                    htm+="<button class='current'>"+data.pageNum+"</button>";
-                    if(pagenum1 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
-                    }
-                    if(pagenum2 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
-                    }
-                    if(pagenum3 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
-                    }
-                    htm+="<a  href='#' onclick='menberList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='menberList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
-                    $("#pagefoot").html(htm);
+
                 }
 
+
+
+            })
+
+        }
+
+
+
+        function dateFormat(type,utcTime) {
+            var date = new Date(utcTime); // 创建Date对象
+            // 获取年、月、日、小时、分钟和秒
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1; // 月份从0开始，所以要加1
+            var day = date.getDate();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+            // 将日期和时间组件组合成字符串
+            var formatteddate = year + '-' + month + '-' + day ;
+            var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+            if(type==1){
+                return formatteddate;
+            }else {
+                return formattedTime;
             }
 
+        }
 
+        // 获取弹窗
+        var modal = document.getElementById('myStateModal');
 
-        })
+        // 打开弹窗的按钮对象
+        var btn = document.getElementById("myStateBtn");
 
-    }
+        // 获取 <span> 元素，用于关闭弹窗 that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
+        // 点击按钮打开弹窗
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
 
-
-  function dateFormat(type,utcTime) {
-      var date = new Date(utcTime); // 创建Date对象
-     // 获取年、月、日、小时、分钟和秒
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1; // 月份从0开始，所以要加1
-      var day = date.getDate();
-      var hours = date.getHours();
-      var minutes = date.getMinutes();
-      var seconds = date.getSeconds();
-     // 将日期和时间组件组合成字符串
-      var formatteddate = year + '-' + month + '-' + day ;
-      var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-      if(type==1){
-          return formatteddate;
-      }else {
-          return formattedTime;
-      }
-
-  }
-
-// 获取弹窗
-    var modal = document.getElementById('myModal');
-
-    // 打开弹窗的按钮对象
-    var btn = document.getElementById("myBtn");
-
-    // 获取 <span> 元素，用于关闭弹窗 that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // 点击按钮打开弹窗
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // 点击 <span> (x), 关闭弹窗
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // 在用户点击其他地方时，关闭弹窗
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        // 点击 <span> (x), 关闭弹窗
+        span.onclick = function() {
             modal.style.display = "none";
         }
-    }
 
-    function addEmplyoee() {
-        var name = document.getElementById("name").value;
-        var age = document.getElementById("age").value;
-        var education = document.getElementById("education").value;
-        var rank = document.getElementById("rank").value;
-        var employmentMode = document.getElementById("employmentMode").value;
-        var joinTime = document.getElementById("joinTime").value;
-        $.ajax({
-            type: "post",
-            url: "/addEmployee",
-            headers: {
-                'Authorization': localStorage.getItem("token") // 在请求头中添加token
-            },
-            data:({
-                name:name,
-                age:age,
-                education:education,
-                rank:rank,
-                employmentMode:employmentMode,
-                joinTime:new Date(joinTime)
-            }),
-            success: function (res) {
-                if(res && res.code===200){
-                    alert(res.message);
-                    modal.style.display = "none";
-                }
+        // 在用户点击其他地方时，关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
+        }
+
+        function addManageState() {
+            var type = document.getElementById("type").value;
+            var name = document.getElementById("name").value;
+            var rentIncome = document.getElementById("rentIncome").value;
+            var rentArrears = document.getElementById("rentArrears").value;
+            var letRate = document.getElementById("letRate").value;
+            var periodicTime = document.getElementById("periodicTime").value;
+            $.ajax({
+                type: "post",
+                url: "/addState",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    type:type,
+                    name:name,
+                    rentIncome:rentIncome,
+                    rentArrears:rentArrears,
+                    letRate:letRate,
+                    periodicTime:new Date(periodicTime)
+                }),
+                success: function (res) {
+                    if(res && res.code===200){
+                        alert(res.message);
+                        modal.style.display = "none";
+                    }
+                }
 
 
-        })
+            })
 
-    }
+        }
 
+        function changeSelect2() {
+            var select1 = document.getElementById("name");
+            var select2 = document.getElementById("type");
+            var selectedValue = select1.value;
+            select2.innerHTML = ""; //清空第二个下拉菜单的内容
+            if (selectedValue === "资产经营") {
+                var optionArray = ["租金收入", "欠缴租金", "出租率"];
+            } else if (selectedValue === "经营业务收入") {
+                var optionArray = ["旧日长轨", "星河集市", "金沙艺术中心","灿若湖民宿","活动策划"];
+            } else {
+                var optionArray = [];
+            }
+            for (var i = 0; i < optionArray.length; i++) {
+                var option = document.createElement("option");
+                option.text = optionArray[i];
+                select2.add(option);
+            }
+        }
 
-</script>
+        //获取所有包含百分比转化
+        function percentage(num) {
+            var per = Number(num)*100;
+            return per +'%';
+
+        }
+
+    </script>
 </body>
 </html>

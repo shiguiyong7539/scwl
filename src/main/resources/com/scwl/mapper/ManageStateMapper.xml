@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scwl.mapper.ManageStateMapper" >
+  <resultMap id="BaseResultMap" type="com.scwl.pojo.ManageState" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="rent_income" property="rentIncome" jdbcType="DECIMAL" />
+    <result column="rent_arrears" property="rentArrears" jdbcType="DECIMAL" />
+    <result column="let_rate" property="letRate" jdbcType="DECIMAL" />
+    <result column="periodic_time" property="periodicTime" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, type, rent_income, rent_arrears, let_rate, periodic_time, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.ManageStateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from manage_state
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from manage_state
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manage_state
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.scwl.pojo.ManageStateExample" >
+    delete from manage_state
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.scwl.pojo.ManageState" >
+    insert into manage_state (id, name, type, 
+      rent_income, rent_arrears, let_rate, 
+      periodic_time, remark)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{rentIncome,jdbcType=DECIMAL}, #{rentArrears,jdbcType=DECIMAL}, #{letRate,jdbcType=DECIMAL}, 
+      #{periodicTime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.scwl.pojo.ManageState" >
+    insert into manage_state
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="rentIncome != null" >
+        rent_income,
+      </if>
+      <if test="rentArrears != null" >
+        rent_arrears,
+      </if>
+      <if test="letRate != null" >
+        let_rate,
+      </if>
+      <if test="periodicTime != null" >
+        periodic_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="rentIncome != null" >
+        #{rentIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="rentArrears != null" >
+        #{rentArrears,jdbcType=DECIMAL},
+      </if>
+      <if test="letRate != null" >
+        #{letRate,jdbcType=DECIMAL},
+      </if>
+      <if test="periodicTime != null" >
+        #{periodicTime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.scwl.pojo.ManageStateExample" resultType="java.lang.Integer" >
+    select count(*) from manage_state
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update manage_state
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rentIncome != null" >
+        rent_income = #{record.rentIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rentArrears != null" >
+        rent_arrears = #{record.rentArrears,jdbcType=DECIMAL},
+      </if>
+      <if test="record.letRate != null" >
+        let_rate = #{record.letRate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.periodicTime != null" >
+        periodic_time = #{record.periodicTime,jdbcType=DATE},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update manage_state
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      rent_income = #{record.rentIncome,jdbcType=DECIMAL},
+      rent_arrears = #{record.rentArrears,jdbcType=DECIMAL},
+      let_rate = #{record.letRate,jdbcType=DECIMAL},
+      periodic_time = #{record.periodicTime,jdbcType=DATE},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.ManageState" >
+    update manage_state
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="rentIncome != null" >
+        rent_income = #{rentIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="rentArrears != null" >
+        rent_arrears = #{rentArrears,jdbcType=DECIMAL},
+      </if>
+      <if test="letRate != null" >
+        let_rate = #{letRate,jdbcType=DECIMAL},
+      </if>
+      <if test="periodicTime != null" >
+        periodic_time = #{periodicTime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.ManageState" >
+    update manage_state
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      rent_income = #{rentIncome,jdbcType=DECIMAL},
+      rent_arrears = #{rentArrears,jdbcType=DECIMAL},
+      let_rate = #{letRate,jdbcType=DECIMAL},
+      periodic_time = #{periodicTime,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAllManageState" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from manage_state
+    <where>
+      <if test="manageState.id != null" >
+        id = #{manageState.id,jdbcType=INTEGER}
+      </if>
+
+      <if test="manageState.name != null and manageState.name !=''" >
+        and name = #{manageState.name}
+      </if>
+
+      <if test="manageState.type != null and manageState.type !=''" >
+        and type = #{manageState.type}
+      </if>
+
+      <if test="manageState.periodicTime != null" >
+        and periodic_time = #{manageState.periodicTime}
+      </if>
+
+      <if test="manageState.remark != null and manageState.remark !=''" >
+        and remark = #{manageState.remark}
+      </if>
+    </where>
+  </select>
+</mapper>

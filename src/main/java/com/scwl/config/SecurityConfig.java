@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomUrlDecisionManager customUrlDecisionManager;
 
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
@@ -52,15 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(
-				"/",
-				"/memberList",
-				"/costManage",
-				"/mangeState",
-				"/login",
-				"/logout",
-				"/admin",
-				"/userInfo",
-				"/index",
+				"/","/memberList","/costManage","/mangeState","/login",
+				"/logout","/admin","/userInfo","/index",
 				"/file/**",
 				"/css/**",
 				"/js/**",
@@ -88,20 +82,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.authorizeRequests()
 				//允许访问
-				//.antMatchers("/login","/temTest2","/logout")
+				//.antMatchers()
 				//.permitAll()
 				//除了上面的所有请求都要求认证
 				.anyRequest()
 				.authenticated()
 				//动态权限配置
-				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-					@Override
-					public <O extends FilterSecurityInterceptor> O postProcess(O object) {
-						object.setAccessDecisionManager(customUrlDecisionManager);
-						object.setSecurityMetadataSource(customFilter);
-						return object;
-					}
-				})
+//				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+//					@Override
+//					public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+//						object.setAccessDecisionManager(customUrlDecisionManager);
+//						object.setSecurityMetadataSource(customFilter);
+//						return object;
+//					}
+//				})
 				.and()
 				//禁用缓存
 				.headers()
@@ -118,6 +112,53 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.tokenValiditySeconds(60 * 60 * 24)
 				.userDetailsService(userDetailsService);
 	}
+
+
+
+//	@Override
+//	protected void configure(HttpSecurity httpSecurity) throws Exception
+//	{
+//		httpSecurity
+//				// CSRF禁用，因为不使用session
+//				.csrf().disable()
+//				// 认证失败处理类
+//				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//				// 基于token，所以不需要session
+//				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//				// 过滤请求
+//				.authorizeRequests()
+//				// 对于登录login 验证码captchaImage 允许匿名访问
+//				.antMatchers("/login", "/captchaImage").anonymous()
+//				.antMatchers(
+//						HttpMethod.GET,
+//						"/*.html",
+//						"/**/*.html",
+//						"/**/*.css",
+//						"/**/*.js"
+//				).permitAll()
+//				.antMatchers("/profile/**").anonymous()
+//				.antMatchers("/srm/qms/**").anonymous()
+//				.antMatchers("/common/download**").anonymous()
+//				.antMatchers("/common/download/resource**").anonymous()
+//				.antMatchers("/swagger-ui.html").anonymous()
+//				.antMatchers("/swagger-resources/**").anonymous()
+//				.antMatchers("/webjars/**").anonymous()
+//				.antMatchers("/*/api-docs").anonymous()
+//				.antMatchers("/druid/**").anonymous()
+//				.antMatchers("/flowable/**").permitAll()
+//				.antMatchers("/socket/**").permitAll()
+//				.antMatchers("/mywebservice/**").permitAll()
+//				// 除上面外的所有请求全部需要鉴权认证
+//				.anyRequest().authenticated()
+//				.and()
+//				.headers().frameOptions().disable();
+//		httpSecurity.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
+//		// 添加JWT filter
+//		httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+//		// 添加CORS filter
+//		httpSecurity.addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class);
+//		httpSecurity.addFilterBefore(corsFilter, LogoutFilter.class);
+//	}
 
 	@Override
 	@Bean
