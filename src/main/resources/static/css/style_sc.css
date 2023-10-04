@@ -104,3 +104,24 @@ select{
 .income{
     display: none;
 }
+
+/*#myChart .tooltip {*/
+/*    position: absolute;*/
+/*    background-color: rgba(50, 50, 50, 0.8); !* 设置提示框的背景色 *!*/
+/*    padding: 5px;*/
+/*    border-radius: 5px;*/
+/*    color: #fff; !* 设置提示框文字的颜色 *!*/
+/*    font-size: 14px;*/
+/*    white-space: nowrap;*/
+/*    z-index: 10; !* 设置提示框的层级，让其显示在其他元素之上 *!*/
+/*}*/
+/*#myChart .x-axis, #myChart .y-axis {*/
+/*    position: absolute;*/
+/*    background-color: rgba(50, 50, 50, 0.8); !* 设置轴线的背景色 *!*/
+/*    padding: 5px;*/
+/*    border-radius: 5px;*/
+/*    color: #fff; !* 设置轴线文字的颜色 *!*/
+/*    font-size: 14px;*/
+/*    white-space: nowrap;*/
+/*    z-index: 10; !* 设置轴线的层级，让其显示在其他元素之上 *!*/
+/*}*/

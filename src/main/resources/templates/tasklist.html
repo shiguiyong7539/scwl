@@ -1,0 +1,600 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <title id="title_id"></title>
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/spinner/ui.spinner.js"></script>
+    <script type="text/javascript" src="js/plugins/spinner/jquery.mousewheel.js"></script>
+
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/forms/uniform.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.cleditor.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.validationEngine-en.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.validationEngine.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/autogrowtextarea.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.dualListBox.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.inputlimiter.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/chosen.jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/wizard/jquery.form.js"></script>
+    <script type="text/javascript" src="js/plugins/wizard/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/plugins/wizard/jquery.form.wizard.js"></script>
+
+    <script type="text/javascript" src="js/plugins/uploader/plupload.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/plupload.html5.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/plupload.html4.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/jquery.plupload.queue.js"></script>
+
+    <script type="text/javascript" src="js/plugins/tables/datatable.js"></script>
+    <script type="text/javascript" src="js/plugins/tables/tablesort.min.js"></script>
+    <script type="text/javascript" src="js/plugins/tables/resizable.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/ui/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.collapsible.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.progress.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.timeentry.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.colorpicker.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.breadcrumbs.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.sourcerer.js"></script>
+
+    <script type="text/javascript" src="js/plugins/calendar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/elfinder.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+    <script type="text/javascript" src="css/layui.css"></script>
+
+    <!-- <script type="text/javascript" src="js/custom.js"></script>-->
+
+    <!-- <script type="text/javascript" src="js/charts/chart.js"></script>
+ -->
+    <!-- Shared on MafiaShare.net  --><!-- Shared on MafiaShare.net  --></head>
+
+<body>
+
+<!-- Left side content -->
+<div id="leftSide">
+    <div class="logo"><a href="#"><img src=" " alt="" /></a></div>
+
+    <div class="sidebarSep mt0"></div>
+
+
+
+    <!-- Left navigation -->
+    <ul id="menu" class="nav">
+        <li class="dash"><a href="#" onclick="index_html()" class="active"><span>首页</span></a></li>
+        <li class="charts"><a href="#" title="" onclick="toggle('userManage')" class="exp"><span>系统管理</span></a>
+            <ul class="sub ul_hidden" id="userManage">
+                <li><a href="" title="">合同履行</a></li>
+                <li><a href="#" title="" onclick="mangeState()">经营管理</a></li>
+                <li><a href="#" title="" onclick="costManage()">成本管理</a></li>
+                <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
+                <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
+                <li><a href="" title="">建设发展</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
+            <ul class="sub ul_hidden" id="taskManage">
+                <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
+                <li><a href="#" title="" onclick="tasklist('市场部')">市场部</a></li>
+                <li><a href="#" title="" onclick="tasklist('财务部')">财务部</a></li>
+                <li><a href="#" title="" onclick="tasklist('规建部')">规建部</a></li>
+                <li><a href="#" title="" onclick="tasklist('金沙艺术中心')">金沙艺术中心</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
+            <ul class="sub ul_hidden" id="fengKongManage">
+                <li><a href="" title="">涉诉情况</a></li>
+                <li><a href="" title="">监督检查整改情况</a></li>
+            </ul>
+        </li>
+
+        <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
+            <ul class="sub ul_hidden" id="myInfo">
+                <li><a href="#" title="" onclick="userInfo()" id="idNo"></a></li>
+                <li><a href="#" title="" onclick="userInfo()" id="idName"></a></li>
+                <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+<!-- Right side -->
+<div id="rightSide">
+
+    <!-- Top fixed navigation -->
+    <div class="topNav">
+        <div class="wrapper">
+            <div class="welcome"><a href="#" title=""><img src="images/userPic.png" alt="" /></a><span id="loginUser"></span></div>
+            <div class="welcome"><a href="#" title=""></a><span id="messages" style="color: red"></span></div>
+            <div class="userNav">
+                <ul>
+                    <li><a href="#" title=""><img src="images/icons/topnav/logout.png" alt="" /><span onclick="logOut()">退出</span></a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- Responsive header -->
+    <div class="resp">
+        <div class="respHead">
+            <a href="#" title=""><img src="images/loginLogo.png" alt="" /></a>
+        </div>
+
+        <div class="cLine"></div>
+        <div class="smalldd">
+            <span class="goTo"><img src="images/icons/light/home.png" alt="" />Dashboard</span>
+            <ul class="smallDropdown">
+                <li><a href="#" title=""><img src="images/icons/light/home.png" alt="" />Dashboard</a></li>
+                <li><a href="#" title=""><img src="images/icons/light/stats.png" alt="" />Statistics and charts</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/pencil.png" alt="" />Forms stuff<strong>4</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Form elements</a></li>
+                        <li><a href="#" title="">Validation</a></li>
+                        <li><a href="#" title="">WYSIWYG and file uploader</a></li>
+                        <li class="last"><a href="#" title="">Wizards</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title=""><img src="images/icons/light/users.png" alt="" />Interface elements</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/frames.png" alt="" />Tables<strong>3</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Static tables</a></li>
+                        <li><a href="#" title="">Dynamic table</a></li>
+                        <li class="last"><a href="#" title="">Sortable &amp; resizable tables</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/fullscreen.png" alt="" />Widgets and grid<strong>2</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Widgets</a></li>
+                        <li class="last"><a href="#" title="">Grid</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/alert.png" alt="" />Error pages<strong>6</strong></a>
+                    <ul class="sub">
+                        <li><a href="#" title="">403 page</a></li>
+                        <li><a href="#" title="">404 page</a></li>
+                        <li><a href="#" title="">405 page</a></li>
+                        <li><a href="#" title="">500 page</a></li>
+                        <li><a href="#" title="">503 page</a></li>
+                        <li class="last"><a href="#" title="">Website is offline</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title=""><img src="images/icons/light/files.png" alt="" />File manager</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/create.png" alt="" />Other pages<strong>3</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Typography</a></li>
+                        <li><a href="#" title="">Calendar</a></li>
+                        <li class="last"><a href="#" title="">Gallery</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="cLine"></div>
+    </div>
+
+    <!-- Title area -->
+    <div class="titleArea">
+        <div class="wrapper">
+            <div class="pageTitle">
+            </div>
+            <div class="middleNav">
+
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="line"></div>
+    <!-- Main content wrapper -->
+    <div class="wrapper">
+
+        <!-- Note -->
+        <div class="nNote nInformation hideit">
+            <p>亲爱的<strong>沙磁文旅 </strong>（Lv1，重庆市地区领导人）</p>
+        </div>
+
+
+        <!-- Widgets -->
+        <div class="widgets">
+            <div class="widget">
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6 id="project_name">信息</h6>
+                    <div class="formAddEmp"><input type="submit" id="myStateBtn" value="" class="redB"></div>
+                </div>
+                <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
+                    <thead>
+                    <tr>
+                        <td width="80">编号</td>
+                        <td width="80">部门名称</td>
+                        <td width="80">任务数</td>
+                        <td width="80">已完成数量</td>
+                        <td width="80">未完成数量</td>
+                        <td width="80">逾期数量</td>
+                        <td width="80">日期</td>
+                    </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    </tbody>
+                </table>
+            </div>
+
+            <span class="page-new">
+                <span id="pagefoot"></span></span>
+            <div class="clear"></div>
+        </div>
+
+        <!-- 弹窗 -->
+        <div id="myStateModal" class="modal">
+
+            <!-- 弹窗内容 -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2 id="window_name"></h2>
+                </div>
+                <div class="modal-body">
+                    <div class="formRow">
+                        部门名称：
+                        <div class="formRight"><select id="project"  style="width: 162px;" >
+                            <option value=""></option>
+                            <option value="综合部">综合部</option>
+                            <option value="市场部">市场部</option>
+                            <option value="财务部">财务部</option>
+                            <option value="规建部">规建部</option>
+                            <option value="金沙艺术中心">金沙艺术中心</option>
+                        </select></div>
+                    </div>
+
+
+                    <div class="formRow ">
+                        任务数：
+                        <div class="formRight"><input type="number"  class="validate[required]"  id="totalNum"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow ">
+                        已完成数量：
+                        <div class="formRight"><input type="number"  class="validate[required]"  id="completed"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow ">
+                        未完成数量：
+                        <div class="formRight"><input type="number"  class="validate[required]"  id="unfinished"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow ">
+                        逾期数量：
+                        <div class="formRight"><input type="number"  class="validate[required]"  id="overdue"></div><div class="clear"></div>
+                    </div>
+
+
+                    <div class="formRow">
+                        日期：
+                        <div class="formRight">
+                            <input type="date"  style="width: 162px;" id="term">
+                        </div>
+                    </div>
+
+                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addTask()">提交</button></div>
+                </div>
+                <div class="modal-footer">
+                    <h3></h3>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- Footer line -->
+    <div id="footer">
+        <div class="wrapper">Copyright © 2023 沙磁文旅版权所有 </div>
+    </div>
+
+
+    <div class="clear"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            getProject();
+            initData();
+            getTaskList(1);
+        } );
+
+
+        function logOut() {
+            $.ajax({
+                type: "GET",
+                url: "/logout",
+                success: function (res) {
+                    if(res && res.code === 200) {
+                        localStorage.removeItem('token');
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.href="/admin";
+                        });
+
+                    }
+                }
+            })
+        }
+        function index_html() {
+            location.href="/admin";
+        }
+        function userInfo() {
+            location.href="/userInfo";
+        }
+        function login() {
+            location.href="/";
+        }
+        function memberList() {
+            location.href="/memberList";
+        }
+        function costManage() {
+            location.href="/costManage";
+        }
+        function mangeState() {
+            location.href="/mangeState";
+        }
+        function capitalposition() {
+            location.href="/capitalList";
+        }
+
+        function tasklist(project) {
+            localStorage.setItem("project",project);
+            location.href="/taskList";
+        }
+        function toggle(id) {
+            var x = document.getElementById(id);
+            if (x.className === "sub ul_hidden") {
+                x.className = "sub";
+            } else {
+                x.className = "sub ul_hidden";
+            }
+        }
+        function getProject() {
+            var project = localStorage.getItem("project");
+            document.getElementById("title_id").innerHTML=project+"管理";
+            document.getElementById("myStateBtn").value="添加"+project+"信息";
+            document.getElementById("project_name").innerHTML=project+"信息";
+            document.getElementById("window_name").innerHTML=project+"信息";
+
+        }
+        function initData() {
+            var token = localStorage.getItem("token");
+            if(token){
+                $.ajax({
+                    type: "get",
+                    url: "/isLogin",
+                    headers: {
+                        'Authorization': token // 在请求头中添加token
+                    },
+                    success: function (res) {
+                        if(res.code === 200) {
+                            document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
+                            document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
+                            document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
+                            document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
+                        }else {
+                            layui.layer.msg(res.message,{time:1000},function(){
+                                layer.close(); //再执行关闭
+                                location.reload();
+                            });
+                        }
+                    },
+                    error:function (res) {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+                    }
+                })
+            }else {
+                var info ="您还未登录，暂时无法显示当前页面的敏感数据哟！"+"<a href='#' onclick='login()'>立即登录</a>";
+                document.getElementById("messages").innerHTML = info;
+            }
+        }
+
+        function getTaskList(pageNum) {
+
+            $.ajax({
+                type: "get",
+                url: "/getTask",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    pageNum:pageNum,
+                    project:localStorage.getItem("project")
+                }),
+                success: function (res) {
+                    if(res && res.code===200){
+                        var data = res.obj;
+                        var data1 = res.obj.list;
+                        var pageNo = parseInt(res.obj.pageNum);
+                        var pages = parseInt(res.obj.pages);
+                        var total = parseInt(res.obj.total);
+                        // 获取表格元素
+                        var str_info='';
+                        for (var i = 0; i < data1.length; i++) {
+                            str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                            str_info+='<td align="center">'+data1[i].project+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].totalNum)+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].completed)+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].unfinished)+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].overdue)+'</td>';
+                            str_info+='<td align="center">'+dateFormat(1,data1[i].term)+'</td></tr>';
+                        }
+                        $("#myTable").html(str_info);
+
+                        pagenum0=pageNo-1;
+                        pagenum1=pageNo+1;
+                        pagenum2=pageNo+2;
+                        pagenum3=pageNo+3;
+                        var htm="<a  href='#' onclick='getTaskList(1)'>首页 </a>";
+                        if(data.pageNum >1){
+                            htm+="<a  href='#' onclick='getTaskList("+data.prePage+")'>上一页 </a>"
+                        }
+                        if(pagenum0 >=1){
+                            htm+="<a  href='#' onclick='getTaskList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        }
+                        htm+="<button class='current'>"+data.pageNum+"</button>";
+                        if(pagenum1 <= pages){
+                            htm+="<a  href='#' onclick='getTaskList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        }
+                        if(pagenum2 <= pages){
+                            htm+="<a  href='#' onclick='getTaskList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        }
+                        if(pagenum3 <= pages){
+                            htm+="<a  href='#' onclick='getTaskList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        }
+                        htm+="<a  href='#' onclick='getTaskList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='getTaskList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                        $("#pagefoot").html(htm);
+                    }
+
+                }
+
+
+
+            })
+
+        }
+
+
+
+        function dateFormat(type,utcTime) {
+            var date = new Date(utcTime); // 创建Date对象
+            // 获取年、月、日、小时、分钟和秒
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1; // 月份从0开始，所以要加1
+            var day = date.getDate();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+            // 将日期和时间组件组合成字符串
+            var formatteddate = year + '-' + month + '-' + day ;
+            var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+            if(type==1){
+                return formatteddate;
+            }else {
+                return formattedTime;
+            }
+
+        }
+
+        // 获取弹窗
+        var modal = document.getElementById('myStateModal');
+
+        // 打开弹窗的按钮对象
+        var btn = document.getElementById("myStateBtn");
+
+        // 获取 <span> 元素，用于关闭弹窗 that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // 点击按钮打开弹窗
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // 点击 <span> (x), 关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // 在用户点击其他地方时，关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function addTask() {
+            var project = document.getElementById("project").value;
+            var totalNum = document.getElementById("totalNum").value;
+            var completed = document.getElementById("completed").value;
+            var unfinished = document.getElementById("unfinished").value;
+            var overdue = document.getElementById("overdue").value;
+            var term = document.getElementById("term").value;
+            $.ajax({
+                type: "post",
+                url: "/addTask",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    project:project,
+                    totalNum:totalNum,
+                    completed:completed,
+                    unfinished:unfinished,
+                    overdue:overdue,
+                    term:new Date(term)
+                }),
+                success: function (res) {
+                    if(res && res.code===200){
+                        modal.style.display = "none";
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            tasklist(localStorage.getItem("project"));
+                        });
+
+                    }
+                }
+
+
+            })
+
+        }
+
+        function changeSelect2() {
+            var select1 = document.getElementById("name");
+            var select2 = document.getElementById("type");
+            var selectedValue = select1.value;
+            select2.innerHTML = ""; //清空第二个下拉菜单的内容
+            if (selectedValue === "资产经营") {
+                var optionArray = ["租金收入", "欠缴租金", "出租率"];
+            } else if (selectedValue === "经营业务收入") {
+                var optionArray = ["旧日长轨", "星河集市", "金沙艺术中心","灿若湖民宿","活动策划"];
+            } else {
+                var optionArray = [];
+            }
+            for (var i = 0; i < optionArray.length; i++) {
+                var option = document.createElement("option");
+                option.text = optionArray[i];
+                select2.add(option);
+            }
+        }
+
+        //获取所有包含百分比转化
+        function percentage(num) {
+            var per = Number(num)*100;
+            return per +'%';
+
+        }
+        
+
+        function isNull(number) {
+            if(null==number){
+                return "";
+            }else {
+                return number;
+            }
+        }
+
+    </script>
+</body>
+</html>

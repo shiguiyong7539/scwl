@@ -106,6 +106,16 @@ public class LoginController {
     public String taskList(){
         return "tasklist";
     }
+
+
+    /**
+     * 平台展示页面
+     * @return
+     */
+    @RequestMapping("/centerShow")
+    public String centerShow(){
+        return "center_show";
+    }
     /**
      * 登录
      * @return

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scwl.mapper.TaskMapper" >
+  <resultMap id="BaseResultMap" type="com.scwl.pojo.Task" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="total_num" property="totalNum" jdbcType="INTEGER" />
+    <result column="completed" property="completed" jdbcType="INTEGER" />
+    <result column="unfinished" property="unfinished" jdbcType="INTEGER" />
+    <result column="overdue" property="overdue" jdbcType="INTEGER" />
+    <result column="term" property="term" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, project, total_num, completed, unfinished, overdue, term, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.TaskExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.scwl.pojo.TaskExample" >
+    delete from task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.scwl.pojo.Task" useGeneratedKeys="true" keyProperty="id">
+    insert into task (id, project, total_num, 
+      completed, unfinished, overdue, 
+      term, remark)
+    values (#{id,jdbcType=INTEGER}, #{project,jdbcType=VARCHAR}, #{totalNum,jdbcType=INTEGER}, 
+      #{completed,jdbcType=INTEGER}, #{unfinished,jdbcType=INTEGER}, #{overdue,jdbcType=INTEGER}, 
+      #{term,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.scwl.pojo.Task" >
+    insert into task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="totalNum != null" >
+        total_num,
+      </if>
+      <if test="completed != null" >
+        completed,
+      </if>
+      <if test="unfinished != null" >
+        unfinished,
+      </if>
+      <if test="overdue != null" >
+        overdue,
+      </if>
+      <if test="term != null" >
+        term,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="completed != null" >
+        #{completed,jdbcType=INTEGER},
+      </if>
+      <if test="unfinished != null" >
+        #{unfinished,jdbcType=INTEGER},
+      </if>
+      <if test="overdue != null" >
+        #{overdue,jdbcType=INTEGER},
+      </if>
+      <if test="term != null" >
+        #{term,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.scwl.pojo.TaskExample" resultType="java.lang.Integer" >
+    select count(*) from task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update task
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.project != null" >
+        project = #{record.project,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalNum != null" >
+        total_num = #{record.totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.completed != null" >
+        completed = #{record.completed,jdbcType=INTEGER},
+      </if>
+      <if test="record.unfinished != null" >
+        unfinished = #{record.unfinished,jdbcType=INTEGER},
+      </if>
+      <if test="record.overdue != null" >
+        overdue = #{record.overdue,jdbcType=INTEGER},
+      </if>
+      <if test="record.term != null" >
+        term = #{record.term,jdbcType=DATE},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update task
+    set id = #{record.id,jdbcType=INTEGER},
+      project = #{record.project,jdbcType=VARCHAR},
+      total_num = #{record.totalNum,jdbcType=INTEGER},
+      completed = #{record.completed,jdbcType=INTEGER},
+      unfinished = #{record.unfinished,jdbcType=INTEGER},
+      overdue = #{record.overdue,jdbcType=INTEGER},
+      term = #{record.term,jdbcType=DATE},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.Task" >
+    update task
+    <set >
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        total_num = #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="completed != null" >
+        completed = #{completed,jdbcType=INTEGER},
+      </if>
+      <if test="unfinished != null" >
+        unfinished = #{unfinished,jdbcType=INTEGER},
+      </if>
+      <if test="overdue != null" >
+        overdue = #{overdue,jdbcType=INTEGER},
+      </if>
+      <if test="term != null" >
+        term = #{term,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.Task" >
+    update task
+    set project = #{project,jdbcType=VARCHAR},
+      total_num = #{totalNum,jdbcType=INTEGER},
+      completed = #{completed,jdbcType=INTEGER},
+      unfinished = #{unfinished,jdbcType=INTEGER},
+      overdue = #{overdue,jdbcType=INTEGER},
+      term = #{term,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getTaskByMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+      select
+        project,sum(total_num) as total_num,sum(completed) as completed,sum(unfinished) as unfinished,sum(overdue) as overdue,
+        DATE_FORMAT(term,#{period}) remark
+    from task
+  where DATE_FORMAT(term,#{period}) = #{condition}
+     GROUP BY project,DATE_FORMAT(term,#{period})
+  </select>
+
+  <select id="getTaskByYear" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+        project,sum(total_num) as total_num,sum(completed) as completed,sum(unfinished) as unfinished,sum(overdue) as overdue,
+        YEAR(term) as remark
+    from task
+  where YEAR(term) = #{condition}
+     GROUP BY project,YEAR(term)
+  </select>
+</mapper>

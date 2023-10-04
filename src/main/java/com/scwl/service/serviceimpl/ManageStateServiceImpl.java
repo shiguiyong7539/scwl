@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.scwl.mapper.ManageStateMapper;
 import com.scwl.pojo.ManageState;
 import com.scwl.pojo.ResBean;
+import com.scwl.service.LogService;
 import com.scwl.service.ManageStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ManageStateServiceImpl implements ManageStateService {
     @Autowired
     private ManageStateMapper manageStateMapper;
+    @Autowired
+    private LogService logService;
     @Override
     public ResBean getAllManageState(int pageNum, int pageSize, ManageState manageState) {
         PageHelper.startPage(pageNum,pageSize);
@@ -32,6 +35,7 @@ public class ManageStateServiceImpl implements ManageStateService {
                 manageState.setLetRate(manageState.getLetRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
             }
             manageStateMapper.insert(manageState);
+            logService.addLog("INSERT","manage_state",manageState.getId(),"新增id为"+manageState.getId()+"的经营状况信息");
             return  ResBean.success("添加成功");
         }catch (Exception e){
             return  ResBean.error("添加失败");

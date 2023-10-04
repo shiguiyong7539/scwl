@@ -1,8 +1,10 @@
 package com.scwl.service.serviceimpl;
 
 import com.scwl.mapper.RoleMapper;
+
 import com.scwl.mapper.UserMapper;
 import com.scwl.pojo.*;
+import com.scwl.service.LogService;
 import com.scwl.service.UserService;
 import com.scwl.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private LogService logService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -75,8 +79,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResBean insertBatchUser(List<User> userList) {
-         userMapper.insertBatchUser(userList);
-        return new ResBean(200,"添加成功",null);
+        try {
+            userMapper.insertBatchUser(userList);
+            //logService.addLog("DELETE","user",user.getId(),"修改id为"+user.getId()+"的用户信息");
+            return  ResBean.success("添加成功",null);
+        }catch (Exception e){
+            return  ResBean.error("添加失败",null);
+        }
+
     }
 
     @Override
@@ -95,17 +105,20 @@ public class UserServiceImpl implements UserService {
         }
         int i = userMapper.updateByPrimaryKey(oldUser);
         if(i==1){
-            return new ResBean(200,"修改成功",null);
+            logService.addLog("DELETE","user",user.getId(),"修改id为"+user.getId()+"的用户信息");
+            return  ResBean.success("修改成功",null);
         }
-         return new ResBean(400,"修改失败，请联系管理员!",null);
+         return  ResBean.error("修改失败，请联系管理员!",null);
     }
 
     @Override
     public ResBean deleteUser(User user) {
         int i = userMapper.deleteByPrimaryKey(user.getId());
         if(i==1){
-            return new ResBean(200,"删除成功",null);
+            logService.addLog("DELETE","user",user.getId(),"删除id为"+user.getId()+"的用户");
+            return  ResBean.success("删除成功",null);
         }
-        return new ResBean(400,"删除失败，请联系管理员!",null);
+        return  ResBean.error("删除失败，请联系管理员!",null);
     }
+
 }
