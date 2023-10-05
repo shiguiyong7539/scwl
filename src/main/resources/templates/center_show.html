@@ -1,228 +1,166 @@
-﻿<!doctype html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
-<title></title>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/echarts.min.js"></script> 
-<script type="text/javascript" src="js/js.js"></script> 
-<script type="text/javascript" src="js/jquery.limarquee.js"></script> 
-<script type="text/javascript" src="js/jquery.cxselect.min.js"></script> 
-	
-<link rel="stylesheet" href="css/comon0.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <title>沙磁文旅</title>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/js.js"></script>
+    <script type="text/javascript" src="js/jquery.limarquee.js"></script>
+    <script type="text/javascript" src="js/jquery.cxselect.min.js"></script>
+    <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="css/comon0.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<div style="background:#000d4a url(images/bg.jpg) center top;">
-	<div class="loading">
-  <div class="loadbox"> <img src="picture/loading.gif"> 页面加载中... </div>
-</div>
-	<div class="back"></div>
-<div class="head">
-	 <div class="weather"><span id="showTime"></span></div>
-  <h1><a href="https://gitee.com/iGaoWei/big-data-view" style="color: white">沙磁文旅大数据可视化展示平台</a></h1>
+<div style="background:#fff center top;">
+    <div class="loading">
+        <div class="loadbox"> <img src="picture/loading.gif"> 页面加载中... </div>
+    </div>
+    <div class="back"></div>
+    <div class="head">
+        <div class="weather"><span id="showTime"></span></div>
+        <h1><a href="https://gitee.com/iGaoWei/big-data-view" style="color: white">沙磁文旅大数据可视化展示平台</a></h1>
 
-</div>
-	<script>
-var t = null;
-    t = setTimeout(time,1000);//開始运行
-    function time()
-    {
-       clearTimeout(t);//清除定时器
-       dt = new Date();
-		var y=dt.getFullYear();
-		var mt=dt.getMonth()+1;
-		var day=dt.getDate();
-       var h=dt.getHours();//获取时
-       var m=dt.getMinutes();//获取分
-       var s=dt.getSeconds();//获取秒
-       document.getElementById("showTime").innerHTML = y+"年"+mt+"月"+day+"日"+h+"时"+m+"分"+s+"秒";
-       t = setTimeout(time,1000); //设定定时器，循环运行     
-    } 
+    </div>
+    <div class="container">
+    <div class="tag1">任务管理<button onclick="getTask('月',currentDate(1))">按月</button>
+        <button onclick="getTask('年',currentDate(2))">按年</button>
+        <div id="myChart" style=" height: 400px;"></div>
+    </div>
 
-</script>
-<div class="mainbox">
-  <ul class="clearfix">
-    <li>
-      <div class="boxall" style="height:400px;">
-        <div class="alltitle">标题样式</div>
-         <div class="navboxall" id="echart5"></div>
-      </div>
-      <div class="boxall" style="height:260px;">
-        <div class="alltitle">标题样式</div>
-       <div class="navboxall" >
-		  <div class="wraptit">
-		   <span>单号</span><span>金额</span><span>品名</span><span>时间</span>
-		   </div>
-		  <div class="wrap">
-          <ul>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-<li><p><span>100021415</span><span>199</span><span>手机</span><span>18小时</span></p></li>
-           
-          </ul>
+    <div class="tag1">任务管理<button onclick="getTask('月',currentDate(1))">按月</button>
+        <button onclick="getTask('年',currentDate(2))">按年</button>
+        <div id="myChart2" style="height: 400px;"></div>
+    </div>
+
+    <div class="tag1">任务管理<button onclick="getTask('月',currentDate(1))">按月</button>
+         <button onclick="getTask('年',currentDate(2))">按年</button>
+         <div id="myChart3" style=" height: 400px;"></div>
+     </div>
+
+        <div class="tag1">任务管理<button onclick="getTask('月',currentDate(1))">按月</button>
+            <button onclick="getTask('年',currentDate(2))">按年</button>
+            <div id="myChart4" style=" height: 400px;"></div>
         </div>
-		  
-		  </div>
-      </div>
-      <div class="boxall" style="height:260px;">
-        <div class="alltitle">标题样式</div>
-        
-       <div class="navboxall" id="echart1"></div>
-      </div>
-    </li>
-    <li>
-      
-    <div class="boxall" style="height:230px">
-		<div class="clearfix navboxall" style="height: 100%">
-		<div class="pulll_left num">
-			<div class="numbt">总体情况<span>(单位：元)</span></div>
-			<div class="numtxt">19382721 </div>
-			</div>
-		<div class="pulll_right zhibiao">
-			<div class="zb1"><span>标题样式</span><div id="zb1"></div></div>
-			<div class="zb2"><span>标题样式</span><div id="zb2"></div></div>
-			<div class="zb3"><span>标题样式</span><div id="zb3"></div></div>
-		</div>
-		</div>
-      </div>
-		   <div class="boxall" style="height:350px">
-        <div class="alltitle">标题样式</div>
-			   <div class="navboxall" id="echart4"></div>
-			   
-      </div>
-		   <div class="boxall" style="height:340px">
-        <div class="alltitle">标题样式</div>
-			   <div class="navboxall" id="echart3"></div>
-      </div>
-    </li>
-    <li>
-      <div class="boxall" style="height:300px">
-        <div class="alltitle">标题样式</div>
-	<div class="navboxall">
-		  <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tbody>
-    <tr>
-      <th scope="col">排名</th>
-      <th scope="col">公司</th>
-      <th scope="col">数量</th>
-      <th scope="col">增长率</th>
-    </tr>
-    <tr>
-		<td><span>1</span></td>
-      <td>腾讯科技</td>
-      <td>114万<br></td>
-      <td>100%<br></td>
-    </tr>
-    <tr>
-		<td><span>2</span></td>
-      <td>百度公司</td>
-      <td>923823万</td>
-      <td>21%</td>
-    </tr>
-    
-    <tr>
-		<td><span>3</span></td>
-      <td>新浪</td>
-      <td>1240253万</td>
-      <td>12%</td>
-    </tr>
-    <tr>
-		<td><span>4</span></td>
-      <td>网易</td>
-      <td>1.2亿</td>
-      <td>39%</td>
-    </tr>
-	  <tr>
-		  <td><span>5</span></td>
-      <td>雅虎</td>
-      <td>13423万</td>
-      <td>9%</td>
-    </tr>
-	
-  </tbody>
-</table>
-		  </div>
-      </div>
-		
-      <div class="boxall" style="height: 300px">
-        <div class="alltitle">标题样式</div>
-		  <div class="navboxall">
-		  <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tbody>
-    <tr>
-       <th scope="col">排名</th>
-      <th scope="col">公司</th>
-      <th scope="col">数量</th>
-      <th scope="col">增长率</th>
-    </tr>
-    <tr>
-		<td><span>1</span></td>
-      <td>腾讯科技</td>
-      <td>114万<br></td>
-      <td>100%<br></td>
-    </tr>
-    <tr>
-		<td><span>2</span></td>
-      <td>百度公司</td>
-      <td>923823万</td>
-      <td>21%</td>
-    </tr>
-    
-    <tr>
-		<td><span>3</span></td>
-      <td>新浪</td>
-      <td>1240253万</td>
-      <td>12%</td>
-    </tr>
-    <tr>
-		<td><span>4</span></td>
-      <td>网易</td>
-      <td>1.2亿</td>
-      <td>39%</td>
-    </tr>
-	  <tr>
-		  <td><span>5</span></td>
-      <td>雅虎</td>
-      <td>13423万</td>
-      <td>9%</td>
-    </tr>
 
-  </tbody>
-</table>
-		  </div>
-		  
-      </div>
-		
-		 <div class="boxall" style="height:320px">
-        <div class="alltitle">标题样式</div>
-			 <div class="navboxall" id="echart2"></div>
-      </div>
-		
-		
-    </li>
-  </ul>
-
+    </div>
 </div>
-	</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function () {
+        getTask("月",currentDate(1));
+    })
 
-	<script>
 
-$(function(){
-	$('.wrap,.adduser').liMarquee({
-		direction: 'up',//身上滚动 
-		runshort: false,//内容不足时不滚动
-		scrollamount: 20//速度
-	});
-});
+    function getTask(period,condition) {
+        // var myChart = echarts.init(document.getElementById('echart4'));
+        var myChart = echarts.init(document.getElementById('myChart'));
+        var myChart2 = echarts.init(document.getElementById('myChart2'));
+        var myChart3 = echarts.init(document.getElementById('myChart3'));
+        var myChart4 = echarts.init(document.getElementById('myChart4'));
+        $.ajax({
+            type: "get",
+            url: "/getTaskByCenter",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:({
+                period:period,
+                condition:condition
+            }),
+            success: function (res) {
+                if(res && res.code===200){
+                    var xAxisData =[];
+                    var data1 =[];
+                    var data2 =[];
+                    var data3 =[];
+                    var data4 =[];
+                    for (let i = 0; i < res.obj.length; i++) {
+                        xAxisData.push(res.obj[i].project);
+                        data1.push(res.obj[i].totalNum)
+                        data2.push(res.obj[i].completed)
+                        data3.push(res.obj[i].unfinished)
+                        data4.push(res.obj[i].overdue)
+                    }
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title: {
+                            text: ''
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['任务数','完成数','未完成数','逾期数']
+                        },
+                        xAxis: {
+                            data:xAxisData
+                        },
+                        yAxis: {
+                            type: 'value',
+                            autoScale: true // 开启自动缩放功能
+                        },
+                        series: [{
+                            name: '任务数',
+                            type: 'bar',
+                            data: data1
+                        },
+                            {
+                                name: '完成数',
+                                type: 'bar',
+                                data: data2
+                            },
+                            {
+                                name: '未完成数',
+                                type: 'bar',
+                                data: data3
+                            },
+                            {
+                                name: '逾期数',
+                                type: 'bar',
+                                data: data4
+                            },
+                        ]
+                    };
 
-</script> 
-	
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                    myChart2.setOption(option);
+                    myChart3.setOption(option);
+                    myChart4.setOption(option);
+                }
+
+            }
+
+
+
+        })
+
+
+    }
+
+    //获取年月日
+
+    function currentDate(type) {
+        var date = new Date(); // 创建Date对象
+        // 获取年、月、日、小时、分钟和秒
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1; // 月份从0开始，所以要加1
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        // 将日期和时间组件组合成字符串
+        var formatteddate = year + '-' + month;
+        var formattedTime = year + '-' + month + '-' + day;
+        if(type==1){
+            return formatteddate;
+        }else {
+            return year;
+        }
+
+    }
+</script>
 </body>
 </html>

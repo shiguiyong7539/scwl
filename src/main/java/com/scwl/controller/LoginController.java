@@ -1,6 +1,5 @@
 package com.scwl.controller;
 
-import com.aliyuncs.http.HttpRequest;
 import com.scwl.pojo.ResBean;
 import com.scwl.pojo.User;
 import com.scwl.service.UserService;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 @Controller

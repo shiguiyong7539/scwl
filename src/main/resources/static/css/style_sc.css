@@ -104,24 +104,41 @@ select{
 .income{
     display: none;
 }
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    overflow: auto;
+}
+.tag1 {
+    float: left;
+    width: calc(100% /3 - 10px);
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    position: relative;
+    padding-left: 12px;
+    margin-bottom: 10px;
+}
 
-/*#myChart .tooltip {*/
-/*    position: absolute;*/
-/*    background-color: rgba(50, 50, 50, 0.8); !* 设置提示框的背景色 *!*/
-/*    padding: 5px;*/
-/*    border-radius: 5px;*/
-/*    color: #fff; !* 设置提示框文字的颜色 *!*/
-/*    font-size: 14px;*/
-/*    white-space: nowrap;*/
-/*    z-index: 10; !* 设置提示框的层级，让其显示在其他元素之上 *!*/
-/*}*/
-/*#myChart .x-axis, #myChart .y-axis {*/
-/*    position: absolute;*/
-/*    background-color: rgba(50, 50, 50, 0.8); !* 设置轴线的背景色 *!*/
-/*    padding: 5px;*/
-/*    border-radius: 5px;*/
-/*    color: #fff; !* 设置轴线文字的颜色 *!*/
-/*    font-size: 14px;*/
-/*    white-space: nowrap;*/
-/*    z-index: 10; !* 设置轴线的层级，让其显示在其他元素之上 *!*/
-/*}*/
+
+@media (max-width: 767px) {
+    .head {
+        height:105px!important;
+        background: url(../images/head_bg.png) no-repeat center center!important;
+        position: relative!important
+    }
+    .head h1 {
+        font-size: 25px!important;
+    }
+    .tag1{
+        flex: 1;
+        width: 100%!important;
+        font-size: 15px;
+    }
+    .container {
+        flex-direction: column;
+    }
+}
