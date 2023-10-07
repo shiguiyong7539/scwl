@@ -1,125 +1,150 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>欢迎来到沙磁文旅管理平台</title>
-</head>
+<meta charset="UTF-8">
+<title>登录</title>
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<link href="css/style_login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/layui.js"></script>
 <script type="text/javascript" src="css/layui.css"></script>
+</head>
 <body>
+<!--
 
-<div class="login-box-body" id="passwordView">
+* 17素材vip建站专区模块代码
+* 详尽信息请看官网：http://www.17sucai.com/pins/vip
+*
+* Copyright , 温州易站网络科技有限公司版权所有
+*
+* 请尊重原创，未经允许请勿转载。
+* 在保留版权的前提下可应用于个人或商业用途
 
-        <div class="form-group has-feedback">
-            <span class="glyphicon glyphicon-user form-control-feedback" title="登录账号"></span>
-            <input type="text" id="username" name="username" class="form-control required"
-                   data-msg-required="请填写登录账号." placeholder=""/>
-        </div>
-        <div class="form-group has-feedback">
-                <span class="glyphicon glyphicon-lock form-control-feedback"
-                      title="登录密码，鼠标按下显示密码"
-                      onmousedown="$('#password').attr('type','text')"
-                      onmouseup="$('#password').attr('type','password')">
-                </span>
-            <input type="password" id="password" name="password" class="form-control required"
-                   data-msg-required="请填写登录密码." placeholder="登录密码" autocomplete="off"/>
-        </div>
-        <div class="form-group">
-            <div class="mt5 icheck">
-                <label title="公共场所慎用,下次不需要再填写帐号">
-                    <input type="checkbox" name="rememberMe"   class="form-control"
-                                                        data-style="minimal-grey"><span class="Remember">记住账号</span></label>
-                &nbsp;
-                <label title="公共场所慎用,下次不需要再填写帐号和密码">
-                        <button type="text" onclick="login()" value="" class="form-control"
-                                data-style="minimal-grey">立即登录</button></label>
+-->
 
-            </div>
-        </div>
+<div class="aui-register-popup">
+	<div class="aui-register-box">
+		<div class="aui-register-link">
+<!--			<a href="javascript:;" class="fl">返回首页</a>-->
+<!--			<a href="javascript:;" class="fr">已有账号？去登录</a>-->
+		</div>
+		<div class="aui-register-logo">
+<!--			<img src="images/logo.png" alt="">-->
+		</div>
+		<div class="aui-register-form" id="verifyCheck">
+			<div class="register-wrap" id="register-wrap">
+				<div class="register" id="register">
+					<div class="register-top" id="reg-top">
+<!--						<h2 class="normal" id="normal">普通登录</h2>-->
+					</div>
+					<!--账户密码登录-->
+					<div class="register-con" id="rc">
+						<div class="aui-register-form-item">
+							<input type="text" name="phone" placeholder="手机号码" class="txt01 f-r3 required" keycodes="tel" tabindex="1" data-valid="isNonEmpty||isPhone" data-error="<i class='icon-tips'></i>请输入手机号||<i class='icon-tips'></i>手机号码格式不正确" maxlength="11" id="phone">
+							<label class="focus valid"><div class="msg" style="display:none"><i class='icon-tips'></i>您还未输入手机号</div></label>
+						</div>
+						<div class="aui-register-form-item">
+<!--							<input type="password" name="password" placeholder="密码" id="password" maxlength="20" class="txt04 f-r3 required" tabindex="4" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-20||level:2" data-error="<i class='icon-tips'></i>密码太短，最少6位||<i class='icon-tips'></i>密码长度6-20位||<i class='icon-tips'></i>密码太简单，有被盗风险，建议字母+数字的组合">-->
+							<input type="text" placeholder="密码" maxlength="10" id="password" class="txt02 f-r3 f-fl required" tabindex="2" data-valid="isNonEmpty||isInt" data-error="<i class='icon-tips'></i>请填写正确的密码||<i class='icon-tips'>">
+							<label class="focus valid"></label>
+
+						</div>
+						<div class="aui-register-form-item">
+							<p class="aui-for-pwd">
+<!--								<a class="" href="#">忘记密码</a>-->
+							</p>
+							<input id="aui-btn-reg" class="aui-btn-reg" placeholder=""  readonly="readonly" value="登录" >
+						</div>
+
+					</div>
+
+					<!--手机动态码登录-->
+<!--					<div class="login-con" id="lc">-->
+<!--						<div class="aui-register-form-item">-->
+<!--							<input type="text" name="phone" placeholder="手机号码" class="txt01 f-r3 required" keycodes="tel" tabindex="1" data-valid="isNonEmpty||isPhone" data-error="<i class='icon-tips'></i>请输入手机号||<i class='icon-tips'></i>手机号码格式不正确" maxlength="11" id="phone">-->
+<!--							<label class="focus valid"><div class="msg" style="display:none"><i class='icon-tips'></i>您还未输入手机号</div></label>-->
+<!--							<span class="aui-get-code btn btn-gray f-r3 f-ml5 f-size13" id="time_box" disabled style="display:none;"></span>-->
+<!--							<span class="aui-get-code btn btn-gray f-r3 f-ml5 f-size13" id="verifyYz" >获取动态码</span>-->
+<!--						</div>-->
+<!--						<div class="aui-register-form-item">-->
+<!--							<input type="text" placeholder="动态码" maxlength="6" id="verifyNo" class="txt02 f-r3 f-fl required" tabindex="2" data-valid="isNonEmpty||isInt" data-error="<i class='icon-tips'></i>请填写正确的手机动态码||<i class='icon-tips'></i>请填写6位手机动态码">-->
+<!--							<label class="focus valid"></label>-->
+<!--						</div>-->
+<!--						<div class="aui-register-form-item">-->
+<!--							<input id="aui-btn-reg1" class="aui-btn-reg" placeholder=""  readonly="readonly" value="登录" >-->
+<!--						</div>-->
+<!--					</div>-->
 
 
-    </div>
+					<!-- 扫码登录 -->
+					<div class="saoma" id="sm">
+						<div class="screen-tu" id="screen">
+							<span class="aui-tag-size">密码登录</span>
+						</div>
+						<div class="aui-text-item">
+							<h1>1秒即登录，方便又安全</h1>
+						</div>
+						<div class="qr-code">
+							<span class="tips_img"></span>
+							<img src="images/code.png" alt="">
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="aui-register-bottom">
+<!--			<a href="#">联系客服</a>-->
+<!--			<a href="#">帮助中心</a>-->
+			<div class="clear"></div>
+		</div>
+	</div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(function () {
-
-        var system = {
-            win: false,
-            mac: false,
-            xll: false,
-            ipad: false
-        };
-
-        //检测平台
-        var p = navigator.platform;
-        system.win = p.indexOf("Win") == 0;
-        system.mac = p.indexOf("Mac") == 0;
-        system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
-        system.ipad = (navigator.userAgent.match(/iPad/i) != null) ? true : false;
-        if (system.win || system.mac || system.xll || system.ipad) {
-            $("#footer1").css("display", "block");
-            $(".denglufangshi2").css("display", "block");
-        } else {
-            $("#footer2").css("display", "block");
-            $(".denglufangshi").css("display", "block");
-            //some code;
-        }
-
-    });
-    //检测用户输入数据
-    function login() {
-        var username = $.trim($('#username').val());
-        var password = $.trim($('#password').val());
-        if (null == username || 0 == username.length) {
-            $("#username").val("").focus();
-            alert("用户名不能为空！")
-            return;
-        }
-
-        if (null == password || 0 == password.length) {
-            $("#password").val("").focus();
-            alert("验证码不能为空！")
-            return;
-        }
-            $("#username").focus();
-            $.ajax({
-                type: "post",
-                url: "/login",
-                datatype:"json",
-                data: ({
-                    username: username,
-                    password: password
-                }),
-                success: function (res) {
-                            if(res && res.code === 200) {
-                                console.log(res.obj);
-                                localStorage.setItem('token', 'Bearer '+res.obj.token);
-                              //  location.href="/admin?Authorization="+'Bearer '+res.obj.token;
-                                location.href="/admin";
-                                }else {
-                                alert(res.message)
-                            }
-                            },
-                error:function (res) {
-
-                }
-                });
 
 
-    }
+<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#aui-btn-reg").click(function() {
+		if (!verifyCheck._click()) return;
+		var username = $.trim($('#phone').val());
+		var password = $.trim($('#password').val());
+		$.ajax({
+			type: "post",
+			url: "/login",
+			datatype:"json",
+			data: ({
+				username: username,
+				password: password
+			}),
+			success: function (res) {
+				if(res && res.code === 200) {
+					console.log(res.obj);
+					localStorage.setItem('token', 'Bearer '+res.obj.token);
+					//  location.href="/admin?Authorization="+'Bearer '+res.obj.token;
+					location.href="/admin";
+				}else {
+					layui.layer.msg(res.message,{time:3000},function(){
+						layer.close(); //再执行关闭
+						location.reload();
+					});
+				}
+			},
+			error:function (res) {
 
-    function showMessage() {
-        var messageElement = document.getElementById("message");
+			}
+		});
 
-        if (sessionStorage.getItem("message") !== null) {
-            messageElement.textContent = sessionStorage.getItem("message");
-            alert(2)
-        } else {
-            messageElement.textContent = ""; // 没有登录时显示空文本
-        }
-    }
+	});
+});
 </script>
+
 
 </body>
 </html>

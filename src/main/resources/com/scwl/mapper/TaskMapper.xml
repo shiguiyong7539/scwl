@@ -274,4 +274,10 @@
   where YEAR(term) = #{condition}
      GROUP BY project,YEAR(term)
   </select>
+  <select id="getTaskByCenterShow" resultMap="BaseResultMap">
+    select
+        project,sum(total_num) as total_num,sum(completed) as completed,sum(unfinished) as unfinished,sum(overdue) as overdue
+     from task
+     GROUP BY project
+  </select>
 </mapper>

@@ -14,6 +14,8 @@ public interface TaskService {
 
     ResBean getTaskByCenter(String period, String condition);
 
+    ResBean getTaskByCenterShow();
+
 
 
 

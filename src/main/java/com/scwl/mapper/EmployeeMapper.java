@@ -5,6 +5,7 @@ import com.scwl.pojo.EmployeeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmployeeMapper {
     int countByExample(EmployeeExample example);
@@ -28,4 +29,12 @@ public interface EmployeeMapper {
     int updateByPrimaryKeySelective(Employee record);
 
     int updateByPrimaryKey(Employee record);
+
+    List<Map> getByAgeGroup();
+
+    List<Map> getByEduGroup();
+    //按职称分组
+    List<Map> getByRankGroup();
+    //按用工方式分组
+    List<Map>  getByModeGroup();
 }

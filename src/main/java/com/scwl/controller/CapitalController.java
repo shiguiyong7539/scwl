@@ -43,4 +43,28 @@ public class CapitalController {
         return capitalService.addCapital(capital);
     }
 
+    /**
+     * 资金数据展览中心
+     * @param request
+     * @param period
+     * @param condition
+     * @return
+     */
+    @RequestMapping("/getCapitalByCenter")
+    public Object getCapitalByCenter(HttpServletRequest request, String period,String condition){
+        return  capitalService.getCapitalByCenter(period,condition);
+    }
+
+    /**
+     * 资金数据展览中心
+     * @param request
+     * @param period
+     * @param condition
+     * @return
+     */
+    @RequestMapping("/getCapitalByCenterShow")
+    public Object getCapitalByCenterShow(HttpServletRequest request){
+        return  capitalService.getCapitalByCenterShow();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.scwl.mapper;
 
+
 import com.scwl.pojo.ManageState;
 import com.scwl.pojo.ManageStateExample;
 import org.apache.ibatis.annotations.Param;
@@ -30,4 +31,12 @@ public interface ManageStateMapper {
     int updateByPrimaryKey(ManageState record);
 
     List<ManageState>  getAllManageState(@Param("manageState") ManageState manageState);
+
+    List<ManageState> getTaskByMonth(String period, String condition);
+
+    List<ManageState> getTaskByYear(String condition);
+
+    List<ManageState> getManageStateByAsset();
+    List<ManageState> getAllName();
+    List<ManageState> getManageStateByManage(String name);
 }

@@ -24943,7 +24943,7 @@ function loginxxl() {
 var time1 = 60;
 function sendSms(type) {
     var phone = '';
-    if (type=="login"){phone=$("#username").val()} else{phone=$("#phone").val()}
+    if (type=="login1.html"){phone=$("#username").val()} else{phone=$("#phone").val()}
     if (''==phone) {
         messageShow("请输入手机号");
         return false;

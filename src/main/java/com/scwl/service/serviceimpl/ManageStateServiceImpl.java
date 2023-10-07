@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.scwl.mapper.ManageStateMapper;
 import com.scwl.pojo.ManageState;
+import com.scwl.pojo.ManageStateExample;
 import com.scwl.pojo.ResBean;
 import com.scwl.service.LogService;
 import com.scwl.service.ManageStateService;
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ManageStateServiceImpl implements ManageStateService {
@@ -40,5 +44,33 @@ public class ManageStateServiceImpl implements ManageStateService {
         }catch (Exception e){
             return  ResBean.error("添加失败");
         }
+    }
+
+    @Override
+    public ResBean getManageStateByCenter() {
+//        if(period.equals("年")){
+//            List<ManageState> manageStates = manageStateMapper.getTaskByYear(condition);
+//            return ResBean.success("success",manageStates);
+//        }else {
+//            period ="%Y-%m";
+//            List<ManageState> manageStates =   manageStateMapper.getTaskByMonth(period,condition.substring(0,7));
+            List<Map<String,Object>> list = new ArrayList<>();
+            List<ManageState>    manageStates = manageStateMapper.getManageStateByAsset();
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("manage",manageStates);
+            list.add(map);
+
+            List<ManageState> allName = manageStateMapper.getAllName();
+            for (ManageState manageState : allName) {
+                List<ManageState> manageStateList = manageStateMapper.getManageStateByManage(manageState.getName());
+                HashMap<String, Object> map1 = new HashMap<>();
+                map1.put("manage",manageStateList);
+                list.add(map1);
+        }
+        return ResBean.success("success",list);
+
+
+
+
     }
 }

@@ -32,4 +32,7 @@ public interface TaskMapper {
     List<Task> getTaskByMonth(String period, String condition);
 
     List<Task> getTaskByYear(String condition);
+
+    List<Task> getTaskByCenterShow();
+
 }

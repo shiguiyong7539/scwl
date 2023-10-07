@@ -10,4 +10,5 @@ public interface ManageStateService {
 
  ResBean getAllManageState(int pageNum, int pageSize, ManageState manageState);
  ResBean addState(ManageState manageState);
+ ResBean getManageStateByCenter();
 }

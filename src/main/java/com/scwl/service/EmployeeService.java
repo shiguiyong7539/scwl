@@ -10,4 +10,5 @@ public interface EmployeeService {
 
     ResBean getEmpList(Integer pageNum, Integer pageSize);
     ResBean addEmployee(Employee employee);
+    ResBean getByCenter();
 }

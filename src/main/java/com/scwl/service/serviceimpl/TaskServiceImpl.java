@@ -54,11 +54,17 @@ public class TaskServiceImpl implements TaskService {
             List<Task> tasks = taskMapper.getTaskByYear(condition);
             return ResBean.success("success",tasks);
         }else {
-            period ="%Y%m";
-            List<Task> tasks =   taskMapper.getTaskByMonth(period,condition.replace("-","").substring(0,6));
+            period ="%Y-%m";
+            List<Task> tasks =   taskMapper.getTaskByMonth(period,condition.substring(0,7));
             return ResBean.success("success",tasks);
         }
 
 
+    }
+
+    @Override
+    public ResBean getTaskByCenterShow() {
+        List<Task> tasks =  taskMapper.getTaskByCenterShow();
+        return ResBean.success("success",tasks);
     }
 }

@@ -104,6 +104,12 @@ select{
 .income{
     display: none;
 }
+.rent_show{
+    display: none;
+}
+.project_show{
+    display: none;
+}
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -122,7 +128,12 @@ select{
     padding-left: 12px;
     margin-bottom: 10px;
 }
-
+.box_show1{
+    display: block;
+}
+.box_show2{
+    display: none;
+}
 
 @media (max-width: 767px) {
     .head {
@@ -140,5 +151,8 @@ select{
     }
     .container {
         flex-direction: column;
+    }
+    .weather{
+        top:40px!important;
     }
 }

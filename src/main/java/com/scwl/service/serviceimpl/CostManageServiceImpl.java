@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.scwl.mapper.CostManageMapper;
 import com.scwl.pojo.CostManage;
 import com.scwl.pojo.ResBean;
+import com.scwl.pojo.Task;
 import com.scwl.service.CostManageService;
 import com.scwl.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,18 @@ public class CostManageServiceImpl implements CostManageService {
             return  ResBean.success("添加成功");
         }catch (Exception e){
             return  ResBean.error("添加失败");
+        }
+    }
+
+    @Override
+    public ResBean getCostManageByCenter(String period, String condition) {
+        if(period.equals("年")){
+            List<CostManage> costManages = costManageMapper.getCostByYear(condition);
+            return ResBean.success("success",costManages);
+        }else {
+            period ="%Y-%m";
+            List<CostManage> costManages =   costManageMapper.getCostByMonth(period,condition.substring(0,7));
+            return ResBean.success("success",costManages);
         }
     }
 }

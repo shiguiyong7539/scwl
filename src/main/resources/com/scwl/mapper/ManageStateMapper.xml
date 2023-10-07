@@ -281,4 +281,45 @@
       </if>
     </where>
   </select>
+
+  <select id="getTaskByMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+      select
+        sum(pay_out_wage) as pay_out_wage,sum(rent) as rent,sum(hydropower_office) as hydropower_office,sum(labor_union) as labor_union,
+        DATE_FORMAT(periodic_time,#{period}) remark
+    from manage_state
+  where DATE_FORMAT(periodic_time,#{period}) = #{condition}
+     GROUP BY DATE_FORMAT(periodic_time,#{period})
+  </select>
+
+  <select id="getTaskByYear" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+         sum(rent_income) as rent_income,sum(rent_arrears) as rent_arrears,sum(let_rate) as let_rate,
+        YEAR(periodic_time) as remark
+    from manage_state
+   where YEAR(periodic_time) = #{condition}
+     GROUP BY YEAR(periodic_time)
+  </select>
+
+  <select id="getManageStateByAsset" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+        type,  sum(rent_income) as rent_income,sum(rent_arrears) as rent_arrears,sum(let_rate) as let_rate,
+        DATE_FORMAT(periodic_time,'%Y-%m') as remark
+    from manage_state
+   where  type ='资产经营' and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(DATE_FORMAT(NOW(), '%Y-01-01'), INTERVAL 12 MONTH)
+     GROUP BY DATE_FORMAT(periodic_time,'%Y-%m')
+     ORDER BY DATE_FORMAT(periodic_time,'%Y-%m')
+  </select>
+  <select id="getAllName" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select  name  from manage_state where  type ='经营业务收入' GROUP BY name
+  </select>
+  <select id="getManageStateByManage" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+        type,name,sum(rent_income) as rent_income,
+        DATE_FORMAT(periodic_time,'%Y-%m') as remark
+    from manage_state
+   where  type ='经营业务收入'and name= #{name} and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(DATE_FORMAT(NOW(), '%Y-01-01'), INTERVAL 12 MONTH)
+     GROUP BY DATE_FORMAT(periodic_time,'%Y-%m')
+     ORDER BY DATE_FORMAT(periodic_time,'%Y-%m')
+  </select>
 </mapper>

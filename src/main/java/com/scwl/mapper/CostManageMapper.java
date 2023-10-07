@@ -30,4 +30,8 @@ public interface CostManageMapper {
     int updateByPrimaryKey(CostManage record);
 
     List<CostManage> getAllCost(@Param("costManage") CostManage costManage);
+
+    List<CostManage> getCostByMonth(String period, String condition);
+
+    List<CostManage> getCostByYear(String condition);
 }

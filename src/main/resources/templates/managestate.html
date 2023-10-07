@@ -253,15 +253,15 @@
                 <div class="modal-body">
                     <div class="formRow">
                         经营类型：
-                        <div class="formRight"><select id="name"  style="width: 162px;">
+                        <div class="formRight"><select id="type"  style="width: 162px;" onchange="showColum()">
                             <option value=""></option>
                             <option value="资产经营">资产经营</option>
                             <option value="经营业务收入">经营业务收入</option>
                         </select></div>
                     </div>
-                    <div class="formRow">
+                    <div class="formRow project_show">
                         项目名称：
-                        <div class="formRight"><select id="type" style="width: 162px;">
+                        <div class="formRight"><select id="name" style="width: 162px;">
                             <option value=""></option>
                             <option value="旧日长轨">旧日长轨</option>
                             <option value="星河集市">星河集市</option>
@@ -275,11 +275,11 @@
                         租金收入：
                         <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentIncome"></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
+                    <div class="formRow rent_show">
                         欠缴租金：
                         <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentArrears"></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
+                    <div class="formRow rent_show">
                         出租率：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="letRate"><span>%</span></div><div class="clear"></div>
                     </div>
@@ -519,20 +519,29 @@
             var rentArrears = document.getElementById("rentArrears").value;
             var letRate = document.getElementById("letRate").value;
             var periodicTime = document.getElementById("periodicTime").value;
+            if(type==""){
+                layui.layer.msg("经营类型不能为空!!!",{time:2000},function(){
+                    return ;
+                });
+            }
+            var data=[];
+            data.push({name:"periodicTime",value:new Date(periodicTime)});
+            data.push({name:"type",value:type});
+            data.push({name:"rentIncome",value:rentIncome});
+            if(name=="资产经营"){
+             data.push({name:"name",value:type});
+             data.push({name:"rentArrears",value:rentArrears});
+             data.push({name:"letRate",value:letRate});
+            }else{
+                data.push({name:"name",value:name});
+            }
             $.ajax({
                 type: "post",
                 url: "/addState",
                 headers: {
                     'Authorization': localStorage.getItem("token") // 在请求头中添加token
                 },
-                data:({
-                    type:type,
-                    name:name,
-                    rentIncome:rentIncome,
-                    rentArrears:rentArrears,
-                    letRate:letRate,
-                    periodicTime:new Date(periodicTime)
-                }),
+                data:data,
                 success: function (res) {
                     if(res && res.code===200){
                         modal.style.display = "none";
@@ -573,6 +582,36 @@
             var per = Number(num)*100;
             return per +'%';
 
+        }
+
+        function showColum() {
+            var name = document.getElementById("type").value;
+            var rent_show = document.getElementsByClassName("rent_show");
+            var project_show = document.getElementsByClassName("project_show");
+            if(name=="资产经营"){
+                for (var i = 0; i < rent_show.length; i++) {
+                    rent_show[i].style = "display:block"; // 修改为隐藏
+                }
+                for (var i = 0; i < project_show.length; i++) {
+                    project_show[i].style = "display:none"; // 修改为隐藏
+                }
+
+            }else if(name=="经营业务收入"){
+                for (var i = 0; i < rent_show.length; i++) {
+                    rent_show[i].style = "display:none"; // 修改为隐藏
+                }
+                for (var i = 0; i < project_show.length; i++) {
+                    project_show[i].style = "display:block"; // 修改为显示
+                }
+
+            }else {
+                for (var i = 0; i < rent_show.length; i++) {
+                    rent_show[i].style = "display:none"; // 修改为隐藏
+                }
+                for (var i = 0; i < project_show.length; i++) {
+                    project_show[i].style = "display:none"; // 修改为隐藏
+                }
+            }
         }
 
     </script>

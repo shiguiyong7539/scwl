@@ -288,4 +288,43 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getCapitalByMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select
+     type,sum(income) as income,sum(income_total) as income_total,sum(contract_expend) as contract_expend,sum(special_expend) as special_expend,
+     sum(daily_expend) as daily_expend,DATE_FORMAT(term,#{period})  as remark
+    from capital_position
+    where DATE_FORMAT(term,#{period}) >= DATE_SUB(DATE_FORMAT(NOW(), '%Y-%m-01'), INTERVAL 6 MONTH)
+    GROUP BY DATE_FORMAT(term,#{period})
+  </select>
+
+  <select id="getCapitalByYear" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+         type,sum(income) as income,sum(income_total) as income_total,sum(contract_expend) as contract_expend,sum(special_expend) as special_expend,
+        sum(daily_expend) as daily_expend,  YEAR(term) as remark
+      from capital_position
+      where YEAR(term) >= YEAR(DATE_SUB(DATE_FORMAT(NOW(), '%Y-01-01'), INTERVAL 6 YEAR))
+       GROUP BY YEAR(term)
+  </select>
+
+
+  <select id="getIncome" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+        type,sum(income) as income,sum(income_total) as income_total,
+        MONTH(term) as remark
+    from capital_position
+   where  type ='收入' and DATE_FORMAT(term,'%Y-%m-01') >= DATE_SUB(DATE_FORMAT(NOW(), '%Y-01-01'), INTERVAL 12 MONTH)
+     GROUP BY DATE_FORMAT(term,'%Y-%m')
+     ORDER BY DATE_FORMAT(term,'%Y-%m')
+  </select>
+
+  <select id="getExpend" parameterType="java.lang.String" resultMap="BaseResultMap">
+          select
+        type,sum(contract_expend) as contract_expend,sum(special_expend) as special_expend,
+        sum(daily_expend) as daily_expend, MONTH(term) as remark
+    from capital_position
+   where  type ='支出' and DATE_FORMAT(term,'%Y-%m-01') >= DATE_SUB(DATE_FORMAT(NOW(), '%Y-01-01'), INTERVAL 12 MONTH)
+     GROUP BY DATE_FORMAT(term,'%Y-%m')
+     ORDER BY DATE_FORMAT(term,'%Y-%m')
+  </select>
 </mapper>

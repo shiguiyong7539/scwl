@@ -1,306 +1,112 @@
-﻿/*   */
- $(window).load(function(){
-             $(".loading").fadeOut()
-            })  
+﻿ $(window).load(function(){$(".loading").fadeOut()})  
 $(function () {
-    echarts_1();
-	echarts_2();
-	echarts_3();
-	echarts_4();
-	echarts_5();
-	zb1();
-	zb2();
-	zb3();
-    function echarts_1() {
+    //echarts_1();
+    echarts_4();
+    echarts_5();
+    echarts_31();
+    echarts_32();
+    getTaskTable();
+function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
-        option = {
-                    tooltip : {
-                        trigger: 'item',
-                        formatter: "{b} : {c} ({d}%)"
-                    },
-                    legend: {
-                        right:0,
-                        top:30,
-                        height:160,
-                        itemWidth:10,
-                        itemHeight:10,
-                        itemGap:10,
-                        textStyle:{
-                            color: 'rgba(255,255,255,.6)',
-                            fontSize:12
-                        },
-                        orient:'vertical',
-                        data:['图例1','图例2','图例3','图例4','图例5']
-                    },
-                   calculable : true,
-                    series : [
-                        {
-                            name:' ',
-							color: ['#62c98d', '#2f89cf', '#4cb9cf', '#53b666', '#62c98d', '#205acf', '#c9c862', '#c98b62', '#c962b9', '#7562c9','#c96262','#c25775','#00b7be'],	
-                            type:'pie',
-                            radius : [30, 70],
-                            center : ['35%', '50%'],
-                            roseType : 'radius',
-                            label: {
-                                normal: {
-                                    show: true
-                                },
-                                emphasis: {
-                                    show: true
-                                }
-                            },
+        var data = [{
+        title: '**省'
+    },
+    ['本周'],
+    [{
+        name: '文本1',
+        max: 150
+    }, {
+        name: '文本2',
+        max: 150
+    }, {
+        name: '文本3',
+        max: 150
+    }, {
+        name: '文本4',
+        max: 150
+    }, {
+        name: '文本5',
+        max: 150
+    }],
+    [43, 100, 28, 3, 150],
+]
+option = {
 
-                            lableLine: {
-                                normal: {
-                                    show: true
-                                },
-                                emphasis: {
-                                    show: true
-                                }
-                            },
+    color: ['#9DD060', '#35C96E', '#4DCEF8'],
 
-                            data:[
-                                {value:10, name:'图例1'},
-                                {value:5, name:'图例2'},
-                                {value:15, name:'图例3'},
-                                {value:25, name:'图例4'},
-                                {value:20, name:'图例5'},
-                      
-                            ]
-                        },
-                    ]
-                };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
-    }
-    /*   */
-function echarts_2() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart2'));
-
-        option = {
-            tooltip: {
-                trigger: 'item',
-               formatter: "{b} : {c} ({d}%)"
-            },
-            legend: {
-			
-				top:'15%',
-                data: ['图例1', '图例2', '图例3', '图例4', '图例5'],
-                icon: 'circle',
-                textStyle: {
-                    color: 'rgba(255,255,255,.6)',
-                }
-            },
-            calculable: true,
-            series: [{
-                name: '',
-				color: ['#62c98d', '#2f89cf', '#4cb9cf', '#53b666', '#62c98d', '#205acf', '#c9c862', '#c98b62', '#c962b9','#c96262'],	
-                type: 'pie',
-                //起始角度，支持范围[0, 360]
-                startAngle: 0,
-                //饼图的半径，数组的第一项是内半径，第二项是外半径
-                radius: [51, 100],
-                //支持设置成百分比，设置成百分比时第一项是相对于容器宽度，第二项是相对于容器高度
-                center: ['50%', '45%'],
-				
-                //是否展示成南丁格尔图，通过半径区分数据大小。可选择两种模式：
-                // 'radius' 面积展现数据的百分比，半径展现数据的大小。
-                //  'area' 所有扇区面积相同，仅通过半径展现数据大小
-                roseType: 'area',
-                //是否启用防止标签重叠策略，默认开启，圆环图这个例子中需要强制所有标签放在中心位置，可以将该值设为 false。
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: true,
-                      //  formatter: '{c}辆'
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: true,
-                        length2: 1,
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                data: [
-                    {value: 1,name: '图例1',},
-                    {value: 4,name: '图例2',},
-                    {value: 5,name: '图例3',},
-                    {value: 6,name: '图例4',},
-                    {value: 9,name: '图例5',},
-         
-                   
-
-                    {value: 0, name: "",label: {show: false},labelLine: {show: false}},
-                    {value: 0, name: "",label: {show: false},labelLine: {show: false}},
-                    {value: 0, name: "",label: {show: false},labelLine: {show: false}},
-                    {value: 0, name: "",label: {show: false},labelLine: {show: false}},
-                    {value: 0, name: "",label: {show: false},labelLine: {show: false}},
-
-                   
-                ]
-            }]
-        };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
-    }
-function echarts_3() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart3'));
-
-        option = {
-	tooltip: {
-		trigger: 'axis',
-		axisPointer: {
-			lineStyle: {
-				color: '#57617B'
-			}
-		}
-	},
-	legend: {
-	
-		//icon: 'vertical',
-			data: ['销售额', '利润'],
-        //align: 'center',
-       // right: '35%',
-		top:'0',
-        textStyle: {
-            color: "#fff"
+    tooltip: {},
+  
+    radar: {
+        center: ['50%', '50%'],
+	 radius: ["25%", "70%"],
+		
+        name: {
+            textStyle: {
+                color: '#72ACD1'
+            }
         },
-       // itemWidth: 15,
-       // itemHeight: 15,
-        itemGap: 20,
-	},
-	grid: {
-		left: '0',
-		right: '20',
-		top:'10',
-		bottom: '20',
-		containLabel: true
-	},
-	xAxis: [{
-		type: 'category',
-		boundaryGap: false,
-		axisLabel: {
-			show: true,
-			textStyle: {
-                           color: 'rgba(255,255,255,.6)'
-                        }
-		},
-		axisLine: {
-			lineStyle: {
-				color: 'rgba(255,255,255,.1)'
-			}
-		},
-		data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-	}, {
-		
 
-		
-		
-	}],
-	yAxis: [{
-		axisLabel: {
-			show: true,
-			textStyle: {
-                           color: 'rgba(255,255,255,.6)'
-                        }
-		},
-		axisLine: {
-			lineStyle: {
-				color: 'rgba(255,255,255,.1)'
-			}
-		},
-		splitLine: {
-			lineStyle: {
-				color: 'rgba(255,255,255,.1)'
-			}
-		}
-	}],
-	series: [{
-		name: '销售额',
-		type: 'line',
-		smooth: true,
-		symbol: 'circle',
-		symbolSize: 5,
-		showSymbol: false,
-		lineStyle: {
-			normal: {
-				width: 2
-			}
-		},
-		areaStyle: {
-			normal: {
-				color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-					offset: 0,
-					color: 'rgba(24, 163, 64, 0.3)'
-				}, {
-					offset: 0.8,
-					color: 'rgba(24, 163, 64, 0)'
-				}], false),
-				shadowColor: 'rgba(0, 0, 0, 0.1)',
-				shadowBlur: 10
-			}
-		},
-		itemStyle: {
-			normal: {
-				color: '#cdba00',
-				borderColor: 'rgba(137,189,2,0.27)',
-				borderWidth: 12
-			}
-		},
-		data: [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122]
-	}, {
-		name: '利润',
-		type: 'line',
-		smooth: true,
-		symbol: 'circle',
-		symbolSize: 5,
-		showSymbol: false,
-		lineStyle: {
-			normal: {
-				width: 2
-			}
-		},
-		areaStyle: {
-			normal: {
-				color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-					offset: 0,
-					color: 'rgba(39, 122,206, 0.3)'
-				}, {
-					offset: 0.8,
-					color: 'rgba(39, 122,206, 0)'
-				}], false),
-				shadowColor: 'rgba(0, 0, 0, 0.1)',
-				shadowBlur: 10
-			}
-		},
-		itemStyle: {
-			normal: {
-				color: '#277ace',
-				borderColor: 'rgba(0,136,212,0.2)',
-				borderWidth: 12
-			}
-		},
-		data: [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
-	}]
+          splitLine: {
+
+              lineStyle: {
+
+                  color: 'rgba(255,255,255,.0',
+
+                  width: 2
+
+              }
+
+          },
+          axisLine: {
+              lineStyle: {
+                  color: 'rgba(255,255,255,0.2)',
+                  width: 1,
+                  type: 'dotted'
+
+              },
+
+          },
+        splitArea: {
+            areaStyle: {
+                  color: ['rgba(255,255,255,.1)', 'rgba(255,255,255,0)']
+              }
+        },
+        indicator: data[2]
+    },
+    series: [{
+        name: '',
+        type: 'radar',
+        data: [{
+                areaStyle: {
+                    normal: {
+                        opacity: 0.3,
+                    }
+                },
+                value: data[3],
+                name: data[1][0]
+            },
+            {
+                areaStyle: {
+                    normal: {
+                        opacity: 0.3,
+                    }
+                },
+                value: data[4],
+                name: data[1][1]
+            },
+            {
+                areaStyle: {
+                    normal: {
+                        opacity: 0.3,
+                    }
+                },
+                value: data[5],
+                name: data[1][2]
+            }
+        ]
+    }]
 };
-
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
         window.addEventListener("resize",function(){
@@ -309,442 +115,1189 @@ function echarts_3() {
     }
 function echarts_4() {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart4'));
-option = {
-   	tooltip: {
-		trigger: 'axis',
-		axisPointer: {
-			lineStyle: {
-				color: '#57617B'
-			}
-		}
-	},
-    "legend": {
-		
-      "data": [
-        {"name": "图例1"},
-        {"name": "图例2"},
-        {"name": "完成率"}
-      ],
-      "top": "0%",
-      "textStyle": {
-       "color": "rgba(255,255,255,0.9)"//图例文字
-      }
-    },
-	
-    "xAxis": [
-      {
-        "type": "category",
-		
-        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-		 axisLine: { lineStyle: {color: "rgba(255,255,255,.1)"}},
-        axisLabel:  { textStyle: {color: "rgba(255,255,255,.6)", fontSize: '14', },
-            },
-		
+        var myChart = echarts.init(document.getElementById('asset_1'));
+        var myChart2 = echarts.init(document.getElementById('asset_2'));
+        var myChart3 = echarts.init(document.getElementById('asset_3'));
+        var myChart4 = echarts.init(document.getElementById('asset_4'));
+    $.ajax({
+        type: "get",
+        url: "/getManageStateByCenter",
+        headers: {
+            'Authorization': localStorage.getItem("token") // 在请求头中添加token
         },
-	],
-    "yAxis": [
-      {
-        "type": "value",
-        "name": "金额",
-        "min": 0,
-        "max": 50,
-        "interval": 10,
-        "axisLabel": {
-          "show": true,
-         
-        },
-        axisLine: {lineStyle: {color: 'rgba(255,255,255,.4)'}},//左线色
-        
-      },
-      {
-        "type": "value",
-        "name": "完成率",
-        "show": true,
-        "axisLabel": {
-          "show": true,
-        
-        },
-		  axisLine: {lineStyle: {color: 'rgba(255,255,255,.4)'}},//右线色
-		   splitLine: {show:true,lineStyle: {color:"#001e94"}},//x轴线
-      },
-    ],
-    "grid": {
-      "top": "10%",
-		"right":"30",
-		"bottom":"30",
-		"left":"30",
-    },
-    "series": [
-      {
-        "name": "图例1",
-		  
-        "type": "bar",
-        "data": [4,6,36,6,8,6,4,6,30,6,8,12],
-        "barWidth": "auto",
-        "itemStyle": {
-          "normal": {
-            "color": {
-              "type": "linear",
-              "x": 0,
-              "y": 0,
-              "x2": 0,
-              "y2": 1,
-              "colorStops": [
-                {
-                  "offset": 0,
-                  "color": "#609db8"
-                },
-                
-                {
-                  "offset": 1,
-                  "color": "#609db8"
-                }
-              ],
-              "globalCoord": false
-            }
-          }
-        }
-      },
-      {
-        "name": "图例2",
-        "type": "bar",
-        "data": [
-          4,2,34,6,8,6,4,2,32,6,8,18
-        ],
-        "barWidth": "auto",
-		
-        "itemStyle": {
-          "normal": {
-            "color": {
-              "type": "linear",
-              "x": 0,
-              "y": 0,
-              "x2": 0,
-              "y2": 1,
-              "colorStops": [
-                {
-                  "offset": 0,
-                  "color": "#66b8a7"
-                },
-                {
-                  "offset": 1,
-                  "color": "#66b8a7"
-                }
-              ],
-              "globalCoord": false
-            }
-          }
-        },
-        "barGap": "0"
-      },
-      {
-        "name": "完成率",
-        "type": "line",
-        "yAxisIndex": 1,
-		
-        "data": [100,50,80,30,90,40, 70,33,100,40,80,20],
-		  lineStyle: {
-			normal: {
-				width: 2
-			},
-		},
-        "itemStyle": {
-          "normal": {
-            "color": "#cdba00",
-			 
-          }
-        },
-        "smooth": true
-      }
-    ]
-};
-       
+        success: function (res) {
+            if(res && res.code===200){
+                   var manage_date =[];
+                   var income_data =[];
+                   var arrears_data =[];
+                   var rate_data =[];
+                var manage_date1 =[];
+                var manage_date2 =[];
+                var manage_date3 =[];
+                var manage_date4 =[];
+                var manage_date5 =[];
+                var income_data1 =[];
+                var income_data2 =[];
+                var income_data3 =[];
+                var income_data4 =[];
+                var income_data5 =[];
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
+                for (let i = 0; i < res.obj.length; i++) {
+                    var manage = res.obj[i].manage;
+                    if(i==0){
+                        for (let i = 0; i < manage.length; i++) {
+                            manage_date.push(manage[i].remark);
+                            income_data.push(manage[i].rentIncome);
+                            arrears_data.push(manage[i].rentArrears);
+                            rate_data.push(manage[i].letRate);
+                        }
+                    }else{
+
+
+                    if(manage[0].name==='旧日长轨'){
+                        for (let i = 0; i < manage.length; i++) {
+                            manage_date1.push(manage[i].remark);
+                            income_data1.push(manage[i].rentIncome);
+                        }
+                    }
+                    if(manage[0].name==='星河集市'){
+                        for (let i = 0; i < manage.length; i++) {
+                            manage_date2.push(manage[i].remark);
+                            income_data2.push(manage[i].rentIncome);
+                        }
+                    }
+                    if(manage[0].name==='金沙艺术中心'){
+                        for (let i = 0; i < manage.length; i++) {
+                            manage_date3.push(manage[i].remark);
+                            income_data3.push(manage[i].rentIncome);
+                        }
+                    }
+                    if(manage[0].name==='灿若湖民宿'){
+                        for (let i = 0; i < manage.length; i++) {
+                            manage_date4.push(manage[i].remark);
+                            income_data4.push(manage[i].rentIncome);
+                        }
+                    }
+                    if(manage[0].name==='活动策划'){
+                        for (let i = 0; i < manage.length; i++) {
+                            manage_date5.push(manage[i].remark);
+                            income_data5.push(manage[i].rentIncome);
+                        }
+                    }
+                    }
+
+
+                }
+                   option = {
+                       //  backgroundColor: '#00265f',
+                       tooltip: {
+                           trigger: 'axis',
+                           axisPointer: {
+                               type: 'shadow'
+                           }
+                       },
+                       legend: {
+                           data: ['租金收入'],
+                           top:'5%',
+                           textStyle: {
+                               color: "#fff",
+                               fontSize: '12',
+
+                           },
+
+                           itemGap: 35
+                       },
+                       grid: {
+                           left: '0%',
+                           top:'40px',
+                           right: '0%',
+                           bottom: '0',
+                           containLabel: true
+                       },
+                       xAxis: [{
+                           type: 'category',
+                           data: manage_date,
+                           axisLine: {
+                               show: true,
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1)",
+                                   width: 1,
+                                   type: "solid"
+                               },
+                           },
+                           axisTick: {
+                               show: false,
+                           },
+                           axisLabel:  {
+                               interval: 0,
+                               // rotate:50,
+                               show: true,
+                               splitNumber: 5,
+                               textStyle: {
+                                   color: "rgba(255,255,255,.6)",
+                                   fontSize: '12',
+                               },
+                           },
+                       }],
+                       yAxis: [{
+                           type: 'value',
+                           axisLabel: {
+                               //formatter: '{value} %'
+                               show:true,
+                               textStyle: {
+                                   color: "rgba(255,255,255,.6)",
+                                   fontSize: '12',
+                               },
+                           },
+                           axisTick: {
+                               show: false,
+                           },
+                           axisLine: {
+                               show: true,
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1	)",
+                                   width: 1,
+                                   type: "solid"
+                               },
+                           },
+                           splitLine: {
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1)",
+                               }
+                           }
+                       }],
+                       series: [{
+                           name: '租金收入',
+                           type: 'line',
+                           smooth: true,
+                           data:income_data,
+
+                           itemStyle: {
+                               normal: {
+                                   color:'#2f89cf',
+                                   opacity: 1,
+                                   barBorderRadius: 5,
+                               }
+                           }
+                       }
+                       ]
+                   };
+
+                   option2 = {
+                       //  backgroundColor: '#00265f',
+                       tooltip: {
+                           trigger: 'axis',
+                           axisPointer: {
+                               type: 'shadow'
+                           }
+                       },
+                       legend: {
+                           data: ['欠缴租金'],
+                           top:'5%',
+                           textStyle: {
+                               color: "#fff",
+                               fontSize: '12',
+
+                           },
+
+                           itemGap: 35
+                       },
+                       grid: {
+                           left: '0%',
+                           top:'40px',
+                           right: '0%',
+                           bottom: '0',
+                           containLabel: true
+                       },
+                       xAxis: [{
+                           type: 'category',
+                           data: manage_date,
+                           axisLine: {
+                               show: true,
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1)",
+                                   width: 1,
+                                   type: "solid"
+                               },
+                           },
+                           axisTick: {
+                               show: false,
+                           },
+                           axisLabel:  {
+                               interval: 0,
+                               // rotate:50,
+                               show: true,
+                               splitNumber: 5,
+                               textStyle: {
+                                   color: "rgba(255,255,255,.6)",
+                                   fontSize: '12',
+                               },
+                           },
+                       }],
+                       yAxis: [{
+                           type: 'value',
+                           axisLabel: {
+                               //formatter: '{value} %'
+                               show:true,
+                               textStyle: {
+                                   color: "rgba(255,255,255,.6)",
+                                   fontSize: '12',
+                               },
+                           },
+                           axisTick: {
+                               show: false,
+                           },
+                           axisLine: {
+                               show: true,
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1	)",
+                                   width: 1,
+                                   type: "solid"
+                               },
+                           },
+                           splitLine: {
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1)",
+                               }
+                           }
+                       }],
+                       series: [{
+                           name: '欠缴租金',
+                           type: 'line',
+                           smooth: true,
+                           data:arrears_data,
+
+                           itemStyle: {
+                               normal: {
+                                   color:'#2f89cf',
+                                   opacity: 1,
+                                   barBorderRadius: 5,
+                               }
+                           }
+                       }
+                       ]
+                   };
+
+                   option3 = {
+                       //  backgroundColor: '#00265f',
+                       tooltip: {
+                           trigger: 'axis',
+                           axisPointer: {
+                               type: 'shadow'
+                           }
+                       },
+                       legend: {
+                           data: ['出租率'],
+                           top:'5%',
+                           textStyle: {
+                               color: "#fff",
+                               fontSize: '12',
+
+                           },
+
+                           itemGap: 35
+                       },
+                       grid: {
+                           left: '0%',
+                           top:'40px',
+                           right: '0%',
+                           bottom: '0',
+                           containLabel: true
+                       },
+                       xAxis: [{
+                           type: 'category',
+                           data: manage_date,
+                           axisLine: {
+                               show: true,
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1)",
+                                   width: 1,
+                                   type: "solid"
+                               },
+                           },
+                           axisTick: {
+                               show: false,
+                           },
+                           axisLabel:  {
+                               interval: 0,
+                               // rotate:50,
+                               show: true,
+                               splitNumber: 5,
+                               textStyle: {
+                                   color: "rgba(255,255,255,.6)",
+                                   fontSize: '12',
+                               },
+                           },
+                       }],
+                       yAxis: [{
+                           type: 'value',
+                           axisLabel: {
+                               //formatter: '{value} %'
+                               show:true,
+                               textStyle: {
+                                   color: "rgba(255,255,255,.6)",
+                                   fontSize: '12',
+                               },
+                           },
+                           axisTick: {
+                               show: false,
+                           },
+                           axisLine: {
+                               show: true,
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1	)",
+                                   width: 1,
+                                   type: "solid"
+                               },
+                           },
+                           splitLine: {
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1)",
+                               }
+                           }
+                       }],
+                       series: [{
+                           name: '出租率',
+                           type: 'line',
+                           smooth: true,
+                           data:rate_data,
+
+                           itemStyle: {
+                               normal: {
+                                   color:'#2f89cf',
+                                   opacity: 1,
+                                   barBorderRadius: 5,
+                               }
+                           }
+                       }
+                       ]
+                   };
+
+                   // 使用刚指定的配置项和数据显示图表。
+                   option4 = {
+                       //  backgroundColor: '#00265f',
+                       tooltip: {
+                           trigger: 'axis',
+                           axisPointer: {
+                               type: 'shadow'
+                           }
+                       },
+                       legend: {
+                           data: ['旧日长轨','星河集市','金沙艺术中心','灿若湖民宿','活动策划'],
+                           top:'5%',
+                           textStyle: {
+                               color: "#fff",
+                               fontSize: '12',
+
+                           },
+
+                           itemGap: 35
+                       },
+                       grid: {
+                           left: '0%',
+                           top:'40px',
+                           right: '0%',
+                           bottom: '0',
+                           containLabel: true
+                       },
+                       xAxis: [{
+                           type: 'category',
+                           data: manage_date1,
+                           axisLine: {
+                               show: true,
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1)",
+                                   width: 1,
+                                   type: "solid"
+                               },
+                           },
+                           axisTick: {
+                               show: false,
+                           },
+                           axisLabel:  {
+                               interval: 0,
+                               // rotate:50,
+                               show: true,
+                               splitNumber: 5,
+                               textStyle: {
+                                   color: "rgba(255,255,255,.6)",
+                                   fontSize: '12',
+                               },
+                           },
+                       }],
+                       yAxis: [{
+                           type: 'value',
+                           axisLabel: {
+                               //formatter: '{value} %'
+                               show:true,
+                               textStyle: {
+                                   color: "rgba(255,255,255,.6)",
+                                   fontSize: '12',
+                               },
+                           },
+                           axisTick: {
+                               show: false,
+                           },
+                           axisLine: {
+                               show: true,
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1	)",
+                                   width: 1,
+                                   type: "solid"
+                               },
+                           },
+                           splitLine: {
+                               lineStyle: {
+                                   color: "rgba(255,255,255,.1)",
+                               }
+                           }
+                       }],
+                       series: [{
+                           name: '旧日长轨',
+                           type: 'line',
+                           smooth: true,
+                           data:income_data1,
+
+                           itemStyle: {
+                               normal: {
+                                   color:'#2f89cf',
+                                   opacity: 1,
+                                   barBorderRadius: 5,
+                               }
+                           }
+                       },{
+                           name: '星河集市',
+                           type: 'line',
+                           smooth: true,
+                           data:income_data2,
+
+                           itemStyle: {
+                               normal: {
+                                   color:'#cf8427',
+                                   opacity: 1,
+                                   barBorderRadius: 5,
+                               }
+                           }
+                       }
+                           ,{
+                               name: '金沙艺术中心',
+                               type: 'line',
+                               smooth: true,
+                               data:income_data3,
+
+                               itemStyle: {
+                                   normal: {
+                                       color:'#cf3b26',
+                                       opacity: 1,
+                                       barBorderRadius: 5,
+                                   }
+                               }
+                           }
+                           ,{
+                               name: '灿若湖民宿',
+                               type: 'line',
+                               smooth: true,
+                               data:income_data4,
+
+                               itemStyle: {
+                                   normal: {
+                                       color:'#4acf28',
+                                       opacity: 1,
+                                       barBorderRadius: 5,
+                                   }
+                               }
+                           }
+                           ,{
+                               name: '活动策划',
+                               type: 'line',
+                               smooth: true,
+                               data:income_data5,
+
+                               itemStyle: {
+                                   normal: {
+                                       color:'#0c190c',
+                                       opacity: 1,
+                                       barBorderRadius: 5,
+                                   }
+                               }
+                           }
+                       ]
+                   };
+
+                   myChart.setOption(option);
+                   myChart2.setOption(option2);
+                   myChart3.setOption(option3);
+                   myChart4.setOption(option4);
+                   window.addEventListener("resize",function(){
+                       myChart.resize();
+                       myChart2.resize();
+                       myChart3.resize();
+                       myChart4.resize();
+                   });
+
+
+
+            }}})
     }
-	
 function echarts_5() {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart5'));
-// 颜色
-var lightBlue = {
-	type: 'linear',
-	x: 0,
-	y: 0,
-	x2: 0,
-	y2: 1,
-	colorStops: [{
-		offset: 0,
-		color: 'rgba(41, 121, 255, 1)'
-	}, {
-		offset: 1,
-		color: 'rgba(0, 192, 255, 1)'
-	}],
-	globalCoord: false
-}
+        var myChart = echarts.init(document.getElementById('capital_1'));
+        var myChart2 = echarts.init(document.getElementById('capital_2'));
+        $.ajax({
+            type: "get",
+            url: "/getCapitalByCenterShow",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            success: function (res) {
+                if(res && res.code===200){
+                    var income_date = [];
+                    //按月租赁收入
+                    var incomeData1 = [];
+                    //每月总收入
+                    var incomeData2 = [];
+                    var expend_date = [];
+                    //合同财务支出
+                    var expendData1 = [];
+                    //专项债支出
+                    var expendData2 = [];
+                    //日常报销支出
+                    var expendData3 = [];
+                    var income = res.obj.income;
+                    var expend = res.obj.expend;
+                    for (let i = 0; i < income.length; i++) {
+                        income_date.push(income[i].remark);
+                        incomeData1.push(income[i].income);
+                        incomeData2.push(income[i].incomeTotal);
+                    }
+                    for (let i = 0; i < expend.length; i++) {
+                        expend_date.push(expend[i].remark);
+                        expendData1.push(expend[i].contractExpend);
+                        expendData2.push(expend[i].specialExpend);
+                        expendData3.push(expend[i].dailyExpend);
+                    }
+                    option = {
+                        //  backgroundColor: '#00265f',
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            }
+                        },
+                        legend: {
+                            data: ['按月租赁收入','每月总收入'],
+                            top:'5%',
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: '12',
 
-var option = {
-	tooltip: {
-		show: false
-	},
-	grid: {
-		top: '0%',
-		left: '65',
-		right: '14%',
-		bottom: '0%',
-	},
-	xAxis: {
-		min: 0,
-		max: 100,
-		splitLine: {
-			show: false
-		},
-		axisTick: {
-			show: false
-		},
-		axisLine: {
-			show: false
-		},
-		axisLabel: {
-			show: false
-		}
-	},
-	yAxis: {
-		data: ['字段名称', '字段名称', '字段名称','字段名称','字段名称','字段名称','字段名称','字段名称','字段名称','字段名称','字段名称'],
-		//offset: 15,
-		axisTick: {
-			show: false
-		},
-		axisLine: {
-			show: false
-		},
-		axisLabel: {
-			color: 'rgba(255,255,255,.6)',
-			fontSize: 14
-		}
-	},
-	series: [{
-		type: 'bar',
-		label: {
-			show: true,
-			zlevel: 10000,
-			position: 'right',
-			padding: 10,
-			color: '#49bcf7',
-			fontSize: 14,
-			formatter: '{c}%'
-			
-		},
-		itemStyle: {
-			color:'#49bcf7'
-		},
-		barWidth: '15',
-		data: [49, 80, 67, 99, 12, 19, 39, 84, 28, 47, 57, 100],
-		z: 10
-	}, {
-		type: 'bar',
-		barGap: '-100%',
-		itemStyle: {
-			color:'#fff',
-			opacity: 0.1
-		},
-		barWidth: '15',
-		data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-		z: 5
-	}],
-};
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
+                            },
+
+                            itemGap: 35
+                        },
+                        grid: {
+                            left: '0%',
+                            top:'40px',
+                            right: '0%',
+                            bottom: '0',
+                            containLabel: true
+                        },
+                        xAxis: [{
+                            type: 'category',
+                            data: income_date,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1)",
+                                    width: 1,
+                                    type: "solid"
+                                },
+                            },
+                            axisTick: {
+                                show: false,
+                            },
+                            axisLabel:  {
+                                interval: 0,
+                                // rotate:50,
+                                show: true,
+                                splitNumber: 5,
+                                textStyle: {
+                                    color: "rgba(255,255,255,.6)",
+                                    fontSize: '12',
+                                },
+                            },
+                        }],
+                        yAxis: [{
+                            type: 'value',
+                            axisLabel: {
+                                //formatter: '{value} %'
+                                show:true,
+                                textStyle: {
+                                    color: "rgba(255,255,255,.6)",
+                                    fontSize: '12',
+                                },
+                            },
+                            axisTick: {
+                                show: false,
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1	)",
+                                    width: 1,
+                                    type: "solid"
+                                },
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1)",
+                                }
+                            }
+                        }],
+                        series: [{
+                            name: '按月租赁收入',
+                            type: 'bar',
+                            smooth: true,
+                            data:incomeData1,
+
+                            itemStyle: {
+                                normal: {
+                                    color:'#2f89cf',
+                                    opacity: 1,
+                                    barBorderRadius: 5,
+                                }
+                            }
+                        },{
+                            name: '每月总收入',
+                            type: 'bar',
+                            smooth: true,
+                            data:incomeData2,
+
+                            itemStyle: {
+                                normal: {
+                                    color:'#cf841b',
+                                    opacity: 1,
+                                    barBorderRadius: 5,
+                                }
+                            }
+                        }
+                        ]
+                    };
+
+                    option2 = {
+                        //  backgroundColor: '#00265f',
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            }
+                        },
+                        legend: {
+                            data: ['合同财务支出','专项债支出','日常报销支出'],
+                            top:'5%',
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: '12',
+
+                            },
+
+                            itemGap: 35
+                        },
+                        grid: {
+                            left: '0%',
+                            top:'40px',
+                            right: '0%',
+                            bottom: '0',
+                            containLabel: true
+                        },
+                        xAxis: [{
+                            type: 'category',
+                            data: expend_date,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1)",
+                                    width: 1,
+                                    type: "solid"
+                                },
+                            },
+                            axisTick: {
+                                show: false,
+                            },
+                            axisLabel:  {
+                                interval: 0,
+                                // rotate:50,
+                                show: true,
+                                splitNumber: 5,
+                                textStyle: {
+                                    color: "rgba(255,255,255,.6)",
+                                    fontSize: '12',
+                                },
+                            },
+                        }],
+                        yAxis: [{
+                            type: 'value',
+                            axisLabel: {
+                                //formatter: '{value} %'
+                                show:true,
+                                textStyle: {
+                                    color: "rgba(255,255,255,.6)",
+                                    fontSize: '12',
+                                },
+                            },
+                            axisTick: {
+                                show: false,
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1	)",
+                                    width: 1,
+                                    type: "solid"
+                                },
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1)",
+                                }
+                            }
+                        }],
+                        series: [{
+                            name: '合同财务支出',
+                            type: 'bar',
+                            smooth: true,
+                            data:expendData1,
+
+                            itemStyle: {
+                                normal: {
+                                    color:'#2f89cf',
+                                    opacity: 1,
+                                    barBorderRadius: 5,
+                                }
+                            }
+                        },{
+                            name: '专项债支出',
+                            type: 'bar',
+                            smooth: true,
+                            data:expendData2,
+
+                            itemStyle: {
+                                normal: {
+                                    color:'#cf7e22',
+                                    opacity: 1,
+                                    barBorderRadius: 5,
+                                }
+                            }
+                            },{
+                            name: '日常报销支出',
+                            type: 'bar',
+                            smooth: true,
+                            data:expendData3,
+
+                            itemStyle: {
+                                normal: {
+                                    color:'#cf1011',
+                                    opacity: 1,
+                                    barBorderRadius: 5,
+                                }
+                            }
+                        }
+                        ]
+                    };
+
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                    myChart2.setOption(option2);
+
+
+                    window.addEventListener("resize",function(){
+                        myChart.resize();
+                        myChart2.resize();
+                    });
+
+
+                }
+
+            }
+
+
+
+        })
+
+
+
     }
-	
-	
-function zb1() {
+function echarts_31() {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('zb1'));
-	var v1=298//男消费
-		var v2=523//女消费
-		var v3=v1+v2//总消费 
-option = {	
-    series: [{
-		
-        type: 'pie',
-        radius: ['60%', '70%'],
-        color:'#49bcf7',
-        label: {
-            normal: {
-                position: 'center'
-            }
+    var myChart = echarts.init(document.getElementById('fb01'));
+	var myChart2 = echarts.init(document.getElementById('fb02'));
+	var myChart3 = echarts.init(document.getElementById('fb03'));
+	var myChart4 = echarts.init(document.getElementById('fb04'));
+	//var myChart5 = echarts.init(document.getElementById('myd1'));
+	// var myChart7 = echarts.init(document.getElementById('sysx'));
+
+    $.ajax({
+        type: "get",
+        url: "/getByCenter",
+        headers: {
+            'Authorization': localStorage.getItem("token") // 在请求头中添加token
         },
-        data: [{
-            value: v2,
-            name: '女消费',
-            label: {
-                normal: {
-                    formatter: v2 +'',
-                    textStyle: {
-                        fontSize: 20,
-						color:'#fff',
-                    }
+        success: function (res) {
+            if(res && res.code===200){
+                var age_list = res.obj.age;
+                var edu_list = res.obj.edu;
+                var rank_list = res.obj.rank;
+                var mode_list = res.obj.mode;
+                var ageData = [];
+                var eduData = [];
+                var rankData = [];
+                var modeData = [];
+
+                for (let i = 0; i < age_list.length; i++) {
+
+                    ageData.push({name:age_list[i].age_range,value:age_list[i].count});
+
                 }
+                for (let i = 0; i < edu_list.length; i++) {
+                    eduData.push({name:edu_list[i].education,value:edu_list[i].count});
+
+                }
+                for (let i = 0; i < rank_list.length; i++) {
+                    rankData.push({name:rank_list[i].rank,value:rank_list[i].count});
+
+                }
+                for (let i = 0; i < mode_list.length; i++) {
+                    modeData.push({name:mode_list[i].employment_mode,value:mode_list[i].count});
+
+                }
+
+                option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        position:function(p){   //其中p为当前鼠标的位置
+                            return [p[0] + 10, p[1] - 10];
+                        }
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        top:'25%',
+                        right:0,
+                        itemWidth: 10,
+                        itemHeight: 10,
+                        data:['20-29岁','30-39岁','40-49岁','50-59岁','60-69岁'],
+                        textStyle: {
+                            color: 'rgba(255,255,255,.5)',
+                            fontSize:'12',
+                        }
+                    },
+                    series: [
+                        {
+                            name:'年龄分布',
+                            type:'pie',
+                            center: ['35%', '50%'],
+                            radius: ['40%', '50%'],
+                            color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+                            label: {show:false},
+                            labelLine: {show:false},
+                            data:ageData
+                        }
+                    ]
+                };
+                option2 = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        position:function(p){   //其中p为当前鼠标的位置
+                            return [p[0] + 10, p[1] - 10];
+                        }
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        top:'25%',
+                        right:'8%',
+                        itemWidth: 10,
+                        itemHeight: 10,
+                        data:['博士','硕士','本科','专科'],
+                        textStyle: {
+                            color: 'rgba(255,255,255,.5)',
+                            fontSize:'12',
+                        }
+                    },
+                    series: [
+                        {
+                            name:'学历构成',
+                            type:'pie',
+                            center: ['40%', '50%'],
+                            radius: ['40%', '50%'],
+                            color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+                            label: {show:false},
+                            labelLine: {show:false},
+                            data:eduData
+                        }
+                    ]
+                };
+                option3 = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        position:function(p){   //其中p为当前鼠标的位置
+                            return [p[0] + 10, p[1] - 10];
+                        }
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        top:'center',
+                        right:0,
+                        itemWidth: 10,
+                        itemHeight: 10,
+                        data:['初级','中级','高级'],
+                        textStyle: {
+                            color: 'rgba(255,255,255,.5)',
+                            fontSize:'12',
+                        }
+                    },
+                    series: [
+                        {
+                            name:'职称',
+                            type:'pie',
+                            center: ['35%', '50%'],
+                            radius: ['40%', '50%'],
+                            color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+                            label: {show:false},
+                            labelLine: {show:false},
+                            data:rankData
+                        }
+                    ]
+                };
+                option4 = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        position:function(p){   //其中p为当前鼠标的位置
+                            return [p[0] + 10, p[1] - 10];
+                        }
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        top:'center',
+                        right:'8%',
+                        itemWidth: 10,
+                        itemHeight: 10,
+                        data:['正式','外聘'],
+                        textStyle: {
+                            color: 'rgba(255,255,255,.5)',
+                            fontSize:'12',
+                        }
+                    },
+                    series: [
+                        {
+                            name:'用工方式',
+                            type:'pie',
+                            center: ['40%', '50%'],
+                            radius: ['40%', '50%'],
+                            color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+                            label: {show:false},
+                            labelLine: {show:false},
+                            data:modeData
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+                myChart2.setOption(option2);
+                myChart3.setOption(option3);
+                myChart4.setOption(option4);
+
+
+                // myChart7.setOption(option7);
+                window.addEventListener("resize",function(){
+                    myChart.resize();
+                    myChart2.resize();
+                    myChart3.resize();
+                    myChart4.resize();
+
+                });
+
+
             }
-        }, {
-            value: v1,
-            name: '男消费',
-            label: {
-                normal: {
-                 formatter : function (params){
-                return '占比'+Math.round( v2/v3*100)+ '%'
-            },
-                    textStyle: {
-                        color: '#aaa',
-                        fontSize: 12
-                    }
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: 'rgba(255,255,255,.2)'
-                },
-                emphasis: {
-                    color: '#fff'
-                }
-            },
-        }]
-    }]
-};
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
+
+        }
+
+
+
+    })
+
+
+
     }
-function zb2() {
+function echarts_32() {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('zb2'));
- var v1=298//男消费
-		var v2=523//女消费
-		var v3=v1+v2//总消费 
-      option = {
-	
-//animation: false,
-    series: [{	
-        type: 'pie',
-       radius: ['60%', '70%'],
-        color:'#cdba00',
-        label: {
-            normal: {
-                position: 'center'
-            }
+        var myChart = echarts.init(document.getElementById('fb05'));
+       $.ajax({
+        type: "get",
+        url: "/getCostManageByCenter",
+        headers: {
+            'Authorization': localStorage.getItem("token") // 在请求头中添加token
         },
-        data: [{
-            value: v1,
-            name: '男消费',
-            label: {
-                normal: {
-                    formatter: v1 +'',
-                    textStyle: {
-                        fontSize: 20,
-						color:'#fff',
-                    }
+        data:({
+            period:'月',
+            condition:currentDate(1)
+        }),
+        success: function (res) {
+            if(res && res.code===200){
+                var pieData = []
+                for (let i = 0; i < res.obj.length; i++) {
+                    pieData.push({name:"工资发放",value:res.obj[i].payOutWage});
+                    pieData.push({name:"房租",value:res.obj[i].rent});
+                    pieData.push({name:"水电办公等",value:res.obj[i].hydropowerOffice});
+                    pieData.push({name:"工会",value:res.obj[i].laborUnion});
                 }
+
+                    option = {
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)",
+                            position:function(p){   //其中p为当前鼠标的位置
+                                return [p[0] + 10, p[1] - 10];
+                            }
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            top:'25%',
+                            right:0,
+                            itemWidth: 10,
+                            itemHeight: 10,
+                            data:['工资发放','房租','水电办公等','工会'],
+                            textStyle: {
+                                color: 'rgba(255,255,255,.5)',
+                                fontSize:'12',
+                            }
+                        },
+                        series: [
+                            {
+                                name:'成本分布',
+                                type:'pie',
+                                center: ['35%', '50%'],
+                                radius: ['40%', '50%'],
+                                color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+                                label: {show:false},
+                                labelLine: {show:false},
+                                data:pieData
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+
+
+                    window.addEventListener("resize",function(){
+                        myChart.resize();
+                    });
+
+
+                }
+
             }
-        }, {
-            value: v2,
-            name: '女消费',
-            label: {
-                normal: {
-                 formatter : function (params){
-                return '占比'+Math.round( v1/v3*100)+ '%'
-            },
-                    textStyle: {
-                        color: '#aaa',
-                        fontSize: 12
-                    }
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: 'rgba(255,255,255,.2)'
-                },
-                emphasis: {
-                    color: '#fff'
-                }
-            },
-        }]
-    }]
-};
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
+
+
+
+        })
+
+
+
     }
-/*   */
-function zb3() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('zb3'));
-		var v1=298//男消费
-		var v2=523//女消费
-		var v3=v1+v2//总消费 
-option = {	
-    series: [{
-		
-        type: 'pie',
-       radius: ['60%', '70%'],
-        color:'#62c98d',
-        label: {
-            normal: {
-                position: 'center'
-            }
-        },
-        data: [{
-            value: v2,
-            name: '女消费',
-            label: {
-                normal: {
-                    formatter: v2 +'',
-                    textStyle: {
-                        fontSize: 20,
-						color:'#fff',
+function getTaskTable() {
+
+        $.ajax({
+            type: "get",
+            url: "/getTaskByCenterShow",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            success: function (res) {
+                if(res && res.code===200){
+                    var data = res.obj;
+                    // 获取表格元素
+                    var str_info='';
+                    for (let i = 0; i < data.length; i++) {
+                        str_info+='<tr><td>'+data[i].project+'</td>';
+                        str_info+='<td><span class="text-w">'+isNull(data[i].totalNum)+'</span></td>';
+                        str_info+='<td><span class="text-b">'+isNull(data[i].completed)+'</span></td>';
+                        str_info+='<td><span class="text-d">'+isNull(data[i].unfinished)+'</span></td>';
+                        str_info+='<td><div class="text-d">'+isNull(data[i].overdue)+'</div></td></tr>';
                     }
+                    $("#taskTable").html(str_info);
                 }
+
             }
-        }, {
-            value: v1,
-            name: '男消费',
-            label: {
-                normal: {
-                 formatter : function (params){
-                return '占比'+Math.round( v2/v3*100)+ '%'
-            },
-                    textStyle: {
-                        color: '#aaa',
-                        fontSize: 12
-                    }
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: 'rgba(255,255,255,.2)'
-                },
-                emphasis: {
-                    color: '#fff'
-                }
-            },
-        }]
-    }]
-};
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
+
+
+
+        })
+
     }
+
+
+
+//获取年月日
+function currentDate(type) {
+        var date = new Date(); // 创建Date对象
+        // 获取年、月、日、小时、分钟和秒
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1; // 月份从0开始，所以要加1
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        // 将日期和时间组件组合成字符串
+        var formatteddate = year + '-' + month;
+        var formattedTime = year + '-' + month + '-' + day;
+        if(type==1){
+            return formatteddate;
+        }else {
+            return year;
+        }
+
+    }
+
+    //获取所有包含百分比转化
+    function percentage(num) {
+        var per = Number(num)*100;
+        return per +'%';
+
+    }
+    function isNull(number) {
+        if(null==number){
+            return "";
+        }else {
+            return number;
+        }
+    }
+
+    // $("#asset1").on("click", function() {
+    //     // var box_show1 = document.getElementsByClassName("box_show1");
+    //     // var box_show2 = document.getElementsByClassName("box_show2");
+    //     var box1 = document.getElementById("box_id1");
+    //     var box2 = document.getElementById("box_id2");
+    //     box1.style.display="block";
+    //     box2.style.display="none";
+    //         // box_show1[0].style = "display:block"; // 修改为显示
+    //         // box_show2[0].style = "display:none"; // 修改为隐藏
+    //
+    //
+    // });
+    // $("#asset2").on("click", function() {
+    //     var box1 = document.getElementById("box_id1");
+    //     var box2 = document.getElementById("box_id2");
+    //     box2.style.display="block";
+    //     box1.style.display="none";
+    //
+    // });
+
 })
 
 

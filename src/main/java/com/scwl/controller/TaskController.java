@@ -44,7 +44,17 @@ public class TaskController {
     @RequestMapping("/getTaskByCenter")
     @ResponseBody
     public Object getTaskByCenter(HttpServletRequest request,String period,String condition){
-            return taskService.getTaskByCenter(period,condition);
+        return taskService.getTaskByCenter(period,condition);
+    }
+
+    /**
+     * 获取任务到展示平台
+     * @return
+     */
+    @RequestMapping("/getTaskByCenterShow")
+    @ResponseBody
+    public Object getTaskByCenterShow(HttpServletRequest request){
+        return taskService.getTaskByCenterShow();
     }
 
 

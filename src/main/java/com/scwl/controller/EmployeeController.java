@@ -41,4 +41,14 @@ public class EmployeeController {
         return employeeService.addEmployee(employee);
     }
 
+    /**
+     * 按年龄分组
+     * @return
+     */
+    @RequestMapping("/getByCenter")
+    @ResponseBody
+    public Object getByCenter(){
+        return employeeService.getByCenter();
+    }
+
 }

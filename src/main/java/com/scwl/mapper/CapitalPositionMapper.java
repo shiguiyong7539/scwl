@@ -28,4 +28,13 @@ public interface CapitalPositionMapper {
     int updateByPrimaryKeySelective(CapitalPosition record);
 
     int updateByPrimaryKey(CapitalPosition record);
+
+    List<CapitalPosition> getCapitalByMonth(String period, String condition);
+
+    List<CapitalPosition> getCapitalByYear(String condition);
+
+    List<CapitalPosition> getIncome();
+
+    List<CapitalPosition> getExpend();
+
 }

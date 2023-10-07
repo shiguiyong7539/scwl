@@ -11,7 +11,9 @@ import com.scwl.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -41,5 +43,29 @@ public class EmployeeServiceImpl implements EmployeeService {
                 return  ResBean.error("添加失败");
         }
 
+    }
+
+    @Override
+    public ResBean getByCenter() {
+        //按年龄分组
+        List<Map> byAgeGroup = employeeMapper.getByAgeGroup();
+        for (int i = 0; i < byAgeGroup.size(); i++) {
+            Map map = byAgeGroup.get(i);
+            Long age = (Long) map.get("age_group");
+            Long ageHigh = age+9;
+            map.put("age_range",age+"-"+ageHigh+"岁");
+        }
+        //按学历分组
+        List<Map> byEduGroup = employeeMapper.getByEduGroup();
+        //按职称分组
+        List<Map> byRankGroup = employeeMapper.getByRankGroup();
+        //按用工方式分组
+        List<Map> byModeGroup = employeeMapper.getByModeGroup();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("age",byAgeGroup);
+        map.put("edu",byEduGroup);
+        map.put("rank",byRankGroup);
+        map.put("mode",byModeGroup);
+        return ResBean.success("success",map);
     }
 }

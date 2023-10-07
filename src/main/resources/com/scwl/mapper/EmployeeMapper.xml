@@ -240,4 +240,28 @@
       employment_mode = #{employmentMode,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getByAgeGroup" resultType="java.util.Map">
+    SELECT FLOOR(age / 10) * 10 AS age_group, COUNT(id) AS count
+    FROM employee
+    GROUP BY age_group
+  </select>
+
+  <select id="getByEduGroup" resultType="java.util.Map">
+    SELECT education, COUNT(id) AS count
+    FROM employee
+    GROUP BY education
+  </select>
+
+  <select id="getByRankGroup" resultType="java.util.Map">
+    SELECT rank, COUNT(id) AS count
+    FROM employee
+    GROUP BY rank
+  </select>
+
+
+  <select id="getByModeGroup" resultType="java.util.Map">
+    SELECT employment_mode, COUNT(id) AS count
+    FROM employee
+    GROUP BY employment_mode
+  </select>
 </mapper>

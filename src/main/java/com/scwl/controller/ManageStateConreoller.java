@@ -15,13 +15,39 @@ public class ManageStateConreoller {
     @Resource
     private ManageStateService manageStateService;
 
+    /**
+     * admin资金管理一览
+     * @param request
+     * @param pageNum
+     * @param pageSize
+     * @param manageState
+     * @return
+     */
     @RequestMapping("/getAllManageState")
     public Object getAllManageState(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize, ManageState manageState){
         return  manageStateService.getAllManageState(pageNum,pageSize,manageState);
     }
 
+    /**
+     * 添加资金管理
+     * @param request
+     * @param manageState
+     * @return
+     */
     @RequestMapping("/addState")
     public Object addState(HttpServletRequest request, ManageState manageState){
         return  manageStateService.addState(manageState);
+    }
+
+    /**
+     * 经营数据展览中心
+     * @param request
+     * @param period
+     * @param condition
+     * @return
+     */
+    @RequestMapping("/getManageStateByCenter")
+    public Object getManageStateByCenter(HttpServletRequest request){
+        return  manageStateService.getManageStateByCenter();
     }
 }
