@@ -215,7 +215,9 @@
 
 
         <div class="widget rightTabs">
-            <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>我的资料</h6></div>
+            <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>我的资料</h6>
+                <div class="formAddEmp"><input type="submit" id="myBtn" value="添加用户" class="redB"></div></div>
+
             <ul class="tabs">
                 <li><a href="#tab1">基本信息</a></li>
 <!--                <li><a href="#tab4">上传头像</a></li>-->
@@ -298,7 +300,39 @@
                 </div>
             </div>
         </div>
+        <!-- 弹窗 -->
+        <div id="myModal" class="modal">
 
+            <!-- 弹窗内容 -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2>用户信息</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="formRow">
+                        昵称：
+                        <div class="formRight"><input type="text" class="validate[required]"  id="add_name"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        电话：
+                        <div class="formRight"><input type="text" class="validate[required]"  id="add_phone"></div><div class="clear"></div>
+                    </div>
+
+                    <div class="formRow">
+                        密码：
+                        <div class="formRight"><input type="text" class="validate[required]"  id="add_password"></div><div class="clear"></div>
+                    </div>
+
+
+                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addUser()">提交</button></div>
+                </div>
+                <div class="modal-footer">
+                    <h3></h3>
+                </div>
+            </div>
+
+        </div>
 
     </div>
 
@@ -438,6 +472,64 @@
                 }
             }
         })
+    }
+
+
+    // 获取弹窗
+    var modal = document.getElementById('myModal');
+
+    // 打开弹窗的按钮对象
+    var btn = document.getElementById("myBtn");
+
+    // 获取 <span> 元素，用于关闭弹窗 that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // 点击按钮打开弹窗
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // 点击 <span> (x), 关闭弹窗
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // 在用户点击其他地方时，关闭弹窗
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function addUser() {
+        var name = document.getElementById("add_name").value;
+        var phone = document.getElementById("add_phone").value;
+        var password = document.getElementById("add_password").value;
+        $.ajax({
+            type: "post",
+            url: "/addUser",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:({
+                name:name,
+                phone:phone,
+                password:password
+            }),
+            success: function (res) {
+                if(res && res.code===200){
+                    modal.style.display = "none";
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
+
+                }
+            }
+
+
+        })
+
     }
 
 </script>

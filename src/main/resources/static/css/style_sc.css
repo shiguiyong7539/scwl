@@ -135,6 +135,15 @@ select{
     display: none;
 }
 
+.left_size{
+    width: 25%;
+}
+.center_size{
+    width: 50%;
+}
+.right_size{
+    width: 25%;
+}
 @media (max-width: 767px) {
     .head {
         height:105px!important;
@@ -154,5 +163,17 @@ select{
     }
     .weather{
         top:40px!important;
+    }
+    .left_size{
+        width: 100%!important;
+    }
+    .center_size{
+        width: 100%!important;
+    }
+    .right_size{
+        width: 100%!important;
+    }
+    .head h1 {
+        font-size: 15px!important;
     }
 }

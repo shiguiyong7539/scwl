@@ -18,6 +18,8 @@ public interface UserService  {
 
    ResBean insertBatchUser(List<User> userList);
 
+   ResBean addUser(User user);
+
    ResBean editUser(User user);
 
    ResBean deleteUser(User user);

@@ -90,6 +90,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResBean addUser(User user) {
+        try {
+            user.setUsername(user.getPhone());
+            user.setEnable(true);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userMapper.insert(user);
+            logService.addLog("INSERT","user",user.getId(),"新增id为"+user.getId()+"的用户信息");
+            return ResBean.success("新增成功");
+        }catch (Exception e){
+            return ResBean.error("新增失败!");
+        }
+
+    }
+
+    @Override
     public ResBean editUser(User user) {
         User oldUser = userMapper.selectByPrimaryKey(user.getId());
         UserExample example = new UserExample();
@@ -105,7 +120,7 @@ public class UserServiceImpl implements UserService {
         }
         int i = userMapper.updateByPrimaryKey(oldUser);
         if(i==1){
-            logService.addLog("DELETE","user",user.getId(),"修改id为"+user.getId()+"的用户信息");
+            logService.addLog("UPDATE","user",user.getId(),"修改id为"+user.getId()+"的用户信息");
             return  ResBean.success("修改成功",null);
         }
          return  ResBean.error("修改失败，请联系管理员!",null);

@@ -114,6 +114,8 @@
                 <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
             </ul>
         </li>
+
+        <li class="dash"><a href="#" onclick="center_html()" class="active"><span>数据展示中心</span></a></li>
     </ul>
 </div>
 
@@ -341,6 +343,9 @@
     function tasklist(project) {
         localStorage.setItem("project",project);
         location.href="/taskList";
+    }
+    function center_html() {
+        location.href="/centerShow";
     }
 
     function toggle(id) {

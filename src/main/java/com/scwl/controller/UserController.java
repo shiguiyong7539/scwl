@@ -18,13 +18,22 @@ public class UserController {
     UserService userService;
 
     /**
-     * 已登录
+     * 编辑用户信息
      * @return
      */
     @RequestMapping("/editUser")
     @ResponseBody
     public Object editUser(HttpServletRequest request, User user){
         return userService.editUser(user);
+    }
+    /**
+     * 编辑用户信息
+     * @return
+     */
+    @RequestMapping("/addUser")
+    @ResponseBody
+    public Object addUser(HttpServletRequest request, User user){
+        return userService.addUser(user);
     }
 
 }

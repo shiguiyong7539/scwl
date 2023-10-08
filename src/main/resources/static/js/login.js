@@ -553,7 +553,7 @@ loginBtn.onclick=function(e){
             if(data=='0'){
                 $('#rc-innerError').eq(0).show();
             }else{
-                window.location.href='../main/index.html';
+                window.location.href='../main/center_show.html';
             }
         });
     }
@@ -670,7 +670,7 @@ loginBtn1.onclick=function(e){
         return;
     }
     if(npnFlag&&otpFlag){
-        window.location.href='../main/index.html';
+        window.location.href='../main/center_show.html';
     }
 
 }

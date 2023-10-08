@@ -1,433 +1,170 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!doctype html>
+<html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <title>沙磁文旅</title>
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/echarts.min.js"></script>
-    <script type="text/javascript" src="js/js.js"></script>
-    <script type="text/javascript" src="js/jquery.limarquee.js"></script>
-    <script type="text/javascript" src="js/jquery.cxselect.min.js"></script>
-    <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
-
-    <link rel="stylesheet" href="css/comon0.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+	<title>沙磁文旅数字展示大屏</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
 </head>
+
 <body>
-<div style="background:#fff center top;">
-    <div class="loading">
-        <div class="loadbox"> <img src="picture/loading.gif"> 页面加载中... </div>
-    </div>
-    <div class="back"></div>
-    <div class="head">
-        <div class="weather"><span id="showTime"></span></div>
-        <h1><a href="https://gitee.com/iGaoWei/big-data-view" style="color: white">沙磁文旅大数据可视化展示平台</a></h1>
-
-    </div>
-    <script>
-        var t = null;
-        t = setTimeout(time,1000);//開始运行
-        function time()
-        {
-            clearTimeout(t);//清除定时器
-            dt = new Date();
-            var y=dt.getFullYear();
-            var mt=dt.getMonth()+1;
-            var day=dt.getDate();
-            var h=dt.getHours();//获取时
-            var m=dt.getMinutes();//获取分
-            var s=dt.getSeconds();//获取秒
-            document.getElementById("showTime").innerHTML = y+"年"+mt+"月"+day+"日"+h+"时"+m+"分"+s+"秒";
-            t = setTimeout(time,1000); //设定定时器，循环运行
-        }
-
-    </script>
-    <div class="container">
-    <div class="tag1">任务管理<button onclick="getTask('月',currentDate(1))">按月</button>
-        <button onclick="getTask('年',currentDate(2))">按年</button><span id="remark_time"></span>
-        <div id="myChart" style=" height: 400px;"></div>
-    </div>
-
-    <div class="tag1">成本管理<button onclick="getCostManage('月',currentDate(1))">按月</button>
-        <button onclick="getCostManage('年',currentDate(2))">按年</button>
-        <div id="myChart2" style="height: 400px;"></div>
-    </div>
-
-    <div class="tag1">资金状况<button onclick="getCapital('月',currentDate(1))">按月</button>
-         <button onclick="getCapital('年',currentDate(2))">按年</button>
-         <div id="myChart3" style=" height: 400px;"></div>
-     </div>
-
-        <div class="tag1">任务管理<button onclick="getTask('月',currentDate(1))">按月</button>
-            <button onclick="getTask('年',currentDate(2))">按年</button>
-            <div id="myChart4" style=" height: 400px;"></div>
-        </div>
-
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(function () {
-        getTask("月",currentDate(1));
-        getCostManage("月",currentDate(1));
-        getCapital("月",currentDate(1));
-      //  getManageState("月",currentDate(1));
-    })
+	<div class="head clearfix">
 
 
-    function getTask(period,condition) {
-        var myChart = echarts.init(document.getElementById('myChart'));
-        var myChart4 = echarts.init(document.getElementById('myChart4'));
-        $.ajax({
-            type: "get",
-            url: "/getTaskByCenter",
-            headers: {
-                'Authorization': localStorage.getItem("token") // 在请求头中添加token
-            },
-            data:({
-                period:period,
-                condition:condition
-            }),
-            success: function (res) {
-                if(res && res.code===200){
-                    if(period==="月"){
-                        document.getElementById('remark_time').innerHTML="("+res.obj[0].remark+")";
-                    }else {
+		<h1 class="pulll_left">沙磁文旅数字展示大屏</h1>
+		<div class="time" id="showTime">2018/6/12 17:00:12</div>
+		<script>
+			var t = null;
+			t = setTimeout(time, 1000);//開始运行
+			function time() {
+				clearTimeout(t);//清除定时器
+				dt = new Date();
+				var y = dt.getFullYear();
+				var mt = dt.getMonth() + 1;
+				var day = dt.getDate();
+				var h = dt.getHours();//获取时
+				var m = dt.getMinutes();//获取分
+				var s = dt.getSeconds();//获取秒
+				document.getElementById("showTime").innerHTML = y + "/" + mt + "/" + day + " " + h + ":" + m + ":" + s + "";
+				t = setTimeout(time, 1000); //设定定时器，循环运行     
+			}
 
-                    }
-                    var xAxisData =[];
-                    var data1 =[];
-                    var data2 =[];
-                    var data3 =[];
-                    var data4 =[];
-                    for (let i = 0; i < res.obj.length; i++) {
-                        xAxisData.push(res.obj[i].project);
-                        data1.push(res.obj[i].totalNum);
-                        data2.push(res.obj[i].completed);
-                        data3.push(res.obj[i].unfinished);
-                        data4.push(res.obj[i].overdue);
-                    }
+		</script>
+	</div>
+	<div class="mainbox">
 
-                    // 指定图表的配置项和数据
-                    var option = {
-                        title: {
-                            text: ''
-                        },
-                        tooltip: {},
-                        legend: {
-                            data:['任务数','完成数','未完成数','逾期数']
-                        },
-                        xAxis: {
-                            data:xAxisData,
-                            axisTick: {
-                                alignWithLabel: true
-                            },
-                            axisLabel: {
-                                interval:0
-                            }
-                        },
-                        yAxis: {
-                            type: 'value',
-                            autoScale: true // 开启自动缩放功能
-                        },
-                        series: [{
-                            name: '任务数',
-                            type: 'bar',
-                            data: data1
-                        },
-                            {
-                                name: '完成数',
-                                type: 'bar',
-                                data: data2
-                            },
-                            {
-                                name: '未完成数',
-                                type: 'bar',
-                                data: data3
-                            },
-                            {
-                                name: '逾期数',
-                                type: 'bar',
-                                data: data4
-                            },
-                        ]
-                    };
+		<ul class="clearfix nav1">
+			<li class="left_size">
+				<div class="box">
+					<div class="tit">任务管理</div>
+					<div class="boxnav" style="height: 235px;">
+						<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
+							<thead>
+							<tr>
+								<th>部门名</th>
+								<th>任务数</th>
+								<th>已完成数</th>
+								<th>未完成数</th>
+								<th>逾期数</th>
+							</tr>
+							</thead>
+							<tbody id="taskTable">
 
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option);
-                    myChart4.setOption(option);
-                }
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="box">
+					<div class="tit">风控</div>
+					<div class="boxnav" style="height: 150px;">
+						<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<th>类  别</th>
+									<th>总件数</th>
+									<th>完了件数</th>
+									<th>未完了件数</th>
+								</tr>
+								<tr>
+									<td>涉诉情况</td>
+									<td>10</td>
+									<td><span class="text-w">10</span></td>
+									<td><span class="text-b">0</span></td>
+								</tr>
+								<tr>
+									<td>监督检查整改情况</td>
+									<td>50</td>
+									<td><span class="text-w">49</span></td>
+									<td><span class="text-b">1</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="box">
+					<div class="tit">合同履行</div>
+					<div class="boxnav" style="height: 150px;">
+						<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<th>总件数</th>
+									<th>完成件数</th>
+									<th>未完成件数</th>
+								</tr>
+								<tr>
+									<td>10</td>
+									<td><span class="text-w">10</span></td>
+									<td><span class="text-b">0</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="box">
+					<div class="tit">人事信息统计</div>
+					<div class="boxnav" style="height: 350px;">
+						<div style="float: left; width: 50%; height: 170px" id="fb01"></div>
+						<div style="float: left; width: 50%; height: 170px" id="fb02"></div>
+						<div style="float: left; width: 50%; height: 170px" id="fb03"></div>
+						<div style="float: left; width: 50%; height: 170px" id="fb04"></div>
+					</div>
+				</div>
+			</li>
+			<li class="center_size">
 
-            }
+				<div class="box">
+					<div class="boxnav mapc" style="height: 1105px; position: relative">
+						<div class="mapnav2">
+							<div class="box">
+								<div class="centerTit">经营状况</div>
+								<div class="tit">租金收入</div>
+								<div class="boxnav" style="height: 200px;" id="asset_1">
+								</div>
+								<div class="tit">欠缴租金</div><br>
+								<div class="fboxnavtechart" style="height: 200px;" id="asset_2">
+								</div>
+								<div class="tit">出租率</div>
+								<div class="boxnav" style="height: 200px;" id="asset_3">
+								</div>
+							</div>
+							<div class="box">
+								<div class="tit">经营业务收入</div>
+								<div class="boxnav" style="height: 250px;" id="asset_4">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-
-
-        })
-
-
-    }
-
-    function getCostManage(period,condition) {
-        var myChart2 = echarts.init(document.getElementById('myChart2'));
-        $.ajax({
-            type: "get",
-            url: "/getCostManageByCenter",
-            headers: {
-                'Authorization': localStorage.getItem("token") // 在请求头中添加token
-            },
-            data:({
-                period:period,
-                condition:condition
-            }),
-            success: function (res) {
-                if(res && res.code===200){
-                    var pieData = []
-                    for (let i = 0; i < res.obj.length; i++) {
-                        pieData.push({name:"工资发放",value:res.obj[i].payOutWage});
-                        pieData.push({name:"房租",value:res.obj[i].rent});
-                        pieData.push({name:"水电办公等",value:res.obj[i].hydropowerOffice});
-                        pieData.push({name:"工会",value:res.obj[i].laborUnion});
-                    }
-                    // 指定图表的配置项和数据
-                    var option = {
-                        grid: {
-                            left: '1%', // 左侧距离容器左侧的距离
-                            right: '1%', // 右侧距离容器右侧的距离
-                            bottom: '1%', // 底部距离容器底部的距离
-                            containLabel: true // 包含 label，防止被挤压到边角
-                        },
-                        series: [
-                            {
-                                type: 'pie',
-                                data: pieData,
-                                // 文字的显示
-                                label: {
-                                    show: true,
-                                    // 决定文字显示的内容
-                                    formatter: function(arg){
-                                         var content =arg.name + '收入\n';
-                                         content += arg.value + '元\n';
-                                        return content;
-                                    },
-                                    position:'insideTop',
-                                    fontSize: 10 // 增加字体大小
-                                },
-                                // radius: 20 //饼图的半径
-                                //radius:'20%' //百分比参照的是宽度和高度中较小的那一部分的一半来进行百分比设置
-                                //radius: ['50%','75%']//第0个元素代表的是内圆的半径 第1个元素外圆的半径
-                                roseType: 'radius',//南丁格尔图 饼图的每一个区域的半径是不同的
-                                //selectedMode: 'single' //选中的效果，能够将选中的区域偏离圆点一小段距离
-                                selectedMode: 'multiple',
-                                selectedOffset: 30
-                            }
-                        ]
-                    }
-
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart2.setOption(option);
-                }
-
-            }
-
-
-
-        })
-
-
-    }
-
-    function getCapital(period,condition) {
-        var myChart3 = echarts.init(document.getElementById('myChart3'));
-        $.ajax({
-            type: "get",
-            url: "/getCapitalByCenter",
-            headers: {
-                'Authorization': localStorage.getItem("token") // 在请求头中添加token
-            },
-            data:({
-                period:period,
-                condition:condition
-            }),
-            success: function (res) {
-                if(res && res.code===200){
-                    var xAxisData =[];
-                    var data1 =[];
-                    var data2 =[];
-                    var data3 =[];
-                    var data4 =[];
-                    var data5 =[];
-                    for (let i = 0; i < res.obj.length; i++) {
-                        xAxisData.push(res.obj[i].remark);
-                        data1.push(res.obj[i].income);
-                        data2.push(res.obj[i].incomeTotal);
-                        data3.push(res.obj[i].contractExpend);
-                        data4.push(res.obj[i].specialExpend);
-                        data5.push(res.obj[i].dailyExpend);
-                    }
-                    // 指定图表的配置项和数据
-                    var option = {
-                        title: {
-                            text: ''
-                        },
-                        tooltip: {},
-                        legend: {
-                            data:['按月租赁收入','每月总收入','合同财务支出','专项债支出','日常报销支出']
-                        },
-                        xAxis: {
-                            data:xAxisData,
-                            axisTick: {
-                                alignWithLabel: true
-                            },
-                            axisLabel: {
-                                interval:0
-                            }
-                        },
-                        yAxis: {
-                            type: 'value',
-                            autoScale: true // 开启自动缩放功能
-                        },
-                        series: [{
-                            name:'按月租赁收入',
-                            type: 'bar',
-                            data: data1
-                           },
-                            {
-                                name:'每月总收入',
-                                type: 'bar',
-                                data: data2
-                            },
-                            {
-                                name:'合同财务支出',
-                                type: 'line',
-                                data: data3
-                            },
-                            {
-                                name:'专项债支出',
-                                type: 'line',
-                                data: data4
-                            },
-                            {
-                                name:'日常报销支出',
-                                type: 'line',
-                                data: data5
-                            },
-                        ]
-                    };
-
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart3.setOption(option);
-
-                }
-
-            }
-
-
-
-        })
-
-
-    }
-    function getManageState(period,condition) {
-        var myChart4 = echarts.init(document.getElementById('myChart3'));
-        $.ajax({
-            type: "get",
-            url: "/getManageStateByCenter",
-            headers: {
-                'Authorization': localStorage.getItem("token") // 在请求头中添加token
-            },
-            data:({
-                period:period,
-                condition:condition
-            }),
-            success: function (res) {
-                if(res && res.code===200){
-                    var xAxisData =[];
-                    var data1 =[];
-                    var data2 =[];
-                    var data3 =[];
-                    var data4 =[];
-                    for (let i = 0; i < res.obj.length; i++) {
-                        xAxisData.push(res.obj[i].project);
-                        data1.push(res.obj[i].totalNum)
-                        data2.push(res.obj[i].completed)
-                        data3.push(res.obj[i].unfinished)
-                        data4.push(res.obj[i].overdue)
-                    }
-                    // 指定图表的配置项和数据
-                    var option = {
-                        title: {
-                            text: ''
-                        },
-                        tooltip: {},
-                        legend: {
-                            data:['任务数','完成数','未完成数','逾期数']
-                        },
-                        xAxis: {
-                            data:xAxisData
-                        },
-                        yAxis: {
-                            type: 'value',
-                            autoScale: true // 开启自动缩放功能
-                        },
-                        series: [{
-                            name: '任务数',
-                            type: 'bar',
-                            data: data1
-                        },
-                            {
-                                name: '完成数',
-                                type: 'bar',
-                                data: data2
-                            },
-                            {
-                                name: '未完成数',
-                                type: 'bar',
-                                data: data3
-                            },
-                            {
-                                name: '逾期数',
-                                type: 'bar',
-                                data: data4
-                            },
-                        ]
-                    };
-
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart4.setOption(option);
-
-                }
-
-            }
-
-
-
-        })
-
-
-    }
-
-    //获取年月日
-
-    function currentDate(type) {
-        var date = new Date(); // 创建Date对象
-        // 获取年、月、日、小时、分钟和秒
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1; // 月份从0开始，所以要加1
-        var day = date.getDate();
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var seconds = date.getSeconds();
-        // 将日期和时间组件组合成字符串
-        var formatteddate = year + '-' + month;
-        var formattedTime = year + '-' + month + '-' + day;
-        if(type==1){
-            return formatteddate;
-        }else {
-            return year;
-        }
-
-    }
-</script>
+			</li>
+			<li class="right_size">
+				<div class="box">
+					<div class="centerTit">资金状况</div>
+					<div class="tit">收入状况</div>
+					<div class="boxnav" id="capital_1" style="height: 213px;"></div>
+					<div class="tit">支出状况</div>
+					<div class="boxnav" id="capital_2" style="height: 213px;">
+					</div>
+				</div>
+				<div class="box">
+					<div class="tit">建设进展</div>
+					<div class="boxnav" style="height: 213px;">
+				</div>
+				</div>
+				<div class="box">
+					<div class="tit">管理成本</div>
+					<div class="boxnav" style="height: 230px;" id="fb05"></div>
+				</div>
+			</li>
+		</ul>
+	</div>
 </body>
+
 </html>
