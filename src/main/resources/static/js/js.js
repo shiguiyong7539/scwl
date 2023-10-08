@@ -201,7 +201,7 @@ function echarts_4() {
                            top:'5%',
                            textStyle: {
                                color: "#fff",
-                               fontSize: '12',
+                               fontSize: '10',
 
                            },
 
@@ -235,7 +235,7 @@ function echarts_4() {
                                splitNumber: 5,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
-                                   fontSize: '12',
+                                   fontSize: '10',
                                },
                            },
                        }],
@@ -246,7 +246,7 @@ function echarts_4() {
                                show:true,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
-                                   fontSize: '12',
+                                   fontSize: '10',
                                },
                            },
                            axisTick: {
@@ -296,7 +296,7 @@ function echarts_4() {
                            top:'5%',
                            textStyle: {
                                color: "#fff",
-                               fontSize: '12',
+                               fontSize: '10',
 
                            },
 
@@ -330,7 +330,7 @@ function echarts_4() {
                                splitNumber: 5,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
-                                   fontSize: '12',
+                                   fontSize: '10',
                                },
                            },
                        }],
@@ -341,7 +341,7 @@ function echarts_4() {
                                show:true,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
-                                   fontSize: '12',
+                                   fontSize: '10',
                                },
                            },
                            axisTick: {
@@ -391,7 +391,7 @@ function echarts_4() {
                            top:'5%',
                            textStyle: {
                                color: "#fff",
-                               fontSize: '12',
+                               fontSize: '10',
 
                            },
 
@@ -425,7 +425,7 @@ function echarts_4() {
                                splitNumber: 5,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
-                                   fontSize: '12',
+                                   fontSize: '10',
                                },
                            },
                        }],
@@ -436,7 +436,7 @@ function echarts_4() {
                                show:true,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
-                                   fontSize: '12',
+                                   fontSize: '10',
                                },
                            },
                            axisTick: {
@@ -487,7 +487,7 @@ function echarts_4() {
                            top:'5%',
                            textStyle: {
                                color: "#fff",
-                               fontSize: '12',
+                               fontSize: '10',
 
                            },
 
@@ -521,7 +521,7 @@ function echarts_4() {
                                splitNumber: 5,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
-                                   fontSize: '12',
+                                   fontSize: '10',
                                },
                            },
                        }],
@@ -532,7 +532,7 @@ function echarts_4() {
                                show:true,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
-                                   fontSize: '12',
+                                   fontSize: '10',
                                },
                            },
                            axisTick: {
@@ -689,7 +689,7 @@ function echarts_5() {
                             top:'5%',
                             textStyle: {
                                 color: "#fff",
-                                fontSize: '12',
+                                fontSize: '10',
 
                             },
 
@@ -723,7 +723,7 @@ function echarts_5() {
                                 splitNumber: 5,
                                 textStyle: {
                                     color: "rgba(255,255,255,.6)",
-                                    fontSize: '12',
+                                    fontSize: '10',
                                 },
                             },
                         }],
@@ -734,7 +734,7 @@ function echarts_5() {
                                 show:true,
                                 textStyle: {
                                     color: "rgba(255,255,255,.6)",
-                                    fontSize: '12',
+                                    fontSize: '10',
                                 },
                             },
                             axisTick: {
@@ -797,7 +797,7 @@ function echarts_5() {
                             top:'5%',
                             textStyle: {
                                 color: "#fff",
-                                fontSize: '12',
+                                fontSize: '10',
 
                             },
 
@@ -831,7 +831,7 @@ function echarts_5() {
                                 splitNumber: 5,
                                 textStyle: {
                                     color: "rgba(255,255,255,.6)",
-                                    fontSize: '12',
+                                    fontSize: '10',
                                 },
                             },
                         }],
@@ -842,7 +842,7 @@ function echarts_5() {
                                 show:true,
                                 textStyle: {
                                     color: "rgba(255,255,255,.6)",
-                                    fontSize: '12',
+                                    fontSize: '10',
                                 },
                             },
                             axisTick: {
@@ -915,7 +915,9 @@ function echarts_5() {
                         myChart.resize();
                         myChart2.resize();
                     });
-
+                    window.onresize = function() {
+                        updateLegendFontSize();
+                    };
 
                 }
 
@@ -925,7 +927,20 @@ function echarts_5() {
 
         })
 
-
+    // 定义一个函数来更新图例字体大小
+    function updateLegendFontSize() {
+        var width = document.getElementById('myChart').offsetWidth;
+        var fontSize = width / 11;
+        myChart.setOption({
+            legend: {
+                itemWidth: 10,
+                itemHeight: 14,
+                textStyle: {
+                    fontSize: fontSize + 'px'
+                }
+            }
+        });
+    }
 
     }
 function echarts_31() {
@@ -989,7 +1004,7 @@ function echarts_31() {
                         data:['20-29岁','30-39岁','40-49岁','50-59岁','60-69岁'],
                         textStyle: {
                             color: 'rgba(255,255,255,.5)',
-                            fontSize:'12',
+                            fontSize:'10',
                         }
                     },
                     series: [
@@ -1022,7 +1037,7 @@ function echarts_31() {
                         data:['博士','硕士','本科','专科'],
                         textStyle: {
                             color: 'rgba(255,255,255,.5)',
-                            fontSize:'12',
+                            fontSize:'10',
                         }
                     },
                     series: [
@@ -1055,7 +1070,7 @@ function echarts_31() {
                         data:['初级','中级','高级'],
                         textStyle: {
                             color: 'rgba(255,255,255,.5)',
-                            fontSize:'12',
+                            fontSize:'10',
                         }
                     },
                     series: [
@@ -1088,7 +1103,7 @@ function echarts_31() {
                         data:['正式','外聘'],
                         textStyle: {
                             color: 'rgba(255,255,255,.5)',
-                            fontSize:'12',
+                            fontSize:'10',
                         }
                     },
                     series: [
@@ -1173,7 +1188,7 @@ function echarts_32() {
                             data:['工资发放','房租','水电办公等','工会'],
                             textStyle: {
                                 color: 'rgba(255,255,255,.5)',
-                                fontSize:'12',
+                                fontSize:'10',
                             }
                         },
                         series: [
@@ -1297,7 +1312,6 @@ function currentDate(type) {
     //     box1.style.display="none";
     //
     // });
-
 })
 
 
