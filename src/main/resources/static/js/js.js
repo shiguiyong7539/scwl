@@ -615,7 +615,7 @@ function echarts_4() {
 
                                itemStyle: {
                                    normal: {
-                                       color:'#0c190c',
+                                       color:'#f7ff2c',
                                        opacity: 1,
                                        barBorderRadius: 5,
                                    }
@@ -998,7 +998,7 @@ function echarts_5() {
 
                                 itemStyle: {
                                     normal: {
-                                        color:'#0c190c',
+                                        color:'#c12125',
                                         opacity: 1,
                                         barBorderRadius: 5,
                                     }
