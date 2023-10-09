@@ -52,8 +52,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         for (int i = 0; i < byAgeGroup.size(); i++) {
             Map map = byAgeGroup.get(i);
             Long age = (Long) map.get("age_group");
-            Long ageHigh = age+9;
-            map.put("age_range",age+"-"+ageHigh+"岁");
+            if(age>=60){
+                Long ageHigh = age+9;
+                map.put("age_range","60岁以上");
+            }else {
+                Long ageHigh = age+9;
+                map.put("age_range",age+"-"+ageHigh+"岁");
+            }
+
         }
         //按学历分组
         List<Map> byEduGroup = employeeMapper.getByEduGroup();
