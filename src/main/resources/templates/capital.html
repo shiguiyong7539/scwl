@@ -223,12 +223,12 @@
                     <thead>
                     <tr>
                         <td width="80">编号</td>
-                        <td width="80">资金类型</td>
-                        <td width="80">按月租赁收入</td>
-                        <td width="80">每月总收入</td>
-                        <td width="80">合同财务支出</td>
-                        <td width="80">专项债支出</td>
-                        <td width="80">日常报销支出</td>
+                        <td width="80">融资计划完成率</td>
+                        <td width="80">运营费用节约率</td>
+                        <td width="80">营业收入增长率</td>
+                        <td width="80">营业现金比率</td>
+                        <td width="80">营业成本率</td>
+                        <td width="80">可用资金</td>
                         <td width="80">日期</td>
                     </tr>
                     </thead>
@@ -252,41 +252,36 @@
                     <h2>资金状况信息</h2>
                 </div>
                 <div class="modal-body">
+
                     <div class="formRow">
-                        资金类型：
-                        <div class="formRight"><select id="type"  style="width: 162px;" onchange="showColum()">
-                            <option value=""></option>
-                            <option value="收入">收入</option>
-                            <option value="支出">支出</option>
-                        </select></div>
+                        融资计划完成率：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="finishRate"><span>%</span></div><div class="clear"></div>
                     </div>
-
-
-                    <div class="formRow income">
-                        按月租赁收入：
-                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="income"></div><div class="clear"></div>
+                    <div class="formRow">
+                        营业收入增长率：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="operatRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow income">
-                        每月总收入：
-                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="incomeTotal"></div><div class="clear"></div>
+                    <div class="formRow">
+                        营业收入增长率：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="incomeRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow expent">
-                        合同财务支出：
-                        <div class="formRight"><input type="number" step="0.01"   class="validate[required]"  id="contractExpend"></div><div class="clear"></div>
+                    <div class="formRow">
+                        营业现金比率：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="cashRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow expent">
-                        专项债支出：
-                        <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="specialExpend"></div><div class="clear"></div>
+                    <div class="formRow">
+                        营业成本率：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="costRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow expent">
-                        日常报销支出：
-                        <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="dailyExpend"></div><div class="clear"></div>
+                    <div class="formRow">
+                        可用资金：
+                        <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="useCapital"></div><div class="clear"></div>
                     </div>
 
                     <div class="formRow">
                         日期：
                         <div class="formRight">
-                            <input type="date"  style="width: 162px;" id="term">
+                            <input type="date"  style="width: 162px;" id="addDate">
                         </div>
                     </div>
 
@@ -422,13 +417,13 @@
                         var str_info='';
                         for (var i = 0; i < data1.length; i++) {
                             str_info+='<tr><td align="center">'+data1[i].id+'</td>';
-                            str_info+='<td align="center">'+data1[i].type+'</td>';
-                            str_info+='<td align="center">'+isNull(data1[i].income)+'</td>';
-                            str_info+='<td align="center">'+isNull(data1[i].incomeTotal)+'</td>';
-                            str_info+='<td align="center">'+isNull(data1[i].contractExpend)+'</td>';
-                            str_info+='<td align="center">'+isNull(data1[i].specialExpend)+'</td>';
-                            str_info+='<td align="center">'+isNull(data1[i].dailyExpend)+'</td>';
-                            str_info+='<td align="center">'+dateFormat(1,data1[i].term)+'</td></tr>';
+                            str_info+='<td align="center">'+percentage(data1[i].finishRate)+'</td>';
+                            str_info+='<td align="center">'+percentage(data1[i].operatRate)+'</td>';
+                            str_info+='<td align="center">'+percentage(data1[i].incomeRate)+'</td>';
+                            str_info+='<td align="center">'+percentage(data1[i].cashRate)+'</td>';
+                            str_info+='<td align="center">'+percentage(data1[i].costRate)+'</td>';
+                            str_info+='<td align="center">'+isNull(data1[i].useCapital)+'</td>';
+                            str_info+='<td align="center">'+dateFormat(1,data1[i].addDate)+'</td></tr>';
                         }
                         $("#myTable").html(str_info);
 
@@ -514,13 +509,13 @@
         }
 
         function addCapital() {
-            var type = document.getElementById("type").value;
-            var income = document.getElementById("income").value;
-            var incomeTotal = document.getElementById("incomeTotal").value;
-            var contractExpend = document.getElementById("contractExpend").value;
-            var specialExpend = document.getElementById("specialExpend").value;
-            var dailyExpend = document.getElementById("dailyExpend").value;
-            var term = document.getElementById("term").value;
+            var finishRate = document.getElementById("finishRate").value;
+            var operatRate = document.getElementById("operatRate").value;
+            var incomeRate = document.getElementById("incomeRate").value;
+            var cashRate = document.getElementById("cashRate").value;
+            var costRate = document.getElementById("costRate").value;
+            var useCapital = document.getElementById("useCapital").value;
+            var addDate = document.getElementById("addDate").value;
             $.ajax({
                 type: "post",
                 url: "/addCapital",
@@ -528,13 +523,13 @@
                     'Authorization': localStorage.getItem("token") // 在请求头中添加token
                 },
                 data:({
-                    type:type,
-                    income:income,
-                    incomeTotal:incomeTotal,
-                    contractExpend:contractExpend,
-                    specialExpend:specialExpend,
-                    dailyExpend:dailyExpend,
-                    term:new Date(term)
+                    finishRate:finishRate,
+                    operatRate:operatRate,
+                    incomeRate:incomeRate,
+                    cashRate:cashRate,
+                    costRate:costRate,
+                    useCapital:useCapital,
+                    addDate:new Date(addDate)
                 }),
                 success: function (res) {
                     if(res && res.code===200){
@@ -573,8 +568,13 @@
 
         //获取所有包含百分比转化
         function percentage(num) {
-            var per = Number(num)*100;
-            return per +'%';
+            if(null==num){
+                return "";
+            }else {
+                var per = Number(num)*100;
+                return per +'%';
+            }
+
 
         }
 

@@ -1,5 +1,6 @@
 package com.scwl.controller;
 
+import com.scwl.pojo.Capital;
 import com.scwl.pojo.CapitalPosition;
 import com.scwl.pojo.Employee;
 import com.scwl.pojo.User;
@@ -39,7 +40,7 @@ public class CapitalController {
      */
     @RequestMapping("/addCapital")
     @ResponseBody
-    public Object addCapital(HttpServletRequest request, CapitalPosition capital){
+    public Object addCapital(HttpServletRequest request, Capital capital){
         return capitalService.addCapital(capital);
     }
 

@@ -1,5 +1,6 @@
 package com.scwl.service;
 
+import com.scwl.pojo.Capital;
 import com.scwl.pojo.CapitalPosition;
 import com.scwl.pojo.ResBean;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,7 +11,7 @@ public interface CapitalService {
 
   ResBean getCapital(int pageNum, int pageSize);
 
-  ResBean addCapital( CapitalPosition capital);
+  ResBean addCapital(Capital capital);
 
   ResBean getCapitalByCenter(String period,String condition);
 
