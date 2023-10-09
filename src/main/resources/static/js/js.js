@@ -1096,6 +1096,7 @@ function echarts_31() {
                         {
                             name:'年龄分布',
                             type:'pie',
+                            animation:true,
                             center: ['35%', '50%'],
                             radius: ['40%', '50%'],
                             color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
