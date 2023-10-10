@@ -427,7 +427,7 @@ function echarts_4() {
                                console.log(params[0]);
                                var axisValue = params[0].axisValue + '</br>';
                                var seriesName = params[0].seriesName + ':';
-                               var unit = params[0].value*100 + '%';
+                               var unit = params[0].value + '%';
                                return axisValue+seriesName+unit;
                            }
                        },
@@ -741,12 +741,13 @@ function echarts_5() {
                             trigger: 'axis',
                             axisPointer: {
                                 type: 'shadow'
-                            },
+                            }
+                            ,
                             formatter: function(params) {
                                 console.log(params[0]);
                                 var axisValue = params[0].axisValue + '</br>';
                                 var seriesName = params[0].seriesName + ':';
-                                var unit = params[0].value*100 + '%';
+                                var unit = params[0].value+'元';
                                 return axisValue+seriesName+unit;
                             }
                         },
