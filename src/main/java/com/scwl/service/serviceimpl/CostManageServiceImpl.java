@@ -42,11 +42,11 @@ public class CostManageServiceImpl implements CostManageService {
     @Override
     public ResBean getCostManageByCenter(String period, String condition) {
         if(period.equals("年")){
-            List<CostManage> costManages = costManageMapper.getCostByYear(condition);
+            CostManage costManages = costManageMapper.getCostByYear(condition);
             return ResBean.success("success",costManages);
         }else {
             period ="%Y-%m";
-            List<CostManage> costManages =   costManageMapper.getCostByMonth(period,condition.substring(0,7));
+            CostManage costManages =   costManageMapper.getCostByMonth(period,condition.substring(0,7));
             return ResBean.success("success",costManages);
         }
     }

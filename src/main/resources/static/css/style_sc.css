@@ -144,6 +144,13 @@ select{
 .right_size{
     width: 30%;
 }
+.btn_right{
+    float: right
+}
+.mbtn{
+    background: #033c76;
+    color: white;
+}
 @media (max-width: 767px) {
     .head {
         height:105px!important;

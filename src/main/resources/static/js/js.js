@@ -4,7 +4,7 @@ $(function () {
     echarts_4();
     echarts_5();
     echarts_31();
-    echarts_32();
+    echarts_32('月');
     getTaskTable();
 function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
@@ -127,6 +127,12 @@ function echarts_4() {
         },
         success: function (res) {
             if(res && res.code===200){
+                //租金总收入
+                document.getElementById("rent_total").innerText = res.obj.rent_total;
+                //租金总欠收
+                document.getElementById("arrears_total").innerText = res.obj.arrears_total;
+                //经营业务总收入
+                document.getElementById("in_total").innerText = res.obj.in_total;
                    var manage_date =[];
                    var income_data =[];
                    var arrears_data =[];
@@ -142,11 +148,11 @@ function echarts_4() {
                 var income_data4 =[];
                 var income_data5 =[];
 
-                for (let i = 0; i < res.obj.length; i++) {
-                    var manage = res.obj[i].manage;
+                for (let i = 0; i < res.obj.list.length; i++) {
+                    var manage = res.obj.list[i].manage;
                     if(i==0){
                         for (let i = 0; i < manage.length; i++) {
-                            manage_date.push(manage[i].remark);
+                            manage_date.push(manage[i].remark+'月');
                             income_data.push(manage[i].rentIncome);
                             arrears_data.push(manage[i].rentArrears);
                             rate_data.push(manage[i].letRate);
@@ -156,31 +162,31 @@ function echarts_4() {
 
                     if(manage[0].name==='旧日长轨'){
                         for (let i = 0; i < manage.length; i++) {
-                            manage_date1.push(manage[i].remark);
+                            manage_date1.push(manage[i].remark+'月');
                             income_data1.push(manage[i].rentIncome);
                         }
                     }
                     if(manage[0].name==='星河集市'){
                         for (let i = 0; i < manage.length; i++) {
-                            manage_date2.push(manage[i].remark);
+                            manage_date2.push(manage[i].remark+'月');
                             income_data2.push(manage[i].rentIncome);
                         }
                     }
                     if(manage[0].name==='金沙艺术中心'){
                         for (let i = 0; i < manage.length; i++) {
-                            manage_date3.push(manage[i].remark);
+                            manage_date3.push(manage[i].remark+'月');
                             income_data3.push(manage[i].rentIncome);
                         }
                     }
                     if(manage[0].name==='灿若湖民宿'){
                         for (let i = 0; i < manage.length; i++) {
-                            manage_date4.push(manage[i].remark);
+                            manage_date4.push(manage[i].remark+'月');
                             income_data4.push(manage[i].rentIncome);
                         }
                     }
                     if(manage[0].name==='活动策划'){
                         for (let i = 0; i < manage.length; i++) {
-                            manage_date5.push(manage[i].remark);
+                            manage_date5.push(manage[i].remark+'月');
                             income_data5.push(manage[i].rentIncome);
                         }
                     }
@@ -194,6 +200,22 @@ function echarts_4() {
                            trigger: 'axis',
                            axisPointer: {
                                type: 'shadow'
+                           },
+                           formatter: function(params) {
+                               console.log(params[0]);
+                               var axisValue = params[0].axisValue + '</br>';
+                               var seriesName = params[0].seriesName + ':';
+                               var unit = params[0].value + ' 元';
+                               return axisValue+seriesName+unit;
+                           }
+                       },
+                       toolbox: {
+                           show: true,
+                           feature: {
+                               magicType: {
+                                   show: true,
+                                   type: ['line', 'bar']
+                               }
                            }
                        },
                        legend: {
@@ -205,7 +227,7 @@ function echarts_4() {
 
                            },
 
-                           itemGap: 35
+                           itemGap: 5
                        },
                        grid: {
                            left: '0%',
@@ -289,6 +311,22 @@ function echarts_4() {
                            trigger: 'axis',
                            axisPointer: {
                                type: 'shadow'
+                           },
+                           formatter: function(params) {
+                               console.log(params[0]);
+                               var axisValue = params[0].axisValue + '</br>';
+                               var seriesName = params[0].seriesName + ':';
+                               var unit = params[0].value + ' 元';
+                               return axisValue+seriesName+unit;
+                           }
+                       },
+                       toolbox: {
+                           show: true,
+                           feature: {
+                               magicType: {
+                                   show: true,
+                                   type: ['line', 'bar']
+                               }
                            }
                        },
                        legend: {
@@ -384,6 +422,13 @@ function echarts_4() {
                            trigger: 'axis',
                            axisPointer: {
                                type: 'shadow'
+                           },
+                           formatter: function(params) {
+                               console.log(params[0]);
+                               var axisValue = params[0].axisValue + '</br>';
+                               var seriesName = params[0].seriesName + ':';
+                               var unit = params[0].value*100 + '%';
+                               return axisValue+seriesName+unit;
                            }
                        },
                        legend: {
@@ -480,7 +525,15 @@ function echarts_4() {
                            trigger: 'axis',
                            axisPointer: {
                                type: 'shadow'
-                           }
+                            }
+                               // ,
+                           // formatter: function(params) {
+                           //     console.log(params[0]);
+                           //     var axisValue = params[0].axisValue + '</br>';
+                           //     var seriesName = params[0].seriesName + ':';
+                           //     var unit = params[0].value + ' 元';
+                           //     return axisValue+seriesName+unit;
+                           // }
                        },
                        legend: {
                            data: ['旧日长轨','星河集市','金沙艺术中心','灿若湖民宿','活动策划'],
@@ -654,6 +707,8 @@ function echarts_5() {
                 if(res && res.code===200){
                    // 融资计划完成率 运营费用节约率 营业收入增长率 营业现金比率 营业成本率 可用资金
                   // finishRate;operatRate; incomeRate;cashRate;costRate; useCapital;addDate;remark;
+                    //当前可用资金
+                    document.getElementById("use_money").innerText = res.obj.use_money;
                     var income_date = [];
                     //融资计划完成率
                     var finishRateData = [];
@@ -668,9 +723,9 @@ function echarts_5() {
                     //可用资金
                     var useCapitalData = [];
 
-                    var data = res.obj;
+                    var data = res.obj.list;
                     for (let i = 0; i < data.length; i++) {
-                        income_date.push(data[i].remark);
+                        income_date.push(data[i].remark+'月');
                         finishRateData.push(data[i].finishRate);
                         operatRateData.push(data[i].operatRate);
                         incomeRateData.push(data[i].incomeRate);
@@ -686,6 +741,22 @@ function echarts_5() {
                             trigger: 'axis',
                             axisPointer: {
                                 type: 'shadow'
+                            },
+                            formatter: function(params) {
+                                console.log(params[0]);
+                                var axisValue = params[0].axisValue + '</br>';
+                                var seriesName = params[0].seriesName + ':';
+                                var unit = params[0].value*100 + '%';
+                                return axisValue+seriesName+unit;
+                            }
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                magicType: {
+                                    show: true,
+                                    type: ['line', 'bar']
+                                }
                             }
                         },
                         legend: {
@@ -810,6 +881,15 @@ function echarts_5() {
                                 type: 'shadow'
                             }
                         },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                magicType: {
+                                    show: true,
+                                    type: ['line', 'bar']
+                                }
+                            }
+                        },
                         legend: {
                             data: ['可用资金'],
                             top:'5%',
@@ -903,6 +983,15 @@ function echarts_5() {
                             trigger: 'axis',
                             axisPointer: {
                                 type: 'shadow'
+                            }
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                magicType: {
+                                    show: true,
+                                    type: ['line', 'bar']
+                                }
                             }
                         },
                         legend: {
@@ -1234,7 +1323,7 @@ function echarts_31() {
 
 
     }
-function echarts_32() {
+function echarts_32(period) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb05'));
        $.ajax({
@@ -1244,25 +1333,25 @@ function echarts_32() {
             'Authorization': localStorage.getItem("token") // 在请求头中添加token
         },
         data:({
-            period:'月',
+            period:period,
             condition:currentDate(1)
         }),
         success: function (res) {
             if(res && res.code===200){
                 var pieData = []
                 var total_money=0;
-                for (let i = 0; i < res.obj.length; i++) {
-                    pieData.push({name:"工资发放",value:res.obj[i].payOutWage});
-                    pieData.push({name:"房租",value:res.obj[i].rent});
-                    pieData.push({name:"水电办公等",value:res.obj[i].hydropowerOffice});
-                    pieData.push({name:"工会",value:res.obj[i].laborUnion});
-                    total_money+=res.obj[i].payOutWage+res.obj[i].rent+res.obj[i].hydropowerOffice+res.obj[i].laborUnion;
-                }
+
+                    pieData.push({name:"工资发放",value:res.obj.payOutWage});
+                    pieData.push({name:"房租",value:res.obj.rent});
+                    pieData.push({name:"水电办公等",value:res.obj.hydropowerOffice});
+                    pieData.push({name:"工会",value:res.obj.laborUnion});
+                    total_money+=res.obj.payOutWage+res.obj.rent+res.obj.hydropowerOffice+res.obj.laborUnion;
+
 
                     option = {
                         title: {
                             zlevel: 0,
-                            text: ['{name|累计成本}', '{value|' + total_money + '}'].join('\n'),
+                            text: ['{name|累计成本}', '{value|' + (total_money/10000).toFixed(2) + '}{name|万元}'].join('\n'),
                             top: '35%',
                             left: '34%',
                             textAlign: 'center',
@@ -1271,12 +1360,12 @@ function echarts_32() {
                                     value: {
                                         color: '#cf5a1f',
                                         fontSize: 15,
-                                        lineHeight: 24,
+                                        lineHeight: 25,
                                     },
                                     name: {
                                         color: '#909399',
-                                        fontSize: 14,
-                                        lineHeight: 35,
+                                        fontSize: 10,
+                                        lineHeight: 25,
                                     },
                                 },
                             }
@@ -1301,9 +1390,16 @@ function echarts_32() {
                                 fontSize:'10',
                             },
                             formatter: function(name) {
-                                             var data = option.series[0].data;
-                                             var percent = (data[0].value / total_money * 100).toFixed(2) + '%';
-                                             return name + ': ' + data[0].value + ' (' + percent + ')';  },
+                                var data = option.series[0].data;
+                                for (let i = 0; i < data.length; i++) {
+                                    if(name === data[i].name){
+                                        var percent = (data[i].value / total_money * 100).toFixed(2) + '%';
+                                        var value = (data[i].value/10000).toFixed(2);
+                                        return name + ': ' +value+ '万元 (' + percent + ')';
+                                    }
+
+                                }
+                                },
                         },
                         series: [
                             {
@@ -1410,6 +1506,12 @@ function currentDate(type) {
         }
     }
 
+    $("#now_month").on("click", function() {
+        echarts_32('月');
+    })
+    $("#now_year").on("click", function() {
+        echarts_32('年');
+    })
     // $("#asset1").on("click", function() {
     //     // var box_show1 = document.getElementsByClassName("box_show1");
     //     // var box_show2 = document.getElementsByClassName("box_show2");

@@ -290,7 +290,7 @@
          sum(pay_out_wage) as pay_out_wage,sum(rent) as rent,sum(hydropower_office) as hydropower_office,sum(labor_union) as labor_union,
         YEAR(periodic_time) as remark
     from cost_manage
-   where YEAR(periodic_time) = #{condition}
+   where YEAR(periodic_time) = YEAR(CURDATE())
      GROUP BY YEAR(periodic_time)
   </select>
 </mapper>

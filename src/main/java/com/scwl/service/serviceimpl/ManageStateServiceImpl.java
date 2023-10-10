@@ -48,13 +48,17 @@ public class ManageStateServiceImpl implements ManageStateService {
 
     @Override
     public ResBean getManageStateByCenter() {
-//        if(period.equals("年")){
-//            List<ManageState> manageStates = manageStateMapper.getTaskByYear(condition);
-//            return ResBean.success("success",manageStates);
-//        }else {
-//            period ="%Y-%m";
-//            List<ManageState> manageStates =   manageStateMapper.getTaskByMonth(period,condition.substring(0,7));
-            List<Map<String,Object>> list = new ArrayList<>();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        //租金收入（欠收）当年度总额
+        ManageState totalByThisYear = manageStateMapper.getTotalByThisYear("资产经营");
+        //收入
+        hashMap.put("rent_total",totalByThisYear.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        //欠收
+        hashMap.put("arrears_total",totalByThisYear.getRentArrears().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        //经营业务收入当年度总额
+        ManageState totalByThisYear1 = manageStateMapper.getTotalByThisYear("经营业务收入");
+        hashMap.put("in_total",totalByThisYear.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        List<Map<String,Object>> list = new ArrayList<>();
             List<ManageState>    manageStates = manageStateMapper.getManageStateByAsset();
             HashMap<String, Object> map = new HashMap<>();
             map.put("manage",manageStates);
@@ -67,7 +71,8 @@ public class ManageStateServiceImpl implements ManageStateService {
                 map1.put("manage",manageStateList);
                 list.add(map1);
         }
-        return ResBean.success("success",list);
+         hashMap.put("list",list);
+        return ResBean.success("success",hashMap);
 
 
 

@@ -304,7 +304,7 @@
   <select id="getManageStateByAsset" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
         type,  sum(rent_income) as rent_income,sum(rent_arrears) as rent_arrears,sum(let_rate) as let_rate,
-        DATE_FORMAT(periodic_time,'%Y-%m') as remark
+        MONTH(periodic_time) as remark
     from manage_state
    where  type ='资产经营' and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
      GROUP BY DATE_FORMAT(periodic_time,'%Y-%m')
@@ -316,10 +316,15 @@
   <select id="getManageStateByManage" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
         type,name,sum(rent_income) as rent_income,
-        DATE_FORMAT(periodic_time,'%Y-%m') as remark
+        MONTH(periodic_time) as remark
     from manage_state
    where  type ='经营业务收入'and name= #{name} and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
      GROUP BY DATE_FORMAT(periodic_time,'%Y-%m')
      ORDER BY DATE_FORMAT(periodic_time,'%Y-%m')
+  </select>
+  <select id="getTotalByThisYear" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    SELECT SUM(rent_income) AS rent_income,SUM(rent_arrears) AS rent_arrears
+    FROM manage_state
+    WHERE type = #{type} and YEAR(periodic_time) = YEAR(CURDATE());
   </select>
 </mapper>

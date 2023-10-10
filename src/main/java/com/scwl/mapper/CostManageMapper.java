@@ -31,7 +31,7 @@ public interface CostManageMapper {
 
     List<CostManage> getAllCost(@Param("costManage") CostManage costManage);
 
-    List<CostManage> getCostByMonth(String period, String condition);
+    CostManage getCostByMonth(String period, String condition);
 
-    List<CostManage> getCostByYear(String condition);
+    CostManage getCostByYear(String condition);
 }

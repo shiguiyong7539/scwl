@@ -37,6 +37,7 @@ public interface ManageStateMapper {
     List<ManageState> getTaskByYear(String condition);
 
     List<ManageState> getManageStateByAsset();
+    ManageState getTotalByThisYear(String type);
     List<ManageState> getAllName();
     List<ManageState> getManageStateByManage(String name);
 }

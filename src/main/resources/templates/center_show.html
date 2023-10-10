@@ -146,10 +146,10 @@
 					<div class="mapnav2">
 						<div class="box">
 							<div class="centerTit">经营状况</div>
-							<div class="tit">租金收入<span class="titAmount">5000</span><span class="titAmountRight">万元（年度总额）</span></div>
+							<div class="tit">租金收入<span class="titAmount" id="rent_total"></span><span class="titAmountRight">万元（年度总额）</span></div>
 							<div class="boxnav" style="height: 200px;" id="asset_1">
 							</div>
-							<div class="tit">欠缴租金<span class="titAmount">100</span><span class="titAmountRight">万元（年度总额）</span></div><br>
+							<div class="tit">欠缴租金<span class="titAmount" id="arrears_total"></span><span class="titAmountRight">万元（年度总额）</span></div><br>
 							<div class="fboxnavtechart" style="height: 200px;" id="asset_2">
 							</div>
 							<div class="tit">出租率</div>
@@ -157,7 +157,7 @@
 							</div>
 						</div>
 						<div class="box">
-							<div class="tit">经营业务收入<span class="titAmount">4000</span><span class="titAmountRight">万元（年度总额）</span></div>
+							<div class="tit">经营业务收入<span class="titAmount" id="in_total"></span><span class="titAmountRight">万元（年度总额）</span></div>
 							<div class="boxnav" style="height: 250px;" id="asset_4">
 							</div>
 						</div>
@@ -169,7 +169,7 @@
 		<li class="right_size">
 			<div class="box">
 				<div class="centerTit">资金状况</div>
-				<div class="tit">可用资金<span class="titAmount">2000</span><span class="titAmountRight">万元（当前）</span></div>
+				<div class="tit">可用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元（当前）</span></div>
 				<div class="boxnav" id="capital_1" style="height: 213px;"></div>
 				<div class="tit">资金状况比率</div>
 				<div class="boxnav" id="capital_2" style="height: 213px;">
@@ -179,7 +179,7 @@
 			</div>
 
 			<div class="box">
-				<div class="tit">管理成本</div>
+				<div class="tit">管理成本<span class="btn_right"><button class="mbtn"  id="now_month">当月</button><button class="mbtn"  id="now_year">当年</button></span></div>
 				<div class="boxnav" style="height: 230px;" id="fb05"></div>
 			</div>
 			<div class="box">
