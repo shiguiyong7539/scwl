@@ -53,8 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(
-				"/","/memberList","/costManage","/mangeState","/login",
+				"/","/loginAdmin","/memberList","/costManage","/mangeState","/login",
 				"/logout","/admin","/userInfo","/index","/capitalList",
+				"/contract",
+				"/risk",
 				"/taskList",
 				"/centerShow",
 				"/file/**",

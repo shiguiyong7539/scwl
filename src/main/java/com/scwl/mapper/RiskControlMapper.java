@@ -2,9 +2,8 @@ package com.scwl.mapper;
 
 import com.scwl.pojo.RiskControl;
 import com.scwl.pojo.RiskControlExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface RiskControlMapper {
     int countByExample(RiskControlExample example);
@@ -28,4 +27,7 @@ public interface RiskControlMapper {
     int updateByPrimaryKeySelective(RiskControl record);
 
     int updateByPrimaryKey(RiskControl record);
+
+    List<RiskControl> getTotal();
+    int getTotalYear(String name);
 }

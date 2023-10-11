@@ -165,123 +165,193 @@ public class RiskControlExample {
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumIsNull() {
-            addCriterion("total_num is null");
+        public Criteria andNameIsNull() {
+            addCriterion("name is null");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumIsNotNull() {
-            addCriterion("total_num is not null");
+        public Criteria andNameIsNotNull() {
+            addCriterion("name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumEqualTo(Integer value) {
-            addCriterion("total_num =", value, "totalNum");
+        public Criteria andNameEqualTo(String value) {
+            addCriterion("name =", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumNotEqualTo(Integer value) {
-            addCriterion("total_num <>", value, "totalNum");
+        public Criteria andNameNotEqualTo(String value) {
+            addCriterion("name <>", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumGreaterThan(Integer value) {
-            addCriterion("total_num >", value, "totalNum");
+        public Criteria andNameGreaterThan(String value) {
+            addCriterion("name >", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumGreaterThanOrEqualTo(Integer value) {
-            addCriterion("total_num >=", value, "totalNum");
+        public Criteria andNameGreaterThanOrEqualTo(String value) {
+            addCriterion("name >=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumLessThan(Integer value) {
-            addCriterion("total_num <", value, "totalNum");
+        public Criteria andNameLessThan(String value) {
+            addCriterion("name <", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumLessThanOrEqualTo(Integer value) {
-            addCriterion("total_num <=", value, "totalNum");
+        public Criteria andNameLessThanOrEqualTo(String value) {
+            addCriterion("name <=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumIn(List<Integer> values) {
-            addCriterion("total_num in", values, "totalNum");
+        public Criteria andNameLike(String value) {
+            addCriterion("name like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumNotIn(List<Integer> values) {
-            addCriterion("total_num not in", values, "totalNum");
+        public Criteria andNameNotLike(String value) {
+            addCriterion("name not like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumBetween(Integer value1, Integer value2) {
-            addCriterion("total_num between", value1, value2, "totalNum");
+        public Criteria andNameIn(List<String> values) {
+            addCriterion("name in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andTotalNumNotBetween(Integer value1, Integer value2) {
-            addCriterion("total_num not between", value1, value2, "totalNum");
+        public Criteria andNameNotIn(List<String> values) {
+            addCriterion("name not in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumIsNull() {
-            addCriterion("finish_num is null");
+        public Criteria andNameBetween(String value1, String value2) {
+            addCriterion("name between", value1, value2, "name");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumIsNotNull() {
-            addCriterion("finish_num is not null");
+        public Criteria andNameNotBetween(String value1, String value2) {
+            addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumEqualTo(Integer value) {
-            addCriterion("finish_num =", value, "finishNum");
+        public Criteria andNumIsNull() {
+            addCriterion("num is null");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumNotEqualTo(Integer value) {
-            addCriterion("finish_num <>", value, "finishNum");
+        public Criteria andNumIsNotNull() {
+            addCriterion("num is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumGreaterThan(Integer value) {
-            addCriterion("finish_num >", value, "finishNum");
+        public Criteria andNumEqualTo(Integer value) {
+            addCriterion("num =", value, "num");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumGreaterThanOrEqualTo(Integer value) {
-            addCriterion("finish_num >=", value, "finishNum");
+        public Criteria andNumNotEqualTo(Integer value) {
+            addCriterion("num <>", value, "num");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumLessThan(Integer value) {
-            addCriterion("finish_num <", value, "finishNum");
+        public Criteria andNumGreaterThan(Integer value) {
+            addCriterion("num >", value, "num");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumLessThanOrEqualTo(Integer value) {
-            addCriterion("finish_num <=", value, "finishNum");
+        public Criteria andNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("num >=", value, "num");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumIn(List<Integer> values) {
-            addCriterion("finish_num in", values, "finishNum");
+        public Criteria andNumLessThan(Integer value) {
+            addCriterion("num <", value, "num");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumNotIn(List<Integer> values) {
-            addCriterion("finish_num not in", values, "finishNum");
+        public Criteria andNumLessThanOrEqualTo(Integer value) {
+            addCriterion("num <=", value, "num");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumBetween(Integer value1, Integer value2) {
-            addCriterion("finish_num between", value1, value2, "finishNum");
+        public Criteria andNumIn(List<Integer> values) {
+            addCriterion("num in", values, "num");
             return (Criteria) this;
         }
 
-        public Criteria andFinishNumNotBetween(Integer value1, Integer value2) {
-            addCriterion("finish_num not between", value1, value2, "finishNum");
+        public Criteria andNumNotIn(List<Integer> values) {
+            addCriterion("num not in", values, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumBetween(Integer value1, Integer value2) {
+            addCriterion("num between", value1, value2, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("num not between", value1, value2, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumIsNull() {
+            addCriterion("year_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumIsNotNull() {
+            addCriterion("year_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumEqualTo(Integer value) {
+            addCriterion("year_num =", value, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumNotEqualTo(Integer value) {
+            addCriterion("year_num <>", value, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumGreaterThan(Integer value) {
+            addCriterion("year_num >", value, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("year_num >=", value, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumLessThan(Integer value) {
+            addCriterion("year_num <", value, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumLessThanOrEqualTo(Integer value) {
+            addCriterion("year_num <=", value, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumIn(List<Integer> values) {
+            addCriterion("year_num in", values, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumNotIn(List<Integer> values) {
+            addCriterion("year_num not in", values, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumBetween(Integer value1, Integer value2) {
+            addCriterion("year_num between", value1, value2, "yearNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andYearNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("year_num not between", value1, value2, "yearNum");
             return (Criteria) this;
         }
 

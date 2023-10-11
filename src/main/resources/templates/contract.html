@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <title>我的资料</title>
+    <title>合同管理</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -60,10 +60,10 @@
     <script type="text/javascript" src="js/layui.js"></script>
     <script type="text/javascript" src="css/layui.css"></script>
 
-<!--    <script type="text/javascript" src="js/custom.js"></script>-->
+   <!-- <script type="text/javascript" src="js/custom.js"></script>-->
 
-<!--    <script type="text/javascript" src="js/charts/chart.js"></script>-->
-
+   <!-- <script type="text/javascript" src="js/charts/chart.js"></script>
+-->
     <!-- Shared on MafiaShare.net  --><!-- Shared on MafiaShare.net  --></head>
 
 <body>
@@ -109,13 +109,11 @@
 
         <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
             <ul class="sub ul_hidden" id="myInfo">
-                <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
-                <li><a href="#" title="#" onclick="userInfo()" id="idName"></a></li>
+                <li><a href="#" title="" onclick="userInfo()" id="idNo"></a></li>
+                <li><a href="#" title="" onclick="userInfo()" id="idName"></a></li>
                 <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
             </ul>
         </li>
-
-        <li class="dash"><a href="#" onclick="center_html()" class="active"><span>数据展示中心</span></a></li>
     </ul>
 </div>
 
@@ -215,119 +213,78 @@
             <p>亲爱的<strong>沙磁文旅 </strong>（Lv1，重庆市地区领导人）</p>
         </div>
 
-
-        <div class="widget rightTabs">
-            <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>我的资料</h6>
-                <div class="formAddEmp"><input type="submit" id="myBtn" value="添加用户" class="redB"></div></div>
-
-            <ul class="tabs">
-                <li><a href="#tab1">基本信息</a></li>
-<!--                <li><a href="#tab4">上传头像</a></li>-->
-            </ul>
-            <div class="tab_container">
-                <div id="tab1" class="tab_content np" style="display: block;">
-
-
-                            <div class="formRow">
-                                <input id="userId" type="hidden"/>
-                                <label>我的名字：<span class="req">*</span></label>
-                                <div class="formRight"><input type="text" class="validate[required]"  id="userName"></div><div class="clear"></div>
-                            </div>
-
-                           <div class="formRow">
-                               <label>手机号码：<span class="req">*</span></label>
-                               <div class="formRight"><input type="text" class="validate[required]"  id="phone"></div><div class="clear"></div>
-                           </div>
-
-                            <div class="formRow">
-                                <label>密码(已加密)：<span class="req">*</span></label>
-                                <div class="formRight"><input type="text" class="validate[required,custom[onlyNumberSp]]"  id="passWord"></div><div class="clear"></div>
-                            </div>
-                            <div class="formSubmit"><input type="submit" onclick="editInfo()" value="修改" class="redB"></div>
-                            <div class="clear"></div>
-                     <
-
+        <!-- Widgets -->
+        <div class="widgets">
+            <div class="widget">
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>合同信息</h6>
+                    <div class="formAddEmp"><input type="submit" id="myCostBtn" value="添加合同" class="redB"></div>
                 </div>
-                <div id="tab2" class="tab_content np" style="display: none;">
-                    <form id="validate" class="form" method="post" action="">
-                        <fieldset>
-                            <div class="formRow">
-                                <label>原密码：<span class="req">*</span></label>
-                                <div class="formRight"><input type="text" class="validate[required]" name="req" id="req"></div><div class="clear"></div>
-                            </div>
-                            <div class="formRow">
-                                <label>新密码：<span class="req">*</span></label>
-                                <div class="formRight"><input type="text" class="validate[required]" name="password1" id="password1"></div><div class="clear"></div>
-                            </div>
-                            <div class="formRow">
-                                <label>确认密码：<span class="req">*</span></label>
-                                <div class="formRight"><input type="text" class="validate[required,minSize[6]]" name="minValid" id="minValid"></div><div class="clear"></div>
-                            </div>
-                            <div class="formSubmit"><input type="submit" value="修改" class="redB"></div>
-                            <div class="clear"></div>
-                        </fieldset>
-                    </form>
-                </div>
-                <div id="tab3" class="tab_content np" style="display: none;">
-                    <form id="validate" class="form" method="post" action="">
-                        <fieldset>
-                            <div class="formRow">
-                                <label>原安全密码：<span class="req">*</span></label>
-                                <div class="formRight"><input type="text" class="validate[required]" name="req" id="req"></div><div class="clear"></div>
-                            </div>
-                            <div class="formRow">
-                                <label>新安全密码：<span class="req">*</span></label>
-                                <div class="formRight"><input type="text" class="validate[required]" name="password1" id="password1"></div><div class="clear"></div>
-                            </div>
-                            <div class="formRow">
-                                <label>确认新密码：<span class="req">*</span></label>
-                                <div class="formRight"><input type="text" class="validate[required,minSize[6]]" name="minValid" id="minValid"></div><div class="clear"></div>
-                            </div>
-                            <div class="formSubmit"><input type="submit" value="修改" class="redB"></div>
-                            <div class="clear"></div>
-                        </fieldset>
-                    </form>
-                </div>
-                <div id="tab4" class="tab_content np" style="display: none;">
-                    <form id="validate" class="form" method="post" action="">
-                        <fieldset>
-                            <div class="formRow">
-                                <label>上传头像<span class="req">*</span></label>
-                                <div class="formRight"><input type="file" class="validate[required]" name="req" id="req"></div><div class="clear"></div>
-                            </div>
-                            <div class="formSubmit"><input type="submit" value="修改" class="redB"></div>
-                            <div class="clear"></div>
-                        </fieldset>
-                    </form>
-                </div>
+                <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
+                    <thead>
+                    <tr>
+                        <td width="80">编号</td>
+                        <td width="80">部门名称</td>
+                        <td width="80">合同名称</td>
+                        <td width="80">合同状态</td>
+                        <td width="80">合同日期</td>
+                    </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    </tbody>
+                </table>
             </div>
+
+            <span class="page-new">
+                <span id="pagefoot"></span></span>
+            <div class="clear"></div>
         </div>
+
         <!-- 弹窗 -->
-        <div id="myModal" class="modal">
+        <div id="myCostModal" class="modal">
 
             <!-- 弹窗内容 -->
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="close">&times;</span>
-                    <h2>用户信息</h2>
+                    <h2>合同信息</h2>
                 </div>
                 <div class="modal-body">
                     <div class="formRow">
-                        昵称：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="add_name"></div><div class="clear"></div>
+                        部门名称：
+                        <div class="formRight">
+                           <select id="department"  style="width: 162px;" >
+                                <option value=""></option>
+                                <option value="综合管理部">综合管理部</option>
+                                <option value="市场拓展部">市场拓展部</option>
+                                <option value="规划建设部">规划建设部</option>
+                                <option value="财务融资部">财务融资部</option>
+                                <option value="金沙艺术中心">金沙艺术中心</option>
+                            </select>
+
+                    </div>
+                   </div>
+                    <div class="formRow">
+                        合同名称：
+                        <div class="formRight"><input type="text"  class="validate[required]"  id="name"></div><div class="clear"></div>
                     </div>
                     <div class="formRow">
-                        电话：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="add_phone"></div><div class="clear"></div>
+                        合同状态：
+                        <div class="formRight">
+                          <select id="type"  style="width: 162px;" >
+                                <option value=""></option>
+                                <option value="履行中">履行中</option>
+                                <option value="履行完毕">履行完毕</option>
+                            </select>
+                        </div>
                     </div>
-
                     <div class="formRow">
-                        密码：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="add_password"></div><div class="clear"></div>
+                        日期：
+                        <div class="formRight">
+                            <input type="date"  style="width: 165px;" id="periodicTime">
+                        </div>
                     </div>
 
-
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addUser()">提交</button></div>
+                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addContract()">提交</button></div>
                 </div>
                 <div class="modal-footer">
                     <h3></h3>
@@ -336,22 +293,23 @@
 
         </div>
 
-    </div>
-
-    <!-- Footer line -->
-    <div id="footer">
-        <div class="wrapper">Copyright © 2023 沙磁文旅版权所有 </div>-->
-    </div>
 
 </div>
+    <!-- Footer line -->
+    <div id="footer">
+        <div class="wrapper">Copyright © 2023 沙磁文旅版权所有 </div>
+    </div>
 
-<div class="clear"></div>
+
+    <div class="clear"></div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-
     $(function () {
         initData();
+        contractList(1);
     } );
+
+
     function logOut() {
         $.ajax({
             type: "GET",
@@ -399,7 +357,6 @@
     function fengkong() {
         location.href="/risk";
     }
-
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
@@ -423,10 +380,6 @@
                         document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
                         document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
                         document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
-                        document.getElementById("userId").value = res.obj.id;
-                        document.getElementById("userName").value = res.obj.name;
-                        // document.getElementById("passWord").value = res.obj.password;
-                        document.getElementById("phone").value = res.obj.phone;
                     }else {
                         layui.layer.msg(res.message,{time:1000},function(){
                             layer.close(); //再执行关闭
@@ -447,47 +400,101 @@
         }
     }
 
+    function contractList(pageNum) {
 
-    function editInfo() {
-        var id = document.getElementById("userId").value;
-        var username = document.getElementById("userName").value;
-        var password = document.getElementById("passWord").value;
-        var phone = document.getElementById("phone").value;
         $.ajax({
             type: "get",
-            url: "/editUser",
+            url: "/getAllContract",
             headers: {
-                'Authorization':  localStorage.getItem("token") // 在请求头中添加token
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
             data:({
-                id:id,
-                name:username,
-                password:password,
-                phone:phone
-             }),
+                pageNum:pageNum
+            }),
             success: function (res) {
-                if(res.code === 200) {
-                    layui.layer.msg(res.message,{time:1000},function(){
-                       layer.close(); //再执行关闭
-                       location.reload();
-                    });
+                if(res && res.code===200){
+                    var data = res.obj;
+                    var data1 = res.obj.list;
+                    var pageNo = parseInt(res.obj.pageNum);
+                    var pages = parseInt(res.obj.pages);
+                    var total = parseInt(res.obj.total);
+                   // 获取表格元素
+                    var str_info='';
+                    for (var i = 0; i < data1.length; i++) {
+                        var id =data1[i].id;
+                        var type =data1[i].type;
+                        str_info+='<tr><td align="center">'+id+'</td>';
+                        str_info+='<td align="center">'+data1[i].department+'</td>';
+                        str_info+='<td align="center">'+data1[i].name+'</td>';
+                       if(type==='履行中'){
+                           str_info+='<td align="center"><a href="#" style="color: red;text-decoration: none;" onclick="updateType('+id+',1)">'+type+'</a></td>';
+                       }else {
+                           str_info+='<td align="center"><a href="#"  style="color: green;text-decoration: none;" onclick="updateType('+id+',2)">'+type+'</a></td>';
+                       }
+                        str_info+='<td align="center">'+dateFormat(1,data1[i].startTime)+'</td></tr>';
+                    }
+                    $("#myTable").html(str_info);
 
-                }else {
-                    layui.layer.msg(res.message,{time:1000},function(){
-                        layer.close(); //再执行关闭
-                        location.reload();
-                    });
+                    pagenum0=pageNo-1;
+                    pagenum1=pageNo+1;
+                    pagenum2=pageNo+2;
+                    pagenum3=pageNo+3;
+                    var htm="<a  href='#' onclick='contractList(1)'>首页 </a>";
+                    if(data.pageNum >1){
+                        htm+="<a  href='#' onclick='contractList("+data.prePage+")'>上一页 </a>"
+                    }
+                    if(pagenum0 >=1){
+                        htm+="<a  href='#' onclick='contractList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                    }
+                    htm+="<button class='current'>"+data.pageNum+"</button>";
+                    if(pagenum1 <= pages){
+                        htm+="<a  href='#' onclick='contractList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                    }
+                    if(pagenum2 <= pages){
+                        htm+="<a  href='#' onclick='contractList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                    }
+                    if(pagenum3 <= pages){
+                        htm+="<a  href='#' onclick='contractList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                    }
+                    htm+="<a  href='#' onclick='contractList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='contractList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                    $("#pagefoot").html(htm);
                 }
+
             }
+
+
+
         })
+
     }
 
 
-    // 获取弹窗
-    var modal = document.getElementById('myModal');
+
+  function dateFormat(type,utcTime) {
+      var date = new Date(utcTime); // 创建Date对象
+     // 获取年、月、日、小时、分钟和秒
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1; // 月份从0开始，所以要加1
+      var day = date.getDate();
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var seconds = date.getSeconds();
+     // 将日期和时间组件组合成字符串
+      var formatteddate = year + '-' + month + '-' + day ;
+      var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+      if(type==1){
+          return formatteddate;
+      }else {
+          return formattedTime;
+      }
+
+  }
+
+// 获取弹窗
+    var modal = document.getElementById('myCostModal');
 
     // 打开弹窗的按钮对象
-    var btn = document.getElementById("myBtn");
+    var btn = document.getElementById("myCostBtn");
 
     // 获取 <span> 元素，用于关闭弹窗 that closes the modal
     var span = document.getElementsByClassName("close")[0];
@@ -509,20 +516,22 @@
         }
     }
 
-    function addUser() {
-        var name = document.getElementById("add_name").value;
-        var phone = document.getElementById("add_phone").value;
-        var password = document.getElementById("add_password").value;
+    function addContract() {
+        var department = document.getElementById("department").value;
+        var name = document.getElementById("name").value;
+        var type = document.getElementById("type").value;
+        var periodicTime = document.getElementById("periodicTime").value;
         $.ajax({
             type: "post",
-            url: "/addUser",
+            url: "/addContract",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
             data:({
+                department:department,
                 name:name,
-                phone:phone,
-                password:password
+                type:type,
+                startTime:new Date(periodicTime)
             }),
             success: function (res) {
                 if(res && res.code===200){
@@ -537,6 +546,54 @@
 
 
         })
+
+    }
+    function updateType(id,type) {
+        let message='';
+        if(type===1){
+            type='履行完毕'
+            message='您确认要把状态更新成履行完毕吗?';
+        }else {
+            type='履行中'
+            message='您确认要把状态更新回履行中吗?';
+        }
+        layer.confirm(message, {
+            title:'操作提示',
+            icon:0,
+            btn: ['确定','取消']
+        }, function(){
+            var index = layer.load();
+            $.ajax({
+                url: "/updateContract",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data: ({
+                    id:id,
+                    type:type
+                }),
+                type: 'post',
+                success: function (resp) {
+                    layer.close(index);
+                    //成功提示
+                    if (resp.code == 200) {
+                        layer.msg("更新成功", {
+                            icon: 1,
+                            time: 1000
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        //失败提示
+                        layer.msg(resp.msg, {
+                            icon: 2,
+                            time: 2000
+                        });
+                    }
+                }
+            });
+        });
+
 
     }
 

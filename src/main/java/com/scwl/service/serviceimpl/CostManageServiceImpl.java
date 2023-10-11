@@ -11,6 +11,8 @@ import com.scwl.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -41,13 +43,18 @@ public class CostManageServiceImpl implements CostManageService {
 
     @Override
     public ResBean getCostManageByCenter(String period, String condition) {
+        CostManage costManages = new CostManage();
         if(period.equals("年")){
-            CostManage costManages = costManageMapper.getCostByYear(condition);
-            return ResBean.success("success",costManages);
+             costManages = costManageMapper.getCostByYear(condition);
+
         }else {
             period ="%Y-%m";
-            CostManage costManages =   costManageMapper.getCostByMonth(period,condition.substring(0,7));
-            return ResBean.success("success",costManages);
+             costManages =   costManageMapper.getCostByMonth(period,condition.substring(0,7));
         }
+        costManages.setHydropowerOffice(costManages.getHydropowerOffice().divide(new BigDecimal(10000),2, RoundingMode.HALF_UP));
+        costManages.setLaborUnion(costManages.getLaborUnion().divide(new BigDecimal(10000),2, RoundingMode.HALF_UP));
+        costManages.setPayOutWage(costManages.getPayOutWage().divide(new BigDecimal(10000),2, RoundingMode.HALF_UP));
+        costManages.setRent(costManages.getRent().divide(new BigDecimal(10000),2, RoundingMode.HALF_UP));
+        return ResBean.success("success",costManages);
     }
 }

@@ -3,9 +3,13 @@
 <mapper namespace="com.scwl.mapper.ContractMapper" >
   <resultMap id="BaseResultMap" type="com.scwl.pojo.Contract" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="total_num" property="totalNum" jdbcType="INTEGER" />
     <result column="finish_num" property="finishNum" jdbcType="INTEGER" />
     <result column="unfinish_num" property="unfinishNum" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="DATE" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
@@ -68,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, total_num, finish_num, unfinish_num, add_time, remark
+    id, department, name, type, total_num, finish_num, unfinish_num, start_time, add_time,
+    remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.ContractExample" >
     select
@@ -85,7 +90,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from contract
     where id = #{id,jdbcType=INTEGER}
@@ -101,18 +106,29 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.Contract" useGeneratedKeys="true" keyProperty="id">
-    insert into contract (id, total_num, finish_num, 
-      unfinish_num, add_time, remark
-      )
-    values (#{id,jdbcType=INTEGER}, #{totalNum,jdbcType=INTEGER}, #{finishNum,jdbcType=INTEGER}, 
-      #{unfinishNum,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into contract (id, department, name,
+      type, total_num, finish_num,
+      unfinish_num, start_time, add_time,
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR}, #{totalNum,jdbcType=INTEGER}, #{finishNum,jdbcType=INTEGER},
+      #{unfinishNum,jdbcType=INTEGER}, #{startTime,jdbcType=DATE}, #{addTime,jdbcType=TIMESTAMP},
+      #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.Contract" >
     insert into contract
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
       </if>
       <if test="totalNum != null" >
         total_num,
@@ -122,6 +138,9 @@
       </if>
       <if test="unfinishNum != null" >
         unfinish_num,
+      </if>
+      <if test="startTime != null" >
+        start_time,
       </if>
       <if test="addTime != null" >
         add_time,
@@ -134,6 +153,15 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
       <if test="totalNum != null" >
         #{totalNum,jdbcType=INTEGER},
       </if>
@@ -142,6 +170,9 @@
       </if>
       <if test="unfinishNum != null" >
         #{unfinishNum,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=DATE},
       </if>
       <if test="addTime != null" >
         #{addTime,jdbcType=TIMESTAMP},
@@ -163,6 +194,15 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
       <if test="record.totalNum != null" >
         total_num = #{record.totalNum,jdbcType=INTEGER},
       </if>
@@ -171,6 +211,9 @@
       </if>
       <if test="record.unfinishNum != null" >
         unfinish_num = #{record.unfinishNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=DATE},
       </if>
       <if test="record.addTime != null" >
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -186,11 +229,15 @@
   <update id="updateByExample" parameterType="map" >
     update contract
     set id = #{record.id,jdbcType=INTEGER},
-      total_num = #{record.totalNum,jdbcType=INTEGER},
-      finish_num = #{record.finishNum,jdbcType=INTEGER},
-      unfinish_num = #{record.unfinishNum,jdbcType=INTEGER},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR}
+    department = #{record.department,jdbcType=VARCHAR},
+    name = #{record.name,jdbcType=VARCHAR},
+    type = #{record.type,jdbcType=VARCHAR},
+    total_num = #{record.totalNum,jdbcType=INTEGER},
+    finish_num = #{record.finishNum,jdbcType=INTEGER},
+    unfinish_num = #{record.unfinishNum,jdbcType=INTEGER},
+    start_time = #{record.startTime,jdbcType=DATE},
+    add_time = #{record.addTime,jdbcType=TIMESTAMP},
+    remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +245,15 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.Contract" >
     update contract
     <set >
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
       <if test="totalNum != null" >
         total_num = #{totalNum,jdbcType=INTEGER},
       </if>
@@ -206,6 +262,9 @@
       </if>
       <if test="unfinishNum != null" >
         unfinish_num = #{unfinishNum,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=DATE},
       </if>
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -218,16 +277,57 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.Contract" >
     update contract
-    set total_num = #{totalNum,jdbcType=INTEGER},
+    set department = #{department,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      total_num = #{totalNum,jdbcType=INTEGER},
       finish_num = #{finishNum,jdbcType=INTEGER},
       unfinish_num = #{unfinishNum,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=DATE},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getContractByCenter" resultMap="BaseResultMap">
-    select sum(total_num) as total_num,sum(finish_num) as finish_num,sum(unfinish_num) as unfinish_num
-    ,add_time,remark
-    from contract
+  <select id="getTotal"  resultMap="BaseResultMap">
+    select count(id) as total_num,department from contract group by department
   </select>
+  <select id="getContinueTotal"  parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(id)  from contract where type = '履行中'  and  department=#{department}
+  </select>
+  <select id="getOverTotal"  parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(id)  from contract where type = '履行完毕' and  department=#{department}
+  </select>
+  <update id="update"  parameterType="com.scwl.pojo.Contract" >
+    update contract
+    <set >
+      <if test="department != null and department != ''" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null and name != ''" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null and type != ''" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        total_num = #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="finishNum != null" >
+        finish_num = #{finishNum,jdbcType=INTEGER},
+      </if>
+      <if test="unfinishNum != null" >
+        unfinish_num = #{unfinishNum,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=DATE},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=DATE},
+      </if>
+      <if test="remark != null and remark != ''" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

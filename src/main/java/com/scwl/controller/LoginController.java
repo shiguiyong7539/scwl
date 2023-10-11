@@ -32,6 +32,16 @@ public class LoginController {
         return "login";
     }
 
+    /**
+     * 登录
+     * @return
+     */
+    @RequestMapping("/loginAdmin")
+    public String loginAdmin(){
+        System.out.println(passwordEncoder.encode("123456"));
+        return "login_admin";
+    }
+
 
     /**
      * 主页
@@ -104,6 +114,27 @@ public class LoginController {
     public String taskList(){
         return "tasklist";
     }
+
+
+    /**
+     * 合同管理页面
+     * @return
+     */
+    @RequestMapping("/contract")
+    public String contract(){
+        return "contract";
+    }
+
+
+    /**
+     * 风控管理页面
+     * @return
+     */
+    @RequestMapping("/risk")
+    public String risk(){
+        return "risk";
+    }
+
 
 
     /**

@@ -21,7 +21,7 @@ public class ContractController {
      * @param request
      * @param pageNum
      * @param pageSize
-     * @param costManage
+     * @param
      * @return
      */
     @RequestMapping("/getAllContract")
@@ -32,19 +32,29 @@ public class ContractController {
     /**
      * 添加合同
      * @param request
-     * @param costManage
+     * @param
      * @return
      */
     @RequestMapping("/addContract")
     public Object addContract(HttpServletRequest request, Contract contract){
         return  contractService.addContract(contract);
     }
+    /**
+     * 添加合同
+     * @param request
+     * @param
+     * @return
+     */
+    @RequestMapping("/updateContract")
+    public Object updateContract(HttpServletRequest request, Contract contract){
+        return  contractService.updateContract(contract);
+    }
 
     /**
      * 合同数据图形化展示
      * @param request
-     * @param period
-     * @param condition
+     * @param
+     * @param
      * @return
      */
     @RequestMapping("/getContractByCenter")

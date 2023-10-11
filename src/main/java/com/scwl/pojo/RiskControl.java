@@ -5,9 +5,11 @@ import java.util.Date;
 public class RiskControl {
     private Integer id;
 
-    private Integer totalNum;
+    private String name;
 
-    private Integer finishNum;
+    private Integer num;
+
+    private Integer yearNum;
 
     private Integer unfinishNum;
 
@@ -23,20 +25,28 @@ public class RiskControl {
         this.id = id;
     }
 
-    public Integer getTotalNum() {
-        return totalNum;
+    public String getName() {
+        return name;
     }
 
-    public void setTotalNum(Integer totalNum) {
-        this.totalNum = totalNum;
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public Integer getFinishNum() {
-        return finishNum;
+    public Integer getNum() {
+        return num;
     }
 
-    public void setFinishNum(Integer finishNum) {
-        this.finishNum = finishNum;
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public Integer getYearNum() {
+        return yearNum;
+    }
+
+    public void setYearNum(Integer yearNum) {
+        this.yearNum = yearNum;
     }
 
     public Integer getUnfinishNum() {

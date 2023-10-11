@@ -1,11 +1,7 @@
 package com.scwl.controller;
 
 import com.scwl.pojo.Capital;
-import com.scwl.pojo.CapitalPosition;
-import com.scwl.pojo.Employee;
-import com.scwl.pojo.User;
 import com.scwl.service.CapitalService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;

@@ -35,9 +35,6 @@ public class ManageStateServiceImpl implements ManageStateService {
     @Override
     public ResBean addState(ManageState manageState) {
         try{
-            if(null!=manageState.getLetRate()){
-                manageState.setLetRate(manageState.getLetRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-            }
             manageStateMapper.insert(manageState);
             logService.addLog("INSERT","manage_state",manageState.getId(),"新增id为"+manageState.getId()+"的经营状况信息");
             return  ResBean.success("添加成功");

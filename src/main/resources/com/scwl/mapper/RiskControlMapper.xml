@@ -3,8 +3,9 @@
 <mapper namespace="com.scwl.mapper.RiskControlMapper" >
   <resultMap id="BaseResultMap" type="com.scwl.pojo.RiskControl" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="total_num" property="totalNum" jdbcType="INTEGER" />
-    <result column="finish_num" property="finishNum" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="year_num" property="yearNum" jdbcType="INTEGER" />
     <result column="unfinish_num" property="unfinishNum" jdbcType="INTEGER" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, total_num, finish_num, unfinish_num, add_time, remark
+    id, name, num, year_num, unfinish_num, add_time, remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.RiskControlExample" >
     select
@@ -85,7 +86,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from risk_control
     where id = #{id,jdbcType=INTEGER}
@@ -101,12 +102,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.RiskControl" useGeneratedKeys="true" keyProperty="id">
-    insert into risk_control (id, total_num, finish_num, 
-      unfinish_num, add_time, remark
-      )
-    values (#{id,jdbcType=INTEGER}, #{totalNum,jdbcType=INTEGER}, #{finishNum,jdbcType=INTEGER}, 
-      #{unfinishNum,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into risk_control (id, name, num,
+      year_num, unfinish_num, add_time,
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER},
+      #{yearNum,jdbcType=INTEGER}, #{unfinishNum,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP},
+      #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.RiskControl" >
     insert into risk_control
@@ -114,11 +115,14 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="totalNum != null" >
-        total_num,
+      <if test="name != null" >
+        name,
       </if>
-      <if test="finishNum != null" >
-        finish_num,
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="yearNum != null" >
+        year_num,
       </if>
       <if test="unfinishNum != null" >
         unfinish_num,
@@ -134,11 +138,14 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="totalNum != null" >
-        #{totalNum,jdbcType=INTEGER},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="finishNum != null" >
-        #{finishNum,jdbcType=INTEGER},
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="yearNum != null" >
+        #{yearNum,jdbcType=INTEGER},
       </if>
       <if test="unfinishNum != null" >
         #{unfinishNum,jdbcType=INTEGER},
@@ -163,11 +170,14 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.totalNum != null" >
-        total_num = #{record.totalNum,jdbcType=INTEGER},
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.finishNum != null" >
-        finish_num = #{record.finishNum,jdbcType=INTEGER},
+      <if test="record.num != null" >
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.yearNum != null" >
+        year_num = #{record.yearNum,jdbcType=INTEGER},
       </if>
       <if test="record.unfinishNum != null" >
         unfinish_num = #{record.unfinishNum,jdbcType=INTEGER},
@@ -186,11 +196,12 @@
   <update id="updateByExample" parameterType="map" >
     update risk_control
     set id = #{record.id,jdbcType=INTEGER},
-      total_num = #{record.totalNum,jdbcType=INTEGER},
-      finish_num = #{record.finishNum,jdbcType=INTEGER},
-      unfinish_num = #{record.unfinishNum,jdbcType=INTEGER},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR}
+    name = #{record.name,jdbcType=VARCHAR},
+    num = #{record.num,jdbcType=INTEGER},
+    year_num = #{record.yearNum,jdbcType=INTEGER},
+    unfinish_num = #{record.unfinishNum,jdbcType=INTEGER},
+    add_time = #{record.addTime,jdbcType=TIMESTAMP},
+    remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,11 +209,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.RiskControl" >
     update risk_control
     <set >
-      <if test="totalNum != null" >
-        total_num = #{totalNum,jdbcType=INTEGER},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="finishNum != null" >
-        finish_num = #{finishNum,jdbcType=INTEGER},
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="yearNum != null" >
+        year_num = #{yearNum,jdbcType=INTEGER},
       </if>
       <if test="unfinishNum != null" >
         unfinish_num = #{unfinishNum,jdbcType=INTEGER},
@@ -218,11 +232,18 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.RiskControl" >
     update risk_control
-    set total_num = #{totalNum,jdbcType=INTEGER},
-      finish_num = #{finishNum,jdbcType=INTEGER},
+    set name = #{name,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      year_num = #{yearNum,jdbcType=INTEGER},
       unfinish_num = #{unfinishNum,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getTotal" resultMap="BaseResultMap">
+  select name,sum(num) as num from risk_control group by name
+  </select>
+  <select id="getTotalYear" parameterType="java.lang.String" resultType="java.lang.Integer">
+  select sum(num) from risk_control where name = #{name} and YEAR(add_time) = YEAR(CURDATE())
+  </select>
 </mapper>

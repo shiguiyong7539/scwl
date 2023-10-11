@@ -81,7 +81,7 @@
         <li class="dash"><a href="#" onclick="index_html()" class="active"><span>首页</span></a></li>
         <li class="charts"><a href="#" title="" onclick="toggle('userManage')" class="exp"><span>系统管理</span></a>
             <ul class="sub ul_hidden" id="userManage">
-                <li><a href="" title="">合同履行</a></li>
+                <li><a href="#" title="" onclick="hetong()">合同履行</a></li>
                 <li><a href="#" title="" onclick="mangeState()">经营管理</a></li>
                 <li><a href="#" title="" onclick="costManage()">成本管理</a></li>
                 <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
@@ -102,7 +102,7 @@
 
         <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
             <ul class="sub ul_hidden" id="fengKongManage">
-                <li><a href="" title="">涉诉情况</a></li>
+                <li><a href="#" title="" onclick="fengkong()">涉诉情况</a></li>
                 <li><a href="" title="">监督检查整改情况</a></li>
             </ul>
         </li>
@@ -344,6 +344,12 @@
     function tasklist(project) {
         localStorage.setItem("project",project);
         location.href="/taskList";
+    }
+    function hetong() {
+        location.href="/contract";
+    }
+    function fengkong() {
+        location.href="/risk";
     }
     function toggle(id) {
         var x = document.getElementById(id);

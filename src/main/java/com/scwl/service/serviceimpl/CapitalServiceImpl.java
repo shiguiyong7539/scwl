@@ -3,7 +3,6 @@ package com.scwl.service.serviceimpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.scwl.mapper.CapitalMapper;
-import com.scwl.mapper.CapitalPositionMapper;
 import com.scwl.pojo.*;
 import com.scwl.service.CapitalService;
 import com.scwl.service.LogService;

@@ -2,9 +2,8 @@ package com.scwl.mapper;
 
 import com.scwl.pojo.Contract;
 import com.scwl.pojo.ContractExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface ContractMapper {
     int countByExample(ContractExample example);
@@ -29,5 +28,12 @@ public interface ContractMapper {
 
     int updateByPrimaryKey(Contract record);
 
-    List<Contract>  getContractByCenter();
+
+    List<Contract> getTotal();
+    int getContinueTotal(String department);
+    int getOverTotal(String department);
+
+    int update(Contract contract);
+
+
 }

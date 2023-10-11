@@ -128,7 +128,7 @@ $(function() {
 					console.log(res.obj);
 					localStorage.setItem('token', 'Bearer '+res.obj.token);
 					//  location.href="/admin?Authorization="+'Bearer '+res.obj.token;
-					location.href="/centerShow";
+					location.href="/admin";
 				}else {
 					layui.layer.msg(res.message,{time:3000},function(){
 						layer.close(); //再执行关闭
