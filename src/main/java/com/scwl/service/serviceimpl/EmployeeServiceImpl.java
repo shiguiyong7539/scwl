@@ -47,6 +47,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public ResBean getByCenter() {
+        //总人数
+        int total = employeeMapper.getTotal();
         //按年龄分组
         List<Map> byAgeGroup = employeeMapper.getByAgeGroup();
         for (int i = 0; i < byAgeGroup.size(); i++) {
@@ -72,6 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         map.put("edu",byEduGroup);
         map.put("rank",byRankGroup);
         map.put("mode",byModeGroup);
+        map.put("total",total);
         return ResBean.success("success",map);
     }
 }

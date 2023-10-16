@@ -240,6 +240,10 @@
       employment_mode = #{employmentMode,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotal" resultType="java.lang.Integer">
+    select count(id) from employee
+  </select>
   <select id="getByAgeGroup" resultType="java.util.Map">
     SELECT FLOOR(age / 10) * 10 AS age_group, COUNT(id) AS count
     FROM employee

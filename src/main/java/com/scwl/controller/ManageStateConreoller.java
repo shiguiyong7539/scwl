@@ -50,4 +50,15 @@ public class ManageStateConreoller {
     public Object getManageStateByCenter(HttpServletRequest request){
         return  manageStateService.getManageStateByCenter();
     }
+
+
+    /**
+     * 经营业务总收入趋势
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getTotalManage")
+    public Object getTotalManage(HttpServletRequest request){
+        return  manageStateService.getTotalManage();
+    }
 }

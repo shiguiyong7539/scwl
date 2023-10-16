@@ -2,7 +2,6 @@ package com.scwl.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class SysLogExample {
@@ -12,40 +11,70 @@ public class SysLogExample {
 
     protected List<Criteria> oredCriteria;
 
+    /**
+     * @return 
+     */
     public SysLogExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
+    /**
+     * @param orderByClause
+     * @return 
+     */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
+    /**
+     * @return 
+     */
     public String getOrderByClause() {
         return orderByClause;
     }
 
+    /**
+     * @param distinct
+     * @return 
+     */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
     }
 
+    /**
+     * @return 
+     */
     public boolean isDistinct() {
         return distinct;
     }
 
+    /**
+     * @return 
+     */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
     }
 
+    /**
+     * @param criteria
+     * @return 
+     */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
     }
 
+    /**
+     * @return 
+     */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
         oredCriteria.add(criteria);
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
@@ -54,11 +83,17 @@ public class SysLogExample {
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     public void clear() {
         oredCriteria.clear();
         orderByClause = null;
@@ -104,32 +139,6 @@ public class SysLogExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -603,52 +612,52 @@ public class SysLogExample {
         }
 
         public Criteria andOperationTimeEqualTo(Date value) {
-            addCriterionForJDBCDate("operation_time =", value, "operationTime");
+            addCriterion("operation_time =", value, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("operation_time <>", value, "operationTime");
+            addCriterion("operation_time <>", value, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("operation_time >", value, "operationTime");
+            addCriterion("operation_time >", value, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("operation_time >=", value, "operationTime");
+            addCriterion("operation_time >=", value, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeLessThan(Date value) {
-            addCriterionForJDBCDate("operation_time <", value, "operationTime");
+            addCriterion("operation_time <", value, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("operation_time <=", value, "operationTime");
+            addCriterion("operation_time <=", value, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeIn(List<Date> values) {
-            addCriterionForJDBCDate("operation_time in", values, "operationTime");
+            addCriterion("operation_time in", values, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("operation_time not in", values, "operationTime");
+            addCriterion("operation_time not in", values, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("operation_time between", value1, value2, "operationTime");
+            addCriterion("operation_time between", value1, value2, "operationTime");
             return (Criteria) this;
         }
 
         public Criteria andOperationTimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("operation_time not between", value1, value2, "operationTime");
+            addCriterion("operation_time not between", value1, value2, "operationTime");
             return (Criteria) this;
         }
     }

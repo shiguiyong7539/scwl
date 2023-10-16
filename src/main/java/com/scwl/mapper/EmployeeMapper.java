@@ -30,6 +30,8 @@ public interface EmployeeMapper {
 
     int updateByPrimaryKey(Employee record);
 
+    int getTotal();
+
     List<Map> getByAgeGroup();
 
     List<Map> getByEduGroup();

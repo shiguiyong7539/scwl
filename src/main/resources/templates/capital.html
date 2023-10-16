@@ -83,7 +83,7 @@
             <ul class="sub ul_hidden" id="userManage">
                 <li><a href="#" title="" onclick="hetong()">合同履行</a></li>
                 <li><a href="#" title="" onclick="mangeState()">经营管理</a></li>
-                <li><a href="#" title="" onclick="costManage()">成本管理</a></li>
+                <li><a href="#" title="" onclick="costManage()">预算执行</a></li>
                 <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
                 <li><a href="" title="">建设发展</a></li>
@@ -258,7 +258,7 @@
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="finishRate"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow">
-                        营业收入增长率：
+                        运营费用节约率：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="operatRate"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow">
@@ -578,8 +578,7 @@
             if(null==num){
                 return "";
             }else {
-                var per = Number(num)*100;
-                return per +'%';
+                return num +'%';
             }
 
 

@@ -3,24 +3,46 @@ package com.scwl.pojo;
 import java.util.Date;
 
 public class Contract {
+    /**
+     */
     private Integer id;
 
+    /**
+     * 部门名称
+     */
     private String department;
 
+    /**
+     */
     private String name;
 
+    /**
+     * 履行状态
+     */
     private String type;
 
+    /**
+     */
     private Integer totalNum;
 
+    /**
+     */
     private Integer finishNum;
 
+    /**
+     */
     private Integer unfinishNum;
 
+    /**
+     */
     private Date startTime;
 
+    /**
+     */
     private Date addTime;
 
+    /**
+     */
     private String remark;
 
     public Integer getId() {

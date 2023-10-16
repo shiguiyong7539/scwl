@@ -3,27 +3,32 @@ package com.scwl.pojo;
 import java.util.List;
 
 public class Menu {
+    /**
+     * url
+     */
     private Integer id;
 
+    /**
+     */
     private String path;
 
+    /**
+     */
     private String url;
 
+    /**
+     */
     private String name;
 
+    /**
+     */
     private Integer parentId;
 
+    /**
+     */
     private Boolean enabled;
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    private List<Role> roles;
+    List<Role> roles;
 
     public List<Role> getRoles() {
         return roles;
@@ -71,5 +76,13 @@ public class Menu {
 
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

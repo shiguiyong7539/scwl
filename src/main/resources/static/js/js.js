@@ -2,10 +2,12 @@
 $(function () {
     //echarts_1();
     echarts_4();
-    echarts_5();
+    echarts_5(1);
     echarts_31();
     echarts_32('月');
     getTaskTable();
+    getContractTable();
+    getRiskTable();
 function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
@@ -119,6 +121,7 @@ function echarts_4() {
         var myChart2 = echarts.init(document.getElementById('asset_2'));
         var myChart3 = echarts.init(document.getElementById('asset_3'));
         var myChart4 = echarts.init(document.getElementById('asset_4'));
+        myChart4.clear();
     $.ajax({
         type: "get",
         url: "/getManageStateByCenter",
@@ -131,6 +134,7 @@ function echarts_4() {
                 document.getElementById("rent_total").innerText = res.obj.rent_total;
                 //租金总欠收
                 document.getElementById("arrears_total").innerText = res.obj.arrears_total;
+
                 //经营业务总收入
                 document.getElementById("in_total").innerText = res.obj.in_total;
                    var manage_date =[];
@@ -202,7 +206,6 @@ function echarts_4() {
                                type: 'shadow'
                            },
                            formatter: function(params) {
-                               console.log(params[0]);
                                var axisValue = params[0].axisValue + '</br>';
                                var seriesName = params[0].seriesName + ':';
                                var unit = params[0].value + ' 元';
@@ -230,9 +233,9 @@ function echarts_4() {
                            itemGap: 5
                        },
                        grid: {
-                           left: '0%',
+                           left: '1%',
                            top:'40px',
-                           right: '0%',
+                           right: '1%',
                            bottom: '0',
                            containLabel: true
                        },
@@ -313,7 +316,6 @@ function echarts_4() {
                                type: 'shadow'
                            },
                            formatter: function(params) {
-                               console.log(params[0]);
                                var axisValue = params[0].axisValue + '</br>';
                                var seriesName = params[0].seriesName + ':';
                                var unit = params[0].value + ' 元';
@@ -341,9 +343,9 @@ function echarts_4() {
                            itemGap: 35
                        },
                        grid: {
-                           left: '0%',
+                           left: '1%',
                            top:'40px',
-                           right: '0%',
+                           right: '1%',
                            bottom: '0',
                            containLabel: true
                        },
@@ -424,13 +426,22 @@ function echarts_4() {
                                type: 'shadow'
                            },
                            formatter: function(params) {
-                               console.log(params[0]);
+
                                var axisValue = params[0].axisValue + '</br>';
                                var seriesName = params[0].seriesName + ':';
                                var unit = params[0].value + '%';
                                return axisValue+seriesName+unit;
                            }
                        },
+                       toolbox: {
+                         show: true,
+                         feature: {
+                         magicType: {
+                             show: true,
+                                type: ['line', 'bar']
+                           }
+                      }
+                         },
                        legend: {
                            data: ['出租率'],
                            top:'5%',
@@ -443,9 +454,9 @@ function echarts_4() {
                            itemGap: 35
                        },
                        grid: {
-                           left: '0%',
+                           left: '1%',
                            top:'40px',
-                           right: '0%',
+                           right: '1%',
                            bottom: '0',
                            containLabel: true
                        },
@@ -525,15 +536,15 @@ function echarts_4() {
                            trigger: 'axis',
                            axisPointer: {
                                type: 'shadow'
-                            }
-                               // ,
-                           // formatter: function(params) {
-                           //     console.log(params[0]);
-                           //     var axisValue = params[0].axisValue + '</br>';
-                           //     var seriesName = params[0].seriesName + ':';
-                           //     var unit = params[0].value + ' 元';
-                           //     return axisValue+seriesName+unit;
-                           // }
+                            },
+                           formatter: function(params) {
+                               var axisValue = params[0].axisValue + '</br>';
+                               var result='';
+                               params.forEach(function(item) {
+                                   result += item.seriesName + ': ' + item.value + ' 元<br>';
+                               });
+                              return axisValue+result;
+                           }
                        },
                        legend: {
                            data: ['旧日长轨','星河集市','金沙艺术中心','灿若湖民宿','活动策划'],
@@ -676,7 +687,8 @@ function echarts_4() {
                            }
                        ]
                    };
-
+                //当前出租率
+                document.getElementById("letRate_now").innerText = rate_data[rate_data.length-1]+'%';
                    myChart.setOption(option);
                    myChart2.setOption(option2);
                    myChart3.setOption(option3);
@@ -692,11 +704,11 @@ function echarts_4() {
 
             }}})
     }
-function echarts_5() {
+function echarts_5(rate) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('capital_1'));
         var myChart2 = echarts.init(document.getElementById('capital_2'));
-        var myChart3 = echarts.init(document.getElementById('capital_3'));
+     //   var myChart3 = echarts.init(document.getElementById('capital_3'));
         $.ajax({
             type: "get",
             url: "/getCapitalByCenterShow",
@@ -709,31 +721,77 @@ function echarts_5() {
                   // finishRate;operatRate; incomeRate;cashRate;costRate; useCapital;addDate;remark;
                     //当前可用资金
                     document.getElementById("use_money").innerText = res.obj.use_money;
+                    document.getElementById("unUse_money").innerText = res.obj.unUse_money;
                     var income_date = [];
                     //融资计划完成率
                     var finishRateData = [];
+                    var finishRateTagData = [];
                     //运营费用节约率
                     var operatRateData = [];
+                    var operatRateTagData = [];
                     //营业收入增长率
                     var incomeRateData = [];
+                    var incomeRateTagData = [];
                     //营业现金比率
                     var cashRateData = [];
+                    var cashRateTagData = [];
                     //营业成本率
                     var costRateData = [];
+                    var costRateTagData = [];
                     //可用资金
                     var useCapitalData = [];
-
+                    //不可用资金
+                    var unUseCapitalData = [];
+                    //最终显示比率数据
+                    var showData = [];
+                    //最终显示指标数据
+                    var showTagData = [];
+                    //显示title
+                    var showTtile = ['融资计划完成率','融资计划完成率指标'];
                     var data = res.obj.list;
+                    // for (let i = 0; i < data.length; i++) {
+                    //     income_date.push(data[i].remark+'月');
+                    //     finishRateData.push(data[i].finishRate);
+                    //     finishRateTagData.push(data[i].finishRateTag);
+                    //     operatRateData.push(data[i].operatRate);
+                    //     operatRateTagData.push(data[i].operatRateTag);
+                    //     incomeRateData.push(data[i].incomeRate);
+                    //     incomeRateTagData.push(data[i].incomeRateTag);
+                    //     cashRateData.push(data[i].cashRate);
+                    //     cashRateTagData.push(data[i].cashTagRate);
+                    //     costRateData.push(data[i].costRate);
+                    //     costRateTagData.push(data[i].costTagRate);
+                    //     useCapitalData.push(data[i].useCapital);
+                    //     unUseCapitalData.push(data[i].unUseCapital);
+                    // }
                     for (let i = 0; i < data.length; i++) {
                         income_date.push(data[i].remark+'月');
-                        finishRateData.push(data[i].finishRate);
-                        operatRateData.push(data[i].operatRate);
-                        incomeRateData.push(data[i].incomeRate);
-                        cashRateData.push(data[i].cashRate);
-                        costRateData.push(data[i].costRate);
                         useCapitalData.push(data[i].useCapital);
+                        unUseCapitalData.push(data[i].unUseCapital);
+                        if(rate==1){
+                            showData.push(data[i].finishRate);
+                            showTagData.push(data[i].finishRateTag);
+                        }else if(rate==2){
+                            showTtile = ['运营费用节约率','运营费用节约率指标'];
+                            showData.push(data[i].operatRate);
+                            showTagData.push(data[i].operatRateTag);
+                        }else if(rate==3){
+                            showTtile = ['营业收入增长率','营业收入增长率指标'];
+                            showData.push(data[i].incomeRate);
+                            showTagData.push(data[i].incomeRateTag);
+                        }else if(rate==4){
+                            showTtile = ['营业现金比率','营业现金比率指标'];
+                            showData.push(data[i].cashRate);
+                            showTagData.push(data[i].cashRateTag);
+                        }else if(rate==5){
+                            showTtile = ['营业成本率','营业成本率指标'];
+                            showData.push(data[i].costRate);
+                            showTagData.push(data[i].costRateTag);
+                        }
 
                     }
+
+
 
                     option = {
                         //  backgroundColor: '#00265f',
@@ -741,14 +799,14 @@ function echarts_5() {
                             trigger: 'axis',
                             axisPointer: {
                                 type: 'shadow'
-                            }
-                            ,
+                            } ,
                             formatter: function(params) {
-                                console.log(params[0]);
                                 var axisValue = params[0].axisValue + '</br>';
-                                var seriesName = params[0].seriesName + ':';
-                                var unit = params[0].value+'元';
-                                return axisValue+seriesName+unit;
+                                var result='';
+                                params.forEach(function(item) {
+                                    result += item.seriesName + ': ' +item.value+ ' %<br>';
+                                });
+                                return axisValue+result;
                             }
                         },
                         toolbox: {
@@ -761,7 +819,7 @@ function echarts_5() {
                             }
                         },
                         legend: {
-                            data: ['融资计划完成率','运营费用节约率','营业收入增长率'],
+                            data: showTtile,
                             top:'-5px',
                             textStyle: {
                                 color: "#fff",
@@ -772,9 +830,9 @@ function echarts_5() {
                             itemGap: 5
                         },
                         grid: {
-                            left: '0%',
+                            left: '1%',
                             top:'40px',
-                            right: '0%',
+                            right: '1%',
                             bottom: '0',
                             containLabel: true
                         },
@@ -831,10 +889,10 @@ function echarts_5() {
                             }
                         }],
                         series: [{
-                            name: '融资计划完成率',
+                            name: showTtile[0],
                             type: 'line',
                             smooth: true,
-                            data:finishRateData,
+                            data:showData,
 
                             itemStyle: {
                                 normal: {
@@ -844,10 +902,10 @@ function echarts_5() {
                                 }
                             }
                         },{
-                            name: '运营费用节约率',
+                            name: showTtile[1],
                             type: 'line',
                             smooth: true,
-                            data:operatRateData,
+                            data:showTagData,
 
                             itemStyle: {
                                 normal: {
@@ -857,20 +915,6 @@ function echarts_5() {
                                 }
                             }
                         }
-                            ,{
-                                name: '营业收入增长率',
-                                type: 'line',
-                                smooth: true,
-                                data:incomeRateData,
-
-                                itemStyle: {
-                                    normal: {
-                                        color:'#cf3b26',
-                                        opacity: 1,
-                                        barBorderRadius: 5,
-                                    }
-                                }
-                            }
                         ]
                     };
 
@@ -880,6 +924,14 @@ function echarts_5() {
                             trigger: 'axis',
                             axisPointer: {
                                 type: 'shadow'
+                            },
+                            formatter: function(params) {
+                                var axisValue = params[0].axisValue + '</br>';
+                                var result='';
+                                params.forEach(function(item) {
+                                    result += item.seriesName + ': ' +item.value+ '元</br>';
+                                });
+                                return axisValue+result;
                             }
                         },
                         toolbox: {
@@ -892,7 +944,7 @@ function echarts_5() {
                             }
                         },
                         legend: {
-                            data: ['可用资金'],
+                            data: ['可用资金','不可用资金'],
                             top:'5%',
                             textStyle: {
                                 color: "#fff",
@@ -903,9 +955,9 @@ function echarts_5() {
                             itemGap: 35
                         },
                         grid: {
-                            left: '0%',
+                            left: '1%',
                             top:'40px',
-                            right: '0%',
+                            right: '1%',
                             bottom: '0',
                             containLabel: true
                         },
@@ -974,121 +1026,16 @@ function echarts_5() {
                                     barBorderRadius: 5,
                                 }
                             }
-                        }
-                        ]
-                    };
-
-                    option3 = {
-                        //  backgroundColor: '#00265f',
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'shadow'
-                            }
                         },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                magicType: {
-                                    show: true,
-                                    type: ['line', 'bar']
-                                }
-                            }
-                        },
-                        legend: {
-                            data: ['营业现金比率','营业成本率'],
-                            top:'-5px',
-                            textStyle: {
-                                color: "#fff",
-                                fontSize: '10',
-
-                            },
-
-                            itemGap: 5
-                        },
-                        grid: {
-                            left: '0%',
-                            top:'40px',
-                            right: '0%',
-                            bottom: '0',
-                            containLabel: true
-                        },
-                        xAxis: [{
-                            type: 'category',
-                            data: income_date,
-                            axisLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: "rgba(255,255,255,.1)",
-                                    width: 1,
-                                    type: "solid"
-                                },
-                            },
-                            axisTick: {
-                                show: false,
-                            },
-                            axisLabel:  {
-                                interval: 0,
-                                // rotate:50,
-                                show: true,
-                                splitNumber: 5,
-                                textStyle: {
-                                    color: "rgba(255,255,255,.6)",
-                                    fontSize: '10',
-                                },
-                            },
-                        }],
-                        yAxis: [{
-                            type: 'value',
-                            axisLabel: {
-                                //formatter: '{value} %'
-                                show:true,
-                                textStyle: {
-                                    color: "rgba(255,255,255,.6)",
-                                    fontSize: '10',
-                                },
-                            },
-                            axisTick: {
-                                show: false,
-                            },
-                            axisLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: "rgba(255,255,255,.1	)",
-                                    width: 1,
-                                    type: "solid"
-                                },
-                            },
-                            splitLine: {
-                                lineStyle: {
-                                    color: "rgba(255,255,255,.1)",
-                                }
-                            }
-                        }],
-                        series: [
                             {
-                                name: '营业现金比率',
-                                type: 'line',
+                                name: '不可用资金',
+                                type: 'bar',
                                 smooth: true,
-                                data:cashRateData,
+                                data:unUseCapitalData,
 
                                 itemStyle: {
                                     normal: {
-                                        color:'#4acf28',
-                                        opacity: 1,
-                                        barBorderRadius: 5,
-                                    }
-                                }
-                            }
-                            ,{
-                                name: '营业成本率',
-                                type: 'line',
-                                smooth: true,
-                                data:costRateData,
-
-                                itemStyle: {
-                                    normal: {
-                                        color:'#c12125',
+                                        color:'#2ccf0c',
                                         opacity: 1,
                                         barBorderRadius: 5,
                                     }
@@ -1096,10 +1043,137 @@ function echarts_5() {
                             }
                         ]
                     };
+
+                    // option3 = {
+                    //     //  backgroundColor: '#00265f',
+                    //     tooltip: {
+                    //         trigger: 'axis',
+                    //         axisPointer: {
+                    //             type: 'shadow'
+                    //         },
+                    //         formatter: function(params) {
+                    //             var axisValue = params[0].axisValue + '</br>';
+                    //             var result='';
+                    //             params.forEach(function(item) {
+                    //                 result += item.seriesName + ': ' +item.value+ ' %<br>';
+                    //             });
+                    //             return axisValue+result;
+                    //         }
+                    //     },
+                    //     toolbox: {
+                    //         show: true,
+                    //         feature: {
+                    //             magicType: {
+                    //                 show: true,
+                    //                 type: ['line', 'bar']
+                    //             }
+                    //         }
+                    //     },
+                    //     legend: {
+                    //         data: ['营业现金比率','营业成本率'],
+                    //         top:'-5px',
+                    //         textStyle: {
+                    //             color: "#fff",
+                    //             fontSize: '10',
+                    //
+                    //         },
+                    //
+                    //         itemGap: 5
+                    //     },
+                    //     grid: {
+                    //         left: '1%',
+                    //         top:'40px',
+                    //         right: '1%',
+                    //         bottom: '0',
+                    //         containLabel: true
+                    //     },
+                    //     xAxis: [{
+                    //         type: 'category',
+                    //         data: income_date,
+                    //         axisLine: {
+                    //             show: true,
+                    //             lineStyle: {
+                    //                 color: "rgba(255,255,255,.1)",
+                    //                 width: 1,
+                    //                 type: "solid"
+                    //             },
+                    //         },
+                    //         axisTick: {
+                    //             show: false,
+                    //         },
+                    //         axisLabel:  {
+                    //             interval: 0,
+                    //             // rotate:50,
+                    //             show: true,
+                    //             splitNumber: 5,
+                    //             textStyle: {
+                    //                 color: "rgba(255,255,255,.6)",
+                    //                 fontSize: '10',
+                    //             },
+                    //         },
+                    //     }],
+                    //     yAxis: [{
+                    //         type: 'value',
+                    //         axisLabel: {
+                    //             //formatter: '{value} %'
+                    //             show:true,
+                    //             textStyle: {
+                    //                 color: "rgba(255,255,255,.6)",
+                    //                 fontSize: '10',
+                    //             },
+                    //         },
+                    //         axisTick: {
+                    //             show: false,
+                    //         },
+                    //         axisLine: {
+                    //             show: true,
+                    //             lineStyle: {
+                    //                 color: "rgba(255,255,255,.1	)",
+                    //                 width: 1,
+                    //                 type: "solid"
+                    //             },
+                    //         },
+                    //         splitLine: {
+                    //             lineStyle: {
+                    //                 color: "rgba(255,255,255,.1)",
+                    //             }
+                    //         }
+                    //     }],
+                    //     series: [
+                    //         {
+                    //             name: '营业现金比率',
+                    //             type: 'line',
+                    //             smooth: true,
+                    //             data:cashRateData,
+                    //
+                    //             itemStyle: {
+                    //                 normal: {
+                    //                     color:'#4acf28',
+                    //                     opacity: 1,
+                    //                     barBorderRadius: 5,
+                    //                 }
+                    //             }
+                    //         }
+                    //         ,{
+                    //             name: '营业成本率',
+                    //             type: 'line',
+                    //             smooth: true,
+                    //             data:costRateData,
+                    //
+                    //             itemStyle: {
+                    //                 normal: {
+                    //                     color:'#c12125',
+                    //                     opacity: 1,
+                    //                     barBorderRadius: 5,
+                    //                 }
+                    //             }
+                    //         }
+                    //     ]
+                    // };
                     // 使用刚指定的配置项和数据显示图表。
                     myChart.setOption(option2);
                     myChart2.setOption(option);
-                    myChart3.setOption(option3);
+                   // myChart3.setOption(option3);
 
 
                     window.addEventListener("resize",function(){
@@ -1135,6 +1209,7 @@ function echarts_31() {
         },
         success: function (res) {
             if(res && res.code===200){
+                var total = res.obj.total;
                 var age_list = res.obj.age;
                 var edu_list = res.obj.edu;
                 var rank_list = res.obj.rank;
@@ -1165,7 +1240,7 @@ function echarts_31() {
                 option = {
                     tooltip: {
                         trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        formatter: "{a} <br/>{b}: {c} 人({d}%)",
                         position:function(p){   //其中p为当前鼠标的位置
                             return [p[0] + 10, p[1] - 10];
                         }
@@ -1199,7 +1274,7 @@ function echarts_31() {
                 option2 = {
                     tooltip: {
                         trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        formatter: "{a} <br/>{b}: {c} 人({d}%)",
                         position:function(p){   //其中p为当前鼠标的位置
                             return [p[0] + 10, p[1] - 10];
                         }
@@ -1232,7 +1307,7 @@ function echarts_31() {
                 option3 = {
                     tooltip: {
                         trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        formatter: "{a} <br/>{b}: {c} 人({d}%)",
                         position:function(p){   //其中p为当前鼠标的位置
                             return [p[0] + 10, p[1] - 10];
                         }
@@ -1265,7 +1340,7 @@ function echarts_31() {
                 option4 = {
                     tooltip: {
                         trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)",
+                        formatter: "{a} <br/>{b}: {c} 人({d}%)",
                         position:function(p){   //其中p为当前鼠标的位置
                             return [p[0] + 10, p[1] - 10];
                         }
@@ -1296,6 +1371,8 @@ function echarts_31() {
                     ]
                 };
 
+                //总人数
+                document.getElementById("person_total").innerText = total;
                 // 使用刚指定的配置项和数据显示图表。
                 myChart.setOption(option);
                 myChart2.setOption(option2);
@@ -1352,7 +1429,7 @@ function echarts_32(period) {
                     option = {
                         title: {
                             zlevel: 0,
-                            text: ['{name|累计成本}', '{value|' + (total_money/10000).toFixed(2) + '}{name|万元}'].join('\n'),
+                            text: ['{name|累计成本}', '{value|' + total_money + '}{name|万元}'].join('\n'),
                             top: '35%',
                             left: '34%',
                             textAlign: 'center',
@@ -1373,10 +1450,10 @@ function echarts_32(period) {
                         },
                         tooltip: {
                             trigger: 'item',
-                            formatter: "{a} <br/>{b}: {c} ({d}%)",
+                            formatter: "{a} <br/>{b}: {c} 万元 ({d}%)",
                             position:function(p){   //其中p为当前鼠标的位置
                                 return [p[0] + 10, p[1] - 10];
-                            }
+                            },
                         },
                         legend: {
                             type: 'scroll',
@@ -1395,8 +1472,7 @@ function echarts_32(period) {
                                 for (let i = 0; i < data.length; i++) {
                                     if(name === data[i].name){
                                         var percent = (data[i].value / total_money * 100).toFixed(2) + '%';
-                                        var value = (data[i].value/10000).toFixed(2);
-                                        return name + ': ' +value+ '万元 (' + percent + ')';
+                                        return name + ': ' +data[i].value+ '万元 (' + percent + ')';
                                     }
 
                                 }
@@ -1469,6 +1545,192 @@ function getTaskTable() {
         })
 
     }
+function getContractTable() {
+        $.ajax({
+            type: "get",
+            url: "/getContractByCenter",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            success: function (res) {
+                if(res && res.code===200){
+                    var data = res.obj;
+                    var str_info='';
+                    for (let i = 0; i < data.length; i++) {
+                        str_info+='<tr><td>'+data[i].department+'</td>';
+                        str_info+='<td><span class="text-w">'+isNull(data[i].totalNum)+'</span></td>';
+                        str_info+='<td><span class="text-b">'+isNull(data[i].finishNum)+'</span></td>';
+                        str_info+='<td><div class="text-d">'+isNull(data[i].unfinishNum)+'</div></td></tr>';
+                    }
+                    $("#contract_table").html(str_info);
+                }
+
+            }
+
+
+
+        })
+
+    }
+function getRiskTable() {
+        $.ajax({
+            type: "get",
+            url: "/getRiskByCenter",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            success: function (res) {
+                if(res && res.code===200){
+                    var data = res.obj;
+                    // 获取表格元素
+                    var str_info='';
+                    for (let i = 0; i < data.length; i++) {
+                        str_info+='<tr><td>'+data[i].name+'</td>';
+                        str_info+='<td>'+isNull(data[i].num)+'</td>';
+                        str_info+='<td><div class="text-w">'+isNull(data[i].yearNum)+'</div></td></tr>';
+                    }
+                    $("#risk_table").html(str_info);
+                }
+
+            }
+
+
+
+        })
+
+    }
+function total_manage() {
+    var myChart = echarts.init(document.getElementById('asset_4'));
+     myChart.clear();
+    $.ajax({
+        type: "get",
+        url: "/getTotalManage",
+        headers: {
+            'Authorization': localStorage.getItem("token") // 在请求头中添加token
+        },
+        success: function (res) {
+            if(res && res.code===200){
+                //经营业务总收入
+                var income_data =[];
+                var manage_date =[];
+
+
+                for (let i = 0; i < res.obj.length; i++) {
+                            manage_date.push(res.obj[i].remark+'月');
+                            income_data.push(res.obj[i].rentIncome);
+                }
+                option = {
+                    //  backgroundColor: '#00265f',
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        },
+                        formatter: function(params) {
+                            var axisValue = params[0].axisValue + '</br>';
+                            var result='';
+                            params.forEach(function(item) {
+                                result += item.seriesName + ': ' + item.value + ' 元<br>';
+                            });
+                            return axisValue+result;
+                        }
+                    },
+                    legend: {
+                        data: ['总收入'],
+                        top:'5%',
+                        textStyle: {
+                            color: "#fff",
+                            fontSize: '10',
+
+                        },
+
+                        itemGap: 35
+                    },
+                    grid: {
+                        left: '0%',
+                        top:'40px',
+                        right: '0%',
+                        bottom: '0',
+                        containLabel: true
+                    },
+                    xAxis: [{
+                        type: 'category',
+                        data: manage_date,
+                        axisLine: {
+                            show: true,
+                            lineStyle: {
+                                color: "rgba(255,255,255,.1)",
+                                width: 1,
+                                type: "solid"
+                            },
+                        },
+                        axisTick: {
+                            show: false,
+                        },
+                        axisLabel:  {
+                            interval: 0,
+                            // rotate:50,
+                            show: true,
+                            splitNumber: 5,
+                            textStyle: {
+                                color: "rgba(255,255,255,.6)",
+                                fontSize: '10',
+                            },
+                        },
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        axisLabel: {
+                            //formatter: '{value} %'
+                            show:true,
+                            textStyle: {
+                                color: "rgba(255,255,255,.6)",
+                                fontSize: '10',
+                            },
+                        },
+                        axisTick: {
+                            show: false,
+                        },
+                        axisLine: {
+                            show: true,
+                            lineStyle: {
+                                color: "rgba(255,255,255,.1	)",
+                                width: 1,
+                                type: "solid"
+                            },
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: "rgba(255,255,255,.1)",
+                            }
+                        }
+                    }],
+                    series: [{
+                        name: '总收入',
+                        type: 'line',
+                        smooth: true,
+                        data:income_data,
+
+                        itemStyle: {
+                            normal: {
+                                color:'#2f89cf',
+                                opacity: 1,
+                                barBorderRadius: 5,
+                            }
+                        }
+                    }
+                    ]
+                };
+
+                myChart.setOption(option);
+                window.addEventListener("resize",function(){
+                    myChart.resize();
+                });
+
+            }}})
+
+}
+
 
 
 
@@ -1513,6 +1775,21 @@ function currentDate(type) {
     $("#now_year").on("click", function() {
         echarts_32('年');
     })
+    $("#total_manage").on("click", function() {
+        total_manage();
+    })
+    $("#in_details").on("click", function() {
+        echarts_4();
+    })
+    $("#rate_type").on("change", function() {
+        // 在这里编写你的函数逻辑
+        var selected = $(this).val();
+        echarts_5(selected);
+    });
+
+
+
+
     // $("#asset1").on("click", function() {
     //     // var box_show1 = document.getElementsByClassName("box_show1");
     //     // var box_show2 = document.getElementsByClassName("box_show2");

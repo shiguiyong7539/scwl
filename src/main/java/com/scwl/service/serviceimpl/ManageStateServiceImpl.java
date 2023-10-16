@@ -54,7 +54,7 @@ public class ManageStateServiceImpl implements ManageStateService {
         hashMap.put("arrears_total",totalByThisYear.getRentArrears().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         //经营业务收入当年度总额
         ManageState totalByThisYear1 = manageStateMapper.getTotalByThisYear("经营业务收入");
-        hashMap.put("in_total",totalByThisYear.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        hashMap.put("in_total",totalByThisYear1.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         List<Map<String,Object>> list = new ArrayList<>();
             List<ManageState>    manageStates = manageStateMapper.getManageStateByAsset();
             HashMap<String, Object> map = new HashMap<>();
@@ -67,12 +67,19 @@ public class ManageStateServiceImpl implements ManageStateService {
                 HashMap<String, Object> map1 = new HashMap<>();
                 map1.put("manage",manageStateList);
                 list.add(map1);
-        }
+            }
          hashMap.put("list",list);
         return ResBean.success("success",hashMap);
 
 
 
 
+    }
+
+    @Override
+    public ResBean getTotalManage() {
+        //经营业务收入当年度总额
+        List<ManageState> list = manageStateMapper.getManageStateByTotal();
+        return ResBean.success("success",list);
     }
 }

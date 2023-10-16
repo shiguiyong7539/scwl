@@ -37,4 +37,5 @@ public interface CapitalMapper {
     List<Capital> getIncome();
 
 
+
 }

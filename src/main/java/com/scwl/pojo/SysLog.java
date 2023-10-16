@@ -3,20 +3,40 @@ package com.scwl.pojo;
 import java.util.Date;
 
 public class SysLog {
+    /**
+     */
     private Integer id;
 
+    /**
+     * 操作类型
+     */
     private String operationType;
 
+    /**
+     * 操作对象
+     */
     private String tableName;
 
+    /**
+     * 对象id
+     */
     private Integer rowId;
 
+    /**
+     */
     private Integer userId;
 
+    /**
+     * 操作详细
+     */
     private String conent;
 
+    /**
+     */
     private String remark;
 
+    /**
+     */
     private Date operationTime;
 
     public Integer getId() {

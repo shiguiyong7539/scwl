@@ -8,21 +8,36 @@ import java.util.Date;
 import java.util.List;
 
 public class User implements UserDetails {
+    /**
+     */
     private Integer id;
 
+    /**
+     * 名称
+     */
     private String name;
 
+    /**
+     * 手机号码
+     */
     private String phone;
 
+    /**
+     * 用户登录名
+     */
     private String username;
 
+    /**
+     * 密码
+     */
     private String password;
 
+    /**
+     */
     private Boolean enable;
 
-    private Date lastLogin;
 
-    private List<Role> roles;
+    List<Role>  roles;
 
     public List<Role> getRoles() {
         return roles;
@@ -31,6 +46,11 @@ public class User implements UserDetails {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
+    /**
+     * 上次登录时间
+     */
+    private Date lastLogin;
 
     public Integer getId() {
         return id;
@@ -62,17 +82,17 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override

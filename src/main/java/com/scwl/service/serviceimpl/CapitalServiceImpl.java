@@ -62,12 +62,14 @@ public class CapitalServiceImpl implements CapitalService {
     }
 
     @Override
-    public ResBean getCapitalByCenterShow() {
+    public ResBean getCapitalByCenterShow(String type) {
         HashMap<String, Object> hashMap = new HashMap<>();
+        //可用和不可用资金
         List<Capital> income = capitalMapper.getIncome();
-
+        //比率
         hashMap.put("list",income);
         hashMap.put("use_money",income.get(income.size()-1).getUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        hashMap.put("unUse_money",income.get(income.size()-1).getUnUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         return ResBean.success("success",hashMap);
     }
 }

@@ -3,18 +3,38 @@ package com.scwl.pojo;
 import java.util.Date;
 
 public class Employee {
+    /**
+     */
     private Integer id;
 
+    /**
+     * 员工名称
+     */
     private String name;
 
+    /**
+     * 年龄
+     */
     private Integer age;
 
+    /**
+     * 学历
+     */
     private String education;
 
+    /**
+     * 入职时间
+     */
     private Date joinTime;
 
+    /**
+     * 职称
+     */
     private String rank;
 
+    /**
+     * 用工方式
+     */
     private String employmentMode;
 
     public Integer getId() {

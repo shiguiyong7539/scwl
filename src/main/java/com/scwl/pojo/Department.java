@@ -1,8 +1,13 @@
 package com.scwl.pojo;
 
 public class Department {
+    /**
+     */
     private Integer id;
 
+    /**
+     * 部门名称
+     */
     private String name;
 
     public Integer getId() {

@@ -4,20 +4,41 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class CostManage {
+    /**
+     */
     private Integer id;
 
+    /**
+     * 成本名称
+     */
     private String name;
 
+    /**
+     * 工资发放
+     */
     private BigDecimal payOutWage;
 
+    /**
+     * 房租
+     */
     private BigDecimal rent;
 
+    /**
+     * 水电办公等
+     */
     private BigDecimal hydropowerOffice;
 
+    /**
+     * 工会
+     */
     private BigDecimal laborUnion;
 
+    /**
+     */
     private Date periodicTime;
 
+    /**
+     */
     private String remark;
 
     public Integer getId() {

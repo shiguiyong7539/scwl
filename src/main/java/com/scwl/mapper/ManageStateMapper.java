@@ -38,6 +38,8 @@ public interface ManageStateMapper {
 
     List<ManageState> getManageStateByAsset();
     ManageState getTotalByThisYear(String type);
+
     List<ManageState> getAllName();
     List<ManageState> getManageStateByManage(String name);
+    List<ManageState> getManageStateByTotal();
 }

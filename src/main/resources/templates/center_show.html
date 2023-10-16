@@ -63,22 +63,14 @@
 				<div class="tit">风控</div>
 				<div class="boxnav" style="height: 150px;">
 					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tbody>
+						<thead>
 						<tr>
 							<th>类  别</th>
 							<th>总件数</th>
 							<th>当年度件数</th>
 						</tr>
-						<tr>
-							<td>涉诉情况</td>
-							<td>10</td>
-							<td><span class="text-w">10</span></td>
-						</tr>
-						<tr>
-							<td>监督检查整改情况</td>
-							<td>50</td>
-							<td><span class="text-w">49</span></td>
-						</tr>
+						</thead>
+						<tbody id="risk_table">
 						</tbody>
 					</table>
 				</div>
@@ -87,49 +79,22 @@
 				<div class="tit">合同履行</div>
 				<div class="boxnav" style="height: 180px;">
 					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tbody>
+						<thead>
 						<tr>
 							<th>部门</th>
 							<th>合同总数</th>
 							<th>履行中</th>
 							<th>履行完毕</th>
 						</tr>
-						<tr>
-							<td>综合管理部</td>
-							<td><span class="text-w">10</span></td>
-							<td><span class="text-d">10</span></td>
-							<td><span class="text-s">0</span></td>
-						</tr>
-						<tr>
-							<td>市场拓展部</td>
-							<td><span class="text-w">50</span></td>
-							<td><span class="text-d">10</span></td>
-							<td><span class="text-s">40</span></td>
-						</tr>
-						<tr>
-							<td>规划建设部</td>
-							<td><span class="text-w">10</span></td>
-							<td><span class="text-d">10</span></td>
-							<td><span class="text-s">0</span></td>
-						</tr>
-						<tr>
-							<td>财务融资部</td>
-							<td><span class="text-w">1</span></td>
-							<td><span class="text-d">1</span></td>
-							<td><span class="text-s">0</span></td>
-						</tr>
-						<tr>
-							<td>金沙艺术中心</td>
-							<td><span class="text-w">10</span></td>
-							<td><span class="text-d">8</span></td>
-							<td><span class="text-s">0</span></td>
-						</tr>
+						</thead>
+						<tbody id="contract_table">
+
 						</tbody>
 					</table>
 				</div>
 			</div>
 			<div class="box">
-				<div class="tit">人事信息统计</div>
+				<div class="tit">人事信息统计<span class="titAmount" id="person_total"></span><span class="titAmountRight">人</span></div>
 				<div class="boxnav" style="height: 350px;">
 					<div style="float: left; width: 50%; height: 170px" id="fb01"></div>
 					<div style="float: left; width: 50%; height: 170px" id="fb02"></div>
@@ -146,21 +111,23 @@
 					<div class="mapnav2">
 						<div class="box">
 							<div class="centerTit">经营状况</div>
-							<div class="tit">租金收入<span class="titAmount" id="rent_total"></span><span class="titAmountRight">万元（年度总额）</span></div>
+							<div class="box">
+								<div class="tit">经营业务收入<span class="titAmount" id="in_total"></span><span class="titAmountRight">万元（今年）</span>
+									<span class="btn_right"><button class="mbtn"  id="in_details">详情</button><button class="mbtn"  id="total_manage">总收入</button></span></div>
+								<div class="boxnav" style="height: 250px;" id="asset_4">
+								</div>
+							</div>
+							<div class="tit">租金收入<span class="titAmount" id="rent_total"></span><span class="titAmountRight">万元（今年）</span></div>
 							<div class="boxnav" style="height: 200px;" id="asset_1">
 							</div>
-							<div class="tit">欠缴租金<span class="titAmount" id="arrears_total"></span><span class="titAmountRight">万元（年度总额）</span></div><br>
+							<div class="tit">欠缴租金<span class="titAmount" id="arrears_total"></span><span class="titAmountRight">万元（今年）</span></div><br>
 							<div class="fboxnavtechart" style="height: 200px;" id="asset_2">
 							</div>
-							<div class="tit">出租率</div>
+							<div class="tit">出租率<span class="titAmount" id="letRate_now"></span><span class="titAmountRight">（当前）</span></div>
 							<div class="boxnav" style="height: 200px;" id="asset_3">
 							</div>
 						</div>
-						<div class="box">
-							<div class="tit">经营业务收入<span class="titAmount" id="in_total"></span><span class="titAmountRight">万元（年度总额）</span></div>
-							<div class="boxnav" style="height: 250px;" id="asset_4">
-							</div>
-						</div>
+
 					</div>
 				</div>
 			</div>
@@ -169,24 +136,40 @@
 		<li class="right_size">
 			<div class="box">
 				<div class="centerTit">资金状况</div>
-				<div class="tit">可用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元（当前）</span></div>
+				<div class="tit">可用<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元（当前）</span>
+					<span class="btn_right"><span class="tit2">不可用</span>
+				    <span class="titAmount" id="unUse_money"></span><span class="titAmountRight">万元（当前）</span>
+					</span>
+				</div>
 				<div class="boxnav" id="capital_1" style="height: 213px;"></div>
-				<div class="tit">资金状况比率</div>
+				<div class="tit">资金状况比率<span class="btn_right">
+					<div class="layui-inline">
+                    <select style="width: 100%"  lay-filter="demo" id="rate_type">
+                     <option value="">请选择</option>
+                     <option value="1">融资计划完成率</option>
+                     <option value="2">运营费用节约率</option>
+                     <option value="3">营业收入增长率</option>
+                     <option value="4">营业现金比率</option>
+                     <option value="5">营业成本率</option>
+                   </select>
+                  </div>
+				</span></div>
 				<div class="boxnav" id="capital_2" style="height: 213px;">
 				</div>
-						<div class="boxnav" id="capital_3" style="height: 213px;">
-						</div>
-			</div>
-
-			<div class="box">
-				<div class="tit">管理成本<span class="btn_right"><button class="mbtn"  id="now_month">当月</button><button class="mbtn"  id="now_year">当年</button></span></div>
-				<div class="boxnav" style="height: 230px;" id="fb05"></div>
+<!--						<div class="boxnav" id="capital_3" style="height: 213px;">-->
+<!--						</div>-->
 			</div>
 			<div class="box">
 				<div class="tit">建设进展</div>
-				<div class="boxnav" style="height: 13px;">
+				<div class="boxnav" style="height: 213px;">
 				</div>
 			</div>
+
+			<div class="box">
+				<div class="tit">预算执行情况<span class="btn_right"><button class="mbtn"  id="now_month">当月</button><button class="mbtn"  id="now_year">当年</button></span></div>
+				<div class="boxnav" style="height: 230px;" id="fb05"></div>
+			</div>
+
 		</li>
 	</ul>
 </div>

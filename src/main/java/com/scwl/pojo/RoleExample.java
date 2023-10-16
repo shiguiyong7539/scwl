@@ -10,40 +10,70 @@ public class RoleExample {
 
     protected List<Criteria> oredCriteria;
 
+    /**
+     * @return 
+     */
     public RoleExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
+    /**
+     * @param orderByClause
+     * @return 
+     */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
+    /**
+     * @return 
+     */
     public String getOrderByClause() {
         return orderByClause;
     }
 
+    /**
+     * @param distinct
+     * @return 
+     */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
     }
 
+    /**
+     * @return 
+     */
     public boolean isDistinct() {
         return distinct;
     }
 
+    /**
+     * @return 
+     */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
     }
 
+    /**
+     * @param criteria
+     * @return 
+     */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
     }
 
+    /**
+     * @return 
+     */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
         oredCriteria.add(criteria);
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
@@ -52,11 +82,17 @@ public class RoleExample {
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     public void clear() {
         oredCriteria.clear();
         orderByClause = null;

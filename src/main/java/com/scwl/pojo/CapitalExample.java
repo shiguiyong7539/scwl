@@ -13,40 +13,70 @@ public class CapitalExample {
 
     protected List<Criteria> oredCriteria;
 
+    /**
+     * @return 
+     */
     public CapitalExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
+    /**
+     * @param orderByClause
+     * @return 
+     */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
+    /**
+     * @return 
+     */
     public String getOrderByClause() {
         return orderByClause;
     }
 
+    /**
+     * @param distinct
+     * @return 
+     */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
     }
 
+    /**
+     * @return 
+     */
     public boolean isDistinct() {
         return distinct;
     }
 
+    /**
+     * @return 
+     */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
     }
 
+    /**
+     * @param criteria
+     * @return 
+     */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
     }
 
+    /**
+     * @return 
+     */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
         oredCriteria.add(criteria);
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
@@ -55,11 +85,17 @@ public class CapitalExample {
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
         return criteria;
     }
 
+    /**
+     * @return 
+     */
     public void clear() {
         oredCriteria.clear();
         orderByClause = null;
@@ -253,6 +289,66 @@ public class CapitalExample {
             return (Criteria) this;
         }
 
+        public Criteria andFinishRateTagIsNull() {
+            addCriterion("finish_rate_tag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagIsNotNull() {
+            addCriterion("finish_rate_tag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagEqualTo(BigDecimal value) {
+            addCriterion("finish_rate_tag =", value, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagNotEqualTo(BigDecimal value) {
+            addCriterion("finish_rate_tag <>", value, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagGreaterThan(BigDecimal value) {
+            addCriterion("finish_rate_tag >", value, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("finish_rate_tag >=", value, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagLessThan(BigDecimal value) {
+            addCriterion("finish_rate_tag <", value, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("finish_rate_tag <=", value, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagIn(List<BigDecimal> values) {
+            addCriterion("finish_rate_tag in", values, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagNotIn(List<BigDecimal> values) {
+            addCriterion("finish_rate_tag not in", values, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("finish_rate_tag between", value1, value2, "finishRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishRateTagNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("finish_rate_tag not between", value1, value2, "finishRateTag");
+            return (Criteria) this;
+        }
+
         public Criteria andOperatRateIsNull() {
             addCriterion("operat_rate is null");
             return (Criteria) this;
@@ -310,6 +406,66 @@ public class CapitalExample {
 
         public Criteria andOperatRateNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("operat_rate not between", value1, value2, "operatRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagIsNull() {
+            addCriterion("operat_rate_tag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagIsNotNull() {
+            addCriterion("operat_rate_tag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagEqualTo(BigDecimal value) {
+            addCriterion("operat_rate_tag =", value, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagNotEqualTo(BigDecimal value) {
+            addCriterion("operat_rate_tag <>", value, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagGreaterThan(BigDecimal value) {
+            addCriterion("operat_rate_tag >", value, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("operat_rate_tag >=", value, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagLessThan(BigDecimal value) {
+            addCriterion("operat_rate_tag <", value, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("operat_rate_tag <=", value, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagIn(List<BigDecimal> values) {
+            addCriterion("operat_rate_tag in", values, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagNotIn(List<BigDecimal> values) {
+            addCriterion("operat_rate_tag not in", values, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("operat_rate_tag between", value1, value2, "operatRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatRateTagNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("operat_rate_tag not between", value1, value2, "operatRateTag");
             return (Criteria) this;
         }
 
@@ -373,6 +529,66 @@ public class CapitalExample {
             return (Criteria) this;
         }
 
+        public Criteria andIncomeRateTagIsNull() {
+            addCriterion("income_rate_tag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagIsNotNull() {
+            addCriterion("income_rate_tag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagEqualTo(BigDecimal value) {
+            addCriterion("income_rate_tag =", value, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagNotEqualTo(BigDecimal value) {
+            addCriterion("income_rate_tag <>", value, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagGreaterThan(BigDecimal value) {
+            addCriterion("income_rate_tag >", value, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("income_rate_tag >=", value, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagLessThan(BigDecimal value) {
+            addCriterion("income_rate_tag <", value, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("income_rate_tag <=", value, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagIn(List<BigDecimal> values) {
+            addCriterion("income_rate_tag in", values, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagNotIn(List<BigDecimal> values) {
+            addCriterion("income_rate_tag not in", values, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("income_rate_tag between", value1, value2, "incomeRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRateTagNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("income_rate_tag not between", value1, value2, "incomeRateTag");
+            return (Criteria) this;
+        }
+
         public Criteria andCashRateIsNull() {
             addCriterion("cash_rate is null");
             return (Criteria) this;
@@ -430,6 +646,66 @@ public class CapitalExample {
 
         public Criteria andCashRateNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("cash_rate not between", value1, value2, "cashRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagIsNull() {
+            addCriterion("cash_rate_tag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagIsNotNull() {
+            addCriterion("cash_rate_tag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagEqualTo(BigDecimal value) {
+            addCriterion("cash_rate_tag =", value, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagNotEqualTo(BigDecimal value) {
+            addCriterion("cash_rate_tag <>", value, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagGreaterThan(BigDecimal value) {
+            addCriterion("cash_rate_tag >", value, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("cash_rate_tag >=", value, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagLessThan(BigDecimal value) {
+            addCriterion("cash_rate_tag <", value, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("cash_rate_tag <=", value, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagIn(List<BigDecimal> values) {
+            addCriterion("cash_rate_tag in", values, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagNotIn(List<BigDecimal> values) {
+            addCriterion("cash_rate_tag not in", values, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("cash_rate_tag between", value1, value2, "cashRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCashRateTagNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("cash_rate_tag not between", value1, value2, "cashRateTag");
             return (Criteria) this;
         }
 
@@ -493,6 +769,66 @@ public class CapitalExample {
             return (Criteria) this;
         }
 
+        public Criteria andCostRateTagIsNull() {
+            addCriterion("cost_rate_tag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagIsNotNull() {
+            addCriterion("cost_rate_tag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagEqualTo(BigDecimal value) {
+            addCriterion("cost_rate_tag =", value, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagNotEqualTo(BigDecimal value) {
+            addCriterion("cost_rate_tag <>", value, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagGreaterThan(BigDecimal value) {
+            addCriterion("cost_rate_tag >", value, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("cost_rate_tag >=", value, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagLessThan(BigDecimal value) {
+            addCriterion("cost_rate_tag <", value, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("cost_rate_tag <=", value, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagIn(List<BigDecimal> values) {
+            addCriterion("cost_rate_tag in", values, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagNotIn(List<BigDecimal> values) {
+            addCriterion("cost_rate_tag not in", values, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("cost_rate_tag between", value1, value2, "costRateTag");
+            return (Criteria) this;
+        }
+
+        public Criteria andCostRateTagNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("cost_rate_tag not between", value1, value2, "costRateTag");
+            return (Criteria) this;
+        }
+
         public Criteria andUseCapitalIsNull() {
             addCriterion("use_capital is null");
             return (Criteria) this;
@@ -550,6 +886,66 @@ public class CapitalExample {
 
         public Criteria andUseCapitalNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("use_capital not between", value1, value2, "useCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalIsNull() {
+            addCriterion("un_use_capital is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalIsNotNull() {
+            addCriterion("un_use_capital is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalEqualTo(BigDecimal value) {
+            addCriterion("un_use_capital =", value, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalNotEqualTo(BigDecimal value) {
+            addCriterion("un_use_capital <>", value, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalGreaterThan(BigDecimal value) {
+            addCriterion("un_use_capital >", value, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("un_use_capital >=", value, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalLessThan(BigDecimal value) {
+            addCriterion("un_use_capital <", value, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("un_use_capital <=", value, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalIn(List<BigDecimal> values) {
+            addCriterion("un_use_capital in", values, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalNotIn(List<BigDecimal> values) {
+            addCriterion("un_use_capital not in", values, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("un_use_capital between", value1, value2, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnUseCapitalNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("un_use_capital not between", value1, value2, "unUseCapital");
             return (Criteria) this;
         }
 

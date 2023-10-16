@@ -3,20 +3,39 @@ package com.scwl.pojo;
 import java.util.Date;
 
 public class Task {
+    /**
+     */
     private Integer id;
 
+    /**
+     */
     private String project;
 
+    /**
+     */
     private Integer totalNum;
 
+    /**
+     * 已完成
+     */
     private Integer completed;
 
+    /**
+     * 未完成
+     */
     private Integer unfinished;
 
+    /**
+     * 逾期
+     */
     private Integer overdue;
 
+    /**
+     */
     private Date term;
 
+    /**
+     */
     private String remark;
 
     public Integer getId() {

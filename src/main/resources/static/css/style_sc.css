@@ -26,6 +26,7 @@
     content: "\f56d";
 }
 
+
 /* 弹窗 (background) */
 .modal {
     display: none; /* 默认隐藏 */
@@ -183,4 +184,8 @@ select{
     .head h1 {
         font-size: 15px!important;
     }
+    .titAmount{
+        margin-left: 5px!important;
+    }
+
 }

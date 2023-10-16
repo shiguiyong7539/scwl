@@ -1,10 +1,18 @@
 package com.scwl.pojo;
 
 public class Role {
+    /**
+     */
     private Integer id;
 
+    /**
+     * 角色名
+     */
     private String name;
 
+    /**
+     * 角色中文显示名
+     */
     private String namezh;
 
     public Integer getId() {

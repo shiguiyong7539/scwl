@@ -327,4 +327,13 @@
     FROM manage_state
     WHERE type = #{type} and YEAR(periodic_time) = YEAR(CURDATE());
   </select>
+  <select id="getManageStateByTotal" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+        type,sum(rent_income) as rent_income,
+        MONTH(periodic_time) as remark
+    from manage_state
+   where  type ='经营业务收入' and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+     GROUP BY DATE_FORMAT(periodic_time,'%Y-%m')
+     ORDER BY DATE_FORMAT(periodic_time,'%Y-%m')
+  </select>
 </mapper>

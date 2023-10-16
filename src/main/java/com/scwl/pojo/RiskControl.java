@@ -3,18 +3,32 @@ package com.scwl.pojo;
 import java.util.Date;
 
 public class RiskControl {
+    /**
+     */
     private Integer id;
 
+    /**
+     */
     private String name;
 
+    /**
+     */
     private Integer num;
 
+    /**
+     */
     private Integer yearNum;
 
+    /**
+     */
     private Integer unfinishNum;
 
+    /**
+     */
     private Date addTime;
 
+    /**
+     */
     private String remark;
 
     public Integer getId() {

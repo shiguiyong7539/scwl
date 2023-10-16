@@ -1,10 +1,18 @@
 package com.scwl.pojo;
 
 public class MenuRole {
+    /**
+     */
     private Integer id;
 
+    /**
+     * 菜单id
+     */
     private Integer mid;
 
+    /**
+     * 角色id
+     */
     private Integer rid;
 
     public Integer getId() {

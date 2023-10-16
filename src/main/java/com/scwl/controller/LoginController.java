@@ -85,7 +85,7 @@ public class LoginController {
      */
     @RequestMapping("/costManage")
     public String costManage(){
-        return "costmanage";
+        return "budget";
     }
 
     /**

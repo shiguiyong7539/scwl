@@ -4,11 +4,17 @@
   <resultMap id="BaseResultMap" type="com.scwl.pojo.Capital" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="finish_rate" property="finishRate" jdbcType="DECIMAL" />
+    <result column="finish_rate_tag" property="finishRateTag" jdbcType="DECIMAL" />
     <result column="operat_rate" property="operatRate" jdbcType="DECIMAL" />
+    <result column="operat_rate_tag" property="operatRateTag" jdbcType="DECIMAL" />
     <result column="income_rate" property="incomeRate" jdbcType="DECIMAL" />
+    <result column="income_rate_tag" property="incomeRateTag" jdbcType="DECIMAL" />
     <result column="cash_rate" property="cashRate" jdbcType="DECIMAL" />
+    <result column="cash_rate_tag" property="cashRateTag" jdbcType="DECIMAL" />
     <result column="cost_rate" property="costRate" jdbcType="DECIMAL" />
+    <result column="cost_rate_tag" property="costRateTag" jdbcType="DECIMAL" />
     <result column="use_capital" property="useCapital" jdbcType="DECIMAL" />
+    <result column="un_use_capital" property="unUseCapital" jdbcType="DECIMAL" />
     <result column="add_date" property="addDate" jdbcType="DATE" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
@@ -71,8 +77,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, finish_rate, operat_rate, income_rate, cash_rate, cost_rate, use_capital, add_date,
-    remark
+    id, finish_rate, finish_rate_tag, operat_rate, operat_rate_tag, income_rate, income_rate_tag,
+    cash_rate, cash_rate_tag, cost_rate, cost_rate_tag, use_capital, un_use_capital,
+    add_date, remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.CapitalExample" >
     select
@@ -104,14 +111,18 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.Capital" useGeneratedKeys="true" keyProperty="id">
-    insert into capital (id, finish_rate, operat_rate,
-      income_rate, cash_rate, cost_rate,
-      use_capital, add_date, remark
+  <insert id="insert" parameterType="com.scwl.pojo.Capital"  useGeneratedKeys="true" keyProperty="id">
+    insert into capital (id, finish_rate, finish_rate_tag,
+      operat_rate, operat_rate_tag, income_rate,
+      income_rate_tag, cash_rate, cash_rate_tag,
+      cost_rate, cost_rate_tag, use_capital,
+      un_use_capital, add_date, remark
       )
-    values (#{id,jdbcType=INTEGER}, #{finishRate,jdbcType=DECIMAL}, #{operatRate,jdbcType=DECIMAL},
-      #{incomeRate,jdbcType=DECIMAL}, #{cashRate,jdbcType=DECIMAL}, #{costRate,jdbcType=DECIMAL},
-      #{useCapital,jdbcType=DECIMAL}, #{addDate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{finishRate,jdbcType=DECIMAL}, #{finishRateTag,jdbcType=DECIMAL},
+      #{operatRate,jdbcType=DECIMAL}, #{operatRateTag,jdbcType=DECIMAL}, #{incomeRate,jdbcType=DECIMAL},
+      #{incomeRateTag,jdbcType=DECIMAL}, #{cashRate,jdbcType=DECIMAL}, #{cashRateTag,jdbcType=DECIMAL},
+      #{costRate,jdbcType=DECIMAL}, #{costRateTag,jdbcType=DECIMAL}, #{useCapital,jdbcType=DECIMAL},
+      #{unUseCapital,jdbcType=DECIMAL}, #{addDate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.Capital" >
@@ -123,20 +134,38 @@
       <if test="finishRate != null" >
         finish_rate,
       </if>
+      <if test="finishRateTag != null" >
+        finish_rate_tag,
+      </if>
       <if test="operatRate != null" >
         operat_rate,
+      </if>
+      <if test="operatRateTag != null" >
+        operat_rate_tag,
       </if>
       <if test="incomeRate != null" >
         income_rate,
       </if>
+      <if test="incomeRateTag != null" >
+        income_rate_tag,
+      </if>
       <if test="cashRate != null" >
         cash_rate,
+      </if>
+      <if test="cashRateTag != null" >
+        cash_rate_tag,
       </if>
       <if test="costRate != null" >
         cost_rate,
       </if>
+      <if test="costRateTag != null" >
+        cost_rate_tag,
+      </if>
       <if test="useCapital != null" >
         use_capital,
+      </if>
+      <if test="unUseCapital != null" >
+        un_use_capital,
       </if>
       <if test="addDate != null" >
         add_date,
@@ -152,20 +181,38 @@
       <if test="finishRate != null" >
         #{finishRate,jdbcType=DECIMAL},
       </if>
+      <if test="finishRateTag != null" >
+        #{finishRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="operatRate != null" >
         #{operatRate,jdbcType=DECIMAL},
+      </if>
+      <if test="operatRateTag != null" >
+        #{operatRateTag,jdbcType=DECIMAL},
       </if>
       <if test="incomeRate != null" >
         #{incomeRate,jdbcType=DECIMAL},
       </if>
+      <if test="incomeRateTag != null" >
+        #{incomeRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="cashRate != null" >
         #{cashRate,jdbcType=DECIMAL},
+      </if>
+      <if test="cashRateTag != null" >
+        #{cashRateTag,jdbcType=DECIMAL},
       </if>
       <if test="costRate != null" >
         #{costRate,jdbcType=DECIMAL},
       </if>
+      <if test="costRateTag != null" >
+        #{costRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="useCapital != null" >
         #{useCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="unUseCapital != null" >
+        #{unUseCapital,jdbcType=DECIMAL},
       </if>
       <if test="addDate != null" >
         #{addDate,jdbcType=DATE},
@@ -190,20 +237,38 @@
       <if test="record.finishRate != null" >
         finish_rate = #{record.finishRate,jdbcType=DECIMAL},
       </if>
+      <if test="record.finishRateTag != null" >
+        finish_rate_tag = #{record.finishRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="record.operatRate != null" >
         operat_rate = #{record.operatRate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operatRateTag != null" >
+        operat_rate_tag = #{record.operatRateTag,jdbcType=DECIMAL},
       </if>
       <if test="record.incomeRate != null" >
         income_rate = #{record.incomeRate,jdbcType=DECIMAL},
       </if>
+      <if test="record.incomeRateTag != null" >
+        income_rate_tag = #{record.incomeRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="record.cashRate != null" >
         cash_rate = #{record.cashRate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cashRateTag != null" >
+        cash_rate_tag = #{record.cashRateTag,jdbcType=DECIMAL},
       </if>
       <if test="record.costRate != null" >
         cost_rate = #{record.costRate,jdbcType=DECIMAL},
       </if>
+      <if test="record.costRateTag != null" >
+        cost_rate_tag = #{record.costRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="record.useCapital != null" >
         use_capital = #{record.useCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="record.unUseCapital != null" >
+        un_use_capital = #{record.unUseCapital,jdbcType=DECIMAL},
       </if>
       <if test="record.addDate != null" >
         add_date = #{record.addDate,jdbcType=DATE},
@@ -220,11 +285,17 @@
     update capital
     set id = #{record.id,jdbcType=INTEGER},
     finish_rate = #{record.finishRate,jdbcType=DECIMAL},
+    finish_rate_tag = #{record.finishRateTag,jdbcType=DECIMAL},
     operat_rate = #{record.operatRate,jdbcType=DECIMAL},
+    operat_rate_tag = #{record.operatRateTag,jdbcType=DECIMAL},
     income_rate = #{record.incomeRate,jdbcType=DECIMAL},
+    income_rate_tag = #{record.incomeRateTag,jdbcType=DECIMAL},
     cash_rate = #{record.cashRate,jdbcType=DECIMAL},
+    cash_rate_tag = #{record.cashRateTag,jdbcType=DECIMAL},
     cost_rate = #{record.costRate,jdbcType=DECIMAL},
+    cost_rate_tag = #{record.costRateTag,jdbcType=DECIMAL},
     use_capital = #{record.useCapital,jdbcType=DECIMAL},
+    un_use_capital = #{record.unUseCapital,jdbcType=DECIMAL},
     add_date = #{record.addDate,jdbcType=DATE},
     remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -237,20 +308,38 @@
       <if test="finishRate != null" >
         finish_rate = #{finishRate,jdbcType=DECIMAL},
       </if>
+      <if test="finishRateTag != null" >
+        finish_rate_tag = #{finishRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="operatRate != null" >
         operat_rate = #{operatRate,jdbcType=DECIMAL},
+      </if>
+      <if test="operatRateTag != null" >
+        operat_rate_tag = #{operatRateTag,jdbcType=DECIMAL},
       </if>
       <if test="incomeRate != null" >
         income_rate = #{incomeRate,jdbcType=DECIMAL},
       </if>
+      <if test="incomeRateTag != null" >
+        income_rate_tag = #{incomeRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="cashRate != null" >
         cash_rate = #{cashRate,jdbcType=DECIMAL},
+      </if>
+      <if test="cashRateTag != null" >
+        cash_rate_tag = #{cashRateTag,jdbcType=DECIMAL},
       </if>
       <if test="costRate != null" >
         cost_rate = #{costRate,jdbcType=DECIMAL},
       </if>
+      <if test="costRateTag != null" >
+        cost_rate_tag = #{costRateTag,jdbcType=DECIMAL},
+      </if>
       <if test="useCapital != null" >
         use_capital = #{useCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="unUseCapital != null" >
+        un_use_capital = #{unUseCapital,jdbcType=DECIMAL},
       </if>
       <if test="addDate != null" >
         add_date = #{addDate,jdbcType=DATE},
@@ -264,11 +353,17 @@
   <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.Capital" >
     update capital
     set finish_rate = #{finishRate,jdbcType=DECIMAL},
+      finish_rate_tag = #{finishRateTag,jdbcType=DECIMAL},
       operat_rate = #{operatRate,jdbcType=DECIMAL},
+      operat_rate_tag = #{operatRateTag,jdbcType=DECIMAL},
       income_rate = #{incomeRate,jdbcType=DECIMAL},
+      income_rate_tag = #{incomeRateTag,jdbcType=DECIMAL},
       cash_rate = #{cashRate,jdbcType=DECIMAL},
+      cash_rate_tag = #{cashRateTag,jdbcType=DECIMAL},
       cost_rate = #{costRate,jdbcType=DECIMAL},
+      cost_rate_tag = #{costRateTag,jdbcType=DECIMAL},
       use_capital = #{useCapital,jdbcType=DECIMAL},
+      un_use_capital = #{unUseCapital,jdbcType=DECIMAL},
       add_date = #{addDate,jdbcType=DATE},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -294,7 +389,8 @@
 
   <select id="getIncome" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
-     finish_rate,operat_rate,income_rate,cash_rate,cost_rate,use_capital,
+       finish_rate,finish_rate_tag,operat_rate,operat_rate_tag,income_rate,income_rate_Tag,
+       cash_rate,cash_rate_tag,cost_rate,cost_rate_tag,use_capital,un_use_capital,
       MONTH(add_date)  as remark
     from capital
    where   DATE_FORMAT(add_date,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
