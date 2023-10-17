@@ -145,6 +145,15 @@ public class LoginController {
     public String centerShow(){
         return "center_show";
     }
+
+    /**
+     * 用户一览
+     * @return
+     */
+    @RequestMapping("/userList")
+    public String userList(){
+        return "userlist";
+    }
     /**
      * 登录
      * @return

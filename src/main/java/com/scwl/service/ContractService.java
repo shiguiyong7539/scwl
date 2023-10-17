@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface ContractService {
 
-    ResBean getAllContract(int pageNum,int pageSize);
+    ResBean getAllContract(int pageNum,int pageSize,Contract contract);
     ResBean addContract(Contract contract);
     ResBean updateContract(Contract contract);
     ResBean getContractByCenter();

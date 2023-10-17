@@ -24,9 +24,19 @@ public class ContractServiceImpl implements ContractService {
     private LogService logService;
 
     @Override
-    public ResBean getAllContract(int pageNum, int pageSize) {
+    public ResBean getAllContract(int pageNum, int pageSize,Contract contract) {
         PageHelper.startPage(pageNum,pageSize);
         ContractExample example = new ContractExample();
+        ContractExample.Criteria criteria = example.createCriteria();
+        if(null!=contract.getName()&&""!=contract.getName()){
+            criteria.andNameLike("%"+contract.getName()+"%");
+        }
+        if(null!=contract.getType()&&""!=contract.getType()){
+            criteria.andTypeEqualTo(contract.getType());
+        }
+        if(null!=contract.getDepartment()&&""!=contract.getDepartment()){
+            criteria.andDepartmentEqualTo(contract.getDepartment());
+        }
        example.setOrderByClause("add_time desc");
         List<Contract> contracts = contractMapper.selectByExample(example);
         PageInfo<Contract> pageInfo = new PageInfo<>(contracts);

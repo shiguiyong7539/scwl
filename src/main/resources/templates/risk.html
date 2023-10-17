@@ -315,7 +315,7 @@
         location.href="/userInfo";
     }
     function login() {
-        location.href="/";
+        location.href="/loginAdmin";
     }
     function memberList() {
         location.href="/memberList";
@@ -363,14 +363,14 @@
                         document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
                         document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
                     }else {
-                        layui.layer.msg(res.message,{time:1000},function(){
+                        layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
                             location.reload();
                         });
                     }
                 },
                 error:function (res) {
-                    layui.layer.msg(res.message,{time:1000},function(){
+                    layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                         layer.close(); //再执行关闭
                         location.reload();
                     });

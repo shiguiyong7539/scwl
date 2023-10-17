@@ -24,7 +24,7 @@ public class CostManageConreoller {
      * @return
      */
     @RequestMapping("/getAllCost")
-    public Object getAllCost(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize, CostManage costManage){
+    public Object getAllCost(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, CostManage costManage){
         return  costManageService.getAllCost(pageNum,pageSize,costManage);
     }
 

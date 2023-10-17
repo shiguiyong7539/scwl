@@ -218,7 +218,9 @@
 
         <div class="widget rightTabs">
             <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>我的资料</h6>
-                <div class="formAddEmp"><input type="submit" id="myBtn" value="添加用户" class="redB"></div></div>
+                <div class="formAddEmp" style="float: left;margin-right: 5px;"><input type="submit" id="myBtn" value="添加用户" class="redB"></div>
+                <div class="formAddEmp" ><input type="submit" onclick="userList()" value="用户列表" class="redB"></div>
+            </div>
 
             <ul class="tabs">
                 <li><a href="#tab1">基本信息</a></li>
@@ -375,7 +377,7 @@
         location.href="/userInfo";
     }
     function login() {
-        location.href="/";
+        location.href="/loginAdmin";
     }
     function memberList() {
         location.href="/memberList";
@@ -398,6 +400,9 @@
     }
     function fengkong() {
         location.href="/risk";
+    }
+    function userList() {
+        location.href="/userList";
     }
 
     function toggle(id) {
@@ -428,14 +433,14 @@
                         // document.getElementById("passWord").value = res.obj.password;
                         document.getElementById("phone").value = res.obj.phone;
                     }else {
-                        layui.layer.msg(res.message,{time:1000},function(){
+                        layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
                             location.reload();
                         });
                     }
                 },
                 error:function (res) {
-                    layui.layer.msg(res.message,{time:1000},function(){
+                    layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                         layer.close(); //再执行关闭
                         location.reload();
                     });
@@ -473,7 +478,7 @@
                     });
 
                 }else {
-                    layui.layer.msg(res.message,{time:1000},function(){
+                    layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                         layer.close(); //再执行关闭
                         location.reload();
                     });
@@ -532,6 +537,10 @@
                         location.reload();
                     });
 
+                }else {
+                    layui.layer.msg(res.message,{icon:2},{time:2000},function(){
+                        layer.close(); //再执行关闭
+                    });
                 }
             }
 

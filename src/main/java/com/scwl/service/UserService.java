@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface UserService  {
 
+  ResBean getUserList(int pageNum,int pageSize,User user);
+
   ResBean login(User user);
 
   User getAdminByUserName(String userName);

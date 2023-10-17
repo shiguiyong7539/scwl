@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scwl.mapper.BudgetMapper" >
+  <resultMap id="BaseResultMap" type="com.scwl.pojo.Budget" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="month_funds" property="monthFunds" jdbcType="DECIMAL" />
+    <result column="real_funds" property="realFunds" jdbcType="DECIMAL" />
+    <result column="deviation_rate" property="deviationRate" jdbcType="DECIMAL" />
+    <result column="month_date" property="monthDate" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, department, month_funds, real_funds, deviation_rate, month_date, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.BudgetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from budget
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from budget
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from budget
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.scwl.pojo.BudgetExample" >
+    delete from budget
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.scwl.pojo.Budget" useGeneratedKeys="true" keyProperty="id">
+    insert into budget (id, department, month_funds, 
+      real_funds, deviation_rate, month_date, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{monthFunds,jdbcType=DECIMAL}, 
+      #{realFunds,jdbcType=DECIMAL}, #{deviationRate,jdbcType=DECIMAL}, #{monthDate,jdbcType=DATE}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.scwl.pojo.Budget" >
+    insert into budget
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="monthFunds != null" >
+        month_funds,
+      </if>
+      <if test="realFunds != null" >
+        real_funds,
+      </if>
+      <if test="deviationRate != null" >
+        deviation_rate,
+      </if>
+      <if test="monthDate != null" >
+        month_date,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="monthFunds != null" >
+        #{monthFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="realFunds != null" >
+        #{realFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="deviationRate != null" >
+        #{deviationRate,jdbcType=DECIMAL},
+      </if>
+      <if test="monthDate != null" >
+        #{monthDate,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.scwl.pojo.BudgetExample" resultType="java.lang.Integer" >
+    select count(*) from budget
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update budget
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monthFunds != null" >
+        month_funds = #{record.monthFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="record.realFunds != null" >
+        real_funds = #{record.realFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deviationRate != null" >
+        deviation_rate = #{record.deviationRate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.monthDate != null" >
+        month_date = #{record.monthDate,jdbcType=DATE},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update budget
+    set id = #{record.id,jdbcType=INTEGER},
+      department = #{record.department,jdbcType=VARCHAR},
+      month_funds = #{record.monthFunds,jdbcType=DECIMAL},
+      real_funds = #{record.realFunds,jdbcType=DECIMAL},
+      deviation_rate = #{record.deviationRate,jdbcType=DECIMAL},
+      month_date = #{record.monthDate,jdbcType=DATE},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.Budget" >
+    update budget
+    <set >
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="monthFunds != null" >
+        month_funds = #{monthFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="realFunds != null" >
+        real_funds = #{realFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="deviationRate != null" >
+        deviation_rate = #{deviationRate,jdbcType=DECIMAL},
+      </if>
+      <if test="monthDate != null" >
+        month_date = #{monthDate,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.Budget" >
+    update budget
+    set department = #{department,jdbcType=VARCHAR},
+      month_funds = #{monthFunds,jdbcType=DECIMAL},
+      real_funds = #{realFunds,jdbcType=DECIMAL},
+      deviation_rate = #{deviationRate,jdbcType=DECIMAL},
+      month_date = #{monthDate,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getBudgetByMonth" resultMap="BaseResultMap">
+    select department,month_funds,real_funds,MONTH(month_date) as remark
+    from budget
+    where MONTH(month_date) = MONTH(CURDATE()) AND YEAR(month_date) = YEAR(CURDATE())
+    group by department
+  </select>
+
+  <select id="getBudgetByYear" resultMap="BaseResultMap">
+   select department,sum(month_funds) as month_funds,sum(real_funds) as real_funds,YEAR(month_date) as remark
+   from budget
+   where YEAR(month_date) = YEAR(CURDATE())
+   group by department
+  </select>
+  <select id="getDepartment"  resultMap="BaseResultMap">
+   select department from budget group by department
+  </select>
+  <select id="getBudgetByDepartment" parameterType="java.lang.String"  resultMap="BaseResultMap">
+   select id,department,deviation_rate,MONTH(month_date) as remark from budget
+   where department=#{department} and DATE_FORMAT(month_date,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+   group by MONTH(month_date)
+   ORDER BY month_date
+  </select>
+</mapper>

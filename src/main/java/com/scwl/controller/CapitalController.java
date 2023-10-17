@@ -25,7 +25,7 @@ public class CapitalController {
      */
     @RequestMapping("/getCapital")
     @ResponseBody
-    public Object getCapital(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize){
+    public Object getCapital(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize){
         return capitalService.getCapital(pageNum,pageSize);
     }
 

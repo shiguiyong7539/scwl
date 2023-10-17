@@ -1,5 +1,7 @@
 package com.scwl.service.serviceimpl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.scwl.mapper.RoleMapper;
 
 import com.scwl.mapper.UserMapper;
@@ -41,28 +43,49 @@ public class UserServiceImpl implements UserService {
     private UserDetailsService userDetailsService;
 
     @Override
-    public ResBean login(User user) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+    public ResBean getUserList(int pageNum, int pageSize, User user) {
+        PageHelper.startPage(pageNum,pageSize);
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        if(null!=user.getName()&&""!=user.getName()){
+            criteria.andNameLike("%"+user.getName()+"%");
+        }
+        if(null!=user.getPhone()&&""!=user.getPhone()){
+            criteria.andPhoneLike("%"+user.getPhone()+"%");
+        }
+        List<User> users = userMapper.selectByExample(example);
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        return ResBean.success("success",pageInfo);
+    }
 
-        if (null==userDetails||!passwordEncoder.matches(user.getPassword(),userDetails.getPassword())){
-            return ResBean.error("用户名或密码不正确");
-        }
-        if (!userDetails.isEnabled()){
-            return ResBean.error("账号被禁用，请联系管理员！");
-        }
-        User user1 = userMapper.getAdminByUserName(user.getUsername());
-        user1.setLastLogin(new Date());
-        userMapper.updateByPrimaryKey(user1);
-        //更新security登录用户对象
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
-                ,null,userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        //生成token
-        String token = jwtTokenUtil.generateToken(userDetails);
-        Map<String,String> tokenMap = new HashMap<>();
-        tokenMap.put("token",token);
-        tokenMap.put("tokenHead",tokenHead);
-        return ResBean.success("登录成功",tokenMap);
+    @Override
+    public ResBean login(User user) {
+       try{
+           UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+
+           if (null==userDetails||!passwordEncoder.matches(user.getPassword(),userDetails.getPassword())){
+               return ResBean.error("用户名或密码不正确");
+           }
+           if (!userDetails.isEnabled()){
+               return ResBean.error("账号被禁用，请联系管理员！");
+           }
+           User user1 = userMapper.getAdminByUserName(user.getUsername());
+           user1.setLastLogin(new Date());
+           userMapper.updateByPrimaryKey(user1);
+           //更新security登录用户对象
+           UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
+                   ,null,userDetails.getAuthorities());
+           SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+           //生成token
+           String token = jwtTokenUtil.generateToken(userDetails);
+           Map<String,String> tokenMap = new HashMap<>();
+           tokenMap.put("token",token);
+           tokenMap.put("tokenHead",tokenHead);
+           return ResBean.success("登录成功",tokenMap);
+       }catch (Exception e){
+           return ResBean.error(e.getMessage());
+       }
+
 
 
     }
@@ -92,14 +115,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResBean addUser(User user) {
         try {
-            user.setUsername(user.getPhone());
-            user.setEnable(true);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userMapper.insert(user);
-            logService.addLog("INSERT","user",user.getId(),"新增id为"+user.getId()+"的用户信息");
-            return ResBean.success("新增成功");
+            User exist = userMapper.getAdminByUserName(user.getPhone());
+            if(null==exist){
+                user.setUsername(user.getPhone());
+                user.setEnable(true);
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+                userMapper.insert(user);
+                logService.addLog("INSERT","user",user.getId(),"新增id为"+user.getId()+"的用户信息");
+                return ResBean.success("添加成功");
+            }else {
+                return ResBean.error("添加失败！改手机账号已经存在,它的名称是:"+exist.getName());
+            }
+
         }catch (Exception e){
-            return ResBean.error("新增失败!");
+            return ResBean.error("添加失败!");
         }
 
     }

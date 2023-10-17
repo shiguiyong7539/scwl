@@ -22,7 +22,7 @@ public class TaskController {
      */
     @RequestMapping("/getTask")
     @ResponseBody
-    public Object getTask(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize, Task task){
+    public Object getTask(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, Task task){
         return taskService.getTask(pageNum,pageSize,task);
     }
 

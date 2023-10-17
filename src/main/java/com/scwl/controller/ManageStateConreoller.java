@@ -24,7 +24,7 @@ public class ManageStateConreoller {
      * @return
      */
     @RequestMapping("/getAllManageState")
-    public Object getAllManageState(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize, ManageState manageState){
+    public Object getAllManageState(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, ManageState manageState){
         return  manageStateService.getAllManageState(pageNum,pageSize,manageState);
     }
 

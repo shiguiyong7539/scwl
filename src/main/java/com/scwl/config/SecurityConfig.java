@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/","/loginAdmin","/memberList","/costManage","/mangeState","/login",
 				"/logout","/admin","/userInfo","/index","/capitalList",
 				"/contract",
+				"/userList",
 				"/risk",
 				"/taskList",
 				"/centerShow",

@@ -26,7 +26,7 @@ public class EmployeeController {
      */
     @RequestMapping("/getEmployeeList")
     @ResponseBody
-    public Object getEmployeeList(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize){
+    public Object getEmployeeList(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize){
         return employeeService.getEmpList(pageNum,pageSize);
     }
 

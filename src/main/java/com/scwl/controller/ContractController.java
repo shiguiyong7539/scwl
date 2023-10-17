@@ -25,8 +25,8 @@ public class ContractController {
      * @return
      */
     @RequestMapping("/getAllContract")
-    public Object getAllContract(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize){
-        return  contractService.getAllContract(pageNum,pageSize);
+    public Object getAllContract(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,Contract contract){
+        return  contractService.getAllContract(pageNum,pageSize,contract);
     }
 
     /**

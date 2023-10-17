@@ -25,7 +25,7 @@ public class RiskControlController {
      * @return
      */
     @RequestMapping("/getAllRisk")
-    public Object getAllRisk(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "2") int pageSize){
+    public Object getAllRisk(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize){
         return  riskControlService.getAllRisk(pageNum,pageSize);
     }
 

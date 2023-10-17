@@ -253,32 +253,55 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="formRow">
+                    <div class="formRow2">
                         融资计划完成率：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="finishRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
+                    <div class="formRow2">
+                        融资计划完成率指标：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="finishRateTag"><span>%</span></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow2">
                         运营费用节约率：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="operatRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
+                    <div class="formRow2">
+                        运营费用节约率指标：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="operatRateTag"><span>%</span></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow2">
                         营业收入增长率：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="incomeRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
+                    <div class="formRow2">
+                        营业收入增长率指标：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="incomeRateTag"><span>%</span></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow2">
                         营业现金比率：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="cashRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
+                    <div class="formRow2">
+                        营业现金比率指标：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="cashRateTag"><span>%</span></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow2">
                         营业成本率：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="costRate"><span>%</span></div><div class="clear"></div>
                     </div>
-                    <div class="formRow">
+                    <div class="formRow2">
+                        营业成本率指标：
+                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="costRateTag"><span>%</span></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow2">
                         可用资金：
                         <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="useCapital"></div><div class="clear"></div>
                     </div>
-
-                    <div class="formRow">
+                    <div class="formRow2">
+                        不可用资金：
+                        <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="unUseCapital"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow2">
                         日期：
                         <div class="formRight">
                             <input type="date"  style="width: 162px;" id="addDate">
@@ -334,7 +357,7 @@
             location.href="/userInfo";
         }
         function login() {
-            location.href="/";
+            location.href="/loginAdmin";
         }
         function memberList() {
             location.href="/memberList";
@@ -383,14 +406,14 @@
                             document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
                             document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
                         }else {
-                            layui.layer.msg(res.message,{time:1000},function(){
+                            layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                                 layer.close(); //再执行关闭
                                 location.reload();
                             });
                         }
                     },
                     error:function (res) {
-                        layui.layer.msg(res.message,{time:1000},function(){
+                        layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
                             location.reload();
                         });
@@ -517,11 +540,17 @@
 
         function addCapital() {
             var finishRate = document.getElementById("finishRate").value;
+            var finishRateTag = document.getElementById("finishRateTag").value;
             var operatRate = document.getElementById("operatRate").value;
+            var operatRateTag = document.getElementById("operatRateTag").value;
             var incomeRate = document.getElementById("incomeRate").value;
+            var incomeRateTag = document.getElementById("incomeRateTag").value;
             var cashRate = document.getElementById("cashRate").value;
+            var cashRateTag = document.getElementById("cashRateTag").value;
             var costRate = document.getElementById("costRate").value;
+            var costRateTag = document.getElementById("costRateTag").value;
             var useCapital = document.getElementById("useCapital").value;
+            var unUseCapital = document.getElementById("unUseCapital").value;
             var addDate = document.getElementById("addDate").value;
             $.ajax({
                 type: "post",
@@ -531,11 +560,17 @@
                 },
                 data:({
                     finishRate:finishRate,
+                    finishRateTag:finishRateTag,
                     operatRate:operatRate,
+                    operatRateTag:operatRateTag,
                     incomeRate:incomeRate,
+                    incomeRateTag:incomeRateTag,
                     cashRate:cashRate,
+                    cashRateTag:cashRateTag,
                     costRate:costRate,
+                    costRateTag:costRateTag,
                     useCapital:useCapital,
+                    unUseCapital:unUseCapital,
                     addDate:new Date(addDate)
                 }),
                 success: function (res) {

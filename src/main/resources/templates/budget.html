@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <title>人事信息</title>
+    <title>预算执行</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -109,15 +109,14 @@
 
         <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
             <ul class="sub ul_hidden" id="myInfo">
-                <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
-                <li><a href="#" title="#" onclick="userInfo()" id="idName"></a></li>
+                <li><a href="#" title="" onclick="userInfo()" id="idNo"></a></li>
+                <li><a href="#" title="" onclick="userInfo()" id="idName"></a></li>
                 <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
             </ul>
         </li>
-
-        <li class="dash"><a href="#" onclick="center_html()" class="active"><span>数据展示中心</span></a></li>
     </ul>
 </div>
+
 
 <!-- Right side -->
 <div id="rightSide">
@@ -217,19 +216,18 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
-                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>员工信息</h6>
-                    <div class="formAddEmp"><input type="submit" id="myBtn" value="添加员工" class="redB"></div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>预算信息</h6>
+                    <div class="formAddEmp"><input type="submit" id="myCostBtn" value="添加预算" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
                         <td width="80">编号</td>
-                        <td width="80">名称</td>
-                        <td width="80">年龄</td>
-                        <td width="80">学历</td>
-                        <td width="80">职称</td>
-                        <td width="80">用工方式</td>
-                        <td width="80">入职时间</td>
+                        <td width="80">部门</td>
+                        <td width="80">月度资金</td>
+                        <td width="80">资金实际使用情况</td>
+                        <td width="80">预算偏差率</td>
+                        <td width="80">日期</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -243,58 +241,45 @@
         </div>
 
         <!-- 弹窗 -->
-        <div id="myModal" class="modal">
+        <div id="myCostModal" class="modal">
 
             <!-- 弹窗内容 -->
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="close">&times;</span>
-                    <h2>员工信息</h2>
+                    <h2>预算执行</h2>
                 </div>
                 <div class="modal-body">
                     <div class="formRow">
-                        姓名：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="name"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow">
-                        年龄：
-                        <div class="formRight"><input type="text" class="validate[required]"  id="age"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow">
-                        学历：
-                        <div class="formRight"><select id="education">
-                            <option value="大专">大专</option>
-                            <option value="本科">本科</option>
-                            <option value="研究生">研究生</option>
-                            <option value="其它">其它</option>
-                        </select></div>
-                    </div>
-                    <div class="formRow">
-                        职称：
-                        <div class="formRight"><select id="rank">
-                            <option value="初级">初级</option>
-                            <option value="中级">中级</option>
-                            <option value="高级">高级</option>
-                        </select></div>
-                    </div>
-
-                    <div class="formRow">
-                        用工方式：
-                        <div class="formRight"><select id="employmentMode">
-                            <option value="劳务外包">劳务外包</option>
-                            <option value="劳务派遣">劳务派遣</option>
-                            <option value="正式聘用">正式聘用</option>
-                        </select></div>
-                    </div>
-
-                    <div class="formRow">
-                        入职时间：
+                        部门：
                         <div class="formRight">
-                            <input type="date"  style="width: 153px;" id="joinTime">
+                        <select id="department"  style="width: 162px;" >
+                            <option value=""></option>
+                            <option value="综合管理部">综合管理部</option>
+                            <option value="市场拓展部">市场拓展部</option>
+                            <option value="规划建设部">规划建设部</option>
+                            <option value="财务融资部">财务融资部</option>
+                            <option value="金沙艺术中心">金沙艺术中心</option>
+                        </select>
+                        </div>
+                   </div>
+                    <div class="formRow">
+                        月度资金：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="monthFunds"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        资金实际使用：
+                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="realFunds"></div><div class="clear"></div>
+                    </div>
+                    
+                    <div class="formRow">
+                        日期：
+                        <div class="formRight">
+                            <input type="date"  style="width: 165px;" id="monthDate">
                         </div>
                     </div>
 
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addEmplyoee()">提交</button></div>
+                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addBudget()">提交</button></div>
                 </div>
                 <div class="modal-footer">
                     <h3></h3>
@@ -316,7 +301,7 @@
 <script type="text/javascript">
     $(function () {
         initData();
-        menberList(1);
+        getAllBudget(1);
     } );
 
 
@@ -331,6 +316,7 @@
                         layer.close(); //再执行关闭
                         location.href="/admin";
                     });
+
                 }
             }
         })
@@ -409,11 +395,11 @@
         }
     }
 
-    function menberList(pageNum) {
+    function getAllBudget(pageNum) {
 
         $.ajax({
             type: "get",
-            url: "/getEmployeeList",
+            url: "/getAllBudget",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
@@ -431,12 +417,11 @@
                     var str_info='';
                     for (var i = 0; i < data1.length; i++) {
                         str_info+='<tr><td align="center">'+data1[i].id+'</td>';
-                        str_info+='<td align="center">'+data1[i].name+'</td>';
-                        str_info+='<td align="center">'+data1[i].age+'</td>';
-                        str_info+='<td align="center">'+data1[i].education+'</td>';
-                        str_info+='<td align="center">'+data1[i].rank+'</td>';
-                        str_info+='<td align="center">'+data1[i].employmentMode+'</td>';
-                        str_info+='<td align="center">'+dateFormat(1,data1[i].joinTime)+'</td></tr>';
+                        str_info+='<td align="center">'+data1[i].department+'</td>';
+                        str_info+='<td align="center">'+data1[i].monthFunds+'</td>';
+                        str_info+='<td align="center">'+data1[i].realFunds+'</td>';
+                        str_info+='<td align="center">'+percentage(data1[i].deviationRate)+'</td>';
+                        str_info+='<td align="center">'+dateFormat(1,data1[i].monthDate)+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
 
@@ -444,24 +429,24 @@
                     pagenum1=pageNo+1;
                     pagenum2=pageNo+2;
                     pagenum3=pageNo+3;
-                    var htm="<a  href='#' onclick='menberList(1)'>首页 </a>";
+                    var htm="<a  href='#' onclick='getAllBudget(1)'>首页 </a>";
                     if(data.pageNum >1){
-                        htm+="<a  href='#' onclick='menberList("+data.prePage+")'>上一页 </a>"
+                        htm+="<a  href='#' onclick='getAllBudget("+data.prePage+")'>上一页 </a>"
                     }
                     if(pagenum0 >=1){
-                        htm+="<a  href='#' onclick='menberList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        htm+="<a  href='#' onclick='getAllBudget("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
                     }
                     htm+="<button class='current'>"+data.pageNum+"</button>";
                     if(pagenum1 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        htm+="<a  href='#' onclick='getAllBudget("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
                     }
                     if(pagenum2 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        htm+="<a  href='#' onclick='getAllBudget("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
                     }
                     if(pagenum3 <= pages){
-                        htm+="<a  href='#' onclick='menberList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        htm+="<a  href='#' onclick='getAllBudget("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
                     }
-                    htm+="<a  href='#' onclick='menberList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='menberList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                    htm+="<a  href='#' onclick='getAllBudget("+data.nextPage+")'> 下一页</a><a  href='#' onclick='getAllBudget("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                     $("#pagefoot").html(htm);
                 }
 
@@ -496,10 +481,10 @@
   }
 
 // 获取弹窗
-    var modal = document.getElementById('myModal');
+    var modal = document.getElementById('myCostModal');
 
     // 打开弹窗的按钮对象
-    var btn = document.getElementById("myBtn");
+    var btn = document.getElementById("myCostBtn");
 
     // 获取 <span> 元素，用于关闭弹窗 that closes the modal
     var span = document.getElementsByClassName("close")[0];
@@ -521,26 +506,23 @@
         }
     }
 
-    function addEmplyoee() {
-        var name = document.getElementById("name").value;
-        var age = document.getElementById("age").value;
-        var education = document.getElementById("education").value;
-        var rank = document.getElementById("rank").value;
-        var employmentMode = document.getElementById("employmentMode").value;
-        var joinTime = document.getElementById("joinTime").value;
+    function addBudget() {
+     
+        var department = document.getElementById("department").value;
+        var monthFunds = document.getElementById("monthFunds").value;
+        var realFunds = document.getElementById("realFunds").value;
+        var monthDate = document.getElementById("monthDate").value;
         $.ajax({
             type: "post",
-            url: "/addEmployee",
+            url: "/addBudget",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
             data:({
-                name:name,
-                age:age,
-                education:education,
-                rank:rank,
-                employmentMode:employmentMode,
-                joinTime:new Date(joinTime)
+                department:department,
+                monthFunds:monthFunds,
+                realFunds:realFunds,
+                monthDate:new Date(monthDate)
             }),
             success: function (res) {
                 if(res && res.code===200){
@@ -555,6 +537,16 @@
 
 
         })
+
+    }
+    //获取所有包含百分比转化
+    function percentage(num) {
+        if(null==num){
+            return "";
+        }else {
+            return num +'%';
+        }
+
 
     }
 
