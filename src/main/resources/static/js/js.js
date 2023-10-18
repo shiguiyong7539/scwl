@@ -4,7 +4,8 @@ $(function () {
     echarts_4();
     echarts_5(1);
     echarts_31();
-    echarts_32('月');
+    //echarts_32('月');
+    echarts_33('月');
     getTaskTable();
     getContractTable();
     getRiskTable();
@@ -890,7 +891,7 @@ function echarts_5(rate) {
                         }],
                         series: [{
                             name: showTtile[0],
-                            type: 'line',
+                            type: 'bar',
                             smooth: true,
                             data:showData,
 
@@ -903,7 +904,7 @@ function echarts_5(rate) {
                             }
                         },{
                             name: showTtile[1],
-                            type: 'line',
+                            type: 'bar',
                             smooth: true,
                             data:showTagData,
 
@@ -1401,120 +1402,120 @@ function echarts_31() {
 
 
     }
-function echarts_32(period) {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('fb05'));
-       $.ajax({
-        type: "get",
-        url: "/getCostManageByCenter",
-        headers: {
-            'Authorization': localStorage.getItem("token") // 在请求头中添加token
-        },
-        data:({
-            period:period,
-            condition:currentDate(1)
-        }),
-        success: function (res) {
-            if(res && res.code===200){
-                var pieData = []
-                var total_money=0;
-
-                    pieData.push({name:"工资发放",value:res.obj.payOutWage});
-                    pieData.push({name:"房租",value:res.obj.rent});
-                    pieData.push({name:"水电办公等",value:res.obj.hydropowerOffice});
-                    pieData.push({name:"工会",value:res.obj.laborUnion});
-                    total_money+=res.obj.payOutWage+res.obj.rent+res.obj.hydropowerOffice+res.obj.laborUnion;
-
-
-                    option = {
-                        title: {
-                            zlevel: 0,
-                            text: ['{name|累计成本}', '{value|' + total_money + '}{name|万元}'].join('\n'),
-                            top: '35%',
-                            left: '34%',
-                            textAlign: 'center',
-                            textStyle: {
-                                rich: {
-                                    value: {
-                                        color: '#cf5a1f',
-                                        fontSize: 15,
-                                        lineHeight: 25,
-                                    },
-                                    name: {
-                                        color: '#909399',
-                                        fontSize: 10,
-                                        lineHeight: 25,
-                                    },
-                                },
-                            }
-                        },
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b}: {c} 万元 ({d}%)",
-                            position:function(p){   //其中p为当前鼠标的位置
-                                return [p[0] + 10, p[1] - 10];
-                            },
-                        },
-                        legend: {
-                            type: 'scroll',
-                            orient: 'vertical',
-                            top:'25%',
-                            right:0,
-                            itemWidth: 10,
-                            itemHeight: 10,
-                            data:['工资发放','房租','水电办公等','工会'],
-                            textStyle: {
-                                color: 'rgba(255,255,255,.5)',
-                                fontSize:'10',
-                            },
-                            formatter: function(name) {
-                                var data = option.series[0].data;
-                                for (let i = 0; i < data.length; i++) {
-                                    if(name === data[i].name){
-                                        var percent = (data[i].value / total_money * 100).toFixed(2) + '%';
-                                        return name + ': ' +data[i].value+ '万元 (' + percent + ')';
-                                    }
-
-                                }
-                                },
-                        },
-                        series: [
-                            {
-                                name:'成本分布',
-                                type:'pie',
-                                center: ['35%', '50%'],
-                                radius: ['40%', '50%'],
-                                color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
-                                // 这里与方法一的label设置的一样
-                                label: {
-                                    show:false,
-                                    position: 'center',
-                                },
-                                data:pieData
-                            }
-                        ]
-                    };
-
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option);
-
-
-                    window.addEventListener("resize",function(){
-                        myChart.resize();
-                    });
-
-
-                }
-
-            }
-
-
-
-        })
-
-
-
-    }
+// function echarts_32(period) {
+//         // 基于准备好的dom，初始化echarts实例
+//         var myChart = echarts.init(document.getElementById('fb05'));
+//        $.ajax({
+//         type: "get",
+//         url: "/getCostManageByCenter",
+//         headers: {
+//             'Authorization': localStorage.getItem("token") // 在请求头中添加token
+//         },
+//         data:({
+//             period:period,
+//             condition:currentDate(1)
+//         }),
+//         success: function (res) {
+//             if(res && res.code===200){
+//                 var pieData = []
+//                 var total_money=0;
+//
+//                     pieData.push({name:"工资发放",value:res.obj.payOutWage});
+//                     pieData.push({name:"房租",value:res.obj.rent});
+//                     pieData.push({name:"水电办公等",value:res.obj.hydropowerOffice});
+//                     pieData.push({name:"工会",value:res.obj.laborUnion});
+//                     total_money+=res.obj.payOutWage+res.obj.rent+res.obj.hydropowerOffice+res.obj.laborUnion;
+//
+//
+//                     option = {
+//                         title: {
+//                             zlevel: 0,
+//                             text: ['{name|累计成本}', '{value|' + total_money + '}{name|万元}'].join('\n'),
+//                             top: '35%',
+//                             left: '34%',
+//                             textAlign: 'center',
+//                             textStyle: {
+//                                 rich: {
+//                                     value: {
+//                                         color: '#cf5a1f',
+//                                         fontSize: 15,
+//                                         lineHeight: 25,
+//                                     },
+//                                     name: {
+//                                         color: '#909399',
+//                                         fontSize: 10,
+//                                         lineHeight: 25,
+//                                     },
+//                                 },
+//                             }
+//                         },
+//                         tooltip: {
+//                             trigger: 'item',
+//                             formatter: "{a} <br/>{b}: {c} 万元 ({d}%)",
+//                             position:function(p){   //其中p为当前鼠标的位置
+//                                 return [p[0] + 10, p[1] - 10];
+//                             },
+//                         },
+//                         legend: {
+//                             type: 'scroll',
+//                             orient: 'vertical',
+//                             top:'25%',
+//                             right:0,
+//                             itemWidth: 10,
+//                             itemHeight: 10,
+//                             data:['工资发放','房租','水电办公等','工会'],
+//                             textStyle: {
+//                                 color: 'rgba(255,255,255,.5)',
+//                                 fontSize:'10',
+//                             },
+//                             formatter: function(name) {
+//                                 var data = option.series[0].data;
+//                                 for (let i = 0; i < data.length; i++) {
+//                                     if(name === data[i].name){
+//                                         var percent = (data[i].value / total_money * 100).toFixed(2) + '%';
+//                                         return name + ': ' +data[i].value+ '万元 (' + percent + ')';
+//                                     }
+//
+//                                 }
+//                                 },
+//                         },
+//                         series: [
+//                             {
+//                                 name:'成本分布',
+//                                 type:'pie',
+//                                 center: ['35%', '50%'],
+//                                 radius: ['40%', '50%'],
+//                                 color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+//                                 // 这里与方法一的label设置的一样
+//                                 label: {
+//                                     show:false,
+//                                     position: 'center',
+//                                 },
+//                                 data:pieData
+//                             }
+//                         ]
+//                     };
+//
+//                     // 使用刚指定的配置项和数据显示图表。
+//                     myChart.setOption(option);
+//
+//
+//                     window.addEventListener("resize",function(){
+//                         myChart.resize();
+//                     });
+//
+//
+//                 }
+//
+//             }
+//
+//
+//
+//         })
+//
+//
+//
+//     }
 function getTaskTable() {
 
         $.ajax({
@@ -1730,6 +1731,401 @@ function total_manage() {
             }}})
 
 }
+    function echarts_33(period) {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('fb06'));
+        var myChart2 = echarts.init(document.getElementById('fb07'));
+        var myChart3 = echarts.init(document.getElementById('fb08'));
+        $.ajax({
+            type: "get",
+            url: "/getBudgetByCenter",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:({
+                condition:period
+            }),
+            success: function (res) {
+                if(res && res.code===200){
+                    var moneyData;
+                    if(period=='月'){
+                        moneyData = res.obj.month;
+                    }else {
+                        moneyData = res.obj.year;
+                    }
+                    var list = res.obj.list;
+                    //月度资金
+                    var planTotal=res.obj.planTotal;
+                    var planData = [];
+                    var planTitle = [];
+                    //资金实际使用情况
+                    var realData=[];
+                    var realTotal=res.obj.realTotal;
+                    var realTitle = [];
+
+                    //预算偏差率
+                    var rateData=[];
+                    var rateData2=[];
+                    var rateData3=[];
+                    var rateData4=[];
+                    var rateData5=[];
+                    var rateTime=[];
+                    var rateTitle=[];
+
+                    for (let i = 0; i < moneyData.length; i++) {
+                        var  budget = moneyData[i];
+                        planTitle.push(budget.department);
+                        realTitle.push(budget.department);
+                        planData.push({name:budget.department,value:budget.monthFunds});
+                        realData.push({name:budget.department,value:budget.realFunds});
+                    }
+                        for (let i = 0; i < list.length; i++) {
+                         var budgets  = list[i].budgets;
+                        if(budgets[0].department==='综合管理部'){
+                            for (let i = 0; i < budgets.length; i++) {
+                                rateTime.push(budgets[i].remark);
+                                rateData.push(budgets[i].deviationRate);
+                            }
+                        }else if(budgets[0].department==='市场拓展部'){
+                            for (let i = 0; i < budgets.length; i++) {
+                                rateData2.push(budgets[i].deviationRate);
+                            }
+                        }else if(budgets[0].department==='规划建设部'){
+                            for (let i = 0; i < budgets.length; i++) {
+                                rateData3.push(budgets[i].deviationRate);
+                            }
+                        }else if(budgets[0].department==='财务融资部'){
+                            for (let i = 0; i < budgets.length; i++) {
+                                rateData4.push(budgets[i].deviationRate);
+                            }
+
+                        }else if(budgets[0].department==='金沙艺术中心'){
+                            for (let i = 0; i < budgets.length; i++) {
+                                rateData5.push(budgets[i].deviationRate);
+                            }
+                        }
+                        rateTitle.push(budgets[0].department);
+
+                    }
+
+                    option = {
+                        title: {
+                            zlevel: 0,
+                            text: ['{name|计划累计}', '{value|' + planTotal + '}{name|万元}'].join('\n'),
+                            top: '28%',
+                            left: '34%',
+                            textAlign: 'center',
+                            textStyle: {
+                                rich: {
+                                    value: {
+                                        color: '#cf5a1f',
+                                        fontSize: 15,
+                                        lineHeight: 25,
+                                    },
+                                    name: {
+                                        color: '#909399',
+                                        fontSize: 10,
+                                        lineHeight: 25,
+                                    },
+                                },
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} 万元 ({d}%)",
+                            position:function(p){   //其中p为当前鼠标的位置
+                                return [p[0] + 10, p[1] - 10];
+                            },
+                        },
+                        legend: {
+                            type: 'scroll',
+                            orient: 'vertical',
+                            top:'25%',
+                            right:0,
+                            itemWidth: 10,
+                            itemHeight: 10,
+                            data:planTitle,
+                            textStyle: {
+                                color: 'rgba(255,255,255,.5)',
+                                fontSize:'10',
+                            },
+                            formatter: function(name) {
+                                var data = option.series[0].data;
+                                for (let i = 0; i < data.length; i++) {
+                                    if(name === data[i].name){
+                                        var percent = (data[i].value / planTotal * 100).toFixed(2) + '%';
+                                        return name + ': ' +data[i].value+ '万元 (' + percent + ')';
+                                    }
+
+                                }
+                            },
+                        },
+                        series: [
+                            {
+                                name:'月度资金',
+                                type:'pie',
+                                center: ['35%', '50%'],
+                                radius: ['55%', '65%'],
+                                color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+                                // 这里与方法一的label设置的一样
+                                label: {
+                                    show:false,
+                                    position: 'center',
+                                },
+                                data:planData
+                            }
+                        ]
+                    };
+                    option2 = {
+                        title: {
+                            zlevel: 0,
+                            text: ['{name|实际累计}', '{value|' + realTotal + '}{name|万元}'].join('\n'),
+                            top: '28%',
+                            left: '34%',
+                            textAlign: 'center',
+                            textStyle: {
+                                rich: {
+                                    value: {
+                                        color: '#cf5a1f',
+                                        fontSize: 15,
+                                        lineHeight: 25,
+                                    },
+                                    name: {
+                                        color: '#909399',
+                                        fontSize: 10,
+                                        lineHeight: 25,
+                                    },
+                                },
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} 万元 ({d}%)",
+                            position:function(p){   //其中p为当前鼠标的位置
+                                return [p[0] + 10, p[1] - 10];
+                            },
+                        },
+                        legend: {
+                            type: 'scroll',
+                            orient: 'vertical',
+                            top:'25%',
+                            right:0,
+                            itemWidth: 10,
+                            itemHeight: 10,
+                            data:realTitle,
+                            textStyle: {
+                                color: 'rgba(255,255,255,.5)',
+                                fontSize:'10',
+                            },
+                            formatter: function(name) {
+                                var data = option2.series[0].data;
+                                for (let i = 0; i < data.length; i++) {
+                                    if(name === data[i].name){
+                                        var percent = (data[i].value / planTotal * 100).toFixed(2) + '%';
+                                        return name + ': ' +data[i].value+ '万元 (' + percent + ')';
+                                    }
+
+                                }
+                            },
+                        },
+                        series: [
+                            {
+                                name:'资金实际使用情况',
+                                type:'pie',
+                                center: ['35%', '50%'],
+                                radius: ['55%', '65%'],
+                                color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+                                // 这里与方法一的label设置的一样
+                                label: {
+                                    show:false,
+                                    position: 'center',
+                                },
+                                data:realData
+                            }
+                        ]
+                    };
+                    option3 = {
+                        //  backgroundColor: '#00265f',
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            },
+                            formatter: function(params) {
+                                var axisValue = params[0].axisValue + '</br>';
+                                var result='';
+                                params.forEach(function(item) {
+                                    result += item.seriesName + ': ' + item.value + ' %<br>';
+                                });
+                                return axisValue+result;
+                            }
+                        },
+                        legend: {
+                            data: rateTitle,
+                            top:'5%',
+                            textStyle: {
+                                color: "#fff",
+                                fontSize: '10',
+
+                            },
+
+                            itemGap: 5
+                        },
+                        grid: {
+                            left: '0%',
+                            top:'40px',
+                            right: '0%',
+                            bottom: '0',
+                            containLabel: true
+                        },
+                        xAxis: [{
+                            type: 'category',
+                            data: rateTime,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1)",
+                                    width: 1,
+                                    type: "solid"
+                                },
+                            },
+                            axisTick: {
+                                show: false,
+                            },
+                            axisLabel:  {
+                                interval: 0,
+                                // rotate:50,
+                                show: true,
+                                splitNumber: 5,
+                                textStyle: {
+                                    color: "rgba(255,255,255,.6)",
+                                    fontSize: '10',
+                                },
+                            },
+                        }],
+                        yAxis: [{
+                            type: 'value',
+                            axisLabel: {
+                                //formatter: '{value} %'
+                                show:true,
+                                textStyle: {
+                                    color: "rgba(255,255,255,.6)",
+                                    fontSize: '10',
+                                },
+                            },
+                            axisTick: {
+                                show: false,
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1	)",
+                                    width: 1,
+                                    type: "solid"
+                                },
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "rgba(255,255,255,.1)",
+                                }
+                            }
+                        }],
+                        series: [{
+                            name: '综合管理部',
+                            type: 'line',
+                            smooth: true,
+                            data:rateData,
+
+                            itemStyle: {
+                                normal: {
+                                    color:'#2f89cf',
+                                    opacity: 1,
+                                    barBorderRadius: 5,
+                                }
+                            }
+                        },{
+                            name: '市场拓展部',
+                            type: 'line',
+                            smooth: true,
+                            data:rateData2,
+
+                            itemStyle: {
+                                normal: {
+                                    color:'#cf8427',
+                                    opacity: 1,
+                                    barBorderRadius: 5,
+                                }
+                            }
+                        }
+                            ,{
+                                name: '规划建设部',
+                                type: 'line',
+                                smooth: true,
+                                data:rateData3,
+
+                                itemStyle: {
+                                    normal: {
+                                        color:'#cf3b26',
+                                        opacity: 1,
+                                        barBorderRadius: 5,
+                                    }
+                                }
+                            }
+                            ,{
+                                name: '财务融资部',
+                                type: 'line',
+                                smooth: true,
+                                data:rateData4,
+
+                                itemStyle: {
+                                    normal: {
+                                        color:'#4acf28',
+                                        opacity: 1,
+                                        barBorderRadius: 5,
+                                    }
+                                }
+                            }
+                            ,{
+                                name: '金沙艺术中心',
+                                type: 'line',
+                                smooth: true,
+                                data:rateData5,
+
+                                itemStyle: {
+                                    normal: {
+                                        color:'#f7ff2c',
+                                        opacity: 1,
+                                        barBorderRadius: 5,
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                    myChart2.setOption(option2);
+                    myChart3.setOption(option3);
+
+
+                    window.addEventListener("resize",function(){
+                        myChart.resize();
+                        myChart2.resize();
+                        myChart3.resize();
+                    });
+
+
+                }
+
+            }
+
+
+
+        })
+
+
+
+    }
+
 
 
 
@@ -1770,10 +2166,10 @@ function currentDate(type) {
     }
 
     $("#now_month").on("click", function() {
-        echarts_32('月');
+        echarts_33('月');
     })
     $("#now_year").on("click", function() {
-        echarts_32('年');
+        echarts_33('年');
     })
     $("#total_manage").on("click", function() {
         total_manage();
@@ -1786,6 +2182,8 @@ function currentDate(type) {
         var selected = $(this).val();
         echarts_5(selected);
     });
+
+
 
 
 

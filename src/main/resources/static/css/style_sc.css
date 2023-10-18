@@ -25,7 +25,20 @@
 .fa-file-download:before {
     content: "\f56d";
 }
-
+.formRow2 {
+    padding: 5px 10px;
+    /* text-align: center; */
+    clear: both;
+    border-bottom: 1px solid #E2E2E2;
+    border-top: 1px solid white;
+    position: relative;
+}
+.formRow2 .formRight {
+    display: block;
+    float: right;
+    width: 80%;
+    margin-right: 18px;
+}
 
 /* 弹窗 (background) */
 .modal {
@@ -151,6 +164,28 @@ select{
 .mbtn{
     background: #033c76;
     color: white;
+}
+.sousuo{
+    height:24px;
+    padding-bottom:0px;
+    line-height:23px;
+    color:#ab70e1;
+    background:none;
+    border: 1px solid #ab70e1;
+    display: inline-block;
+    padding: 0 5px;
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+    opacity: .9;
+    border-radius: 2px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0;
+    position:relative;
 }
 @media (max-width: 767px) {
     .head {

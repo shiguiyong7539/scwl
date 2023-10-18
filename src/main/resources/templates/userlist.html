@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <title>合同管理</title>
+    <title>用户管理</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -218,36 +218,21 @@
             <div class="widget">
                 <div class="layui-row">
                     <form class="layui-col-md12 x-so" id="formId">
-                        <input  style=" width: 10%;" type="text" name="name"  placeholder="合同名称" autocomplete="off" class="layui-input">
-                          <span>状态:</span>
-                          <select name="type">
-                            <option value=""></option>
-                            <option value="履行中">履行中</option>
-                            <option value="履行完毕">履行完毕</option>
-                          </select>
-                        <span>部门:</span>
-                            <select name="department">
-                                <option value=""></option>
-                                <option value="综合管理部">综合管理部</option>
-                                <option value="市场拓展部">市场拓展部</option>
-                                <option value="规划建设部">规划建设部</option>
-                                <option value="财务融资部">财务融资部</option>
-                                <option value="金沙艺术中心">金沙艺术中心</option>
-                            </select>
-                        <div id="sousuo" class="sousuo" onclick="contractList(1)" >搜索</div>
+                        <input  style=" width: 10%;" type="text" name="name"  placeholder="名称" autocomplete="off" class="layui-input">
+                        <input  style=" width: 10%;" type="text" name="phone"  placeholder="账号" autocomplete="off" class="layui-input">
+                        <div id="sousuo" class="sousuo" onclick="userList(1)" >搜索</div>
                     </form>
                 </div>
-                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>合同信息</h6>
-                    <div class="formAddEmp"><input type="submit" id="myCostBtn" value="添加合同" class="redB"></div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>用户列表</h6>
+                    <div class="formAddEmp"><input type="submit" id="myUserBtn" value="添加用户" class="redB"></div></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
                         <td width="80">编号</td>
-                        <td width="80">部门名称</td>
-                        <td width="80">合同名称</td>
-                        <td width="80">合同状态</td>
-                        <td width="80">合同日期</td>
+                        <td width="80">名称</td>
+                        <td width="80">账号</td>
+                        <td width="80">最近登录时间</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -259,61 +244,39 @@
                 <span id="pagefoot"></span></span>
             <div class="clear"></div>
         </div>
+    <!-- 弹窗 -->
+    <div id="myUserModal" class="modal">
 
-        <!-- 弹窗 -->
-        <div id="myCostModal" class="modal">
-
-            <!-- 弹窗内容 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h2>合同信息</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="formRow">
-                        部门名称：
-                        <div class="formRight">
-                           <select id="department"  style="width: 162px;" >
-                                <option value=""></option>
-                                <option value="综合管理部">综合管理部</option>
-                                <option value="市场拓展部">市场拓展部</option>
-                                <option value="规划建设部">规划建设部</option>
-                                <option value="财务融资部">财务融资部</option>
-                                <option value="金沙艺术中心">金沙艺术中心</option>
-                            </select>
-
-                    </div>
-                   </div>
-                    <div class="formRow">
-                        合同名称：
-                        <div class="formRight"><input type="text"  class="validate[required]"  id="name"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow">
-                        合同状态：
-                        <div class="formRight">
-                          <select id="type"  style="width: 162px;" >
-                                <option value=""></option>
-                                <option value="履行中">履行中</option>
-                                <option value="履行完毕">履行完毕</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="formRow">
-                        日期：
-                        <div class="formRight">
-                            <input type="date"  style="width: 165px;" id="periodicTime">
-                        </div>
-                    </div>
-
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addContract()">提交</button></div>
-                </div>
-                <div class="modal-footer">
-                    <h3></h3>
-                </div>
+        <!-- 弹窗内容 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>用户信息</h2>
             </div>
+            <div class="modal-body">
+                <div class="formRow">
+                    昵称：
+                    <div class="formRight"><input type="text" class="validate[required]"  id="add_name"></div><div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    电话：
+                    <div class="formRight"><input type="text" class="validate[required]"  id="add_phone"></div><div class="clear"></div>
+                </div>
 
+                <div class="formRow">
+                    密码：
+                    <div class="formRight"><input type="text" class="validate[required]"  id="add_password"></div><div class="clear"></div>
+                </div>
+
+
+                <div><button style="margin-left:20%;background: green;color: white;" onclick="addUser()">提交</button></div>
+            </div>
+            <div class="modal-footer">
+                <h3></h3>
+            </div>
         </div>
 
+    </div>
 
 </div>
     <!-- Footer line -->
@@ -327,7 +290,7 @@
 <script type="text/javascript">
     $(function () {
         initData();
-        contractList(1);
+        userList(1);
     } );
 
 
@@ -421,11 +384,11 @@
         }
     }
 
-    function contractList(pageNum) {
+    function userList(pageNum) {
 
         $.ajax({
             type: "get",
-            url: "/getAllContract?pageNum="+pageNum,
+            url: "/getUserList?pageNum="+pageNum,
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
@@ -443,14 +406,9 @@
                         var id =data1[i].id;
                         var type =data1[i].type;
                         str_info+='<tr><td align="center">'+id+'</td>';
-                        str_info+='<td align="center">'+data1[i].department+'</td>';
                         str_info+='<td align="center">'+data1[i].name+'</td>';
-                       if(type==='履行中'){
-                           str_info+='<td align="center"><a href="#" style="color: red;text-decoration: none;" onclick="updateType('+id+',1)">'+type+'</a></td>';
-                       }else {
-                           str_info+='<td align="center"><a href="#"  style="color: green;text-decoration: none;" onclick="updateType('+id+',2)">'+type+'</a></td>';
-                       }
-                        str_info+='<td align="center">'+dateFormat(1,data1[i].startTime)+'</td></tr>';
+                        str_info+='<td align="center">'+data1[i].phone+'</td>';
+                        str_info+='<td align="center">'+dateFormat(2,data1[i].lastLogin)+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
 
@@ -458,24 +416,24 @@
                     pagenum1=pageNo+1;
                     pagenum2=pageNo+2;
                     pagenum3=pageNo+3;
-                    var htm="<a  href='#' onclick='contractList(1)'>首页 </a>";
+                    var htm="<a  href='#' onclick='userList(1)'>首页 </a>";
                     if(data.pageNum >1){
-                        htm+="<a  href='#' onclick='contractList("+data.prePage+")'>上一页 </a>"
+                        htm+="<a  href='#' onclick='userList("+data.prePage+")'>上一页 </a>"
                     }
                     if(pagenum0 >=1){
-                        htm+="<a  href='#' onclick='contractList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        htm+="<a  href='#' onclick='userList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
                     }
                     htm+="<button class='current'>"+data.pageNum+"</button>";
                     if(pagenum1 <= pages){
-                        htm+="<a  href='#' onclick='contractList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        htm+="<a  href='#' onclick='userList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
                     }
                     if(pagenum2 <= pages){
-                        htm+="<a  href='#' onclick='contractList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        htm+="<a  href='#' onclick='userList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
                     }
                     if(pagenum3 <= pages){
-                        htm+="<a  href='#' onclick='contractList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        htm+="<a  href='#' onclick='userList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
                     }
-                    htm+="<a  href='#' onclick='contractList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='contractList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                    htm+="<a  href='#' onclick='userList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='userList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                     $("#pagefoot").html(htm);
                 }
 
@@ -499,8 +457,9 @@
       var minutes = date.getMinutes();
       var seconds = date.getSeconds();
      // 将日期和时间组件组合成字符串
-      var formatteddate = year + '-' + month + '-' + day ;
-      var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+      var formatteddate = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) ;
+      var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (month>=10?month:"0"+month) + ' ' + (hours>=10?hours:"0"+hours) + ':'
+          + (minutes>=10?minutes:"0"+minutes) + ':' + (seconds>=10?seconds:"0"+seconds);
       if(type==1){
           return formatteddate;
       }else {
@@ -510,10 +469,10 @@
   }
 
 // 获取弹窗
-    var modal = document.getElementById('myCostModal');
+    var modal = document.getElementById('myUserModal');
 
     // 打开弹窗的按钮对象
-    var btn = document.getElementById("myCostBtn");
+    var btn = document.getElementById("myUserBtn");
 
     // 获取 <span> 元素，用于关闭弹窗 that closes the modal
     var span = document.getElementsByClassName("close")[0];
@@ -535,22 +494,20 @@
         }
     }
 
-    function addContract() {
-        var department = document.getElementById("department").value;
-        var name = document.getElementById("name").value;
-        var type = document.getElementById("type").value;
-        var periodicTime = document.getElementById("periodicTime").value;
+    function addUser() {
+        var name = document.getElementById("add_name").value;
+        var phone = document.getElementById("add_phone").value;
+        var password = document.getElementById("add_password").value;
         $.ajax({
             type: "post",
-            url: "/addContract",
+            url: "/addUser",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
             data:({
-                department:department,
                 name:name,
-                type:type,
-                startTime:new Date(periodicTime)
+                phone:phone,
+                password:password
             }),
             success: function (res) {
                 if(res && res.code===200){
@@ -560,6 +517,10 @@
                         location.reload();
                     });
 
+                }else {
+                    layui.layer.msg(res.message,{icon:2},{time:2000},function(){
+                        layer.close(); //再执行关闭
+                    });
                 }
             }
 
