@@ -222,5 +222,9 @@ select{
     .titAmount{
         margin-left: 5px!important;
     }
+    .time{
+        top: 30% !important;
+
+    }
 
 }
