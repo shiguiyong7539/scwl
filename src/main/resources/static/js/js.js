@@ -1792,7 +1792,7 @@ function total_manage() {
                          var budgets  = list[i].budgets;
                         if(budgets[0].department==='综合管理部'){
                             for (let i = 0; i < budgets.length; i++) {
-                                rateTime.push(budgets[i].remark);
+                                rateTime.push(budgets[i].remark+'月');
                                 rateData.push(budgets[i].deviationRate);
                             }
                         }else if(budgets[0].department==='市场拓展部'){
