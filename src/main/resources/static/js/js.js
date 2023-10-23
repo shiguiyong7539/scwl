@@ -152,6 +152,7 @@ function echarts_4() {
                 var income_data3 =[];
                 var income_data4 =[];
                 var income_data5 =[];
+                var title_data=[];
 
                 for (let i = 0; i < res.obj.list.length; i++) {
                     var manage = res.obj.list[i].manage;
@@ -164,7 +165,7 @@ function echarts_4() {
                         }
                     }else{
 
-
+                        title_data.push(manage[0].name);
                     if(manage[0].name==='旧日长轨'){
                         for (let i = 0; i < manage.length; i++) {
                             manage_date1.push(manage[i].remark+'月');
@@ -548,7 +549,7 @@ function echarts_4() {
                            }
                        },
                        legend: {
-                           data: ['旧日长轨','星河集市','金沙艺术中心','灿若湖民宿','活动策划'],
+                           data:title_data,
                            top:'5%',
                            textStyle: {
                                color: "#fff",
@@ -567,7 +568,7 @@ function echarts_4() {
                        },
                        xAxis: [{
                            type: 'category',
-                           data: manage_date1,
+                           data: manage_date2,
                            axisLine: {
                                show: true,
                                lineStyle: {
@@ -716,6 +717,9 @@ function echarts_5(rate) {
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
+            data:{
+                condition:rate
+            },
             success: function (res) {
                 if(res && res.code===200){
                    // 融资计划完成率 运营费用节约率 营业收入增长率 营业现金比率 营业成本率 可用资金
@@ -747,9 +751,11 @@ function echarts_5(rate) {
                     var showData = [];
                     //最终显示指标数据
                     var showTagData = [];
+                    var quarterly_data = [];
                     //显示title
                     var showTtile = ['融资计划完成率','融资计划完成率指标'];
                     var data = res.obj.list;
+                    var incomeRate = res.obj.incomeRate;
                     // for (let i = 0; i < data.length; i++) {
                     //     income_date.push(data[i].remark+'月');
                     //     finishRateData.push(data[i].finishRate);
@@ -769,30 +775,32 @@ function echarts_5(rate) {
                         income_date.push(data[i].remark+'月');
                         useCapitalData.push(data[i].useCapital);
                         unUseCapitalData.push(data[i].unUseCapital);
+                    }
+
+                    for (let i = 0; i < incomeRate.length; i++) {
+                        quarterly_data.push(incomeRate[i].quarterly);
                         if(rate==1){
-                            showData.push(data[i].finishRate);
-                            showTagData.push(data[i].finishRateTag);
+                            showData.push(incomeRate[i].finishRate);
+                            showTagData.push(incomeRate[i].finishRateTag);
                         }else if(rate==2){
                             showTtile = ['运营费用节约率','运营费用节约率指标'];
-                            showData.push(data[i].operatRate);
-                            showTagData.push(data[i].operatRateTag);
+                            showData.push(incomeRate[i].operatRate);
+                            showTagData.push(incomeRate[i].operatRateTag);
                         }else if(rate==3){
                             showTtile = ['营业收入增长率','营业收入增长率指标'];
-                            showData.push(data[i].incomeRate);
-                            showTagData.push(data[i].incomeRateTag);
+                            showData.push(incomeRate[i].incomeRate);
+                            showTagData.push(incomeRate[i].incomeRateTag);
                         }else if(rate==4){
                             showTtile = ['营业现金比率','营业现金比率指标'];
-                            showData.push(data[i].cashRate);
-                            showTagData.push(data[i].cashRateTag);
+                            showData.push(incomeRate[i].cashRate);
+                            showTagData.push(incomeRate[i].cashRateTag);
                         }else if(rate==5){
                             showTtile = ['营业成本率','营业成本率指标'];
-                            showData.push(data[i].costRate);
-                            showTagData.push(data[i].costRateTag);
+                            showData.push(incomeRate[i].costRate);
+                            showTagData.push(incomeRate[i].costRateTag);
                         }
 
                     }
-
-
 
                     option = {
                         //  backgroundColor: '#00265f',
@@ -839,7 +847,7 @@ function echarts_5(rate) {
                         },
                         xAxis: [{
                             type: 'category',
-                            data: income_date,
+                            data: quarterly_data,
                             axisLine: {
                                 show: true,
                                 lineStyle: {
@@ -891,7 +899,7 @@ function echarts_5(rate) {
                         }],
                         series: [{
                             name: showTtile[0],
-                            type: 'bar',
+                            type: 'line',
                             smooth: true,
                             data:showData,
 
@@ -904,7 +912,7 @@ function echarts_5(rate) {
                             }
                         },{
                             name: showTtile[1],
-                            type: 'bar',
+                            type: 'line',
                             smooth: true,
                             data:showTagData,
 
@@ -942,6 +950,7 @@ function echarts_5(rate) {
                                     show: true,
                                     type: ['line', 'bar']
                                 }
+                               // ,dataView: { readOnly: false }
                             }
                         },
                         legend: {
@@ -1865,7 +1874,7 @@ function total_manage() {
                                 name:'月度资金',
                                 type:'pie',
                                 center: ['35%', '50%'],
-                                radius: ['55%', '65%'],
+                                radius: ['65%', '75%'],
                                 color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
                                 // 这里与方法一的label设置的一样
                                 label: {
@@ -1933,7 +1942,7 @@ function total_manage() {
                                 name:'资金实际使用情况',
                                 type:'pie',
                                 center: ['35%', '50%'],
-                                radius: ['55%', '65%'],
+                                radius: ['65%', '75%'],
                                 color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
                                 // 这里与方法一的label设置的一样
                                 label: {

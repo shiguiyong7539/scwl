@@ -243,7 +243,9 @@
   <select id="getBudgetByMonth" resultMap="BaseResultMap">
     select department,month_funds,real_funds,MONTH(month_date) as remark
     from budget
-    where MONTH(month_date) = MONTH(CURDATE()) AND YEAR(month_date) = YEAR(CURDATE())
+    where
+    (DATE_FORMAT(month_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m'))
+    or (DATE_FORMAT(month_date, '%Y-%m') = DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m'))
     group by department
   </select>
 

@@ -5,12 +5,12 @@ import com.scwl.pojo.ResBean;
 
 public interface CapitalService {
 
-  ResBean getCapital(int pageNum, int pageSize);
+  ResBean getCapital(int pageNum, int pageSize, Capital capital);
 
   ResBean addCapital(Capital capital);
 
   ResBean getCapitalByCenter(String period,String condition);
 
-  ResBean getCapitalByCenterShow(String type);
+  ResBean getCapitalByCenterShow();
 
  }

@@ -229,6 +229,66 @@ public class CapitalExample {
             return (Criteria) this;
         }
 
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
         public Criteria andFinishRateIsNull() {
             addCriterion("finish_rate is null");
             return (Criteria) this;
@@ -946,6 +1006,76 @@ public class CapitalExample {
 
         public Criteria andUnUseCapitalNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("un_use_capital not between", value1, value2, "unUseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyIsNull() {
+            addCriterion("quarterly is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyIsNotNull() {
+            addCriterion("quarterly is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyEqualTo(String value) {
+            addCriterion("quarterly =", value, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyNotEqualTo(String value) {
+            addCriterion("quarterly <>", value, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyGreaterThan(String value) {
+            addCriterion("quarterly >", value, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyGreaterThanOrEqualTo(String value) {
+            addCriterion("quarterly >=", value, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyLessThan(String value) {
+            addCriterion("quarterly <", value, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyLessThanOrEqualTo(String value) {
+            addCriterion("quarterly <=", value, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyLike(String value) {
+            addCriterion("quarterly like", value, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyNotLike(String value) {
+            addCriterion("quarterly not like", value, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyIn(List<String> values) {
+            addCriterion("quarterly in", values, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyNotIn(List<String> values) {
+            addCriterion("quarterly not in", values, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyBetween(String value1, String value2) {
+            addCriterion("quarterly between", value1, value2, "quarterly");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuarterlyNotBetween(String value1, String value2) {
+            addCriterion("quarterly not between", value1, value2, "quarterly");
             return (Criteria) this;
         }
 

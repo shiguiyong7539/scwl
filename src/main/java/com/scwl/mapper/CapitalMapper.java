@@ -35,6 +35,7 @@ public interface CapitalMapper {
     List<Capital> getCapitalByYear(String condition);
 
     List<Capital> getIncome();
+    List<Capital> getIncomeRate();
 
 
 

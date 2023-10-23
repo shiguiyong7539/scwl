@@ -24,9 +24,18 @@ public class CapitalServiceImpl implements CapitalService {
     private LogService logService;
 
     @Override
-    public ResBean getCapital(int pageNum, int pageSize) {
+    public ResBean getCapital(int pageNum, int pageSize, Capital capital) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Capital> capitals = capitalMapper.selectByExample(new CapitalExample());
+        CapitalExample example = new CapitalExample();
+        CapitalExample.Criteria criteria = example.createCriteria();
+        if(null!=capital.getType()){
+            criteria.andTypeEqualTo(capital.getType());
+            if(null!=capital.getQuarterly()&&""!=capital.getQuarterly()&&capital.getType()==2){
+            criteria.andQuarterlyEqualTo(capital.getQuarterly());
+            }
+        }
+
+        List<Capital> capitals = capitalMapper.selectByExample(example);
         PageInfo<Capital> pageInfo = new PageInfo<>(capitals);
         return ResBean.success("查询成功",pageInfo);
     }
@@ -34,11 +43,11 @@ public class CapitalServiceImpl implements CapitalService {
     @Override
     public ResBean addCapital(Capital capital)  {
         try{
-            capital.setFinishRate(capital.getFinishRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-            capital.setOperatRate(capital.getOperatRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-            capital.setIncomeRate(capital.getIncomeRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-            capital.setCashRate(capital.getCashRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-            capital.setCostRate(capital.getCostRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
+//            capital.setFinishRate(capital.getFinishRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
+//            capital.setOperatRate(capital.getOperatRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
+//            capital.setIncomeRate(capital.getIncomeRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
+//            capital.setCashRate(capital.getCashRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
+//            capital.setCostRate(capital.getCostRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
             capitalMapper.insert(capital);
             logService.addLog("INSERT","capital",capital.getId(),"新增id为"+capital.getId()+"的资金状况信息");
 
@@ -62,12 +71,14 @@ public class CapitalServiceImpl implements CapitalService {
     }
 
     @Override
-    public ResBean getCapitalByCenterShow(String type) {
+    public ResBean getCapitalByCenterShow() {
         HashMap<String, Object> hashMap = new HashMap<>();
         //可用和不可用资金
         List<Capital> income = capitalMapper.getIncome();
         //比率
+        List<Capital> incomeRate = capitalMapper.getIncomeRate();
         hashMap.put("list",income);
+        hashMap.put("incomeRate",incomeRate);
         hashMap.put("use_money",income.get(income.size()-1).getUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         hashMap.put("unUse_money",income.get(income.size()-1).getUnUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         return ResBean.success("success",hashMap);

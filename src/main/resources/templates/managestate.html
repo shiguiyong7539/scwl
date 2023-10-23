@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
     <title>经营管理</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
@@ -58,7 +58,7 @@
     <script type="text/javascript" src="js/plugins/calendar.min.js"></script>
     <script type="text/javascript" src="js/plugins/elfinder.min.js"></script>
     <script type="text/javascript" src="js/layui.js"></script>
-    <script type="text/javascript" src="css/layui.css"></script>
+
 
     <!-- <script type="text/javascript" src="js/custom.js"></script>-->
 
@@ -482,8 +482,9 @@
             var minutes = date.getMinutes();
             var seconds = date.getSeconds();
             // 将日期和时间组件组合成字符串
-            var formatteddate = year + '-' + month + '-' + day ;
-            var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+            var formatteddate = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) ;
+            var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (month>=10?month:"0"+month) + ' ' + (hours>=10?hours:"0"+hours) + ':'
+                + (minutes>=10?minutes:"0"+minutes) + ':' + (seconds>=10?seconds:"0"+seconds);
             if(type==1){
                 return formatteddate;
             }else {

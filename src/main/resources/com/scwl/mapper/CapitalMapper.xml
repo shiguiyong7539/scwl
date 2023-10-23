@@ -3,6 +3,7 @@
 <mapper namespace="com.scwl.mapper.CapitalMapper" >
   <resultMap id="BaseResultMap" type="com.scwl.pojo.Capital" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="finish_rate" property="finishRate" jdbcType="DECIMAL" />
     <result column="finish_rate_tag" property="finishRateTag" jdbcType="DECIMAL" />
     <result column="operat_rate" property="operatRate" jdbcType="DECIMAL" />
@@ -15,6 +16,7 @@
     <result column="cost_rate_tag" property="costRateTag" jdbcType="DECIMAL" />
     <result column="use_capital" property="useCapital" jdbcType="DECIMAL" />
     <result column="un_use_capital" property="unUseCapital" jdbcType="DECIMAL" />
+    <result column="quarterly" property="quarterly" jdbcType="VARCHAR" />
     <result column="add_date" property="addDate" jdbcType="DATE" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
@@ -77,9 +79,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, finish_rate, finish_rate_tag, operat_rate, operat_rate_tag, income_rate, income_rate_tag,
-    cash_rate, cash_rate_tag, cost_rate, cost_rate_tag, use_capital, un_use_capital,
-    add_date, remark
+    id, type, finish_rate, finish_rate_tag, operat_rate, operat_rate_tag, income_rate,
+    income_rate_tag, cash_rate, cash_rate_tag, cost_rate, cost_rate_tag, use_capital,
+    un_use_capital, quarterly, add_date, remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.CapitalExample" >
     select
@@ -112,24 +114,27 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.Capital"  useGeneratedKeys="true" keyProperty="id">
-    insert into capital (id, finish_rate, finish_rate_tag,
-      operat_rate, operat_rate_tag, income_rate,
-      income_rate_tag, cash_rate, cash_rate_tag,
-      cost_rate, cost_rate_tag, use_capital,
-      un_use_capital, add_date, remark
-      )
-    values (#{id,jdbcType=INTEGER}, #{finishRate,jdbcType=DECIMAL}, #{finishRateTag,jdbcType=DECIMAL},
-      #{operatRate,jdbcType=DECIMAL}, #{operatRateTag,jdbcType=DECIMAL}, #{incomeRate,jdbcType=DECIMAL},
-      #{incomeRateTag,jdbcType=DECIMAL}, #{cashRate,jdbcType=DECIMAL}, #{cashRateTag,jdbcType=DECIMAL},
-      #{costRate,jdbcType=DECIMAL}, #{costRateTag,jdbcType=DECIMAL}, #{useCapital,jdbcType=DECIMAL},
-      #{unUseCapital,jdbcType=DECIMAL}, #{addDate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into capital (id, type, finish_rate,
+      finish_rate_tag, operat_rate, operat_rate_tag,
+      income_rate, income_rate_tag, cash_rate,
+      cash_rate_tag, cost_rate, cost_rate_tag,
+      use_capital, un_use_capital, quarterly,
+      add_date, remark)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{finishRate,jdbcType=DECIMAL},
+      #{finishRateTag,jdbcType=DECIMAL}, #{operatRate,jdbcType=DECIMAL}, #{operatRateTag,jdbcType=DECIMAL},
+      #{incomeRate,jdbcType=DECIMAL}, #{incomeRateTag,jdbcType=DECIMAL}, #{cashRate,jdbcType=DECIMAL},
+      #{cashRateTag,jdbcType=DECIMAL}, #{costRate,jdbcType=DECIMAL}, #{costRateTag,jdbcType=DECIMAL},
+      #{useCapital,jdbcType=DECIMAL}, #{unUseCapital,jdbcType=DECIMAL}, #{quarterly,jdbcType=VARCHAR},
+      #{addDate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.Capital" >
     insert into capital
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="type != null" >
+        type,
       </if>
       <if test="finishRate != null" >
         finish_rate,
@@ -167,6 +172,9 @@
       <if test="unUseCapital != null" >
         un_use_capital,
       </if>
+      <if test="quarterly != null" >
+        quarterly,
+      </if>
       <if test="addDate != null" >
         add_date,
       </if>
@@ -177,6 +185,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="finishRate != null" >
         #{finishRate,jdbcType=DECIMAL},
@@ -214,6 +225,9 @@
       <if test="unUseCapital != null" >
         #{unUseCapital,jdbcType=DECIMAL},
       </if>
+      <if test="quarterly != null" >
+        #{quarterly,jdbcType=VARCHAR},
+      </if>
       <if test="addDate != null" >
         #{addDate,jdbcType=DATE},
       </if>
@@ -233,6 +247,9 @@
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.finishRate != null" >
         finish_rate = #{record.finishRate,jdbcType=DECIMAL},
@@ -270,6 +287,9 @@
       <if test="record.unUseCapital != null" >
         un_use_capital = #{record.unUseCapital,jdbcType=DECIMAL},
       </if>
+      <if test="record.quarterly != null" >
+        quarterly = #{record.quarterly,jdbcType=VARCHAR},
+      </if>
       <if test="record.addDate != null" >
         add_date = #{record.addDate,jdbcType=DATE},
       </if>
@@ -284,6 +304,7 @@
   <update id="updateByExample" parameterType="map" >
     update capital
     set id = #{record.id,jdbcType=INTEGER},
+    type = #{record.type,jdbcType=INTEGER},
     finish_rate = #{record.finishRate,jdbcType=DECIMAL},
     finish_rate_tag = #{record.finishRateTag,jdbcType=DECIMAL},
     operat_rate = #{record.operatRate,jdbcType=DECIMAL},
@@ -296,6 +317,7 @@
     cost_rate_tag = #{record.costRateTag,jdbcType=DECIMAL},
     use_capital = #{record.useCapital,jdbcType=DECIMAL},
     un_use_capital = #{record.unUseCapital,jdbcType=DECIMAL},
+    quarterly = #{record.quarterly,jdbcType=VARCHAR},
     add_date = #{record.addDate,jdbcType=DATE},
     remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -305,6 +327,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.Capital" >
     update capital
     <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
       <if test="finishRate != null" >
         finish_rate = #{finishRate,jdbcType=DECIMAL},
       </if>
@@ -341,6 +366,9 @@
       <if test="unUseCapital != null" >
         un_use_capital = #{unUseCapital,jdbcType=DECIMAL},
       </if>
+      <if test="quarterly != null" >
+        quarterly = #{quarterly,jdbcType=VARCHAR},
+      </if>
       <if test="addDate != null" >
         add_date = #{addDate,jdbcType=DATE},
       </if>
@@ -352,7 +380,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.Capital" >
     update capital
-    set finish_rate = #{finishRate,jdbcType=DECIMAL},
+    set type = #{type,jdbcType=INTEGER},
+      finish_rate = #{finishRate,jdbcType=DECIMAL},
       finish_rate_tag = #{finishRateTag,jdbcType=DECIMAL},
       operat_rate = #{operatRate,jdbcType=DECIMAL},
       operat_rate_tag = #{operatRateTag,jdbcType=DECIMAL},
@@ -364,6 +393,7 @@
       cost_rate_tag = #{costRateTag,jdbcType=DECIMAL},
       use_capital = #{useCapital,jdbcType=DECIMAL},
       un_use_capital = #{unUseCapital,jdbcType=DECIMAL},
+      quarterly = #{quarterly,jdbcType=VARCHAR},
       add_date = #{addDate,jdbcType=DATE},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -382,19 +412,27 @@
        finish_rate,operat_rate,income_rate,cash_rate,cost_rate,use_capital,
       YEAR(add_date)  as remark
     from capital
-      where YEAR(add_date) >= YEAR(CURDATE(), INTERVAL 12 YEAR))
+      where YEAR(add_date) >= DATE_SUB(YEAR(CURDATE(), INTERVAL 12 YEAR))
        GROUP BY YEAR(add_date)
   </select>
 
 
   <select id="getIncome" parameterType="java.lang.String" resultMap="BaseResultMap">
-      select
-       finish_rate,finish_rate_tag,operat_rate,operat_rate_tag,income_rate,income_rate_Tag,
-       cash_rate,cash_rate_tag,cost_rate,cost_rate_tag,use_capital,un_use_capital,
+      select use_capital,un_use_capital,
       MONTH(add_date)  as remark
     from capital
-   where   DATE_FORMAT(add_date,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+   where type=1 and  DATE_FORMAT(add_date,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
      GROUP BY DATE_FORMAT(add_date,'%Y-%m')
      ORDER BY DATE_FORMAT(add_date,'%Y-%m')
+  </select>
+  <select id="getIncomeRate" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+       finish_rate,finish_rate_tag,operat_rate,operat_rate_tag,income_rate,income_rate_Tag,
+       cash_rate,cash_rate_tag,cost_rate,cost_rate_tag,quarterly,
+      YEAR(add_date)  as remark
+    from capital
+    where type=2 and    DATE_FORMAT(add_date,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 24 MONTH)
+     GROUP BY quarterly, YEAR(add_date)
+     ORDER BY DATE_FORMAT(add_date,'%Y-%m'),quarterly
   </select>
 </mapper>

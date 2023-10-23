@@ -25,8 +25,8 @@ public class CapitalController {
      */
     @RequestMapping("/getCapital")
     @ResponseBody
-    public Object getCapital(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize){
-        return capitalService.getCapital(pageNum,pageSize);
+    public Object getCapital(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, Capital capital){
+        return capitalService.getCapital(pageNum,pageSize,capital);
     }
 
 
@@ -60,8 +60,8 @@ public class CapitalController {
      * @return
      */
     @RequestMapping("/getCapitalByCenterShow")
-    public Object getCapitalByCenterShow(HttpServletRequest request,String type){
-        return  capitalService.getCapitalByCenterShow(type);
+    public Object getCapitalByCenterShow(HttpServletRequest request){
+        return  capitalService.getCapitalByCenterShow();
     }
 
 }

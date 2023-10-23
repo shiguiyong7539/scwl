@@ -9,6 +9,11 @@ public class Capital {
     private Integer id;
 
     /**
+     * 1,资金2，比率
+     */
+    private Integer type;
+
+    /**
      * 融资计划完成率
      */
     private BigDecimal finishRate;
@@ -69,6 +74,11 @@ public class Capital {
     private BigDecimal unUseCapital;
 
     /**
+     * 年份季度
+     */
+    private String quarterly;
+
+    /**
      */
     private Date addDate;
 
@@ -82,6 +92,14 @@ public class Capital {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public BigDecimal getFinishRate() {
@@ -178,6 +196,14 @@ public class Capital {
 
     public void setUnUseCapital(BigDecimal unUseCapital) {
         this.unUseCapital = unUseCapital;
+    }
+
+    public String getQuarterly() {
+        return quarterly;
+    }
+
+    public void setQuarterly(String quarterly) {
+        this.quarterly = quarterly == null ? null : quarterly.trim();
     }
 
     public Date getAddDate() {
