@@ -216,6 +216,25 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
+                <div class="layui-row">
+                    <form class="layui-col-md12 x-so" id="formId">
+                        <span>经营类型:</span>
+                        <select name="type">
+                            <option value="资产经营">资产经营</option>
+                            <option value="经营业务收入">经营业务收入</option>
+                        </select>
+                        <span>项目名称:</span>
+                        <select name="name">
+                            <option value=""></option>
+                            <option value="旧日长轨">旧日长轨</option>
+                            <option value="星河集市">星河集市</option>
+                            <option value="金沙艺术中心">金沙艺术中心</option>
+                            <option value="灿若湖民宿">灿若湖民宿</option>
+                            <option value="活动策划">活动策划</option>
+                        </select>
+                        <div id="sousuo" class="sousuo" onclick="manageStateList(1)" >搜索</div>
+                    </form>
+                </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>经营状况信息</h6>
                     <div class="formAddEmp"><input type="submit" id="myStateBtn" value="添加经营状况" class="redB"></div>
                 </div>
@@ -309,7 +328,6 @@
 
 
     <div class="clear"></div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {
             initData();
@@ -407,16 +425,13 @@
         }
 
         function manageStateList(pageNum) {
-
             $.ajax({
                 type: "get",
-                url: "/getAllManageState",
+                url: "/getAllManageState?pageNum="+pageNum,
                 headers: {
                     'Authorization': localStorage.getItem("token") // 在请求头中添加token
                 },
-                data:({
-                    pageNum:pageNum
-                }),
+                data: $('#formId').serialize(),
                 success: function (res) {
                     if(res && res.code===200){
                         var data = res.obj;
@@ -430,9 +445,9 @@
                             str_info+='<tr><td align="center">'+data1[i].id+'</td>';
                             str_info+='<td align="center">'+data1[i].type+'</td>';
                             str_info+='<td align="center">'+data1[i].name+'</td>';
-                            str_info+='<td align="center">'+data1[i].rentIncome+'</td>';
-                            str_info+='<td align="center">'+data1[i].rentArrears+'</td>';
-                            str_info+='<td align="center">'+percentage(data1[i].letRate)+'</td>';
+                            str_info+='<td align="center"><input id="rentIncome_input" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentIncome)+'"></td>';
+                            str_info+='<td align="center"><input id="rentArrears_input" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentArrears)+'"></td>';
+                            str_info+='<td align="center"><input id="letRate_input"  onchange="updateState('+data1[i].id+')" style="text-align: right" value="'+isNull(data1[i].letRate)+'">%</td>';
                             str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
                         }
                         $("#myTable").html(str_info);
@@ -460,6 +475,7 @@
                         }
                         htm+="<a  href='#' onclick='manageStateList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='manageStateList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                         $("#pagefoot").html(htm);
+                        layui.layer.msg(res.message,{icon:1},{time:2000});
                     }
 
                 }
@@ -584,11 +600,12 @@
             }
         }
 
-        //获取所有包含百分比转化
-        function percentage(num) {
-            var per = Number(num);
-            return per +'%';
-
+        function isNull(number) {
+            if(null==number){
+                return "";
+            }else {
+                return number;
+            }
         }
 
         function showColum() {
@@ -620,6 +637,42 @@
                 }
             }
         }
+
+
+
+        function updateState(id) {
+           let rentIncome =  document.getElementById("rentIncome_input").value;
+           let rentArrears =  document.getElementById("rentArrears_input").value;
+           let letRate =  document.getElementById("letRate_input").value;
+
+            $.ajax({
+                type: "post",
+                url: "/updateState",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    id:id,
+                    rentIncome:rentIncome,
+                    rentArrears:rentArrears,
+                    letRate:letRate
+                }),
+                success: function (res) {
+                    if(res && res.code===200){
+                        modal.style.display = "none";
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+
+                    }
+                }
+
+
+            })
+
+        }
+
 
     </script>
 </body>

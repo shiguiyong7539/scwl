@@ -40,6 +40,16 @@ public class ManageStateConreoller {
     }
 
     /**
+     * 更新资金管理
+     * @param request
+     * @param manageState
+     * @return
+     */
+    @RequestMapping("/updateState")
+    public Object updateState(HttpServletRequest request, ManageState manageState){
+        return  manageStateService.updateState(manageState);
+    }
+    /**
      * 经营数据展览中心
      * @param request
      * @param period

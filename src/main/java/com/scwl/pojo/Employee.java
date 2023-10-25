@@ -13,14 +13,28 @@ public class Employee {
     private String name;
 
     /**
+     * 性别
+     */
+    private String sex;
+
+    /**
      * 年龄
      */
     private Integer age;
 
     /**
+     */
+    private String department;
+
+    /**
      * 学历
      */
     private String education;
+
+    /**
+     * 出生日期
+     */
+    private Date birthday;
 
     /**
      * 入职时间
@@ -53,6 +67,14 @@ public class Employee {
         this.name = name == null ? null : name.trim();
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
     public Integer getAge() {
         return age;
     }
@@ -61,12 +83,28 @@ public class Employee {
         this.age = age;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department == null ? null : department.trim();
+    }
+
     public String getEducation() {
         return education;
     }
 
     public void setEducation(String education) {
         this.education = education == null ? null : education.trim();
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public Date getJoinTime() {

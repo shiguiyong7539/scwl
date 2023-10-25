@@ -26,10 +26,15 @@ public class ManageStateServiceImpl implements ManageStateService {
     private LogService logService;
     @Override
     public ResBean getAllManageState(int pageNum, int pageSize, ManageState manageState) {
+        String msg="查询成功！";
+        if(manageState.getType().equals("资产经营")&&!manageState.getName().equals("")){
+            manageState.setName("");
+            msg +="选择资产经营的时候无法选择项目名称";
+        }
         PageHelper.startPage(pageNum,pageSize);
         List<ManageState> manageList = manageStateMapper.getAllManageState(manageState);
         PageInfo<ManageState> pageInfo = new PageInfo<>(manageList);
-        return ResBean.success("查詢成功",pageInfo);
+        return ResBean.success(msg,pageInfo);
     }
 
     @Override
@@ -44,31 +49,57 @@ public class ManageStateServiceImpl implements ManageStateService {
     }
 
     @Override
+    public ResBean updateState(ManageState manageState) {
+        try{
+            ManageState manage= manageStateMapper.selectByPrimaryKey(manageState.getId());
+            manage.setRentArrears(manageState.getRentArrears());
+            manage.setLetRate(manageState.getLetRate());
+            manage.setRentIncome(manageState.getRentIncome());
+            manageStateMapper.updateByPrimaryKey(manage);
+            logService.addLog("UPDATE","manage_state",manageState.getId(),"更新id为"+manageState.getId()+"的经营状况信息");
+            return  ResBean.success("修改成功");
+        }catch (Exception e){
+            return  ResBean.error("修改失败");
+        }
+    }
+
+    @Override
     public ResBean getManageStateByCenter() {
         HashMap<String, Object> hashMap = new HashMap<>();
         //租金收入（欠收）当年度总额
         ManageState totalByThisYear = manageStateMapper.getTotalByThisYear("资产经营");
-        //收入
+        //租金总收入
         hashMap.put("rent_total",totalByThisYear.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
-
         //经营业务收入当年度总额
         ManageState totalByThisYear1 = manageStateMapper.getTotalByThisYear("经营业务收入");
         hashMap.put("in_total",totalByThisYear1.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
-        List<Map<String,Object>> list = new ArrayList<>();
-            List<ManageState>    manageStates = manageStateMapper.getManageStateByAsset();
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("manage",manageStates);
-            list.add(map);
 
-            List<ManageState> allName = manageStateMapper.getAllName();
+        //租金收入（图形化）
+        List<ManageState> income = manageStateMapper.getDataByColumn("rent_income", "资产经营");
+        hashMap.put("income",income);
+        //欠收租金（图形化）
+        List<ManageState> arrears = manageStateMapper.getDataByColumn("rent_arrears", "资产经营");
+        hashMap.put("arrears",arrears);
+        //出租率（图形化）
+        List<ManageState> rate = manageStateMapper.getDataByColumn("let_rate", "资产经营");
+        hashMap.put("rate",rate);
+        //经营业务（图形化）
+        List<Map<String,Object>> list = new ArrayList<>();
+        List<ManageState> allName = manageStateMapper.getAllName();
             for (ManageState manageState : allName) {
                 List<ManageState> manageStateList = manageStateMapper.getManageStateByManage(manageState.getName());
                 HashMap<String, Object> map1 = new HashMap<>();
                 map1.put("manage",manageStateList);
                 list.add(map1);
             }
-        //欠收
-         hashMap.put("arrears_total",manageStates.get(manageStates.size()-1).getRentArrears().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        //欠收(当前)
+        for (int i = 0; i < arrears.size(); i++) {
+            if(null!=arrears.get(arrears.size()-(i+1)).getRentArrears()){
+                hashMap.put("arrears_now",arrears.get(arrears.size()-(i+1)).getRentArrears().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+                break;
+            }
+        }
+
          hashMap.put("list",list);
         return ResBean.success("success",hashMap);
 

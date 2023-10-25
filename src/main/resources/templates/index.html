@@ -67,67 +67,52 @@
 
 <!-- Left side content -->
 <div id="leftSide">
-    <div class="logo"><a href="#"><img src="images/logo.png" alt="" /></a></div>
-    
-    <div class="sidebarSep mt0"></div>
-    
-    <!-- Search widget -->
-    <form action="" class="sidebarSearch">
-        <input type="text" name="search" placeholder="搜索..." id="ac" />
-        <input type="submit" value="" />
-    </form>
-    
-    <div class="sidebarSep"></div>
+<!--    <div class="logo"><a href="#"><img src=" " alt="" /></a></div>-->
 
-    <!-- Next update progress widget -->
-    <div class="nextUpdate">
-        <ul>
-            <li>下次更新时间在:</li>
-            <li>23 小时 14 分</li>
-        </ul>
-        <div class="pWrapper"><div class="progressG" title="78%"></div></div>
-    </div>
-    
-    <div class="sidebarSep"></div>
-    
+    <div class="sidebarSep mt0"></div>
+
+
+
     <!-- Left navigation -->
     <ul id="menu" class="nav">
-        <li class="dash"><a href="index.html" title=""  class="active"><span>首页</span></a></li>
-        <li class="charts"><a href="我的资料.html" title="" class="exp"><span>账户管理</span></a>
-          <ul class="sub">
-              <li><a href="#" title="">激活码管理</a></li>
-              <li><a href="门票管理.html" title="">门票券管理</a></li>
-              <li><a href="我的团队.html" title="">伞下的成员</a></li>
-              <li><a href="#" title="">注册下线会员</a></li>
-              <li class="last"><a href="#" title="">注销登录账号</a></li>
-          </ul>
-      	</li>
-        <li class="forms"><a href="#" title="" class="exp"><span>交易记录</span><strong></strong></a>
-            <ul class="sub">
-                <li><a href="提供帮助记录.html" title="">提供帮助记录</a></li>
-                <li><a href="接受帮助记录.html" title="">接受帮助记录</a></li>
-                <li><a href="团队信息记录.html" title="">团队信息记录</a></li>
-                <li><a href="提供帮助所得利息.html" title="">提供帮助所得利息</a></li>
-                <li class="last"><a href="经理奖钱包记录.html" title="">经理奖钱包记录</a></li>
+        <li class="dash"><a href="#" onclick="index_html()" class="active"><span>首页</span></a></li>
+        <li class="charts"><a href="#" title=""  class="exp"><span>系统管理</span></a>
+            <ul class="sub ul_hidden" >
+                <li><a href="#" title="" onclick="hetong()">合同履行</a></li>
+                <li><a href="#" title="" onclick="mangeState()">经营管理</a></li>
+                <li><a href="#" title="" onclick="costManage()">预算执行</a></li>
+                <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
+                <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
+                <li><a href="" title="">建设发展</a></li>
             </ul>
         </li>
-        <li class="ui"><a href="#" title="" class="exp"><span>我的钱包</span></a>
-            <ul class="sub">
-                <li><a href="我的钱包.html" title="">资产：￥10000</a></li>
-                <li><a href="我的钱包.html" title="">经理：￥1700</a></li>
-                <li><a href="我的钱包.html" title="">推荐：￥150</a></li>
-                <li class="last"><a href="我的钱包.html" title="">积分：0分</a></li>
+
+        <li class="charts"><a href="#" title=""  class="exp"><span>任务管理</span></a>
+            <ul class="sub ul_hidden" >
+                <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
+                <li><a href="#" title="" onclick="tasklist('市场部')">市场部</a></li>
+                <li><a href="#" title="" onclick="tasklist('财务部')">财务部</a></li>
+                <li><a href="#" title="" onclick="tasklist('规建部')">规建部</a></li>
+                <li><a href="#" title="" onclick="tasklist('金沙艺术中心')">金沙艺术中心</a></li>
             </ul>
         </li>
-        <li class="tables"><a href="我的资料.html" title="" class="exp"><span>个人档案</span><strong></strong></a>
-            <ul class="sub">
-                <li><a href="我的资料.html" title="">ID号：1</a></li>
-                <li><a href="我的资料.html" title="">级别：Lv1</a></li>
-                <li><a href="我的资料.html" title="">姓名：华远网络</a></li>
-                <li class="last"><a href="我的资料.html" title="">手机：18200000000</a></li>
+
+        <li class="charts"><a href="#" title=""  class="exp"><span>风控管理</span></a>
+            <ul class="sub ul_hidden">
+                <li><a href="#" title="" onclick="fengkong()">涉诉情况</a></li>
+                <li><a href="" title="">监督检查整改情况</a></li>
             </ul>
         </li>
-        <li class="widgets"><a href="#" title="" class="exp"><span>拆包大厅</span><strong></strong></a></li>
+
+        <li class="tables"><a href="#" title=""  class="exp"><span>个人档案</span><strong></strong></a>
+            <ul class="sub ul_hidden" >
+                <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
+                <li><a href="#" title="#" onclick="userInfo()" id="idName"></a></li>
+                <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
+            </ul>
+        </li>
+
+        <li class="dash"><a href="#" onclick="center_html()" class="active"><span>数据展示中心</span></a></li>
     </ul>
 </div>
 
@@ -170,15 +155,6 @@
                         <li class="last"><a href="#" title="">注销登录账号</a></li>
                     </ul>
                 </li>
-                <li class="forms"><a href="#" title="" class="exp"><span>交易记录</span><strong></strong></a>
-                    <ul class="sub">
-                        <li><a href="提供帮助记录.html" title="">提供帮助记录</a></li>
-                        <li><a href="接受帮助记录.html" title="">接受帮助记录</a></li>
-                        <li><a href="团队信息记录.html" title="">团队信息记录</a></li>
-                        <li><a href="提供帮助所得利息.html" title="">提供帮助所得利息</a></li>
-                        <li class="last"><a href="经理奖钱包记录.html" title="">经理奖钱包记录</a></li>
-                    </ul>
-                </li>
             </ul>
         </div>
         <div class="cLine"></div>
@@ -194,7 +170,7 @@
     
         <!-- Note -->
         <div class="nNote nInformation hideit">
-            <p>亲爱的<strong>华远网络 </strong>（Lv1，山东临沂市地区领导人）本月任务 <strong>1 </strong>次，已完成 <strong>1 </strong>次排单。</p>
+            <p>亲爱的<strong>沙磁文旅 </strong>（Lv1，重庆市地区领导人）</p>
         </div>
         <!-- Widgets -->
         <div class="widgets">
@@ -204,13 +180,119 @@
     
     <!-- Footer line -->
     <div id="footer">
-        <div class="wrapper">Copyright © 2016 华远软件官方演示站点-本站点只提供演示版权所有</div>
+        <div class="wrapper">Copyright © 2023 沙磁文旅版权所有</div>
     </div>
 
 </div>
 
 <div class="clear"></div>
 
+<script type="text/javascript">
+    $(".toggle").click(function() {
+        $(this).next("ul").slideToggle();
+    });
+    $(function () {
+        initData();
+    })
+
+
+    function initData() {
+        var token = localStorage.getItem("token");
+        if(token){
+            $.ajax({
+                type: "get",
+                url: "/isLogin",
+                headers: {
+                    'Authorization': token // 在请求头中添加token
+                },
+                success: function (res) {
+                    if(res.code === 200) {
+                        document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
+                        document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
+                        document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
+                        document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
+                        // document.getElementById("userId").value = res.obj.id;
+                    }else {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+                    }
+                },
+                error:function (res) {
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
+                }
+            })
+        }else {
+            var info ="您还未登录，暂时无法显示当前页面的敏感数据哟！"+"<a href='#' onclick='login()'>立即登录</a>";
+            document.getElementById("messages").innerHTML = info;
+        }
+    }
+
+    function logOut() {
+        $.ajax({
+            type: "GET",
+            url: "/logout",
+            success: function (res) {
+                if(res && res.code === 200) {
+                    localStorage.removeItem('token');
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.href="/admin";
+                    });
+                }
+            },
+            error:function (res) {
+                layui.layer.msg(res.message,{time:1000},function(){
+                    layer.close(); //再执行关闭
+                    location.reload();
+                });
+            }
+        })
+    }
+
+    function index_html() {
+        location.href="/admin";
+    }
+    function userInfo() {
+        location.href="/userInfo";
+    }
+    function login() {
+        location.href="/loginAdmin";
+    }
+    function memberList() {
+        location.href="/memberList";
+    }
+
+    function costManage() {
+        location.href="/costManage";
+    }
+    function mangeState() {
+        location.href="/mangeState";
+    }
+
+    function capitalposition() {
+        location.href="/capitalList";
+    }
+    function tasklist(project) {
+        localStorage.setItem("project",project);
+        location.href="/taskList";
+    }
+    function center_html() {
+        location.href="/centerShow";
+    }
+    function hetong() {
+        location.href="/contract";
+    }
+    function fengkong() {
+        location.href="/risk";
+    }
+
+
+</script>
 </body>
 
 </html>

@@ -218,7 +218,13 @@
         <div class="widgets">
             <div class="widget">
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>员工信息</h6>
-                    <div class="formAddEmp"><input type="submit" id="myBtn" value="添加员工" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myBtn" value="添加员工" class="redB"></div>
+                    <div class="formAddEmp" style="display: none">
+                        <form  enctype="multipart/form-data">
+                            <input type="file" name="memberFile" id="memberFile" accept=".xls,.xlsx">
+                            <button onclick="uploadFile()" class="redB" >上传</button>
+                        </form>
+                    </div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
@@ -229,7 +235,7 @@
                         <td width="80">学历</td>
                         <td width="80">职称</td>
                         <td width="80">用工方式</td>
-                        <td width="80">入职时间</td>
+                        <td width="80">出生时间</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -263,6 +269,7 @@
                     <div class="formRow">
                         学历：
                         <div class="formRight"><select id="education">
+                            <option value="中专">中专</option>
                             <option value="大专">大专</option>
                             <option value="本科">本科</option>
                             <option value="研究生">研究生</option>
@@ -288,7 +295,7 @@
                     </div>
 
                     <div class="formRow">
-                        入职时间：
+                        出生时间：
                         <div class="formRight">
                             <input type="date"  style="width: 153px;" id="joinTime">
                         </div>
@@ -312,7 +319,7 @@
 
 
     <div class="clear"></div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script type="text/javascript">
     $(function () {
         initData();
@@ -436,7 +443,7 @@
                         str_info+='<td align="center">'+data1[i].education+'</td>';
                         str_info+='<td align="center">'+data1[i].rank+'</td>';
                         str_info+='<td align="center">'+data1[i].employmentMode+'</td>';
-                        str_info+='<td align="center">'+dateFormat(1,data1[i].joinTime)+'</td></tr>';
+                        str_info+='<td align="center">'+dateFormat(1,data1[i].birthday)+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
 
@@ -541,13 +548,43 @@
                 education:education,
                 rank:rank,
                 employmentMode:employmentMode,
-                joinTime:new Date(joinTime)
+                birthday:new Date(joinTime)
             }),
             success: function (res) {
                 if(res && res.code===200){
                     modal.style.display = "none";
                     layui.layer.msg(res.message,{time:1000},function(){
                         layer.close(); //再执行关闭
+                        location.reload();
+                    });
+
+                }
+            }
+
+
+        })
+
+    }
+
+    function uploadFile() {
+        var fileInput = document.getElementById('memberFile');
+        var file = fileInput.files[0];
+        var formData = new FormData();
+        formData.append('memberFile', file);
+        $.ajax({
+            type: "post",
+            url: "/uploadMemberFile",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:formData,
+            contentType: false,
+            processData: false,//这个很有必要，不然不行
+            dataType: "json",
+            mimeType: "multipart/form-data",
+            success: function (res) {
+                if(res && res.code===200){
+                    layui.layer.msg(res.message,{time:1000},function(){
                         location.reload();
                     });
 

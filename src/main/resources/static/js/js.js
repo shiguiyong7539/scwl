@@ -134,13 +134,16 @@ function echarts_4() {
                 //租金总收入
                 document.getElementById("rent_total").innerText = res.obj.rent_total;
                 //租金总欠收
-                document.getElementById("arrears_total").innerText = res.obj.arrears_total;
+                document.getElementById("arrears_now").innerText = res.obj.arrears_now;
 
                 //经营业务总收入
                 document.getElementById("in_total").innerText = res.obj.in_total;
                    var manage_date =[];
                    var income_data =[];
+                   var income_date =[];
+                   var arrears_date =[];
                    var arrears_data =[];
+                   var rate_date =[];
                    var rate_data =[];
                 var manage_date1 =[];
                 var manage_date2 =[];
@@ -156,15 +159,6 @@ function echarts_4() {
 
                 for (let i = 0; i < res.obj.list.length; i++) {
                     var manage = res.obj.list[i].manage;
-                    if(i==0){
-                        for (let i = 0; i < manage.length; i++) {
-                            manage_date.push(manage[i].remark+'月');
-                            income_data.push(manage[i].rentIncome);
-                            arrears_data.push(manage[i].rentArrears);
-                            rate_data.push(manage[i].letRate);
-                        }
-                    }else{
-
                         title_data.push(manage[0].name);
                     if(manage[0].name==='旧日长轨'){
                         for (let i = 0; i < manage.length; i++) {
@@ -196,11 +190,30 @@ function echarts_4() {
                             income_data5.push(manage[i].rentIncome);
                         }
                     }
-                    }
+
 
 
                 }
-                   option = {
+
+                for (let i = 0; i < res.obj.income.length; i++) {
+                    income_date.push(res.obj.income[i].remark+'月');
+                    income_data.push(res.obj.income[i].rentIncome);
+                }
+
+                for (let i = 0; i < res.obj.arrears.length; i++) {
+                    arrears_date.push(res.obj.arrears[i].remark+'月');
+                    arrears_data.push(res.obj.arrears[i].rentArrears);
+                }
+
+                for (let i = 0; i < res.obj.rate.length; i++) {
+                    rate_date.push(res.obj.rate[i].remark+'月');
+                    rate_data.push(res.obj.rate[i].letRate);
+                }
+
+
+
+
+                option = {
                        //  backgroundColor: '#00265f',
                        tooltip: {
                            trigger: 'axis',
@@ -243,7 +256,7 @@ function echarts_4() {
                        },
                        xAxis: [{
                            type: 'category',
-                           data: manage_date,
+                           data: income_date,
                            axisLine: {
                                show: true,
                                lineStyle: {
@@ -353,7 +366,7 @@ function echarts_4() {
                        },
                        xAxis: [{
                            type: 'category',
-                           data: manage_date,
+                           data: arrears_date,
                            axisLine: {
                                show: true,
                                lineStyle: {
@@ -464,7 +477,7 @@ function echarts_4() {
                        },
                        xAxis: [{
                            type: 'category',
-                           data: manage_date,
+                           data: rate_date,
                            axisLine: {
                                show: true,
                                lineStyle: {
@@ -1225,25 +1238,33 @@ function echarts_31() {
                 var rank_list = res.obj.rank;
                 var mode_list = res.obj.mode;
                 var ageData = [];
+                var ageTitle = [];
                 var eduData = [];
+                var eduTitle = [];
                 var rankData = [];
+                var rankTitle = [];
                 var modeData = [];
+                var modeTitle = [];
 
                 for (let i = 0; i < age_list.length; i++) {
 
                     ageData.push({name:age_list[i].age_range,value:age_list[i].count});
+                    ageTitle.push(age_list[i].age_range);
 
                 }
                 for (let i = 0; i < edu_list.length; i++) {
                     eduData.push({name:edu_list[i].education,value:edu_list[i].count});
+                    eduTitle.push(edu_list[i].education);
 
                 }
                 for (let i = 0; i < rank_list.length; i++) {
                     rankData.push({name:rank_list[i].rank,value:rank_list[i].count});
+                    rankTitle.push(rank_list[i].rank);
 
                 }
                 for (let i = 0; i < mode_list.length; i++) {
                     modeData.push({name:mode_list[i].employment_mode,value:mode_list[i].count});
+                    modeTitle.push(mode_list[i].employment_mode);
 
                 }
 
@@ -1261,7 +1282,7 @@ function echarts_31() {
                         right:0,
                         itemWidth: 10,
                         itemHeight: 10,
-                        data:['20-29岁','30-39岁','40-49岁','50-59岁','60岁以上'],
+                        data:ageTitle,
                         textStyle: {
                             color: 'rgba(255,255,255,.5)',
                             fontSize:'10',
@@ -1295,7 +1316,7 @@ function echarts_31() {
                         right:'8%',
                         itemWidth: 10,
                         itemHeight: 10,
-                        data:['其它','研究生','本科','大专'],
+                        data:eduTitle,
                         textStyle: {
                             color: 'rgba(255,255,255,.5)',
                             fontSize:'10',
@@ -1328,7 +1349,7 @@ function echarts_31() {
                         right:0,
                         itemWidth: 10,
                         itemHeight: 10,
-                        data:['初级','中级','高级'],
+                        data:rankTitle,
                         textStyle: {
                             color: 'rgba(255,255,255,.5)',
                             fontSize:'10',
@@ -1361,7 +1382,7 @@ function echarts_31() {
                         right:'8%',
                         itemWidth: 10,
                         itemHeight: 10,
-                        data:['正式聘用','劳务外包','劳务派遣'],
+                        data:modeTitle,
                         textStyle: {
                             color: 'rgba(255,255,255,.5)',
                             fontSize:'10',

@@ -42,4 +42,5 @@ public interface ManageStateMapper {
     List<ManageState> getAllName();
     List<ManageState> getManageStateByManage(String name);
     List<ManageState> getManageStateByTotal();
+    List<ManageState> getDataByColumn(@Param("column") String column,@Param("type") String type);
 }

@@ -4,8 +4,11 @@
   <resultMap id="BaseResultMap" type="com.scwl.pojo.Employee" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
     <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
     <result column="join_time" property="joinTime" jdbcType="TIMESTAMP" />
     <result column="rank" property="rank" jdbcType="VARCHAR" />
     <result column="employment_mode" property="employmentMode" jdbcType="VARCHAR" />
@@ -69,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, age, education, join_time, rank, employment_mode
+    id, name, sex, age, department, education, birthday, join_time, rank, employment_mode
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.EmployeeExample" >
     select
@@ -102,11 +105,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.Employee" useGeneratedKeys="true" keyProperty="id">
-    insert into employee (id, name, age, 
-      education, join_time, rank, 
+    insert into employee (id, name, sex, 
+      age, department, education, 
+      birthday, join_time, rank, 
       employment_mode)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
-      #{education,jdbcType=VARCHAR}, #{joinTime,jdbcType=TIMESTAMP}, #{rank,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{joinTime,jdbcType=TIMESTAMP}, #{rank,jdbcType=VARCHAR}, 
       #{employmentMode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.Employee" >
@@ -118,11 +123,20 @@
       <if test="name != null" >
         name,
       </if>
+      <if test="sex != null" >
+        sex,
+      </if>
       <if test="age != null" >
         age,
       </if>
+      <if test="department != null" >
+        department,
+      </if>
       <if test="education != null" >
         education,
+      </if>
+      <if test="birthday != null" >
+        birthday,
       </if>
       <if test="joinTime != null" >
         join_time,
@@ -141,11 +155,20 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
       <if test="age != null" >
         #{age,jdbcType=INTEGER},
       </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
       <if test="education != null" >
         #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
       </if>
       <if test="joinTime != null" >
         #{joinTime,jdbcType=TIMESTAMP},
@@ -173,11 +196,20 @@
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
       <if test="record.age != null" >
         age = #{record.age,jdbcType=INTEGER},
       </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
       <if test="record.education != null" >
         education = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=DATE},
       </if>
       <if test="record.joinTime != null" >
         join_time = #{record.joinTime,jdbcType=TIMESTAMP},
@@ -197,8 +229,11 @@
     update employee
     set id = #{record.id,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
       age = #{record.age,jdbcType=INTEGER},
+      department = #{record.department,jdbcType=VARCHAR},
       education = #{record.education,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
       join_time = #{record.joinTime,jdbcType=TIMESTAMP},
       rank = #{record.rank,jdbcType=VARCHAR},
       employment_mode = #{record.employmentMode,jdbcType=VARCHAR}
@@ -212,11 +247,20 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
       <if test="age != null" >
         age = #{age,jdbcType=INTEGER},
       </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
       <if test="education != null" >
         education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
       </if>
       <if test="joinTime != null" >
         join_time = #{joinTime,jdbcType=TIMESTAMP},
@@ -233,8 +277,11 @@
   <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.Employee" >
     update employee
     set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
+      department = #{department,jdbcType=VARCHAR},
       education = #{education,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
       join_time = #{joinTime,jdbcType=TIMESTAMP},
       rank = #{rank,jdbcType=VARCHAR},
       employment_mode = #{employmentMode,jdbcType=VARCHAR}
@@ -245,7 +292,7 @@
     select count(id) from employee
   </select>
   <select id="getByAgeGroup" resultType="java.util.Map">
-    SELECT FLOOR(age / 10) * 10 AS age_group, COUNT(id) AS count
+    SELECT FLOOR(TIMESTAMPDIFF(YEAR, birthday, CURDATE())  / 10) * 10 AS age_group, COUNT(id) AS count
     FROM employee
     GROUP BY age_group
   </select>

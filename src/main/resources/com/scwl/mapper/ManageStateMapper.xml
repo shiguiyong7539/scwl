@@ -255,7 +255,7 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getAllManageState" resultMap="BaseResultMap" parameterType="map">
+  <select id="getAllManageState" resultMap="BaseResultMap" parameterType="com.scwl.pojo.ManageState" >
     select
     <include refid="Base_Column_List" />
     from manage_state
@@ -333,6 +333,15 @@
         MONTH(periodic_time) as remark
     from manage_state
    where  type ='经营业务收入' and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+     GROUP BY DATE_FORMAT(periodic_time,'%Y-%m')
+     ORDER BY DATE_FORMAT(periodic_time,'%Y-%m')
+  </select>
+  <select id="getDataByColumn" parameterType="java.lang.String" resultMap="BaseResultMap">
+     select
+        type,  ${column},
+        MONTH(periodic_time) as remark
+     from manage_state
+     where  type = #{type}  and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
      GROUP BY DATE_FORMAT(periodic_time,'%Y-%m')
      ORDER BY DATE_FORMAT(periodic_time,'%Y-%m')
   </select>
