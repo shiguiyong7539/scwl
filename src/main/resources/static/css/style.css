@@ -70,7 +70,7 @@ i{font-style: normal;}
     background-size: 100% 100%;}
 .box:before{top: -1px;}
 
-.boxnav{padding: 10px;}
+.boxnav{padding: 5px;}
 .nav2{}
 .nav2>li:first-child{border:none;}
 .nav2>li{float: left;border-left:1px solid rgba(7,118,181,.2); height:240px; padding: 0 10px 10px 10px;}
