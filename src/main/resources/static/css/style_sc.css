@@ -189,7 +189,7 @@ select{
 }
 @media (max-width: 767px) {
     .head {
-        height:105px!important;
+        height:55px!important;
         background: url(../images/head_bg.png) no-repeat center center!important;
         position: relative!important
     }
@@ -224,6 +224,7 @@ select{
     }
     .time{
         top: 30% !important;
+        display: none;
     }
     .tit{
         font-size: 12px!important;
