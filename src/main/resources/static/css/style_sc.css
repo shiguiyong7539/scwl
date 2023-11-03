@@ -228,11 +228,26 @@ body .open_css .layui-layer-title{
     font-weight: bold;
 }
 .myInput{
-    width: 15%;
+    width: 12%;
+}
+.supd{
+    margin-left: 1%;font-weight: bold;
+}
+.supp{
+    margin-left: 35%;font-weight: bold;
+}
+.supt{
+    margin-left: 25%;font-weight: bold;
 }
 @media (max-width: 767px) {
+    .supp{
+        margin-left: 1px;!important;
+    }
+    .supt{
+        margin-left: 1px;!important;
+    }
     .myInput{
-        width: 35%;
+        width: 50%;
     }
     .redB{
         padding: 15%;
