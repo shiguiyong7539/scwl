@@ -102,7 +102,7 @@
         <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
             <ul class="sub ul_hidden" id="fengKongManage">
                 <li><a href="#" title="" onclick="fengkong()">涉诉情况</a></li>
-                <li><a href="" title="">监督检查整改情况</a></li>
+                <li><a href="#" title="" onclick="rectify()">监督检查整改情况</a></li>
             </ul>
         </li>
 
@@ -377,6 +377,9 @@
     function fengkong() {
         location.href="/risk";
     }
+    function rectify() {
+        location.href="/rectify";
+    }
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
@@ -445,9 +448,9 @@
                         str_info+='<td align="center">'+data1[i].department+'</td>';
                         str_info+='<td align="center">'+data1[i].name+'</td>';
                        if(type==='履行中'){
-                           str_info+='<td align="center"><a href="#" style="color: red;text-decoration: none;" onclick="updateType('+id+',1)">'+type+'</a></td>';
+                           str_info+='<td align="center" id="type_'+id+'"><a href="#" style="color: red;text-decoration: none;" onclick="updateType('+id+',1)">'+type+'</a></td>';
                        }else {
-                           str_info+='<td align="center"><a href="#"  style="color: green;text-decoration: none;" onclick="updateType('+id+',2)">'+type+'</a></td>';
+                           str_info+='<td align="center" id="type_'+id+'"><a href="#"  style="color: green;text-decoration: none;" onclick="updateType('+id+',2)">'+type+'</a></td>';
                        }
                         str_info+='<td align="center">'+dateFormat(1,data1[i].startTime)+'</td></tr>';
                     }
@@ -499,7 +502,7 @@
         var seconds = date.getSeconds();
         // 将日期和时间组件组合成字符串
         var formatteddate = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) ;
-        var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (month>=10?month:"0"+month) + ' ' + (hours>=10?hours:"0"+hours) + ':'
+        var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) + ' ' + (hours>=10?hours:"0"+hours) + ':'
             + (minutes>=10?minutes:"0"+minutes) + ':' + (seconds>=10?seconds:"0"+seconds);
         if(type==1){
             return formatteddate;
@@ -569,12 +572,15 @@
     }
     function updateType(id,type) {
         let message='';
+        let html='';
         if(type===1){
             type='履行完毕'
             message='您确认要把状态更新成履行完毕吗?';
+            html='<a href="#"  style="color: green;text-decoration: none;" onclick="updateType('+id+',2)">'+type+'</a>';
         }else {
             type='履行中'
             message='您确认要把状态更新回履行中吗?';
+            html='<a href="#" style="color: red;text-decoration: none;" onclick="updateType('+id+',1)">'+type+'</a>';
         }
         layer.confirm(message, {
             title:'操作提示',
@@ -596,11 +602,12 @@
                     layer.close(index);
                     //成功提示
                     if (resp.code == 200) {
+                        document.getElementById("type_"+id).innerHTML=html;
                         layer.msg("更新成功", {
                             icon: 1,
                             time: 1000
                         }, function () {
-                            location.reload();
+
                         });
                     } else {
                         //失败提示

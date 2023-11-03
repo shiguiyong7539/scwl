@@ -165,13 +165,49 @@ select{
     background: #033c76;
     color: white;
 }
+body .open_css{
+    border-radius: 20px;
+    color:black;
+}
+body .open_css .layui-layer-title{
+    border-radius: 20px 20px 0 0!important;
+    text-align: center!important;
+    font-weight: bold;
+}
+.textarea_info{
+    width: 100%;
+    height: 80%;
+    border: none;
+}
+.lable_father{
+    margin-bottom: 5px;
+}
+.lable_child{
+    margin-bottom: 5px;
+    margin-left: 25px;
+}
+
+.text_add{
+    width: 51%;
+    margin-left: 6%;
+    margin-top: -2%;
+    margin-bottom: 10px;
+}
+.text-over {
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
 .sousuo{
     height:24px;
     padding-bottom:0px;
     line-height:23px;
-    color:#ab70e1;
-    background:none;
-    border: 1px solid #ab70e1;
+    color: white;
+    background: #9f352b;
+    border: 1px solid #9f352b;
     display: inline-block;
     padding: 0 5px;
     white-space: nowrap;
@@ -186,6 +222,7 @@ select{
     font-weight: inherit;
     outline: 0;
     position:relative;
+    font-weight: bold;
 }
 @media (max-width: 767px) {
     .head {

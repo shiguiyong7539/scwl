@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.scwl.mapper.RiskControlMapper" >
-  <resultMap id="BaseResultMap" type="com.scwl.pojo.RiskControl" >
+<mapper namespace="com.scwl.mapper.RectifyMatterMapper" >
+  <resultMap id="BaseResultMap" type="com.scwl.pojo.RectifyMatter" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="num" property="num" jdbcType="INTEGER" />
-    <result column="year_num" property="yearNum" jdbcType="INTEGER" />
-    <result column="unfinish_num" property="unfinishNum" jdbcType="INTEGER" />
-    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="title_id" property="titleId" jdbcType="INTEGER" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, num, year_num, unfinish_num, add_time, remark
+    id, name, title_id, order_num
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.RiskControlExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.RectifyMatterExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from risk_control
+    from rectify_matter
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,31 +83,29 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
-    from risk_control
+    from rectify_matter
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from risk_control
+    delete from rectify_matter
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.scwl.pojo.RiskControlExample" >
-    delete from risk_control
+  <delete id="deleteByExample" parameterType="com.scwl.pojo.RectifyMatterExample" >
+    delete from rectify_matter
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.RiskControl" useGeneratedKeys="true" keyProperty="id">
-    insert into risk_control (id, name, num,
-      year_num, unfinish_num, add_time,
-      remark)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER},
-      #{yearNum,jdbcType=INTEGER}, #{unfinishNum,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP},
-      #{remark,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.scwl.pojo.RectifyMatter" useGeneratedKeys="true" keyProperty="id">
+    insert into rectify_matter (id, name, title_id, 
+      order_num)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{titleId,jdbcType=INTEGER}, 
+      #{orderNum,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.scwl.pojo.RiskControl" >
-    insert into risk_control
+  <insert id="insertSelective" parameterType="com.scwl.pojo.RectifyMatter" >
+    insert into rectify_matter
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -118,20 +113,11 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="num != null" >
-        num,
+      <if test="titleId != null" >
+        title_id,
       </if>
-      <if test="yearNum != null" >
-        year_num,
-      </if>
-      <if test="unfinishNum != null" >
-        unfinish_num,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="remark != null" >
-        remark,
+      <if test="orderNum != null" >
+        order_num,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -141,31 +127,22 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="num != null" >
-        #{num,jdbcType=INTEGER},
+      <if test="titleId != null" >
+        #{titleId,jdbcType=INTEGER},
       </if>
-      <if test="yearNum != null" >
-        #{yearNum,jdbcType=INTEGER},
-      </if>
-      <if test="unfinishNum != null" >
-        #{unfinishNum,jdbcType=INTEGER},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.scwl.pojo.RiskControlExample" resultType="java.lang.Integer" >
-    select count(*) from risk_control
+  <select id="countByExample" parameterType="com.scwl.pojo.RectifyMatterExample" resultType="java.lang.Integer" >
+    select count(*) from rectify_matter
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update risk_control
+    update rectify_matter
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
@@ -173,20 +150,11 @@
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.num != null" >
-        num = #{record.num,jdbcType=INTEGER},
+      <if test="record.titleId != null" >
+        title_id = #{record.titleId,jdbcType=INTEGER},
       </if>
-      <if test="record.yearNum != null" >
-        year_num = #{record.yearNum,jdbcType=INTEGER},
-      </if>
-      <if test="record.unfinishNum != null" >
-        unfinish_num = #{record.unfinishNum,jdbcType=INTEGER},
-      </if>
-      <if test="record.addTime != null" >
-        add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.remark != null" >
-        remark = #{record.remark,jdbcType=VARCHAR},
+      <if test="record.orderNum != null" >
+        order_num = #{record.orderNum,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -194,56 +162,49 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update risk_control
+    update rectify_matter
     set id = #{record.id,jdbcType=INTEGER},
-    name = #{record.name,jdbcType=VARCHAR},
-    num = #{record.num,jdbcType=INTEGER},
-    year_num = #{record.yearNum,jdbcType=INTEGER},
-    unfinish_num = #{record.unfinishNum,jdbcType=INTEGER},
-    add_time = #{record.addTime,jdbcType=TIMESTAMP},
-    remark = #{record.remark,jdbcType=VARCHAR}
+      name = #{record.name,jdbcType=VARCHAR},
+      title_id = #{record.titleId,jdbcType=INTEGER},
+      order_num = #{record.orderNum,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.RiskControl" >
-    update risk_control
+  <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.RectifyMatter" >
+    update rectify_matter
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="num != null" >
-        num = #{num,jdbcType=INTEGER},
+      <if test="titleId != null" >
+        title_id = #{titleId,jdbcType=INTEGER},
       </if>
-      <if test="yearNum != null" >
-        year_num = #{yearNum,jdbcType=INTEGER},
-      </if>
-      <if test="unfinishNum != null" >
-        unfinish_num = #{unfinishNum,jdbcType=INTEGER},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.RiskControl" >
-    update risk_control
+  <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.RectifyMatter" >
+    update rectify_matter
     set name = #{name,jdbcType=VARCHAR},
-      num = #{num,jdbcType=INTEGER},
-      year_num = #{yearNum,jdbcType=INTEGER},
-      unfinish_num = #{unfinishNum,jdbcType=INTEGER},
-      add_time = #{addTime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR}
+      title_id = #{titleId,jdbcType=INTEGER},
+      order_num = #{orderNum,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getTotal" resultMap="BaseResultMap">
-  select name,sum(num) as num from risk_control group by name
+  <select id="getByTitleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from rectify_matter where title_id= #{tid} order by order_num
   </select>
-  <select id="getTotalYear" parameterType="java.lang.String" resultType="java.lang.Integer">
-  select sum(num) from risk_control where  YEAR(add_time) = YEAR(CURDATE())
+
+  <select id="getByIds" parameterType="int[]" resultMap="BaseResultMap">
+    select * from rectify_matter
+    <if test="matterIds!=null and matterIds.length >0 ">
+      where id in
+      <foreach item="item" index="index" collection="matterIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    order by order_num
   </select>
 </mapper>

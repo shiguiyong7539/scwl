@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scwl.mapper.SupervisionRectifyMapper" >
+  <resultMap id="BaseResultMap" type="com.scwl.pojo.SupervisionRectify" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="head_line" property="headLine" jdbcType="VARCHAR" />
+    <result column="rectify_person" property="rectifyPerson" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="title_ids" property="titleIds" jdbcType="VARCHAR" />
+    <result column="matter_ids" property="matterIds" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="supervision_scope" property="supervisionScope" jdbcType="VARCHAR" />
+    <result column="supervision_way" property="supervisionWay" jdbcType="VARCHAR" />
+    <result column="existing_problem" property="existingProblem" jdbcType="VARCHAR" />
+    <result column="business_tips" property="businessTips" jdbcType="VARCHAR" />
+    <result column="rectify_reply" property="rectifyReply" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="deadline" property="deadline" jdbcType="TIMESTAMP" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, head_line, rectify_person, department, title_ids, matter_ids, status, supervision_scope, 
+    supervision_way, existing_problem, business_tips, rectify_reply, start_time, deadline, 
+    add_time, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.SupervisionRectifyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from supervision_rectify
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from supervision_rectify
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from supervision_rectify
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.scwl.pojo.SupervisionRectifyExample" >
+    delete from supervision_rectify
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.scwl.pojo.SupervisionRectify" useGeneratedKeys="true" keyProperty="id">
+    insert into supervision_rectify (id, head_line, rectify_person, 
+      department, title_ids, matter_ids, 
+      status, supervision_scope, supervision_way, 
+      existing_problem, business_tips, rectify_reply, 
+      start_time, deadline, add_time, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{headLine,jdbcType=VARCHAR}, #{rectifyPerson,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{titleIds,jdbcType=VARCHAR}, #{matterIds,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{supervisionScope,jdbcType=VARCHAR}, #{supervisionWay,jdbcType=VARCHAR}, 
+      #{existingProblem,jdbcType=VARCHAR}, #{businessTips,jdbcType=VARCHAR}, #{rectifyReply,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{deadline,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.scwl.pojo.SupervisionRectify" >
+    insert into supervision_rectify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="headLine != null" >
+        head_line,
+      </if>
+      <if test="rectifyPerson != null" >
+        rectify_person,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="titleIds != null" >
+        title_ids,
+      </if>
+      <if test="matterIds != null" >
+        matter_ids,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="supervisionScope != null" >
+        supervision_scope,
+      </if>
+      <if test="supervisionWay != null" >
+        supervision_way,
+      </if>
+      <if test="existingProblem != null" >
+        existing_problem,
+      </if>
+      <if test="businessTips != null" >
+        business_tips,
+      </if>
+      <if test="rectifyReply != null" >
+        rectify_reply,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="deadline != null" >
+        deadline,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="headLine != null" >
+        #{headLine,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyPerson != null" >
+        #{rectifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="titleIds != null" >
+        #{titleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="matterIds != null" >
+        #{matterIds,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisionScope != null" >
+        #{supervisionScope,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisionWay != null" >
+        #{supervisionWay,jdbcType=VARCHAR},
+      </if>
+      <if test="existingProblem != null" >
+        #{existingProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTips != null" >
+        #{businessTips,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyReply != null" >
+        #{rectifyReply,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadline != null" >
+        #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.scwl.pojo.SupervisionRectifyExample" resultType="java.lang.Integer" >
+    select count(*) from supervision_rectify
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update supervision_rectify
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.headLine != null" >
+        head_line = #{record.headLine,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rectifyPerson != null" >
+        rectify_person = #{record.rectifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleIds != null" >
+        title_ids = #{record.titleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.matterIds != null" >
+        matter_ids = #{record.matterIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supervisionScope != null" >
+        supervision_scope = #{record.supervisionScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supervisionWay != null" >
+        supervision_way = #{record.supervisionWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.existingProblem != null" >
+        existing_problem = #{record.existingProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessTips != null" >
+        business_tips = #{record.businessTips,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rectifyReply != null" >
+        rectify_reply = #{record.rectifyReply,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deadline != null" >
+        deadline = #{record.deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update supervision_rectify
+    set id = #{record.id,jdbcType=INTEGER},
+      head_line = #{record.headLine,jdbcType=VARCHAR},
+      rectify_person = #{record.rectifyPerson,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      title_ids = #{record.titleIds,jdbcType=VARCHAR},
+      matter_ids = #{record.matterIds,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      supervision_scope = #{record.supervisionScope,jdbcType=VARCHAR},
+      supervision_way = #{record.supervisionWay,jdbcType=VARCHAR},
+      existing_problem = #{record.existingProblem,jdbcType=VARCHAR},
+      business_tips = #{record.businessTips,jdbcType=VARCHAR},
+      rectify_reply = #{record.rectifyReply,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      deadline = #{record.deadline,jdbcType=TIMESTAMP},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.SupervisionRectify" >
+    update supervision_rectify
+    <set >
+      <if test="headLine != null" >
+        head_line = #{headLine,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyPerson != null" >
+        rectify_person = #{rectifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="titleIds != null" >
+        title_ids = #{titleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="matterIds != null" >
+        matter_ids = #{matterIds,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisionScope != null" >
+        supervision_scope = #{supervisionScope,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisionWay != null" >
+        supervision_way = #{supervisionWay,jdbcType=VARCHAR},
+      </if>
+      <if test="existingProblem != null" >
+        existing_problem = #{existingProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTips != null" >
+        business_tips = #{businessTips,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyReply != null" >
+        rectify_reply = #{rectifyReply,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadline != null" >
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.SupervisionRectify" >
+    update supervision_rectify
+    set head_line = #{headLine,jdbcType=VARCHAR},
+      rectify_person = #{rectifyPerson,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      title_ids = #{titleIds,jdbcType=VARCHAR},
+      matter_ids = #{matterIds,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      supervision_scope = #{supervisionScope,jdbcType=VARCHAR},
+      supervision_way = #{supervisionWay,jdbcType=VARCHAR},
+      existing_problem = #{existingProblem,jdbcType=VARCHAR},
+      business_tips = #{businessTips,jdbcType=VARCHAR},
+      rectify_reply = #{rectifyReply,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      deadline = #{deadline,jdbcType=TIMESTAMP},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getTotal" resultType="java.lang.Integer">
+  select count(id) as num from supervision_rectify
+  </select>
+  <select id="getTotalYear" parameterType="java.lang.String" resultType="java.lang.Integer">
+  select count(id) from supervision_rectify where  YEAR(add_time) = YEAR(CURDATE())
+  </select>
+</mapper>

@@ -568,7 +568,7 @@ input[type=submit], input[type=reset], input[type=button], button { padding: 7px
 .blueB:hover { background-position: 0 -113px; }
 .blueB:active { background-position: 0 -141px; }
 
-.redB { background-position: 0 -170px; border: 1px solid #9f352b; color: #fff; }
+.redB { background-position: 0 -170px; border: 1px solid #9f352b; color: #fff;border-radius: 5px 5px 5px 5px; }
 .redB:hover { background-position: 0 -198px; }
 .redB:active { background-position: 0 -226px; }
 

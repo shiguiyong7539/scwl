@@ -1,0 +1,975 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+    <title>监督检查整改情况</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/spinner/ui.spinner.js"></script>
+    <script type="text/javascript" src="js/plugins/spinner/jquery.mousewheel.js"></script>
+
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/forms/uniform.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.cleditor.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.validationEngine-en.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.validationEngine.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/autogrowtextarea.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.dualListBox.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.inputlimiter.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/chosen.jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/wizard/jquery.form.js"></script>
+    <script type="text/javascript" src="js/plugins/wizard/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/plugins/wizard/jquery.form.wizard.js"></script>
+
+    <script type="text/javascript" src="js/plugins/uploader/plupload.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/plupload.html5.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/plupload.html4.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/jquery.plupload.queue.js"></script>
+
+    <script type="text/javascript" src="js/plugins/tables/datatable.js"></script>
+    <script type="text/javascript" src="js/plugins/tables/tablesort.min.js"></script>
+    <script type="text/javascript" src="js/plugins/tables/resizable.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/ui/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.collapsible.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.progress.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.timeentry.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.colorpicker.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.breadcrumbs.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.sourcerer.js"></script>
+
+    <script type="text/javascript" src="js/plugins/calendar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/elfinder.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+
+
+   <!-- <script type="text/javascript" src="js/custom.js"></script>-->
+
+   <!-- <script type="text/javascript" src="js/charts/chart.js"></script>
+-->
+    <!-- Shared on MafiaShare.net  --><!-- Shared on MafiaShare.net  --></head>
+
+<body>
+
+<!-- Left side content -->
+<div id="leftSide">
+    <div class="logo"><a href="#"><img src=" " alt="" /></a></div>
+
+    <div class="sidebarSep mt0"></div>
+
+
+
+    <!-- Left navigation -->
+    <ul id="menu" class="nav">
+        <li class="dash"><a href="#" onclick="index_html()" class="active"><span>首页</span></a></li>
+        <li class="charts"><a href="#" title="" onclick="toggle('userManage')" class="exp"><span>系统管理</span></a>
+            <ul class="sub ul_hidden" id="userManage">
+                <li><a href="#" title="" onclick="hetong()">合同履行</a></li>
+                <li><a href="#" title="" onclick="mangeState()">经营管理</a></li>
+                <li><a href="#" title="" onclick="costManage()">预算执行</a></li>
+                <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
+                <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
+                <li><a href="" title="">建设发展</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
+            <ul class="sub ul_hidden" id="taskManage">
+                <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
+                <li><a href="#" title="" onclick="tasklist('市场部')">市场部</a></li>
+                <li><a href="#" title="" onclick="tasklist('财务部')">财务部</a></li>
+                <li><a href="#" title="" onclick="tasklist('规建部')">规建部</a></li>
+                <li><a href="#" title="" onclick="tasklist('金沙艺术中心')">金沙艺术中心</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
+            <ul class="sub ul_hidden" id="fengKongManage">
+                <li><a href="#" title="" onclick="fengkong()">涉诉情况</a></li>
+                <li><a href="#" title="" onclick="rectify()">监督检查整改情况</a></li>
+            </ul>
+        </li>
+
+        <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
+            <ul class="sub ul_hidden" id="myInfo">
+                <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
+                <li><a href="#" title="#" onclick="userInfo()" id="idName"></a></li>
+                <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
+            </ul>
+        </li>
+
+        <li class="dash"><a href="#" onclick="center_html()" class="active"><span>数据展示中心</span></a></li>
+    </ul>
+</div>
+
+
+<!-- Right side -->
+<div id="rightSide">
+
+    <!-- Top fixed navigation -->
+    <div class="topNav">
+        <div class="wrapper">
+            <div class="welcome"><a href="#" title=""><img src="images/userPic.png" alt="" /></a><span id="loginUser"></span></div>
+            <div class="welcome"><a href="#" title=""></a><span id="messages" style="color: red"></span></div>
+            <div class="userNav">
+                <ul>
+                    <li><a href="#" title=""><img src="images/icons/topnav/logout.png" alt="" /><span onclick="logOut()">退出</span></a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- Responsive header -->
+    <div class="resp">
+        <div class="respHead">
+            <a href="#" title=""><img src="images/loginLogo.png" alt="" /></a>
+        </div>
+
+        <div class="cLine"></div>
+        <div class="smalldd">
+            <span class="goTo"><img src="images/icons/light/home.png" alt="" />Dashboard</span>
+            <ul class="smallDropdown">
+                <li><a href="#" title=""><img src="images/icons/light/home.png" alt="" />Dashboard</a></li>
+                <li><a href="#" title=""><img src="images/icons/light/stats.png" alt="" />Statistics and charts</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/pencil.png" alt="" />Forms stuff<strong>4</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Form elements</a></li>
+                        <li><a href="#" title="">Validation</a></li>
+                        <li><a href="#" title="">WYSIWYG and file uploader</a></li>
+                        <li class="last"><a href="#" title="">Wizards</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title=""><img src="images/icons/light/users.png" alt="" />Interface elements</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/frames.png" alt="" />Tables<strong>3</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Static tables</a></li>
+                        <li><a href="#" title="">Dynamic table</a></li>
+                        <li class="last"><a href="#" title="">Sortable &amp; resizable tables</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/fullscreen.png" alt="" />Widgets and grid<strong>2</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Widgets</a></li>
+                        <li class="last"><a href="#" title="">Grid</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/alert.png" alt="" />Error pages<strong>6</strong></a>
+                    <ul class="sub">
+                        <li><a href="#" title="">403 page</a></li>
+                        <li><a href="#" title="">404 page</a></li>
+                        <li><a href="#" title="">405 page</a></li>
+                        <li><a href="#" title="">500 page</a></li>
+                        <li><a href="#" title="">503 page</a></li>
+                        <li class="last"><a href="#" title="">Website is offline</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title=""><img src="images/icons/light/files.png" alt="" />File manager</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/create.png" alt="" />Other pages<strong>3</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Typography</a></li>
+                        <li><a href="#" title="">Calendar</a></li>
+                        <li class="last"><a href="#" title="">Gallery</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="cLine"></div>
+    </div>
+
+    <!-- Title area -->
+    <div class="titleArea">
+        <div class="wrapper">
+            <div class="pageTitle">
+            </div>
+            <div class="middleNav">
+
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="line"></div>
+    <!-- Main content wrapper -->
+    <div class="wrapper">
+
+        <!-- Note -->
+        <div class="nNote nInformation hideit">
+            <p>亲爱的<strong>沙磁文旅 </strong>（Lv1，重庆市地区领导人）</p>
+        </div>
+
+        <!-- Widgets -->
+        <div class="widgets">
+            <div class="widget">
+                <div class="layui-row">
+                    <form class="layui-col-md12 x-so" id="formId">
+                        名称: <input  style=" width: 10%;" type="text" name="headLine"  placeholder="名称" autocomplete="off" class="layui-input">
+                        监督人:<input  style=" width: 10%;" type="text" name="rectifyPerson"  placeholder="监督人" autocomplete="off" class="layui-input">
+                        <span>部门:</span>
+                        <select name="department">
+                            <option value=""></option>
+                            <option value="综合管理部">综合管理部</option>
+                            <option value="市场拓展部">市场拓展部</option>
+                            <option value="规划建设部">规划建设部</option>
+                            <option value="财务融资部">财务融资部</option>
+                            <option value="金沙艺术中心">金沙艺术中心</option>
+                            <option value="活动策划经营业务专班">活动策划经营业务专班</option>
+                        </select>
+                        <span>状态:</span>
+                        <select name="staus">
+                            <option value=""></option>
+                            <option value="整改中">整改中</option>
+                            <option value="整改完成">整改完成</option>
+                        </select>
+                        <div id="sousuo" class="sousuo" onclick="rectifyList(1)" >搜索</div>
+                    </form>
+                </div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>监督整改信息</h6>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="openProject()" value="添加监督项目" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="openMatter()" value="添加监督事项" class="redB"></div>
+                    <div class="formAddEmp"><input type="submit" onclick="openDetails()" value="添加整改详情" class="redB"></div>
+                </div>
+                <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
+                    <thead>
+                    <tr>
+                        <td width="50">编号</td>
+                        <td width="200">名称</td>
+                        <td width="80">被监督部门</td>
+                        <td width="80">监督人</td>
+                        <td width="80">整改状态</td>
+                        <td width="80">整改期限</td>
+                        <td width="80">备注</td>
+                        <td width="80">操作</td>
+                    </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    </tbody>
+                </table>
+            </div>
+
+            <span class="page-new">
+                <span id="pagefoot"></span></span>
+            <div class="clear"></div>
+        </div>
+
+        <!-- 弹窗 -->
+
+        <input type="hidden" id="commit_title_ids"/>
+        <input type="hidden" id="commit_matter_ids"/>
+
+
+
+
+
+</div>
+    <!-- Footer line -->
+    <div id="footer">
+        <div class="wrapper">Copyright © 2023 沙磁文旅版权所有 </div>
+    </div>
+
+
+    <div class="clear"></div>
+
+<script type="text/javascript">
+    $(function () {
+        initData();
+        rectifyList(1);
+    } );
+
+
+    function logOut() {
+        $.ajax({
+            type: "GET",
+            url: "/logout",
+            success: function (res) {
+                if(res && res.code === 200) {
+                    localStorage.removeItem('token');
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.href="/admin";
+                    });
+
+                }
+            }
+        })
+    }
+    function index_html() {
+        location.href="/admin";
+    }
+    function userInfo() {
+        location.href="/userInfo";
+    }
+    function login() {
+        location.href="/loginAdmin";
+    }
+    function memberList() {
+        location.href="/memberList";
+    }
+    function costManage() {
+        location.href="/costManage";
+    }
+    function mangeState() {
+        location.href="/mangeState";
+    }
+    function capitalposition() {
+        location.href="/capitalList";
+    }
+    function tasklist(project) {
+        localStorage.setItem("project",project);
+        location.href="/taskList";
+    }
+    function hetong() {
+        location.href="/contract";
+    }
+    function fengkong() {
+        location.href="/risk";
+    }
+    function rectify() {
+        location.href="/rectify";
+    }
+    function toggle(id) {
+        var x = document.getElementById(id);
+        if (x.className === "sub ul_hidden") {
+            x.className = "sub";
+        } else {
+            x.className = "sub ul_hidden";
+        }
+    }
+    function initData() {
+        var token = localStorage.getItem("token");
+        if(token){
+            $.ajax({
+                type: "get",
+                url: "/isLogin",
+                headers: {
+                    'Authorization': token // 在请求头中添加token
+                },
+                success: function (res) {
+                    if(res.code === 200) {
+                       // JSON.stringify()
+                        document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
+                        document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
+                        document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
+                        document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
+                    }else {
+                        layui.layer.msg(res.message,{icon:2},{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+                    }
+                },
+                error:function (res) {
+                    layui.layer.msg(res.message,{icon:2},{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
+                }
+            })
+        }else {
+            var info ="您还未登录，暂时无法显示当前页面的敏感数据哟！"+"<a href='#' onclick='login()'>立即登录</a>";
+            document.getElementById("messages").innerHTML = info;
+        }
+    }
+
+    function rectifyList(pageNum) {
+
+        $.ajax({
+            type: "get",
+            url: "/getAllRectify?pageNum="+pageNum,
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:$('#formId').serialize(),
+            success: function (res) {
+                if(res && res.code===200){
+                    var data = res.obj;
+                    var data1 = res.obj.list;
+                    var pageNo = parseInt(res.obj.pageNum);
+                    var pages = parseInt(res.obj.pages);
+                    var total = parseInt(res.obj.total);
+                   // 获取表格元素
+                    var str_info='';
+                    for (var i = 0; i < data1.length; i++) {
+                        str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                        str_info+='<td align="center">'+data1[i].headLine+'</td>';
+                        str_info+='<td align="center">'+data1[i].department+'</td>';
+                        str_info+='<td align="center">'+data1[i].rectifyPerson+'</td>';
+                        if(data1[i].status==='整改中'){
+                            str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: red;text-decoration: none;"  onclick="updateStatus('+data1[i].id+',1)">'+data1[i].status+'</a></td>';
+                        }else {
+                            str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#"  style="color: green;text-decoration: none;" onclick="updateStatus('+data1[i].id+',2)">'+data1[i].status+'</a></td>';
+                        }
+                        str_info+='<td align="center">'+dateFormat(1,data1[i].deadline)+'</td>';
+                        str_info+='<td align="center"><div  class="text-over" title="'+(data1[i].remark==null?"":data1[i].remark)+'">'+(data1[i].remark==null?"":data1[i].remark)+'</div></td>';
+                        str_info+='<td align="center" onclick="getDetails('+data1[i].id+')"><button class="redB">详情</button></td></tr>';
+                    }
+                    $("#myTable").html(str_info);
+
+                    pagenum0=pageNo-1;
+                    pagenum1=pageNo+1;
+                    pagenum2=pageNo+2;
+                    pagenum3=pageNo+3;
+                    var htm="<a  href='#' onclick='rectifyList(1)'>首页 </a>";
+                    if(data.pageNum >1){
+                        htm+="<a  href='#' onclick='rectifyList("+data.prePage+")'>上一页 </a>"
+                    }
+                    if(pagenum0 >=1){
+                        htm+="<a  href='#' onclick='rectifyList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                    }
+                    htm+="<button class='current'>"+data.pageNum+"</button>";
+                    if(pagenum1 <= pages){
+                        htm+="<a  href='#' onclick='rectifyList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                    }
+                    if(pagenum2 <= pages){
+                        htm+="<a  href='#' onclick='rectifyList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                    }
+                    if(pagenum3 <= pages){
+                        htm+="<a  href='#' onclick='rectifyList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                    }
+                    htm+="<a  href='#' onclick='rectifyList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='rectifyList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                    $("#pagefoot").html(htm);
+                }
+
+            }
+
+
+
+        })
+
+    }
+
+
+
+    function dateFormat(type,utcTime) {
+        var date = new Date(utcTime); // 创建Date对象
+        // 获取年、月、日、小时、分钟和秒
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1; // 月份从0开始，所以要加1
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        // 将日期和时间组件组合成字符串
+        var formatteddate = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) ;
+        var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) + ' ' + (hours>=10?hours:"0"+hours) + ':'
+            + (minutes>=10?minutes:"0"+minutes) + ':' + (seconds>=10?seconds:"0"+seconds);
+        if(type==1){
+            return formatteddate;
+        }else {
+            return formattedTime;
+        }
+
+    }
+
+// 获取弹窗
+    function getDetails(id) {
+        $.ajax({
+            type: "get",
+            url: "/getRectifyDetail?id="+id,
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            success: function (res) {
+                if(res && res.code===200){
+                    let str_info="";
+                    let projectVos = res.obj.rectifyProjectVos;
+                    //后面所对应的rows_num;
+                    var endlen = 0;
+                    for (var i = 0; i < projectVos.length; i++) {
+                        for (var a = 0; a < projectVos[i].matters.length; a++) {
+                            endlen++;
+                        }
+                    }
+
+                    for (var i = 0; i < projectVos.length; i++) {
+                        var projectVo = projectVos[i];
+                        //title所对应的rows_num;
+                        var tlen = 0;
+                        var matters = projectVo.matters;
+                        for (var a = 0; a < matters.length; a++) {
+                            tlen++;
+                        }
+                        str_info+='<tr><td style="border: 1px solid gray" rowspan="'+tlen+'" align="center">'+projectVo.title+'</td>';
+                        for (var b = 0; b < matters.length; b++) {
+                            if(i==0){
+                                if(b==0){
+                                    str_info+='<td style="border: 1px solid gray" align="center">'+matters[b].orderNum+'</td>';
+                                    str_info+='<td style="border: 1px solid gray" align="center">'+matters[b].name+'</td>';
+                                    str_info+='<td rowspan="'+endlen+'" style="border: 1px solid gray" align="center">'+res.obj.supervisionScope+'</td>';
+                                    str_info+='<td rowspan="'+endlen+'" style="border: 1px solid gray" align="center">'+res.obj.supervisionWay+'</td>';
+                                    str_info+='<td rowspan="'+endlen+'" style="border: 1px solid gray" align="center"><textarea id="textarea_problem" onchange="updateDetails('+res.obj.id+',1)" class="textarea_info">'+res.obj.existingProblem+'</textarea></td>';
+                                    str_info+='<td rowspan="'+endlen+'" style="border: 1px solid gray" align="center"><textarea id="textarea_tips" onchange="updateDetails('+res.obj.id+',2)" class="textarea_info">'+res.obj.businessTips+'</textarea></td>';
+                                    str_info+='<td rowspan="'+endlen+'" style="border: 1px solid gray" align="center">'+dateFormat(1,res.obj.deadline)+'</td>';
+                                    str_info+='<td rowspan="'+endlen+'" style="border: 1px solid gray" align="center"><textarea id="textarea_reply" onchange="updateDetails('+res.obj.id+',3)" class="textarea_info">'+(res.obj.rectifyReply==null?"":res.obj.rectifyReply)+'</textarea></td>';
+                                    str_info+='<td rowspan="'+endlen+'" style="border: 1px solid gray" align="center"><textarea id="textarea_remark" onchange="updateDetails('+res.obj.id+',4)" class="textarea_info">'+(res.obj.remark==null?"":res.obj.remark)+'</textarea></td></tr>';
+                                }else {
+                                    str_info+='<tr><td style="border: 1px solid gray" align="center">'+matters[b].orderNum+'</td>';
+                                    str_info+='<td style="border: 1px solid gray" align="center">'+matters[b].name+'</td></tr>';
+                                }
+                            }else {
+                                if(b==0){
+                                    str_info+='<td style="border: 1px solid gray" align="center">'+matters[b].orderNum+'</td>';
+                                    str_info+='<td style="border: 1px solid gray" align="center">'+matters[b].name+'</td></tr>';
+                                }else {
+                                    str_info+='<tr><td style="border: 1px solid gray" align="center">'+matters[b].orderNum+'</td>';
+                                    str_info+='<td style="border: 1px solid gray" align="center">'+matters[b].name+'</td></tr>';
+                                }
+
+                            }
+                        }
+                    }
+
+                    let html_info='<div class="layui-row" id="openDetails">\n' +
+                        '            <span style="margin-left: 1%;font-weight: bold;"  id="supervision_deparment">被监督部门： '+res.obj.department+' </span>\n' +
+                        '            <span style="margin-left: 35%;font-weight: bold;" id="supervision_person">监督人： '+res.obj.rectifyPerson+'</span>\n' +
+                        '            <span style="margin-left: 25%;font-weight: bold;"  id="supervision_time">监督时间： '+dateFormat(1,res.obj.startTime)+'</span>\n' +
+                        '            <table  cellpadding="0" cellspacing="0" width="100%" class="sTable" style="margin-left: 1%;width: 98%;height: 90%;margin-bottom: 2%">\n' +
+                        '                <thead>\n' +
+                        '                <tr>\n' +
+                        '                    <th style="border: 1px solid gray" width="120">监督项目</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="40">序号</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="250">监督事项</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="120">监督范围</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="100">监督方式</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="250">存在问题</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="250">工作建议</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="100">整改期限</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="250">整改回复</th>\n' +
+                        '                    <th style="border: 1px solid gray" width="120">备注</th>\n' +
+                        '                </tr>\n' +
+                        '                </thead>\n' +
+                        '                <tbody>\n' +str_info+
+                        '\n' +
+                        '                </tbody>\n' +
+                        '\n' +
+                        '            </table>\n' +
+                        '\n' +
+                        '        </div>';
+
+                    layui.layer.open({
+                        type:1,
+                        title:res.obj.headLine,
+                        skin:"open_css",
+                        area:['90%','90%'],
+                        content:html_info
+                    })
+
+
+                }
+            }
+
+
+        })
+
+    }
+
+    function openProject() {
+        let html=' <div class="layui-row"  id="openProject">\n' +
+            '            <form class="layui-col-md12 x-so" id="projectformId">\n' +
+            '                <div style="margin-left: 20%;margin-top: 2%">\n' +
+            '                监督项目: <input type="text" name="title"  placeholder="" autocomplete="off" class="layui-input">\n' +
+            '\n' +
+            '                </div>\n' +
+            '                <div class="sousuo" style="margin-left: 33%; margin-top: 1%; width: 15%;" onclick="addProject()" >提交</div>\n' +
+            '            </form>\n' +
+            '        </div>';
+        layui.layer.open({
+            type:1,
+            title:"整改项目",
+            skin:"open_css",
+            area:['40%','50%'],
+            content:html
+        })
+    }
+
+
+    function openMatter() {
+        $.ajax({
+            type: "get",
+            url: "/getProjectList",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            success: function (res) {
+                let option='<option></option>';
+                for (let i = 0; i < res.obj.length; i++) {
+                    option+='<option value="'+res.obj[i].id+'">'+res.obj[i].title+'</option>';
+                }
+                let html_info='<div class="layui-row"  id="openMatter">\n' +
+                    '            <form class="layui-col-md12 x-so" id="matterformId">\n' +
+                    '                <div style="margin-left: 20%;margin-top: 2%">\n' +
+                    '                <span>监督项目:</span>\n' +
+                    '                <select name="titleId" id="select_project">\n' +
+                    '\n' +option+
+                    '                </select>\n' +
+                    '                </div>\n' +
+                    '                <div style="margin-left: 20%;margin-top: 2%">\n' +
+                    '                    <span>监督事项:</span><textarea type="text" style="position: fixed;margin-left: 3px;" rows="2" cols="25" name="name"> </textarea>\n' +
+                    '                </div>\n' +
+                    '                <div style="margin-left: 33%; margin-top: 2%;width: 15%;" class="sousuo" onclick="addMatter()" >提交</div>\n' +
+                    '            </form>\n' +
+                    '        </div>';
+                layui.layer.open({
+                    type:1,
+                    title:"整改事项",
+                    skin:"open_css",
+                    area:['40%','50%'],
+                    content:html_info
+                })
+
+            }})
+
+    }
+
+    function openDetails() {
+
+        $.ajax({
+            type: "get",
+            url: "/getProjectListAndMatters",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            success: function (res) {
+                var option='<div style="display: flex;flex-direction: column;align-items: start;">';
+
+                for (let i = 0; i < res.obj.length; i++) {
+                    var matters = res.obj[i].matters;
+                    let child='';
+                    var ids =[];
+                    for (let a = 0; a < matters.length; a++) {
+                        ids[a] =matters[a].id;
+                    }
+                    for (let a = 0; a < matters.length; a++) {
+                        child+='<lable class="lable_child"><input type="checkbox" onclick="chooseMatter(['+ids+'],'+res.obj[i].id+')" id="matterIds_'+res.obj[i].id+'_'+matters[a].id+'" name="matterIds" value="'+matters[a].id+'">'+matters[a].name+'</lable>';
+                    }
+                    option+='<lable class="lable_father"><input type="checkbox" onclick="chooseProject('+res.obj[i].id+',['+ids+'])" id="titleIds_'+res.obj[i].id+'" name="titleIds" value="'+res.obj[i].id+'">'+res.obj[i].title+'</lable>';
+                    option +=child;
+                }
+                option +='</div>';
+                let html_info='<div class="layui-row"  id="openAddDetails">\n' +
+                    '            <form class="layui-col-md12 x-so" id="detailsformId" style="width: 96%;margin-left: 5%;margin-right: 2%;margin-top: 5px;">\n' +
+                    '                <div>\n' +
+                    '                <span>名称:</span> <input  style=" width: 25%;height: 20px;" type="text" id="headLine" name="headLine"  placeholder="" autocomplete="off" class="layui-input">\n' +
+                    '                <span style="margin-left: 3%;">监督人:</span> <input  style=" width: 20%;height: 20px;" type="text" name="rectifyPerson" id="rectifyPerson"  placeholder="监督人" autocomplete="off" class="layui-input">\n' +
+                    '                <span>部门:</span>\n' +
+                    '                <select name="department" id="department" style="height: 20px;" >\n' +
+                    '                    <option value=""></option>\n' +
+                    '                    <option value="综合管理部">综合管理部</option>\n' +
+                    '                    <option value="市场拓展部">市场拓展部</option>\n' +
+                    '                    <option value="规划建设部">规划建设部</option>\n' +
+                    '                    <option value="财务融资部">财务融资部</option>\n' +
+                    '                    <option value="金沙艺术中心">金沙艺术中心</option>\n' +
+                    '                    <option value="活动策划经营业务专班">活动策划经营业务专班</option>\n' +
+                    '                </select>\n' +
+                    '                <span>状态:</span>\n' +
+                    '                <select name="status" id="status" style="height: 20px;" >\n' +
+                    '                    <option value="整改中">整改中</option>\n' +
+                    '                    <option value="整改完成">整改完成</option>\n' +
+                    '                </select>\n' +
+                    '                    <div>\n' +
+                    '                <span>监督项目和事项:</span>\n' +
+                    '                    </div>\n' +
+                    '                    <div  style="margin-left: 5%;">\n' +option+
+                    '                    </div>\n' +
+                    '                </div>\n' +
+                    '                <div>\n' +
+                    '                </div>\n' +
+                    '                <span>监督范围:</span>\n' +
+                    '                <div>\n' +
+                    '                <textarea   rows="5" type="text" name="supervisionScope"  id="supervisionScope"  placeholder="" autocomplete="off" class="layui-input text_add"></textarea>\n' +
+                    '                </div>\n' +
+                    '                <span>监督方式:</span>\n' +
+                    '                <div>\n' +
+                    '                     <textarea   rows="5" type="text" name="supervisionWay" id="supervisionWay" placeholder="" autocomplete="off" class="layui-input text_add"></textarea>\n' +
+                    '                 </div>\n' +
+                    '                <span>存在问题:</span>\n' +
+                    '                <div>\n' +
+                    '              <textarea  rows="5" type="text" name="existingProblem"  id="existingProblem" placeholder="" autocomplete="off" class="layui-input text_add"></textarea>\n' +
+                    '                 </div>\n' +
+                    '                <span>工作建议:</span>\n' +
+                    '                <div>\n' +
+                    '                  <textarea  rows="5" type="text" name="businessTips" id="businessTips"  placeholder="" autocomplete="off" class="layui-input text_add"></textarea>\n' +
+                    '                  </div>\n' +
+                    '                <span>整改回复:</span>\n' +
+                    '                  <div>\n' +
+                    '                    <textarea rows="5" type="text" name="rectifyReply"  id="rectifyReply" placeholder="" autocomplete="off" class="layui-input text_add"></textarea>\n' +
+                    '                 </div>\n' +
+                    '                <span>整改备注:</span>\n' +
+                    '                <div>\n' +
+                    '                 <textarea rows="5" type="text" name="remark"  id="remark" placeholder="" autocomplete="off" class="layui-input text_add"></textarea>\n' +
+                    '                 </div>\n' +
+                    '                <div class="formRow">\n' +
+                    '                    整改期限：\n' +
+                    '                    <div class="formRight">\n' +
+                    '                        <input type="date"  style="width: 165px;"  id="deadline"  name="deadline">\n' +
+                    '                    </div>\n' +
+                    '                </div>\n' +
+                    '                <div class="formRow">\n' +
+                    '                    监督日期：\n' +
+                    '                    <div class="formRight">\n' +
+                    '                        <input type="date"  style="width: 165px;"  id="startTime" name="startTime">\n' +
+                    '                    </div>\n' +
+                    '                </div>\n' +
+                    '                <div style="margin-left: 20%; margin-top: 1%;width: 15%;"  class="sousuo" onclick="addDetails()" >提交</div>\n' +
+                    '            </form>\n' +
+                    '        </div>';
+
+                layui.layer.open({
+                    type:1,
+                    title:"整改详情",
+                    skin:"open_css",
+                    area:['70%','90%'],
+                    content:html_info
+                })
+
+            }})
+
+    }
+
+    function addProject() {
+        $.ajax({
+            type: "post",
+            url: "/addProject",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:$("#projectformId").serialize(),
+            success: function (res) {
+              if(res.code==200){
+                  document.getElementById("projectformId").reset();
+                  layui.layer.msg(res.message,{icon:1},{time:1000});
+              }else {
+                  layui.layer.msg(res.message,{icon:2},{time:1000});
+              }
+            }})
+    }
+
+    function addMatter() {
+        $.ajax({
+            type: "post",
+            url: "/addMatter",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:$("#matterformId").serialize(),
+            success: function (res) {
+                if(res.code==200){
+                    document.getElementById("matterformId").reset();
+                    layui.layer.msg(res.message,{icon:1},{time:1000});
+                }else {
+                    layui.layer.msg(res.message,{icon:2},{time:1000});
+                }
+            }})
+    }
+
+    function addDetails() {
+        var titlsIds = $("#commit_title_ids").val();
+        var matterIds = $("#commit_matter_ids").val();
+        var headLine = $("#headLine").val();
+        var rectifyPerson = $("#rectifyPerson").val();
+        var department =$("#department").val();
+        var supervisionScope =$("#supervisionScope").val();
+        var supervisionWay =$("#supervisionWay").val();
+        var existingProblem =$("#existingProblem").val();
+        var businessTips =$("#businessTips").val();
+        var rectifyReply =$("#rectifyReply").val();
+        var status =$("#status").val();
+        var startTime =$("#startTime").val();
+        var deadline =$("#deadline").val();
+        var remark =$("#remark").val();
+        if(null==titlsIds||titlsIds==""){
+            layui.layer.msg("监督项目和事项不能为空！！！！",{icon:2},{time:1000});
+            return;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/addRectify",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:({
+                headLine:headLine,
+                rectifyPerson:rectifyPerson,
+                department:department,
+                headLine:headLine,
+                titleIds:titlsIds,
+                matterIds:matterIds,
+                supervisionScope:supervisionScope,
+                supervisionWay:supervisionWay,
+                existingProblem:existingProblem,
+                businessTips:businessTips,
+                rectifyReply:rectifyReply,
+                status:status,
+                remark:remark,
+                startTime:new Date(startTime),
+                deadline:new Date(deadline),
+                addTime:new Date()
+            }),
+            success: function (res) {
+                if(res.code==200){
+                    document.getElementById("detailsformId").reset();
+                    layui.layer.msg(res.message,{icon:1},{time:1000});
+                }else {
+                    layui.layer.msg(res.message,{icon:2},{time:1000});
+                }
+            }})
+
+    }
+
+    function updateDetails(id,type) {
+        var formData = new FormData();
+        formData.append("id",id);
+        formData.append("supervisionWay",type);
+        if(type===1){
+            formData.append("existingProblem",$("#textarea_problem").val());
+        }else if(type==2){
+            formData.append("businessTips",$("#textarea_tips").val());
+        }else if(type==3){
+            formData.append("rectifyReply",$("#textarea_reply").val());
+        }else {
+            formData.append("remark",$("#textarea_remark").val());
+        }
+        $.ajax({
+            type: "post",
+            url: "/updateRectify",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                if(res.code==200){
+                    layui.layer.msg(res.message,{icon:1},{time:1000});
+                }else {
+                    layui.layer.msg(res.message,{icon:2},{time:1000});
+                }
+            }})
+    }
+
+
+    function chooseProject(id,arr) {
+        var element = document.getElementById("titleIds_"+id);
+        let flag=false;
+        if(element.checked){
+            //选中
+            flag =true;
+        }
+        for (let i = 0; i < arr.length; i++) {
+            var child = document.getElementById("matterIds_"+id+"_"+arr[i]);
+            child.checked = flag;
+
+        }
+        getCheckValue();
+
+    }
+
+    function chooseMatter(arr,tid) {
+        var father = document.getElementById("titleIds_"+tid);
+        let flag=false;
+        for (let i = 0; i < arr.length; i++) {
+            var child = document.getElementById("matterIds_"+tid+"_"+arr[i]);
+            if(child.checked){
+              flag = child.checked;
+              break;
+            }
+        }
+        father.checked = flag;
+        getCheckValue();
+    }
+
+    function getCheckValue() {
+        var checkboxes_Title = document.getElementsByName("titleIds");
+        var checkboxes_matter = document.getElementsByName("matterIds");
+        let titleIds='';
+        let matterIds='';
+        for (var i = 0; i < checkboxes_Title.length; i++) {
+            if(checkboxes_Title[i].checked){
+                titleIds = titleIds==''?checkboxes_Title[i].value:titleIds+','+checkboxes_Title[i].value;
+            }
+
+        }
+        for (var i = 0; i < checkboxes_matter.length; i++) {
+            if(checkboxes_matter[i].checked) {
+                matterIds = matterIds == '' ? checkboxes_matter[i].value : matterIds + ',' + checkboxes_matter[i].value;
+            }
+        }
+        $("#commit_title_ids").val(titleIds);
+        $("#commit_matter_ids").val(matterIds);
+
+    }
+
+    function updateStatus(id,type) {
+        let message='';
+        let html='';
+        if(type===1){
+            type='整改完成'
+            message='您确认要把状态更新成整改完成吗?';
+             html='<a href="#"  style="color: green;text-decoration: none;" onclick="updateStatus('+id+',2)">整改完成</a>';
+        }else {
+            type='整改中'
+            message='您确认要把状态更新回整改中吗?';
+             html='<a href="#" style="color: red;text-decoration: none;"  onclick="updateStatus('+id+',1)">整改中</a>';
+        }
+        layer.confirm(message, {
+            title:'操作提示',
+            icon:0,
+            btn: ['确定','取消']
+        }, function(){
+            var index = layer.load();
+            $.ajax({
+                url: "/updateRectify",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data: ({
+                    id:id,
+                    supervisionWay:5,
+                    status:type
+                }),
+                type: 'post',
+                success: function (resp) {
+                    layer.close(index);
+                    //成功提示
+                    if (resp.code == 200) {
+                        document.getElementById("status_"+id).innerHTML=html;
+                        layer.msg("更新成功", {
+                            icon: 1,
+                            time: 1000
+                        }, function () {
+
+                        });
+                    } else {
+                        //失败提示
+                        layer.msg(resp.msg, {
+                            icon: 2,
+                            time: 2000
+                        });
+                    }
+                }
+            });
+        });
+
+
+    }
+</script>
+</body>
+</html>

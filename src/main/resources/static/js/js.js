@@ -1,4 +1,4 @@
-﻿ $(window).load(function(){$(".loading").fadeOut()})  
+﻿ $(window).load(function(){$(".loading").fadeOut()})
 $(function () {
     //echarts_1();
     echarts_4();
@@ -1616,9 +1616,16 @@ function getRiskTable() {
                     // 获取表格元素
                     var str_info='';
                     for (let i = 0; i < data.length; i++) {
-                        str_info+='<tr><td>'+data[i].name+'</td>';
-                        str_info+='<td>'+isNull(data[i].num)+'</td>';
-                        str_info+='<td><div class="text-w">'+isNull(data[i].yearNum)+'</div></td></tr>';
+                        if(data[i].name==='监督检查整改情况'){
+                            str_info+='<tr><td><a href="#" style="border-bottom: 1px solid;" onclick="openRectify()">'+data[i].name+'</a></td>';
+                            str_info+='<td>'+isNull(data[i].num)+'</td>';
+                            str_info+='<td><div class="text-w">'+isNull(data[i].yearNum)+'</div></td></tr>';
+                        }else {
+                            str_info+='<tr><td>'+data[i].name+'</td>';
+                            str_info+='<td>'+isNull(data[i].num)+'</td>';
+                            str_info+='<td><div class="text-w">'+isNull(data[i].yearNum)+'</div></td></tr>';
+                        }
+
                     }
                     $("#risk_table").html(str_info);
                 }
@@ -2212,6 +2219,8 @@ function currentDate(type) {
         var selected = $(this).val();
         echarts_5(selected);
     });
+
+
 
 
 

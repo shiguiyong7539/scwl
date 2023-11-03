@@ -28,6 +28,6 @@ public interface RiskControlMapper {
 
     int updateByPrimaryKey(RiskControl record);
 
-    List<RiskControl> getTotal();
-    int getTotalYear(String name);
+    RiskControl getTotal();
+    int getTotalYear();
 }

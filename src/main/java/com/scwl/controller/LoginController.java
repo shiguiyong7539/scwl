@@ -28,7 +28,6 @@ public class LoginController {
      */
     @RequestMapping("/")
     public String loginHtml(){
-        System.out.println(passwordEncoder.encode("123456"));
         return "login";
     }
 
@@ -38,7 +37,7 @@ public class LoginController {
      */
     @RequestMapping("/loginAdmin")
     public String loginAdmin(){
-        System.out.println(passwordEncoder.encode("123456"));
+      //  System.out.println(passwordEncoder.encode("123456"));
         return "login_admin";
     }
 
@@ -127,7 +126,7 @@ public class LoginController {
 
 
     /**
-     * 风控管理页面
+     * 涉诉管理页面
      * @return
      */
     @RequestMapping("/risk")
@@ -135,6 +134,24 @@ public class LoginController {
         return "risk";
     }
 
+    /**
+     * 监督整改管理页面
+     * @return
+     */
+    @RequestMapping("/rectify")
+    public String rectify(){
+        return "rectify";
+    }
+
+
+    /**
+     * 监督整改管理页面
+     * @return
+     */
+    @RequestMapping("/rectifyShow")
+    public String rectifyShow(){
+        return "rectify_show";
+    }
 
 
     /**
