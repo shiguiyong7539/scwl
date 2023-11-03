@@ -62,6 +62,7 @@
 <style>
     body{
         background: white!important;
+        overflow:auto;
     }
 </style>
 <body>
@@ -75,18 +76,18 @@
     <div class="wrapper">
 
         <!-- Note -->
-        <div class="nNote nInformation hideit">
-            <p>亲爱的<strong>沙磁文旅 </strong>（Lv1，重庆市地区领导人）</p>
-        </div>
+<!--        <div class="nNote nInformation hideit">-->
+<!--            <p>亲爱的<strong>沙磁文旅 </strong>（Lv1，重庆市地区领导人）</p>-->
+<!--        </div>-->
 
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
                 <div class="layui-row">
                     <form class="layui-col-md12 x-so" id="formId">
-                        名称: <input  style=" width: 10%;" type="text" name="headLine"  placeholder="名称" autocomplete="off" class="layui-input">
-                        监督人:<input  style=" width: 10%;" type="text" name="rectifyPerson"  placeholder="监督人" autocomplete="off" class="layui-input">
-                        <span>部门:</span>
+                        名称: <input   type="text" name="headLine"  placeholder="名称" autocomplete="off" class="layui-input myInput">
+                        监督人:<input  type="text" name="rectifyPerson"  placeholder="监督人" autocomplete="off" class="layui-input myInput"
+                      <label>  部门:
                         <select name="department">
                             <option value=""></option>
                             <option value="综合管理部">综合管理部</option>
@@ -96,12 +97,7 @@
                             <option value="金沙艺术中心">金沙艺术中心</option>
                             <option value="活动策划经营业务专班">活动策划经营业务专班</option>
                         </select>
-                        <span>状态:</span>
-                        <select name="staus">
-                            <option value=""></option>
-                            <option value="整改中">整改中</option>
-                            <option value="整改完成">整改完成</option>
-                        </select>
+                      </label>
                         <div id="sousuo" class="sousuo" onclick="rectifyList(1)" >搜索</div>
                     </form>
                 </div>
@@ -110,14 +106,11 @@
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
-                        <td width="50">编号</td>
-                        <td width="200">名称</td>
-                        <td width="80">被监督部门</td>
-                        <td width="80">监督人</td>
-                        <td width="80">整改状态</td>
-                        <td width="80">整改期限</td>
-                        <td width="80">备注</td>
-                        <td width="80">操作</td>
+                        <td width="3%">编号</td>
+                        <td width="24%">名称</td>
+                        <td width="8%">被监督部门</td>
+                        <td width="8%">监督人</td>
+                        <td width="8%">操作</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -208,18 +201,11 @@
                    // 获取表格元素
                     var str_info='';
                     for (var i = 0; i < data1.length; i++) {
-                        str_info+='<tr><td align="center">'+data1[i].id+'</td>';
-                        str_info+='<td align="center">'+data1[i].headLine+'</td>';
-                        str_info+='<td align="center">'+data1[i].department+'</td>';
-                        str_info+='<td align="center">'+data1[i].rectifyPerson+'</td>';
-                        if(data1[i].status==='整改中'){
-                            str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: red;text-decoration: none;">'+data1[i].status+'</a></td>';
-                        }else {
-                            str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#"  style="color: green;text-decoration: none;">'+data1[i].status+'</a></td>';
-                        }
-                        str_info+='<td align="center">'+dateFormat(1,data1[i].deadline)+'</td>';
-                        str_info+='<td align="center"><div  class="text-over" title="'+(data1[i].remark==null?"":data1[i].remark)+'">'+(data1[i].remark==null?"":data1[i].remark)+'</div></td>';
-                        str_info+='<td align="center" onclick="getDetails('+data1[i].id+')"><button class="redB">详情</button></td></tr>';
+                        str_info+='<tr><td >'+data1[i].id+'</td>';
+                        str_info+='<td >'+data1[i].headLine+'</td>';
+                        str_info+='<td >'+data1[i].department+'</td>';
+                        str_info+='<td >'+data1[i].rectifyPerson+'</td>';
+                        str_info+='<td  onclick="getDetails('+data1[i].id+')"><button class="redB">详情</button></td></tr>';
                     }
                     $("#myTable").html(str_info);
 

@@ -193,6 +193,9 @@ body .open_css .layui-layer-title{
     margin-top: -2%;
     margin-bottom: 10px;
 }
+.newDiv{
+
+}
 .text-over {
     width: 100px;
     overflow: hidden;
@@ -224,7 +227,19 @@ body .open_css .layui-layer-title{
     position:relative;
     font-weight: bold;
 }
+.myInput{
+    width: 15%;
+}
 @media (max-width: 767px) {
+    .myInput{
+        width: 35%;
+    }
+    .redB{
+        padding: 15%;
+    }
+    .newDiv{
+        transform: rotate(90deg);
+    }
     .head {
         height:55px!important;
         background: url(../images/head_bg.png) no-repeat center center!important;
