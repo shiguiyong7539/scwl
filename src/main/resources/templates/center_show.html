@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="js/Bubble.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
 </head>
 
 <body>
@@ -197,5 +198,17 @@
 </div>
 </div>
 </body>
+<script>
+	function openRectify() {
+		layui.layer.open({
+			type:2,
+			title:"监督检查整改情况",
+			skin:"open_css",
+			area:['70%','90%'],
+			content: "/rectifyShow"
+		})
 
+	}
+
+</script>
 </html>

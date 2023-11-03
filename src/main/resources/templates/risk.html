@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
-    <title>风控管理</title>
+    <title>涉诉情况</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -103,7 +103,7 @@
         <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
             <ul class="sub ul_hidden" id="fengKongManage">
                 <li><a href="#" title="" onclick="fengkong()">涉诉情况</a></li>
-                <li><a href="" title="">监督检查整改情况</a></li>
+                <li><a href="#" title="" onclick="rectify()">监督检查整改情况</a></li>
             </ul>
         </li>
 
@@ -339,6 +339,9 @@
     function fengkong() {
         location.href="/risk";
     }
+    function rectify() {
+        location.href="/rectify";
+    }
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
@@ -456,7 +459,7 @@
         var seconds = date.getSeconds();
         // 将日期和时间组件组合成字符串
         var formatteddate = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) ;
-        var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (month>=10?month:"0"+month) + ' ' + (hours>=10?hours:"0"+hours) + ':'
+        var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) + ' ' + (hours>=10?hours:"0"+hours) + ':'
             + (minutes>=10?minutes:"0"+minutes) + ':' + (seconds>=10?seconds:"0"+seconds);
         if(type==1){
             return formatteddate;

@@ -58,6 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/contract",
 				"/userList",
 				"/risk",
+				"/rectify",
+				"/rectifyShow",
 				"/taskList",
 				"/centerShow",
 				"/file/**",

@@ -103,7 +103,7 @@
         <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
             <ul class="sub ul_hidden" id="fengKongManage">
                 <li><a href="#" title="" onclick="fengkong()">涉诉情况</a></li>
-                <li><a href="" title="">监督检查整改情况</a></li>
+                <li><a href="#" title="" onclick="rectify()">监督检查整改情况</a></li>
             </ul>
         </li>
 
@@ -402,6 +402,9 @@
     }
     function userList() {
         location.href="/userList";
+    }
+    function rectify() {
+        location.href="/rectify";
     }
 
     function toggle(id) {
