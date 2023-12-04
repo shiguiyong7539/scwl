@@ -80,6 +80,7 @@ public class RiskControlServiceImpl implements RiskControlService {
     @Override
     public ResBean addRectify(SupervisionRectify supervisionRectify) {
         try{
+            supervisionRectify.setAddTime(new Date());
             supervisionRectifyMapper.insert(supervisionRectify);
             logService.addLog("INSERT","supervision_rectify",supervisionRectify.getId(),"新增id为"+supervisionRectify.getId()+"的监督整改信息");
             return  ResBean.success("添加成功");
