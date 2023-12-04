@@ -84,7 +84,7 @@
         <div class="widgets">
             <div class="widget">
                 <div class="layui-row">
-                    <div class="layui-col-md12 x-so" id="formId">
+                    <form class="layui-col-md12 x-so" id="formId">
                         <div>名　称:<input   type="text" name="headLine"  placeholder="名称" autocomplete="off" class="layui-input myInput"></div>
                         <div>监督人:<input  type="text" name="rectifyPerson"  placeholder="监督人" autocomplete="off" class="layui-input myInput"/></div>
                         <div>部　门:<select name="department">
@@ -101,7 +101,7 @@
                       </div>
 
                     </form>
-                </div>
+                </form>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>监督整改信息</h6>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
@@ -118,10 +118,11 @@
                     </tbody>
                 </table>
             </div>
-
-            <span class="page-new">
-                <span id="pagefoot"></span></span>
             <div class="clear"></div>
+
+                <div> <span class="page-new">
+                <span id="pagefoot"></span></span>
+                </div>
         </div>
 
         <!-- 弹窗 -->
