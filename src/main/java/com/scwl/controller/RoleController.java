@@ -21,7 +21,7 @@ public class RoleController {
      * 已登录
      * @return
      */
-    @RequestMapping("/addRole")
+    @RequestMapping("/test")
     @ResponseBody
     public Object addRole(HttpServletRequest request, Role role){
         return null;

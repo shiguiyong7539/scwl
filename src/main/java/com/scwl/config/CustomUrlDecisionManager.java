@@ -1,5 +1,9 @@
 package com.scwl.config;
 
+import com.alibaba.fastjson.JSONPath;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.scwl.pojo.Role;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -7,9 +11,13 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Type;
+import java.security.Principal;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 权限控制
@@ -36,12 +44,26 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
 				}
 			}
 			//判断用户角色是否为url所需角色
-			Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-			for (GrantedAuthority authority : authorities) {
-				if (authority.getAuthority().equals(needRole)){
+//			Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+//			for (GrantedAuthority authority : authorities) {
+//				if (authority.getAuthority().equals(needRole)){
+//					return;
+//				}
+//			}
+			Object principal = authentication.getPrincipal();
+			Gson gson = new Gson();
+			String json = gson.toJson(principal);
+			String roles = JSONPath.read(json,"roles").toString();
+			Type listType = new TypeToken<List<Role>>() {}.getType();
+			List<Role> roleList = gson.fromJson(roles, listType);
+			for (Role role : roleList) {
+				if(needRole.equals(role.getName())){
 					return;
 				}
 			}
+
+
+
 		}
 		throw new AccessDeniedException("权限不足，请联系管理员!");
 	}

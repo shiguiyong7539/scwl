@@ -12,16 +12,15 @@ import com.scwl.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,6 +37,7 @@ public class UserServiceImpl implements UserService {
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private LogService logService;
+
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -59,23 +59,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResBean login(User user) {
+    public ResBean oaLogin(String phone) {
        try{
-           UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-
-           if (null==userDetails||!passwordEncoder.matches(user.getPassword(),userDetails.getPassword())){
-               return ResBean.error("用户名或密码不正确");
-           }
+           UserDetails userDetails = userDetailsService.loadUserByUsername(phone);
            if (!userDetails.isEnabled()){
                return ResBean.error("账号被禁用，请联系管理员！");
            }
-           User user1 = userMapper.getAdminByUserName(user.getUsername());
+           User user1 = userMapper.getAdminByUserName(phone);
            user1.setLastLogin(new Date());
            userMapper.updateByPrimaryKey(user1);
            //更新security登录用户对象
            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
                    ,null,userDetails.getAuthorities());
            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+           // 为用户设置权限
+          List<Role> roles =   roleMapper.getRoles(user1.getId());
+           List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+           for (Role role : roles) {
+               grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+           }
            //生成token
            String token = jwtTokenUtil.generateToken(userDetails);
            Map<String,String> tokenMap = new HashMap<>();
@@ -83,8 +85,47 @@ public class UserServiceImpl implements UserService {
            tokenMap.put("tokenHead",tokenHead);
            return ResBean.success("登录成功",tokenMap);
        }catch (Exception e){
-           return ResBean.error(e.getMessage());
+           return ResBean.error("用户不存在！");
        }
+
+
+
+    }
+
+    @Override
+    public ResBean login(User user) {
+        try{
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+
+            if (null==userDetails||!passwordEncoder.matches(user.getPassword(),userDetails.getPassword())){
+                return ResBean.error("用户名或密码不正确");
+            }
+            if (!userDetails.isEnabled()){
+                return ResBean.error("账号被禁用，请联系管理员！");
+            }
+            User user1 = userMapper.getAdminByUserName(user.getUsername());
+            user1.setLastLogin(new Date());
+            userMapper.updateByPrimaryKey(user1);
+            //更新security登录用户对象
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
+                    ,null,userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            // 为用户设置权限
+            List<Role> roles =   roleMapper.getRoles(user1.getId());
+            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+            for (Role role : roles) {
+                // grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+                grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+            }
+            //生成token
+            String token = jwtTokenUtil.generateToken(userDetails);
+            Map<String,String> tokenMap = new HashMap<>();
+            tokenMap.put("token",token);
+            tokenMap.put("tokenHead",tokenHead);
+            return ResBean.success("登录成功",tokenMap);
+        }catch (Exception e){
+            return ResBean.error(e.getMessage());
+        }
 
 
 

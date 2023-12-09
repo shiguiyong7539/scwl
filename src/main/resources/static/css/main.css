@@ -1279,7 +1279,7 @@ li.plupload_droptext:hover { background: #fff; }
 /* Footer
 ================================================== */
 
-#footer { clear: both; position: absolute; bottom: 0; left: 0; width: 100%;  }
+#footer { clear: both; position: relative; bottom: 0; left: 0; width: 100%;  }
 #footer .wrapper { text-align: center; padding: 20px 0 20px 222px; margin: 0; }
 
 

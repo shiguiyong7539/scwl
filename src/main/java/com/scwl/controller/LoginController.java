@@ -1,17 +1,23 @@
 package com.scwl.controller;
 
+import com.alibaba.fastjson.JSONPath;
+import com.google.gson.Gson;
 import com.scwl.pojo.ResBean;
 import com.scwl.pojo.User;
 import com.scwl.service.UserService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -39,6 +45,25 @@ public class LoginController {
     public String loginAdmin(){
       //  System.out.println(passwordEncoder.encode("123456"));
         return "login_admin";
+    }
+    /**
+     * 角色
+     * @return
+     */
+    @RequestMapping("/roleList")
+    public String roleList(){
+        //  System.out.println(passwordEncoder.encode("123456"));
+        return "role";
+    }
+
+    /**
+     * 权限
+     * @return
+     */
+    @RequestMapping("/authority")
+    public String authority(){
+        //  System.out.println(passwordEncoder.encode("123456"));
+        return "authority";
     }
 
 
@@ -159,7 +184,11 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/centerShow")
-    public String centerShow(){
+    public String centerShow(HttpServletRequest request){
+//        String user_agent = request.getHeader("user_agent");
+//        if(user_agent.indexOf("iphone")!=-1){
+//
+//        }
         return "center_show";
     }
 
@@ -180,6 +209,39 @@ public class LoginController {
     public Object login(HttpServletRequest request,User user){
         return userService.login(user);
     }
+    /**
+     * 登录
+     * @return
+     */
+    @RequestMapping("/oaLogin")
+    public String oaLogin(HttpServletRequest request,String phone){
+        ResBean resBean = userService.oaLogin(phone);
+        HttpSession session = request.getSession();
+        if(resBean.getCode()==200){
+            Object obj = resBean.getObj();
+            Gson gson = new Gson();
+            String s = gson.toJson(obj);
+            String token = JSONPath.read(s, "token").toString();
+            session.setAttribute("code","200");
+            session.setAttribute("token",token);
+        }else {
+            session.setAttribute("code","404");
+            session.setAttribute("message",resBean.getMessage());
+        }
+        return "redirect:center_show";
+    }
+    @RequestMapping("/getOaToken")
+    @ResponseBody
+    public ResBean getOaToken(HttpServletRequest request){
+        String code = request.getSession().getAttribute("code").toString();
+        if(code.equals("200")){
+            return  ResBean.success(request.getSession().getAttribute("token").toString());
+        }else {
+            return  ResBean.error(request.getSession().getAttribute("message").toString());
+        }
+
+    }
+
 
     /**
      * 退出
@@ -188,6 +250,7 @@ public class LoginController {
     @RequestMapping("/logout")
     @ResponseBody
     public Object logout(HttpServletRequest request){
+        // 解析JWT令牌以获取声明
         return  ResBean.success("已退出");
     }
 

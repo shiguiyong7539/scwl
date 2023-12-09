@@ -311,12 +311,17 @@ function echarts_4() {
                            type: 'line',
                            smooth: true,
                            data:income_data,
-
+                           symbol: 'circle',
+                           symbolSize: 10,
+                           smooth: true,
+                           animationDuration: 2000,
                            itemStyle: {
                                normal: {
-                                   color:'#2f89cf',
-                                   opacity: 1,
-                                   barBorderRadius: 5,
+                                   color: '#fcff2d',
+                                   shadowBlur: 0,
+                                   shadowColor: "#fcff2d",
+                                   shadowOffsetX: 0,
+                                   shadowOffsetY: 0
                                }
                            }
                        }
@@ -421,12 +426,17 @@ function echarts_4() {
                            type: 'line',
                            smooth: true,
                            data:arrears_data,
-
+                           symbol: 'circle',
+                           symbolSize: 10,
+                           smooth: true,
+                           animationDuration: 2000,
                            itemStyle: {
                                normal: {
-                                   color:'#2f89cf',
-                                   opacity: 1,
-                                   barBorderRadius: 5,
+                                   color: '#ffd927',
+                                   shadowBlur: 0,
+                                   shadowColor: "#ffd91a",
+                                   shadowOffsetX: 0,
+                                   shadowOffsetY: 0
                                }
                            }
                        }
@@ -532,12 +542,17 @@ function echarts_4() {
                            type: 'line',
                            smooth: true,
                            data:rate_data,
-
+                           symbol: 'circle',
+                           symbolSize: 10,
+                           smooth: true,
+                           animationDuration: 2000,
                            itemStyle: {
                                normal: {
-                                   color:'#2f89cf',
-                                   opacity: 1,
-                                   barBorderRadius: 5,
+                                   color: '#cfb018',
+                                   shadowBlur: 0,
+                                   shadowColor: "#cfb018",
+                                   shadowOffsetX: 0,
+                                   shadowOffsetY: 0
                                }
                            }
                        }
@@ -636,25 +651,34 @@ function echarts_4() {
                            type: 'line',
                            smooth: true,
                            data:income_data1,
-
+                           symbol: 'circle',
+                           symbolSize: 10,
+                           smooth: true,
+                           animationDuration: 2000,
                            itemStyle: {
                                normal: {
-                                   color:'#2f89cf',
-                                   opacity: 1,
-                                   barBorderRadius: 5,
+                                   color: '#2f89cf',
+                                   shadowBlur: 0,
+                                   shadowColor: "#2f89cf",
+                                   shadowOffsetX: 0,
+                                   shadowOffsetY: 0
                                }
                            }
                        },{
                            name: '星河集市',
                            type: 'line',
+                           symbol: 'circle',
+                           symbolSize: 10,
                            smooth: true,
+                           animationDuration: 2000,
                            data:income_data2,
-
                            itemStyle: {
                                normal: {
-                                   color:'#cf8427',
-                                   opacity: 1,
-                                   barBorderRadius: 5,
+                                   color: '#cf8427',
+                                   shadowBlur: 0,
+                                   shadowColor: "#cf8427",
+                                   shadowOffsetX: 0,
+                                   shadowOffsetY: 0
                                }
                            }
                        }
@@ -663,12 +687,25 @@ function echarts_4() {
                                type: 'line',
                                smooth: true,
                                data:income_data3,
-
+                               //
+                               // itemStyle: {
+                               //     normal: {
+                               //         color:'#cf3b26',
+                               //         opacity: 1,
+                               //         barBorderRadius: 5,
+                               //     }
+                               // }
+                               symbol: 'circle',
+                               symbolSize: 10,
+                               smooth: true,
+                               animationDuration: 2000,
                                itemStyle: {
                                    normal: {
-                                       color:'#cf3b26',
-                                       opacity: 1,
-                                       barBorderRadius: 5,
+                                       color: '#cf3b26',
+                                       shadowBlur: 0,
+                                       shadowColor: "#cf3b26",
+                                       shadowOffsetX: 0,
+                                       shadowOffsetY: 0
                                    }
                                }
                            }
@@ -678,11 +715,24 @@ function echarts_4() {
                                smooth: true,
                                data:income_data4,
 
+                               // itemStyle: {
+                               //     normal: {
+                               //         color:'#4acf28',
+                               //         opacity: 1,
+                               //         barBorderRadius: 5,
+                               //     }
+                               // }
+                               symbol: 'circle',
+                               symbolSize: 10,
+                               smooth: true,
+                               animationDuration: 2000,
                                itemStyle: {
                                    normal: {
-                                       color:'#4acf28',
-                                       opacity: 1,
-                                       barBorderRadius: 5,
+                                       color: '#4acf28',
+                                       shadowBlur: 0,
+                                       shadowColor: "#4acf28",
+                                       shadowOffsetX: 0,
+                                       shadowOffsetY: 0
                                    }
                                }
                            }
@@ -692,11 +742,24 @@ function echarts_4() {
                                smooth: true,
                                data:income_data5,
 
+                               // itemStyle: {
+                               //     normal: {
+                               //         color:'#f7ff2c',
+                               //         opacity: 1,
+                               //         barBorderRadius: 5,
+                               //     }
+                               // }
+                               symbol: 'circle',
+                               symbolSize: 10,
+                               smooth: true,
+                               animationDuration: 2000,
                                itemStyle: {
                                    normal: {
-                                       color:'#f7ff2c',
-                                       opacity: 1,
-                                       barBorderRadius: 5,
+                                       color: '#f7ff2c',
+                                       shadowBlur: 0,
+                                       shadowColor: "#f7ff2c",
+                                       shadowOffsetX: 0,
+                                       shadowOffsetY: 0
                                    }
                                }
                            }
@@ -708,6 +771,8 @@ function echarts_4() {
                    myChart2.setOption(option2);
                    myChart3.setOption(option3);
                    myChart4.setOption(option4);
+
+
                    window.addEventListener("resize",function(){
                        myChart.resize();
                        myChart2.resize();
@@ -766,7 +831,7 @@ function echarts_5(rate) {
                     var showTagData = [];
                     var quarterly_data = [];
                     //显示title
-                    var showTtile = ['融资计划完成率','融资计划完成率指标'];
+                    var showTtile = ['融资计划完成率','区国资考核指标'];
                     var data = res.obj.list;
                     var incomeRate = res.obj.incomeRate;
                     // for (let i = 0; i < data.length; i++) {
@@ -796,19 +861,19 @@ function echarts_5(rate) {
                             showData.push(incomeRate[i].finishRate);
                             showTagData.push(incomeRate[i].finishRateTag);
                         }else if(rate==2){
-                            showTtile = ['运营费用节约率','运营费用节约率指标'];
+                            showTtile = ['运营费用节约率','区国资考核指标'];
                             showData.push(incomeRate[i].operatRate);
                             showTagData.push(incomeRate[i].operatRateTag);
                         }else if(rate==3){
-                            showTtile = ['营业收入增长率','营业收入增长率指标'];
+                            showTtile = ['营业收入增长率','区国资考核指标'];
                             showData.push(incomeRate[i].incomeRate);
                             showTagData.push(incomeRate[i].incomeRateTag);
                         }else if(rate==4){
-                            showTtile = ['营业现金比率','营业现金比率指标'];
+                            showTtile = ['营业现金比率','区国资考核指标'];
                             showData.push(incomeRate[i].cashRate);
                             showTagData.push(incomeRate[i].cashRateTag);
                         }else if(rate==5){
-                            showTtile = ['营业成本率','营业成本率指标'];
+                            showTtile = ['营业成本率','区国资考核指标'];
                             showData.push(incomeRate[i].costRate);
                             showTagData.push(incomeRate[i].costRateTag);
                         }
@@ -916,11 +981,24 @@ function echarts_5(rate) {
                             smooth: true,
                             data:showData,
 
+                            // itemStyle: {
+                            //     normal: {
+                            //         color:'#2f89cf',
+                            //         opacity: 1,
+                            //         barBorderRadius: 5,
+                            //     }
+                            // }
+                            symbol: 'circle',
+                            symbolSize: 10,
+                            smooth: true,
+                            animationDuration: 2000,
                             itemStyle: {
                                 normal: {
-                                    color:'#2f89cf',
-                                    opacity: 1,
-                                    barBorderRadius: 5,
+                                    color: '#2f89cf',
+                                    shadowBlur: 0,
+                                    shadowColor: "#2f89cf",
+                                    shadowOffsetX: 0,
+                                    shadowOffsetY: 0
                                 }
                             }
                         },{
@@ -929,11 +1007,24 @@ function echarts_5(rate) {
                             smooth: true,
                             data:showTagData,
 
+                            // itemStyle: {
+                            //     normal: {
+                            //         color:'#cf8427',
+                            //         opacity: 1,
+                            //         barBorderRadius: 5,
+                            //     }
+                            // }
+                            symbol: 'circle',
+                            symbolSize: 10,
+                            smooth: true,
+                            animationDuration: 2000,
                             itemStyle: {
                                 normal: {
-                                    color:'#cf8427',
-                                    opacity: 1,
-                                    barBorderRadius: 5,
+                                    color: '#cf8427',
+                                    shadowBlur: 0,
+                                    shadowColor: "#cf8427",
+                                    shadowOffsetX: 0,
+                                    shadowOffsetY: 0
                                 }
                             }
                         }
@@ -1067,136 +1158,9 @@ function echarts_5(rate) {
                         ]
                     };
 
-                    // option3 = {
-                    //     //  backgroundColor: '#00265f',
-                    //     tooltip: {
-                    //         trigger: 'axis',
-                    //         axisPointer: {
-                    //             type: 'shadow'
-                    //         },
-                    //         formatter: function(params) {
-                    //             var axisValue = params[0].axisValue + '</br>';
-                    //             var result='';
-                    //             params.forEach(function(item) {
-                    //                 result += item.seriesName + ': ' +item.value+ ' %<br>';
-                    //             });
-                    //             return axisValue+result;
-                    //         }
-                    //     },
-                    //     toolbox: {
-                    //         show: true,
-                    //         feature: {
-                    //             magicType: {
-                    //                 show: true,
-                    //                 type: ['line', 'bar']
-                    //             }
-                    //         }
-                    //     },
-                    //     legend: {
-                    //         data: ['营业现金比率','营业成本率'],
-                    //         top:'-5px',
-                    //         textStyle: {
-                    //             color: "#fff",
-                    //             fontSize: '10',
-                    //
-                    //         },
-                    //
-                    //         itemGap: 5
-                    //     },
-                    //     grid: {
-                    //         left: '1%',
-                    //         top:'40px',
-                    //         right: '1%',
-                    //         bottom: '0',
-                    //         containLabel: true
-                    //     },
-                    //     xAxis: [{
-                    //         type: 'category',
-                    //         data: income_date,
-                    //         axisLine: {
-                    //             show: true,
-                    //             lineStyle: {
-                    //                 color: "rgba(255,255,255,.1)",
-                    //                 width: 1,
-                    //                 type: "solid"
-                    //             },
-                    //         },
-                    //         axisTick: {
-                    //             show: false,
-                    //         },
-                    //         axisLabel:  {
-                    //             interval: 0,
-                    //             // rotate:50,
-                    //             show: true,
-                    //             splitNumber: 5,
-                    //             textStyle: {
-                    //                 color: "rgba(255,255,255,.6)",
-                    //                 fontSize: '10',
-                    //             },
-                    //         },
-                    //     }],
-                    //     yAxis: [{
-                    //         type: 'value',
-                    //         axisLabel: {
-                    //             //formatter: '{value} %'
-                    //             show:true,
-                    //             textStyle: {
-                    //                 color: "rgba(255,255,255,.6)",
-                    //                 fontSize: '10',
-                    //             },
-                    //         },
-                    //         axisTick: {
-                    //             show: false,
-                    //         },
-                    //         axisLine: {
-                    //             show: true,
-                    //             lineStyle: {
-                    //                 color: "rgba(255,255,255,.1	)",
-                    //                 width: 1,
-                    //                 type: "solid"
-                    //             },
-                    //         },
-                    //         splitLine: {
-                    //             lineStyle: {
-                    //                 color: "rgba(255,255,255,.1)",
-                    //             }
-                    //         }
-                    //     }],
-                    //     series: [
-                    //         {
-                    //             name: '营业现金比率',
-                    //             type: 'line',
-                    //             smooth: true,
-                    //             data:cashRateData,
-                    //
-                    //             itemStyle: {
-                    //                 normal: {
-                    //                     color:'#4acf28',
-                    //                     opacity: 1,
-                    //                     barBorderRadius: 5,
-                    //                 }
-                    //             }
-                    //         }
-                    //         ,{
-                    //             name: '营业成本率',
-                    //             type: 'line',
-                    //             smooth: true,
-                    //             data:costRateData,
-                    //
-                    //             itemStyle: {
-                    //                 normal: {
-                    //                     color:'#c12125',
-                    //                     opacity: 1,
-                    //                     barBorderRadius: 5,
-                    //                 }
-                    //             }
-                    //         }
-                    //     ]
-                    // };
-                    // 使用刚指定的配置项和数据显示图表。
                     myChart.setOption(option2);
                     myChart2.setOption(option);
-                   // myChart3.setOption(option3);
+
 
 
                     window.addEventListener("resize",function(){
@@ -1749,13 +1713,26 @@ function total_manage() {
                         smooth: true,
                         data:income_data,
 
+                        // itemStyle: {
+                        //     normal: {
+                        //         color:'#2f89cf',
+                        //         opacity: 1,
+                        //         barBorderRadius: 5,
+                        //     }
+                        // }
+                        symbol: 'circle',
+                        symbolSize: 10,
+                        smooth: true,
+                        animationDuration: 2000,
                         itemStyle: {
                             normal: {
-                                color:'#2f89cf',
-                                opacity: 1,
-                                barBorderRadius: 5,
+                                color: '#cf2f13',
+                                shadowBlur: 0,
+                                shadowColor: "#cf2f13",
+                                shadowOffsetX: 0,
+                                shadowOffsetY: 0
                             }
-                        }
+                    }
                     }
                     ]
                 };
@@ -1855,12 +1832,12 @@ function total_manage() {
                             textStyle: {
                                 rich: {
                                     value: {
-                                        color: '#cf5a1f',
+                                        color: '#ffeb7b',
                                         fontSize: 15,
                                         lineHeight: 25,
                                     },
                                     name: {
-                                        color: '#909399',
+                                        color: 'white',
                                         fontSize: 10,
                                         lineHeight: 25,
                                     },
@@ -1883,7 +1860,7 @@ function total_manage() {
                             itemHeight: 10,
                             data:planTitle,
                             textStyle: {
-                                color: 'rgba(255,255,255,.5)',
+                                color: 'white',
                                 fontSize:'10',
                             },
                             formatter: function(name) {
@@ -1923,12 +1900,12 @@ function total_manage() {
                             textStyle: {
                                 rich: {
                                     value: {
-                                        color: '#cf5a1f',
+                                        color: '#ffeb7b',
                                         fontSize: 15,
                                         lineHeight: 25,
                                     },
                                     name: {
-                                        color: '#909399',
+                                        color: 'white',
                                         fontSize: 10,
                                         lineHeight: 25,
                                     },
@@ -1951,7 +1928,7 @@ function total_manage() {
                             itemHeight: 10,
                             data:realTitle,
                             textStyle: {
-                                color: 'rgba(255,255,255,.5)',
+                                color: 'white',
                                 fontSize:'10',
                             },
                             formatter: function(name) {
@@ -2072,12 +2049,17 @@ function total_manage() {
                             type: 'line',
                             smooth: true,
                             data:rateData,
-
+                            symbol: 'circle',
+                            symbolSize: 10,
+                            smooth: true,
+                            animationDuration: 2000,
                             itemStyle: {
                                 normal: {
-                                    color:'#2f89cf',
-                                    opacity: 1,
-                                    barBorderRadius: 5,
+                                    color: '#2f89cf',
+                                    shadowBlur: 0,
+                                    shadowColor: "#2f89cf",
+                                    shadowOffsetX: 0,
+                                    shadowOffsetY: 0
                                 }
                             }
                         },{
@@ -2085,12 +2067,17 @@ function total_manage() {
                             type: 'line',
                             smooth: true,
                             data:rateData2,
-
+                            symbol: 'circle',
+                            symbolSize: 10,
+                            smooth: true,
+                            animationDuration: 2000,
                             itemStyle: {
                                 normal: {
-                                    color:'#cf8427',
-                                    opacity: 1,
-                                    barBorderRadius: 5,
+                                    color: '#cf8427',
+                                    shadowBlur: 0,
+                                    shadowColor: "#cf8427",
+                                    shadowOffsetX: 0,
+                                    shadowOffsetY: 0
                                 }
                             }
                         }
@@ -2099,12 +2086,17 @@ function total_manage() {
                                 type: 'line',
                                 smooth: true,
                                 data:rateData3,
-
+                                symbol: 'circle',
+                                symbolSize: 10,
+                                smooth: true,
+                                animationDuration: 2000,
                                 itemStyle: {
                                     normal: {
-                                        color:'#cf3b26',
-                                        opacity: 1,
-                                        barBorderRadius: 5,
+                                        color: '#cf3b26',
+                                        shadowBlur: 0,
+                                        shadowColor: "#cf3b26",
+                                        shadowOffsetX: 0,
+                                        shadowOffsetY: 0
                                     }
                                 }
                             }
@@ -2113,12 +2105,17 @@ function total_manage() {
                                 type: 'line',
                                 smooth: true,
                                 data:rateData4,
-
+                                symbol: 'circle',
+                                symbolSize: 10,
+                                smooth: true,
+                                animationDuration: 2000,
                                 itemStyle: {
                                     normal: {
-                                        color:'#4acf28',
-                                        opacity: 1,
-                                        barBorderRadius: 5,
+                                        color: '#4acf28',
+                                        shadowBlur: 0,
+                                        shadowColor: "#4acf28",
+                                        shadowOffsetX: 0,
+                                        shadowOffsetY: 0
                                     }
                                 }
                             }
@@ -2127,12 +2124,17 @@ function total_manage() {
                                 type: 'line',
                                 smooth: true,
                                 data:rateData5,
-
+                                symbol: 'circle',
+                                symbolSize: 10,
+                                smooth: true,
+                                animationDuration: 2000,
                                 itemStyle: {
                                     normal: {
-                                        color:'#f7ff2c',
-                                        opacity: 1,
-                                        barBorderRadius: 5,
+                                        color: '#f7ff2c',
+                                        shadowBlur: 0,
+                                        shadowColor: "#f7ff2c",
+                                        shadowOffsetX: 0,
+                                        shadowOffsetY: 0
                                     }
                                 }
                             }
@@ -2203,15 +2205,43 @@ function currentDate(type) {
     }
 
     $("#now_month").on("click", function() {
+        // 获取元素
+        var element = document.getElementById("now_month");
+        // 获取元素
+        var element2 = document.getElementById("now_year");
+        // 修改class
+        element.className = "infobtnChoose";
+        element2.className = "infobtn";
         echarts_33('月');
     })
     $("#now_year").on("click", function() {
+        // 获取元素
+        var element = document.getElementById("now_month");
+        // 获取元素
+        var element2 = document.getElementById("now_year");
+        // 修改class
+        element2.className = "infobtnChoose";
+        element.className = "infobtn";
         echarts_33('年');
     })
     $("#total_manage").on("click", function() {
+        // 获取元素
+        var element = document.getElementById("in_details");
+        // 获取元素
+        var element2 = document.getElementById("total_manage");
+        // 修改class
+        element2.className = "infobtnChoose";
+        element.className = "infobtn";
         total_manage();
     })
     $("#in_details").on("click", function() {
+        // 获取元素
+        var element = document.getElementById("in_details");
+        // 获取元素
+        var element2 = document.getElementById("total_manage");
+       // 修改class
+        element.className = "infobtnChoose";
+        element2.className = "infobtn";
         echarts_4();
     })
     $("#rate_type").on("change", function() {

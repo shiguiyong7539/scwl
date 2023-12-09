@@ -26,5 +26,5 @@ public interface UserService  {
 
    ResBean deleteUser(User user);
 
-
+   ResBean oaLogin(String phone);
 }

@@ -36,15 +36,21 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		//获取请求的url
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();
+		int queryStartIndex = requestUrl.indexOf('?');
+		if (queryStartIndex != -1) {
+			requestUrl = requestUrl.substring(0, queryStartIndex);
+		}
 		List<Menu> menus = menuService.getMenusWithRole();
 		for (Menu menu : menus) {
 			//判断请求url与菜单角色是否匹配
 			if (antPathMatcher.match(menu.getUrl(),requestUrl)){
 				String[] str = menu.getRoles().stream().map(Role::getName).toArray(String[]::new);
 				return SecurityConfig.createList(str);
+				//匹配的url默认即可访问
+			//	return SecurityConfig.createList("ROLE_LOGIN");
 			}
 		}
-		//没匹配的url默认登录即可访问
+		//没匹配的url默认登录可访问
 		return SecurityConfig.createList("ROLE_LOGIN");
 	}
 

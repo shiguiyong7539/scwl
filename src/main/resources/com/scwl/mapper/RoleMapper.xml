@@ -97,7 +97,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.Role" >
+  <insert id="insert" parameterType="com.scwl.pojo.Role" useGeneratedKeys="true" keyProperty="id">
     insert into role (id, name, nameZh
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{namezh,jdbcType=VARCHAR}
