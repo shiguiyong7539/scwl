@@ -1580,7 +1580,7 @@ function getRiskTable() {
                     // 获取表格元素
                     var str_info='';
                     for (let i = 0; i < data.length; i++) {
-                        if(data[i].name==='监督检查整改情况'){
+                        if(data[i].name==='内部监督情况'){
                             str_info+='<tr><td><a href="#" style="border-bottom: 1px solid;" onclick="openRectify()">'+data[i].name+'</a></td>';
                             str_info+='<td>'+isNull(data[i].num)+'</td>';
                             str_info+='<td><div class="text-w">'+isNull(data[i].yearNum)+'</div></td></tr>';

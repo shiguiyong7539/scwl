@@ -200,7 +200,7 @@ public class RiskControlServiceImpl implements RiskControlService {
         HashMap<String, Object> map = new HashMap<>();
         HashMap<String, Object> map2 = new HashMap<>();
         map.put("name","涉诉情况");
-        map2.put("name","监督检查整改情况");
+        map2.put("name","内部监督情况");
         //涉诉总件数
         RiskControl riskControl = riskControlMapper.getTotal();
         map.put("num",riskControl.getNum());
