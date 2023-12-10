@@ -1,14 +1,7 @@
 ﻿ $(window).load(function(){$(".loading").fadeOut()})
 $(function () {
     //echarts_1();
-    echarts_4();
-    echarts_5(1);
-    echarts_31();
-    //echarts_32('月');
-    echarts_33('月');
-    getTaskTable();
-    getContractTable();
-    getRiskTable();
+    getOaToken();
 function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
@@ -1752,7 +1745,7 @@ function total_manage() {
             }}})
 
 }
-    function echarts_33(period) {
+function echarts_33(period) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb06'));
         var myChart2 = echarts.init(document.getElementById('fb07'));
@@ -2258,9 +2251,37 @@ function currentDate(type) {
     });
 
 
+function getOaToken() {
+        var token = localStorage.getItem("token");
+        if(token){
+            initData();
+        }else {
+            $.ajax({
+                type: "get",
+                url: "/getOaToken",
+                success: function (res) {
+                    if(res.code === 200) {
+                        localStorage.setItem('token', 'Bearer '+res.message);
+                        initData();
+                    }else {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                        });
+                    }
+                }
+            })
+        }
+    }
 
-
-
+function initData() {
+    echarts_4();
+    echarts_5(1);
+    echarts_31();
+    echarts_33('月');
+    getTaskTable();
+    getContractTable();
+    getRiskTable();
+}
 
 
 

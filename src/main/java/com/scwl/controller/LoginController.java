@@ -5,14 +5,11 @@ import com.google.gson.Gson;
 import com.scwl.pojo.ResBean;
 import com.scwl.pojo.User;
 import com.scwl.service.UserService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
@@ -228,7 +225,7 @@ public class LoginController {
             session.setAttribute("code","404");
             session.setAttribute("message",resBean.getMessage());
         }
-        return "redirect:center_show";
+        return "redirect:centerShow";
     }
     @RequestMapping("/getOaToken")
     @ResponseBody
