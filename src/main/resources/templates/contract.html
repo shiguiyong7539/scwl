@@ -85,7 +85,6 @@
                 <li><a href="#" title="" onclick="costManage()">预算执行</a></li>
                 <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
-                <li><a href="" title="">建设发展</a></li>
             </ul>
         </li>
 
@@ -564,12 +563,11 @@
             success: function (res) {
                 if(res && res.code===200){
                     modal.style.display = "none";
-                    layui.layer.msg(res.message,{time:1000},function(){
-                        layer.close(); //再执行关闭
-                        location.reload();
-                    });
-
                 }
+                layui.layer.msg(res.message,{time:1000},function(){
+                    layer.close(); //再执行关闭
+                    location.reload();
+                });
             }
 
 

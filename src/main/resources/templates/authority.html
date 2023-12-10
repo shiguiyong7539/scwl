@@ -86,7 +86,6 @@
                 <li><a href="#" title="" onclick="costManage()">预算执行</a></li>
                 <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
-                <li><a href="" title="">建设发展</a></li>
             </ul>
         </li>
 
@@ -224,16 +223,22 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
-                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>涉诉信息</h6>
-                    <div class="formAddEmp"><input type="submit" id="myCostBtn" value="添加涉诉" class="redB"></div>
+                <div class="layui-row">
+                    <form class="layui-col-md12 x-so" id="formId">
+                        菜单名称：<input  style=" width: 10%;" type="text" name="name"  placeholder="菜单名称" autocomplete="off" class="layui-input">
+
+                        <div id="sousuo" class="sousuo" onclick="menuList(1)" >搜索</div>
+                    </form>
+                </div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>权限菜单</h6>
+                   <div class="formAddEmp"><input type="submit" id="myCostBtn" value="添加菜单" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
-                        <td width="80">编号</td>
-                        <td width="80">类别</td>
-                        <td width="80">件数</td>
-                        <td width="80">日期</td>
+                        <td width="20">序号</td>
+                        <td width="80">名称</td>
+                        <td width="80">URL</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -253,26 +258,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="close">&times;</span>
-                    <h2>涉诉信息</h2>
+                    <h2>菜单信息</h2>
                 </div>
                 <div class="modal-body">
                     <div class="formRow">
-                        类别：
-                        <div class="formRight"><input type="text" value="涉诉情况" readonly="readonly" class="validate[required]" style="width: 162px;color: black;"  id="name"></div><div class="clear"></div>
+                        名称：
+                        <div class="formRight"><input type="text"   class="validate[required]" style="width: 162px;color: black;"  id="name"></div><div class="clear"></div>
                    </div>
                     <div class="formRow">
-                        件数：
-                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="num"></div><div class="clear"></div>
+                        URL：
+                        <div class="formRight"><input  class="validate[required]"  id="url"></div><div class="clear"></div>
                     </div>
-
-                    <div class="formRow">
-                        日期：
-                        <div class="formRight">
-                            <input type="date"  style="width: 165px;" id="add_time">
-                        </div>
-                    </div>
-
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addRisk()">提交</button></div>
+                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addMenu()">提交</button></div>
                 </div>
                 <div class="modal-footer">
                     <h3></h3>
@@ -294,7 +291,7 @@
 <script type="text/javascript">
     $(function () {
         initData();
-        riskList(1);
+        menuList(1);
     } );
 
 
@@ -397,17 +394,15 @@
         }
     }
 
-    function riskList(pageNum) {
+    function menuList(pageNum) {
 
         $.ajax({
             type: "get",
-            url: "/getAllRisk",
+            url: "/getAllMenu?pageNum="+pageNum,
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
-            data:({
-                pageNum:pageNum
-            }),
+            data: $('#formId').serialize(),
             success: function (res) {
                 if(res && res.code===200){
                     var data = res.obj;
@@ -420,8 +415,7 @@
                     for (var i = 0; i < data1.length; i++) {
                         str_info+='<tr><td align="center">'+data1[i].id+'</td>';
                         str_info+='<td align="center">'+data1[i].name+'</td>';
-                        str_info+='<td align="center">'+data1[i].num+'</td>';
-                        str_info+='<td align="center">'+dateFormat(1,data1[i].addTime)+'</td></tr>';
+                        str_info+='<td align="center">'+data1[i].url+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
 
@@ -429,24 +423,24 @@
                     pagenum1=pageNo+1;
                     pagenum2=pageNo+2;
                     pagenum3=pageNo+3;
-                    var htm="<a  href='#' onclick='riskList(1)'>首页 </a>";
+                    var htm="<a  href='#' onclick='menuList(1)'>首页 </a>";
                     if(data.pageNum >1){
-                        htm+="<a  href='#' onclick='riskList("+data.prePage+")'>上一页 </a>"
+                        htm+="<a  href='#' onclick='menuList("+data.prePage+")'>上一页 </a>"
                     }
                     if(pagenum0 >=1){
-                        htm+="<a  href='#' onclick='riskList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        htm+="<a  href='#' onclick='menuList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
                     }
                     htm+="<button class='current'>"+data.pageNum+"</button>";
                     if(pagenum1 <= pages){
-                        htm+="<a  href='#' onclick='riskList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        htm+="<a  href='#' onclick='menuList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
                     }
                     if(pagenum2 <= pages){
-                        htm+="<a  href='#' onclick='riskList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        htm+="<a  href='#' onclick='menuList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
                     }
                     if(pagenum3 <= pages){
-                        htm+="<a  href='#' onclick='riskList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        htm+="<a  href='#' onclick='menuList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
                     }
-                    htm+="<a  href='#' onclick='riskList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='riskList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                    htm+="<a  href='#' onclick='menuList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='menuList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                     $("#pagefoot").html(htm);
                 }
 
@@ -507,30 +501,27 @@
         }
     }
 
-    function addRisk() {
+    function addMenu() {
         var name = document.getElementById("name").value;
-        var num = document.getElementById("num").value;
-        var add_time = document.getElementById("add_time").value;
+        var url = document.getElementById("url").value;
         $.ajax({
             type: "post",
-            url: "/addRisk",
+            url: "/addMenu",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
             data:({
                 name:name,
-                num:num,
-                addTime:new Date(add_time)
+                url:url
             }),
             success: function (res) {
                 if(res && res.code===200){
                     modal.style.display = "none";
-                    layui.layer.msg(res.message,{time:1000},function(){
-                        layer.close(); //再执行关闭
-                        location.reload();
-                    });
-
                 }
+                layui.layer.msg(res.message,{time:1000},function(){
+                    layer.close(); //再执行关闭
+                    location.reload();
+                });
             }
 
 

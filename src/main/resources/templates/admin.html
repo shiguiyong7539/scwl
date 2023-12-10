@@ -86,7 +86,6 @@
                 <li><a href="#" title="" onclick="costManage()">预算执行</a></li>
                 <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
-                <li><a href="" title="">建设发展</a></li>
             </ul>
         </li>
 
@@ -260,7 +259,7 @@
         $(this).next("ul").slideToggle();
     });
     $(function () {
-        getOaToken();
+        initData();
     })
 
     function getOaToken() {
