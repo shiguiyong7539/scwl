@@ -133,11 +133,14 @@ function echarts_4() {
             if(res && res.code===200){
                 //租金总收入
                 document.getElementById("rent_total").innerText = res.obj.rent_total;
+                $("#asset_1_date").html(res.obj.income_lastDate);
                 //租金总欠收
                 document.getElementById("arrears_now").innerText = res.obj.arrears_now;
-
+                $("#asset_2_date").html(res.obj.income_lastDate);
                 //经营业务总收入
                 document.getElementById("in_total").innerText = res.obj.in_total;
+                $("#asset_4_date").html(res.obj.manage_lastDate);
+                $("#asset_3_date").html(res.obj.rate_lastDate);
                    var manage_date =[];
                    var income_data =[];
                    var income_date =[];
@@ -1201,6 +1204,8 @@ function echarts_31() {
                 var edu_list = res.obj.edu;
                 var rank_list = res.obj.rank;
                 var mode_list = res.obj.mode;
+                var latDate = res.obj.latDate;
+                $("#personDate").html(latDate);
                 var ageData = [];
                 var ageTitle = [];
                 var eduData = [];
@@ -1577,6 +1582,7 @@ function getRiskTable() {
             success: function (res) {
                 if(res && res.code===200){
                     var data = res.obj;
+                    var lastDate = data[0].lastDate;
                     // 获取表格元素
                     var str_info='';
                     for (let i = 0; i < data.length; i++) {
@@ -1592,6 +1598,7 @@ function getRiskTable() {
 
                     }
                     $("#risk_table").html(str_info);
+                    $("#fkdate").html(lastDate);
                 }
 
             }

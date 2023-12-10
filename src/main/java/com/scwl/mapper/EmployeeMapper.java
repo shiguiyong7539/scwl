@@ -39,4 +39,6 @@ public interface EmployeeMapper {
     List<Map> getByRankGroup();
     //按用工方式分组
     List<Map>  getByModeGroup();
+
+    Employee getLastDate();
 }

@@ -244,6 +244,9 @@
   select name,sum(num) as num from risk_control group by name
   </select>
   <select id="getTotalYear" parameterType="java.lang.String" resultType="java.lang.Integer">
-  select sum(num) from risk_control where  YEAR(add_time) = YEAR(CURDATE())
+  select sum(num)  from risk_control where  YEAR(add_time) = YEAR(CURDATE())
+  </select>
+  <select id="getLastDate" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select add_time  from risk_control  ORDER BY add_time DESC LIMIT 1
   </select>
 </mapper>

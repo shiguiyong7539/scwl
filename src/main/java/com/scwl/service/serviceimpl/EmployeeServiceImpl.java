@@ -62,6 +62,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ResBean getByCenter() {
         //总人数
         int total = employeeMapper.getTotal();
+        //截止日期
+        Employee employee = employeeMapper.getLastDate();
         //按年龄分组
         List<Map> byAgeGroup = employeeMapper.getByAgeGroup();
         for (int i = 0; i < byAgeGroup.size(); i++) {
@@ -87,6 +89,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         map.put("rank",byRankGroup);
         map.put("mode",byModeGroup);
         map.put("total",total);
+        String str = new SimpleDateFormat("yyyy年MM月dd日").format(employee.getJoinTime());
+        map.put("latDate", "截止"+str);
         return ResBean.success("success",map);
     }
 

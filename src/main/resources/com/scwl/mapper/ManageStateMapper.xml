@@ -285,7 +285,7 @@
   <select id="getTaskByMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
 
       select
-        sum(pay_out_wage) as pay_out_wage,sum(rent) as rent,sum(hydropower_office) as hydropower_office,sum(labor_union) as labor_union,
+        sum(pay_out_wage) as pay_out_wage,sum(rent) as rent,sum(hydropower_office) as hydropower_office,sum(labor_union) as labor_union,periodic_time,
         DATE_FORMAT(periodic_time,#{period}) remark
     from manage_state
   where DATE_FORMAT(periodic_time,#{period}) = #{condition}
@@ -294,7 +294,7 @@
 
   <select id="getTaskByYear" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
-         sum(rent_income) as rent_income,sum(rent_arrears) as rent_arrears,sum(let_rate) as let_rate,
+         sum(rent_income) as rent_income,sum(rent_arrears) as rent_arrears,sum(let_rate) as let_rate,periodic_time,
         YEAR(periodic_time) as remark
     from manage_state
    where YEAR(periodic_time) = #{condition}
@@ -303,7 +303,7 @@
 
   <select id="getManageStateByAsset" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
-        type,  sum(rent_income) as rent_income,sum(rent_arrears) as rent_arrears,sum(let_rate) as let_rate,
+        type,  sum(rent_income) as rent_income,sum(rent_arrears) as rent_arrears,sum(let_rate) as let_rate,periodic_time,
         MONTH(periodic_time) as remark
     from manage_state
    where  type ='资产经营' and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
@@ -315,7 +315,7 @@
   </select>
   <select id="getManageStateByManage" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
-        type,name,sum(rent_income) as rent_income,
+        type,name,sum(rent_income) as rent_income,periodic_time,
         MONTH(periodic_time) as remark
     from manage_state
    where  type ='经营业务收入'and name= #{name} and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
@@ -329,7 +329,7 @@
   </select>
   <select id="getManageStateByTotal" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
-        type,sum(rent_income) as rent_income,
+        type,sum(rent_income) as rent_income,periodic_time,
         MONTH(periodic_time) as remark
     from manage_state
    where  type ='经营业务收入' and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
@@ -338,7 +338,7 @@
   </select>
   <select id="getDataByColumn" parameterType="java.lang.String" resultMap="BaseResultMap">
      select
-        type,  ${column},
+        type,  ${column},periodic_time,
         MONTH(periodic_time) as remark
      from manage_state
      where  type = #{type}  and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)

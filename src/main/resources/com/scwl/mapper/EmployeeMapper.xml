@@ -315,4 +315,7 @@
     FROM employee
     GROUP BY employment_mode
   </select>
+  <select id="getLastDate" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select join_time  from employee  ORDER BY join_time DESC LIMIT 1
+  </select>
 </mapper>

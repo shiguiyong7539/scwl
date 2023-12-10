@@ -1,5 +1,6 @@
 package com.scwl.mapper;
 
+import com.scwl.pojo.RiskControl;
 import com.scwl.pojo.SupervisionRectify;
 import com.scwl.pojo.SupervisionRectifyExample;
 import com.scwl.vo.SupervisionRectifyVo;
@@ -79,5 +80,7 @@ public interface SupervisionRectifyMapper {
 
     int getTotal();
     int getTotalYear();
+
+    SupervisionRectify getLastDate();
 
 }

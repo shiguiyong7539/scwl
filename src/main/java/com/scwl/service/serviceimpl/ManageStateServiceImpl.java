@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,12 +78,18 @@ public class ManageStateServiceImpl implements ManageStateService {
         //租金收入（图形化）
         List<ManageState> income = manageStateMapper.getDataByColumn("rent_income", "资产经营");
         hashMap.put("income",income);
+        String  income_lastDate= new SimpleDateFormat("yyyy年MM月dd日").format(income.get(income.size() - 1).getPeriodicTime());
+        hashMap.put("income_lastDate","截止"+income_lastDate);
         //欠收租金（图形化）
         List<ManageState> arrears = manageStateMapper.getDataByColumn("rent_arrears", "资产经营");
         hashMap.put("arrears",arrears);
+        String  arrears_lastDate= new SimpleDateFormat("yyyy年MM月dd日").format(arrears.get(arrears.size() - 1).getPeriodicTime());
+        hashMap.put("arrears_lastDate","截止"+arrears_lastDate);
         //出租率（图形化）
         List<ManageState> rate = manageStateMapper.getDataByColumn("let_rate", "资产经营");
         hashMap.put("rate",rate);
+        String  rate_lastDate= new SimpleDateFormat("yyyy年MM月dd日").format(rate.get(rate.size() - 1).getPeriodicTime());
+        hashMap.put("rate_lastDate","截止"+rate_lastDate);
         //经营业务（图形化）
         List<Map<String,Object>> list = new ArrayList<>();
         List<ManageState> allName = manageStateMapper.getAllName();
@@ -101,6 +108,11 @@ public class ManageStateServiceImpl implements ManageStateService {
         }
 
          hashMap.put("list",list);
+        //经营业务收入截止日期
+        Map<String, Object> map = list.get(list.size() - 1);
+        List<ManageState> manage = (List<ManageState>) map.get("manage");
+        String  manage_lastDate= new SimpleDateFormat("yyyy年MM月dd日").format(manage.get(manage.size()-1).getPeriodicTime());
+        hashMap.put("manage_lastDate","截止"+manage_lastDate);
         return ResBean.success("success",hashMap);
 
 

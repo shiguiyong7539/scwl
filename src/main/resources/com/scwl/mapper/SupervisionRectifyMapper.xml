@@ -390,4 +390,8 @@
   <select id="getTotalYear" parameterType="java.lang.String" resultType="java.lang.Integer">
   select count(id) from supervision_rectify where  YEAR(add_time) = YEAR(CURDATE())
   </select>
+
+  <select id="getLastDate" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select add_time  from supervision_rectify  ORDER BY add_time DESC LIMIT 1
+  </select>
 </mapper>

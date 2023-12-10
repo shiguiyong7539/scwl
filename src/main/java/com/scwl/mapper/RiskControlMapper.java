@@ -30,4 +30,5 @@ public interface RiskControlMapper {
 
     RiskControl getTotal();
     int getTotalYear();
+    RiskControl getLastDate();
 }
