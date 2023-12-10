@@ -230,12 +230,19 @@ public class LoginController {
     @RequestMapping("/getOaToken")
     @ResponseBody
     public ResBean getOaToken(HttpServletRequest request){
-        String code = request.getSession().getAttribute("code").toString();
-        if(code.equals("200")){
-            return  ResBean.success(request.getSession().getAttribute("token").toString());
+        HttpSession session = request.getSession();
+        if(null!=session.getAttribute("code")){
+          String  code = request.getSession().getAttribute("code").toString();
+            if(!code.isEmpty()&&code.equals("200")){
+                return  ResBean.success(request.getSession().getAttribute("token").toString());
+            }else {
+                return  ResBean.error(request.getSession().getAttribute("message").toString());
+            }
         }else {
-            return  ResBean.error(request.getSession().getAttribute("message").toString());
+            return  ResBean.error("您还未登录，暂时无法显示当前页面的敏感数据！");
         }
+
+
 
     }
 
