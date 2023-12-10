@@ -1246,7 +1246,7 @@ function echarts_31() {
                         itemHeight: 10,
                         data:ageTitle,
                         textStyle: {
-                            color: 'rgba(255,255,255,.5)',
+                            color: 'white',
                             fontSize:'10',
                         }
                     },
@@ -1280,7 +1280,7 @@ function echarts_31() {
                         itemHeight: 10,
                         data:eduTitle,
                         textStyle: {
-                            color: 'rgba(255,255,255,.5)',
+                            color: 'white',
                             fontSize:'10',
                         }
                     },
@@ -1313,7 +1313,7 @@ function echarts_31() {
                         itemHeight: 10,
                         data:rankTitle,
                         textStyle: {
-                            color: 'rgba(255,255,255,.5)',
+                            color: 'white',
                             fontSize:'10',
                         }
                     },
@@ -1346,7 +1346,7 @@ function echarts_31() {
                         itemHeight: 10,
                         data:modeTitle,
                         textStyle: {
-                            color: 'rgba(255,255,255,.5)',
+                            color: 'white',
                             fontSize:'10',
                         }
                     },
