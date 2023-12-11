@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    ResBean getEmpList(Integer pageNum, Integer pageSize);
+    ResBean getEmpList(Integer pageNum, Integer pageSize,Employee employee);
     ResBean addEmployee(Employee employee);
+    ResBean updateMember(Employee employee);
     ResBean getByCenter();
     ResBean uploadMemberFile( List<String[]> data) throws ParseException;
 }

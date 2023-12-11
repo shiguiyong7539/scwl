@@ -120,7 +120,6 @@
             </ul>
         </li>
 
-        <li class="dash"><a href="#" onclick="center_html()" class="active"><span>数据展示中心</span></a></li>
     </ul>
 </div>
 
@@ -226,19 +225,23 @@
                 <div class="layui-row">
                     <form class="layui-col-md12 x-so" id="formId">
                         菜单名称：<input  style=" width: 10%;" type="text" name="name"  placeholder="菜单名称" autocomplete="off" class="layui-input">
+                        角色名称：<input  style=" width: 10%;" type="text" name="url"  placeholder="角色名称" autocomplete="off" class="layui-input">
 
                         <div id="sousuo" class="sousuo" onclick="menuList(1)" >搜索</div>
                     </form>
                 </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>权限菜单</h6>
-                   <div class="formAddEmp"><input type="submit" id="myCostBtn" value="添加菜单" class="redB"></div>
+                   <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myCostBtn" value="添加菜单" class="redB"></div>
+                   <div class="formAddEmp"><input type="submit"  onclick="openRoles()"  value="添加授权" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
+                        <td width="20"><input type="checkbox" onclick="selectAll()"></td>
                         <td width="20">序号</td>
                         <td width="80">名称</td>
-                        <td width="80">URL</td>
+                        <td width="30">URL</td>
+                        <td width="80">所需角色</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -413,9 +416,21 @@
                    // 获取表格元素
                     var str_info='';
                     for (var i = 0; i < data1.length; i++) {
-                        str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                        str_info+='<tr><td align="center"><input class="checkMenu" type="checkbox" value="'+data1[i].id+'"></td>';
+                        str_info+='<td align="center">'+data1[i].id+'</td>';
                         str_info+='<td align="center">'+data1[i].name+'</td>';
-                        str_info+='<td align="center">'+data1[i].url+'</td></tr>';
+                        str_info+='<td align="center">'+data1[i].url+'</td>';
+                        var roles = data1[i].roles;
+                        var rolesName="";
+                        for (var a = 0; a < roles.length; a++){
+                            var namezh = roles[a].namezh;
+                            if(rolesName==""){
+                                rolesName = namezh;
+                            }else {
+                                rolesName += ","+namezh;
+                            }
+                        }
+                        str_info+='<td align="center">'+rolesName+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
 
@@ -528,6 +543,50 @@
         })
 
     }
+    function openRoles() {
+      //  var selectedValues = $(".checkMenu:checked").val();
+      // 使用原生JavaScript
+      //  var selectedValues = document.querySelectorAll(".checkMenu");
+        var selectedValues = document.querySelectorAll(".checkMenu:checked");
+        var mids = [];
+        for (var i = 0; i < selectedValues.length; i++) {
+            mids.push(selectedValues[i].value);
+        }
+        if(mids.length==0){
+            layui.layer.msg('您沒有勾选任何菜单');
+        }else {
+            localStorage.setItem("mids",mids);
+            layui.layer.open({
+                type:2,
+                title:"角色",
+                skin:"open_css",
+                area:['45%','50%'],
+                closeBtn: 1, //关闭按钮的样式，0是默认的
+                shadeClose: true, //点击弹出层外空白处
+                content: "/roleChoose",
+                success: function(layero, index){
+                    // 添加关闭事件
+                    layero.close(function(){
+                        // 刷新主页
+                        location.reload();
+                    });}
+            })
+        }
+
+    }
+
+    function selectAll() {
+        var checkboxes = document.getElementsByClassName("checkMenu");
+        for (var i = 0; i < checkboxes.length; i++) {
+            if(checkboxes[i].checked){
+                checkboxes[i].checked=false;
+            }else{
+                checkboxes[i].checked= true;
+            }
+
+        }
+    }
+
 
 
 </script>

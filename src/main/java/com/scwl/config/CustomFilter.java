@@ -36,6 +36,7 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		//获取请求的url
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();
+		String method = ((FilterInvocation) object).getRequest().getMethod();
 		int queryStartIndex = requestUrl.indexOf('?');
 		if (queryStartIndex != -1) {
 			requestUrl = requestUrl.substring(0, queryStartIndex);
@@ -51,7 +52,10 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
 			}
 		}
 		//没匹配的url默认登录可访问
-		return SecurityConfig.createList("ROLE_LOGIN");
+		if(method.equals("GET")){
+			return SecurityConfig.createList("ROLE_LOGIN");
+		}
+		return SecurityConfig.createList("ROLE_");
 	}
 
 	@Override

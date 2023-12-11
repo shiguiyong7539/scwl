@@ -1,5 +1,6 @@
 package com.scwl.controller;
 
+import com.scwl.pojo.Menu;
 import com.scwl.pojo.ResBean;
 import com.scwl.pojo.Role;
 import com.scwl.service.MenuService;
@@ -22,5 +23,24 @@ public class MenuRolesController {
     @RequestMapping("/addRole")
     public ResBean addRole(HttpServletRequest request, Role role){
         return menuService.addRole(role);
+    }
+
+
+    @RequestMapping("/getAllMenu")
+    public ResBean getAllMenu(HttpServletRequest request,@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, Menu menu){
+        return menuService.getAllMenu(pageNum,pageSize,menu);
+    }
+    @RequestMapping("/addMenu")
+    public ResBean addMenu(HttpServletRequest request, Menu menu){
+        return menuService.addMenu(menu);
+    }
+    @RequestMapping("/addMenuRole")
+    public ResBean addMenuRole(HttpServletRequest request, Integer[] mids,Integer[] rids){
+        return menuService.addMenuRole(mids,rids);
+    }
+
+    @RequestMapping("/addUserRole")
+    public ResBean addUserRole(HttpServletRequest request, Integer[] uids,Integer[] rids){
+        return menuService.addUserRole(uids,rids);
     }
 }

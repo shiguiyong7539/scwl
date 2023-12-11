@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+
+
+<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript">
+$(function() {
+	var devices = ["phone", "pad", "pod", "iPhone", "iPod", "ios", "iPad", "Android", "Mobile", "BlackBerry", "IEMobile", "MQQBrowser", "JUC", "Fennec", "wOSBrowser", "BrowserNG", "WebOS", "Symbian", "Windows Phone"];
+	var userAgentInfo = navigator.userAgent;
+	var isMobile = devices.some(function(device) {
+		return userAgentInfo.indexOf(device) > 0;
+	});
+	if(isMobile) {
+		location.href="/centerShowPhone";
+	} else {
+		location.href="/centerShow";
+	}
+
+});
+</script>
+
+</html>

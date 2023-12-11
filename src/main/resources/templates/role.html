@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
-    <title>涉诉情况</title>
+    <title>角色</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -119,7 +119,6 @@
             </ul>
         </li>
 
-        <li class="dash"><a href="#" onclick="center_html()" class="active"><span>数据展示中心</span></a></li>
     </ul>
 </div>
 
@@ -262,11 +261,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="formRow">
-                        中文名：
+                        中文名*：
                         <div class="formRight"><input class="validate[required]"  id="nameZh"></div><div class="clear"></div>
                     </div>
                     <div class="formRow">
-                        英文名：
+                        英文名*：
                         <div class="formRight"><input class="validate[required]"  id="name"></div><div class="clear"></div>
                     </div>
 
@@ -398,10 +397,9 @@
     }
 
     function roleList(pageNum) {
-
         $.ajax({
             type: "get",
-            url: "/getAllRole?pageNum="+pageNum,
+            url:"/getAllRole?pageNum="+pageNum,
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
@@ -445,6 +443,12 @@
                     }
                     htm+="<a  href='#' onclick='roleList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='roleList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                     $("#pagefoot").html(htm);
+                }else {
+                    //失败提示
+                    layer.msg(res.message, {
+                        icon: 2,
+                        time: 2000
+                    });
                 }
 
             }
@@ -507,6 +511,10 @@
     function addRole() {
         var name = document.getElementById("name").value;
         var nameZh = document.getElementById("nameZh").value;
+        if(name.length == 0||nameZh.length == 0){
+            layui.layer.msg('中英文名称都必填!');
+            return;
+        }
         $.ajax({
             type: "post",
             url: "/addRole",
@@ -518,14 +526,14 @@
                 namezh:nameZh
             }),
             success: function (res) {
-                if(res && res.code===200){
+                if(res && res.code===200) {
                     modal.style.display = "none";
+                }
                     layui.layer.msg(res.message,{time:1000},function(){
                         layer.close(); //再执行关闭
                         location.reload();
                     });
 
-                }
             }
 
 

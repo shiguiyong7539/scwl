@@ -188,6 +188,14 @@ public class LoginController {
 //        }
         return "center_show";
     }
+    /**
+     * 平台展示页面
+     * @return
+     */
+    @RequestMapping("/centerShowPhone")
+    public String centerShowPhone(HttpServletRequest request){
+        return "center_show_sp";
+    }
 
     /**
      * 用户一览
@@ -196,6 +204,30 @@ public class LoginController {
     @RequestMapping("/userList")
     public String userList(){
         return "userlist";
+    }
+
+    /**
+     * 角色选择
+     * @return
+     */
+    @RequestMapping("/roleChoose")
+    public String roleChoose(){
+        return "rolechoose";
+    }
+
+    /**
+     * 角色选择
+     * @return
+     */
+    @RequestMapping("/userRoleChoose")
+    public String userRoleChoose(){
+        return "userrolechoose";
+    }
+
+    //重定向
+    @RequestMapping("/getShowData")
+    public String getShowData(){
+        return "urlredirect";
     }
     /**
      * 登录
@@ -225,7 +257,7 @@ public class LoginController {
             session.setAttribute("code","404");
             session.setAttribute("message",resBean.getMessage());
         }
-        return "redirect:centerShow";
+        return "redirect:getShowData";
     }
     @RequestMapping("/getOaToken")
     @ResponseBody

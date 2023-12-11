@@ -27,4 +27,5 @@ public interface UserService  {
    ResBean deleteUser(User user);
 
    ResBean oaLogin(String phone);
+   ResBean generatUser(Integer[] ids);
 }

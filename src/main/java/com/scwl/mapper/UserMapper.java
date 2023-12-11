@@ -32,4 +32,7 @@ public interface UserMapper {
     User getAdminByUserName(String userName);
 
     int insertBatchUser(@Param("list")List<User> userList);
+
+    List<User> getAllUserAndRole(User user);
+
 }

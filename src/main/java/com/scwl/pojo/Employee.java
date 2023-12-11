@@ -51,6 +51,16 @@ public class Employee {
      */
     private String employmentMode;
 
+    /**
+     * 联系电话
+     */
+    private String phone;
+
+    /**
+     * 职务
+     */
+    private String jobDuty;
+
     public Integer getId() {
         return id;
     }
@@ -129,5 +139,21 @@ public class Employee {
 
     public void setEmploymentMode(String employmentMode) {
         this.employmentMode = employmentMode == null ? null : employmentMode.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getJobDuty() {
+        return jobDuty;
+    }
+
+    public void setJobDuty(String jobDuty) {
+        this.jobDuty = jobDuty == null ? null : jobDuty.trim();
     }
 }

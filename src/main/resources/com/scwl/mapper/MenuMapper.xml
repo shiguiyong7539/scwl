@@ -108,7 +108,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.Menu" >
+  <insert id="insert" parameterType="com.scwl.pojo.Menu" useGeneratedKeys="true" keyProperty="id">
     insert into menu (id, path, url,
       name, parent_id, enabled
       )
@@ -250,4 +250,27 @@
         ORDER BY
             m.id
     </select>
+
+  <select id="getAllMenuAndRole" parameterType="java.lang.String" resultMap="MenusWithRole">
+      SELECT
+            m.*,
+            r.id AS rid,
+            r.`name` AS rname,
+            r.nameZh AS rnameZh
+        FROM
+            menu m,
+            menu_role mr,
+            role r
+        where
+            m.id = mr.mid
+            AND r.id = mr.rid
+         <if test="menuName != null and menuName!=''" >
+          and m.name like #{menuName}
+         </if>
+        <if test="roleName != null and roleName!=''" >
+          and r.nameZh like #{roleName}
+        </if>
+        ORDER BY
+            m.id
+  </select>
 </mapper>

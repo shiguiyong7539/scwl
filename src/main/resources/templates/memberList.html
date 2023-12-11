@@ -105,7 +105,12 @@
                 <li><a href="#" title="" onclick="rectify()">内部监督情况</a></li>
             </ul>
         </li>
-
+        <li class="charts"><a href="#" title="" onclick="toggle('role')" class="exp"><span>角色权限</span></a>
+            <ul class="sub ul_hidden" id="role">
+                <li><a href="#" title="" onclick="roleList()">角色</a></li>
+                <li><a href="#" title="" onclick="authority()">权限</a></li>
+            </ul>
+        </li>
         <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
             <ul class="sub ul_hidden" id="myInfo">
                 <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
@@ -114,7 +119,6 @@
             </ul>
         </li>
 
-        <li class="dash"><a href="#" onclick="center_html()" class="active"><span>数据展示中心</span></a></li>
     </ul>
 </div>
 
@@ -216,8 +220,17 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
+                <div class="layui-row">
+                    <form class="layui-col-md12 x-so" id="formId">
+                        <input  style=" width: 10%;" type="text" name="name"  placeholder="姓名" autocomplete="off" class="layui-input">
+                        <input  style=" width: 10%;" type="text" name="phone"  placeholder="电话" autocomplete="off" class="layui-input">
+
+                        <div id="sousuo" class="sousuo" onclick="menberList(1)" >搜索</div>
+                    </form>
+                </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>员工信息</h6>
                     <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myBtn" value="添加员工" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="generatUser()" value="生成账户" class="redB"></div>
                     <div class="formAddEmp" style="display: none">
                         <form  enctype="multipart/form-data">
                             <input type="file" name="memberFile" id="memberFile" accept=".xls,.xlsx">
@@ -228,12 +241,17 @@
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
+                        <td width="20"><input type="checkbox" onclick="chooseEmpAll()"></td>
                         <td width="80">编号</td>
                         <td width="80">名称</td>
+                        <td width="80">性别</td>
                         <td width="80">年龄</td>
                         <td width="80">学历</td>
+                        <td width="80">部门</td>
+                        <td width="80">职务</td>
                         <td width="80">职称</td>
                         <td width="80">用工方式</td>
+                        <td width="80">联系电话</td>
                         <td width="80">出生时间</td>
                     </tr>
                     </thead>
@@ -260,6 +278,18 @@
                     <div class="formRow">
                         姓名：
                         <div class="formRight"><input type="text" class="validate[required]"  id="name"></div><div class="clear"></div>
+                    </div>
+                    <div class="formRow">
+                        性别：
+                        <div class="formRight"><select id="sex">
+                            <option ></option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select></div>
+                    </div>
+                    <div class="formRow">
+                        手机：
+                        <div class="formRight"><input type="text" class="validate[required]"  id="phone"></div><div class="clear"></div>
                     </div>
                     <div class="formRow">
                         年龄：
@@ -375,6 +405,12 @@
     function rectify() {
         location.href="/rectify";
     }
+    function roleList() {
+        location.href="/roleList";
+    }
+    function authority() {
+        location.href="/authority";
+    }
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
@@ -422,13 +458,11 @@
 
         $.ajax({
             type: "get",
-            url: "/getEmployeeList",
+            url: "/getEmployeeList?pageNum="+pageNum,
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
-            data:({
-                pageNum:pageNum
-            }),
+            data: $('#formId').serialize(),
             success: function (res) {
                 if(res && res.code===200){
                     var data = res.obj;
@@ -439,12 +473,17 @@
                    // 获取表格元素
                     var str_info='';
                     for (var i = 0; i < data1.length; i++) {
-                        str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                        str_info+='<tr><td align="center"><input class="checkEmp" type="checkbox" value="'+data1[i].id+'"></td>';
+                        str_info+='<td align="center">'+data1[i].id+'</td>';
                         str_info+='<td align="center">'+data1[i].name+'</td>';
+                        str_info+='<td align="center">'+data1[i].sex+'</td>';
                         str_info+='<td align="center">'+data1[i].age+'</td>';
                         str_info+='<td align="center">'+data1[i].education+'</td>';
+                        str_info+='<td align="center">'+data1[i].department+'</td>';
+                        str_info+='<td align="center"><input style="text-align: center;" id="duty_'+data1[i].id+'" onchange="updateMember('+data1[i].id+')" value="'+isNull(data1[i].jobDuty)+'"></td>';
                         str_info+='<td align="center">'+data1[i].rank+'</td>';
                         str_info+='<td align="center">'+data1[i].employmentMode+'</td>';
+                        str_info+='<td align="center"><input style="text-align: center;" id="phone_'+data1[i].id+'" onchange="updateMember('+data1[i].id+')" value="'+isNull(data1[i].phone)+'"></td>';
                         str_info+='<td align="center">'+dateFormat(1,data1[i].birthday)+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
@@ -472,6 +511,12 @@
                     }
                     htm+="<a  href='#' onclick='menberList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='menberList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                     $("#pagefoot").html(htm);
+                }else {
+                    //失败提示
+                    layer.msg(res.message, {
+                        icon: 2,
+                        time: 2000
+                    });
                 }
 
             }
@@ -537,6 +582,8 @@
         var education = document.getElementById("education").value;
         var rank = document.getElementById("rank").value;
         var employmentMode = document.getElementById("employmentMode").value;
+        var sex = document.getElementById("sex").value;
+        var phone = document.getElementById("phone").value;
         var joinTime = document.getElementById("joinTime").value;
         $.ajax({
             type: "post",
@@ -550,17 +597,20 @@
                 education:education,
                 rank:rank,
                 employmentMode:employmentMode,
+                sex:sex,
+                phone:phone,
                 birthday:new Date(joinTime)
             }),
             success: function (res) {
-                if(res && res.code===200){
+                if(res && res.code===200) {
                     modal.style.display = "none";
+                }
                     layui.layer.msg(res.message,{time:1000},function(){
                         layer.close(); //再执行关闭
                         location.reload();
                     });
 
-                }
+
             }
 
 
@@ -597,7 +647,81 @@
         })
 
     }
+    function updateMember(id) {
+        let phone =  document.getElementById("phone_"+id).value;
+        let jobDuty =  document.getElementById("duty_"+id).value;
+        $.ajax({
+            type: "post",
+            url: "/updateMember",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:({
+                id:id,
+                phone:phone,
+                jobDuty:jobDuty
+            }),
+            success: function (res) {
+                if(res && res.code===200){
+                    modal.style.display = "none";
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        //  location.reload();
+                    });
 
+                }
+            }
+
+
+        })
+
+    }
+    function isNull(number) {
+        if(null==number){
+            return "";
+        }else {
+            return number;
+        }
+    }
+    function chooseEmpAll() {
+        var checkboxes = document.getElementsByClassName("checkEmp");
+        for (var i = 0; i < checkboxes.length; i++) {
+            if(checkboxes[i].checked){
+                checkboxes[i].checked=false;
+            }else{
+                checkboxes[i].checked= true;
+            }
+
+        }
+    }
+    function generatUser() {
+        var selectedValues = document.querySelectorAll(".checkEmp:checked");
+        var eids = [];
+        for (var i = 0; i < selectedValues.length; i++) {
+            eids.push(selectedValues[i].value);
+        }
+        localStorage.setItem("eids",eids);
+        if(eids.length==0){
+            layui.layer.msg('您沒有勾选员工');
+        }else {
+            var data = {"eids": localStorage.getItem("eids")};
+            $.ajax({
+                type: "get",
+                url: "/generatUser",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data: data,
+                success: function (res) {
+                    localStorage.removeItem("eids");
+                    localStorage.removeItem("rids");
+                    location.reload();
+                    layui.layer.msg(res.message);
+
+                }})
+
+        }
+    }
 
 </script>
 </body>

@@ -30,4 +30,6 @@ public interface MenuMapper {
     int updateByPrimaryKey(Menu record);
 
     List<Menu> getMenusWithRole();
+
+    List<Menu> getAllMenuAndRole(@Param("menuName")String menuName, @Param("roleName")String roleName);
 }

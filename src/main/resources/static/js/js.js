@@ -778,7 +778,17 @@ function echarts_4() {
 
 
 
-            }}})
+            }else {
+                var info ='<div class="lookNo">'+res.message+'</div>';
+                $("#asset_1").html(info);
+                $("#asset_2").html(info);
+                $("#asset_3").html(info);
+                $("#asset_4").html(info);
+
+
+            }
+
+        }})
     }
 function echarts_5(rate) {
         // 基于准备好的dom，初始化echarts实例
@@ -903,7 +913,7 @@ function echarts_5(rate) {
                         },
                         legend: {
                             data: showTtile,
-                            top:'-5px',
+                            top:'4%',
                             textStyle: {
                                 color: "#fff",
                                 fontSize: '10',
@@ -1124,7 +1134,7 @@ function echarts_5(rate) {
                             }
                         }],
                         series: [{
-                            name: '可用资金',
+                            name: '灵活使用资金',
                             type: 'bar',
                             smooth: true,
                             data:useCapitalData,
@@ -1138,7 +1148,7 @@ function echarts_5(rate) {
                             }
                         },
                             {
-                                name: '不可用资金',
+                                name: '受限资金',
                                 type: 'bar',
                                 smooth: true,
                                 data:unUseCapitalData,
@@ -1164,6 +1174,10 @@ function echarts_5(rate) {
                         myChart2.resize();
                     });
 
+                }else {
+                    var info ='<div class="lookNo">'+res.message+'</div>';
+                    $("#capital_1").html(info);
+                    $("#capital_2").html(info);
                 }
 
             }
@@ -1383,6 +1397,12 @@ function echarts_31() {
                 });
 
 
+            }else {
+                var info = '<div class="lookNo">'+res.message+'</div>';
+                $("#fb01").html(info);
+                $("#fb02").html(info);
+                $("#fb03").html(info);
+                $("#fb04").html(info);
             }
 
         }
@@ -1529,6 +1549,8 @@ function getTaskTable() {
                         str_info+='<td><div class="text-d">'+isNull(data[i].overdue)+'</div></td></tr>';
                     }
                     $("#taskTable").html(str_info);
+                }else {
+
                 }
 
             }
@@ -1556,6 +1578,9 @@ function getContractTable() {
                         str_info+='<td><div class="text-d">'+isNull(data[i].unfinishNum)+'</div></td></tr>';
                     }
                     $("#contract_table").html(str_info);
+                }else {
+                    var info='<tr><td align="center" style="color: white">'+res.message+'</td>';
+                    $("#contract_table").html(info);
                 }
 
             }
@@ -1592,6 +1617,9 @@ function getRiskTable() {
                     }
                     $("#risk_table").html(str_info);
                     $("#fkdate").html(lastDate);
+                }else {
+                    var info='<tr><td align="center"  style="color: white">'+res.message+'</td>';
+                    $("#risk_table").html(info);
                 }
 
             }
@@ -1835,6 +1863,7 @@ function echarts_33(period) {
                                         color: '#ffeb7b',
                                         fontSize: 15,
                                         lineHeight: 25,
+                                        fontWeight: 'bold'
                                     },
                                     name: {
                                         color: 'white',
@@ -1903,6 +1932,7 @@ function echarts_33(period) {
                                         color: '#ffeb7b',
                                         fontSize: 15,
                                         lineHeight: 25,
+                                        fontWeight: 'bold'
                                     },
                                     name: {
                                         color: 'white',
@@ -2153,6 +2183,10 @@ function echarts_33(period) {
                     });
 
 
+                }else {
+                    var info = '<div class="lookNo">'+res.message+'</div>';
+                    $("#fb06").html(info);
+                    $("#fb08").html(info);
                 }
 
             }

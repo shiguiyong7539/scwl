@@ -104,7 +104,12 @@
                 <li><a href="#" title="" onclick="rectify()">内部监督情况</a></li>
             </ul>
         </li>
-
+        <li class="charts"><a href="#" title="" onclick="toggle('role')" class="exp"><span>角色权限</span></a>
+            <ul class="sub ul_hidden" id="role">
+                <li><a href="#" title="" onclick="roleList()">角色</a></li>
+                <li><a href="#" title="" onclick="authority()">权限</a></li>
+            </ul>
+        </li>
         <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
             <ul class="sub ul_hidden" id="myInfo">
                 <li><a href="#" title="" onclick="userInfo()" id="idNo"></a></li>
@@ -379,6 +384,13 @@
     function rectify() {
         location.href="/rectify";
     }
+    function roleList() {
+        location.href="/roleList";
+    }
+    function authority() {
+        location.href="/authority";
+    }
+
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {

@@ -239,6 +239,11 @@ body .open_css .layui-layer-title{
 .supt{
     margin-left: 25%;font-weight: bold;
 }
+.lookNo{
+    text-align: center;
+    color: white!important;
+    font-size: 12px;
+}
 @media (max-width: 767px) {
     .supp{
         margin-left: 1px;!important;

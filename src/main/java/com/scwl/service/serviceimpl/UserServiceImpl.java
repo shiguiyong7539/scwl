@@ -2,9 +2,11 @@ package com.scwl.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.scwl.mapper.EmployeeMapper;
 import com.scwl.mapper.RoleMapper;
 
 import com.scwl.mapper.UserMapper;
+import com.scwl.mapper.UserRoleMapper;
 import com.scwl.pojo.*;
 import com.scwl.service.LogService;
 import com.scwl.service.UserService;
@@ -32,6 +34,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleMapper roleMapper;
     @Autowired
+    private EmployeeMapper employeeMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -45,15 +51,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResBean getUserList(int pageNum, int pageSize, User user) {
         PageHelper.startPage(pageNum,pageSize);
-        UserExample example = new UserExample();
-        UserExample.Criteria criteria = example.createCriteria();
-        if(null!=user.getName()&&""!=user.getName()){
-            criteria.andNameLike("%"+user.getName()+"%");
-        }
-        if(null!=user.getPhone()&&""!=user.getPhone()){
-            criteria.andPhoneLike("%"+user.getPhone()+"%");
-        }
-        List<User> users = userMapper.selectByExample(example);
+        List<User> users = userMapper.getAllUserAndRole(user);
         PageInfo<User> pageInfo = new PageInfo<>(users);
         return ResBean.success("success",pageInfo);
     }
@@ -90,6 +88,28 @@ public class UserServiceImpl implements UserService {
 
 
 
+    }
+
+    @Override
+    public ResBean generatUser(Integer[] ids) {
+        for (Integer id : ids) {
+            Employee employee = employeeMapper.selectByPrimaryKey(id);
+            User exist = userMapper.getAdminByUserName(employee.getPhone());
+            if(null==exist) {
+                User user = new User();
+                user.setUsername(employee.getPhone());
+                user.setPhone(employee.getPhone());
+                user.setName(employee.getName());
+                user.setEnable(true);
+                user.setPassword(passwordEncoder.encode("Scwl1234"));
+                userMapper.insert(user);
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getId());
+                userRole.setRid(2);
+                userRoleMapper.insert(userRole);
+            }
+        }
+        return ResBean.success("生成成功");
     }
 
     @Override
@@ -177,7 +197,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResBean editUser(User user) {
         User oldUser = userMapper.selectByPrimaryKey(user.getId());
-        UserExample example = new UserExample();
         if(null!=user.getPassword()&&"" !=user.getPassword()){
             oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }

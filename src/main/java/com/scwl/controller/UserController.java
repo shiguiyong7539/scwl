@@ -51,4 +51,16 @@ public class UserController {
         return userService.addUser(user);
     }
 
+
+
+    /**
+     *根据员工手机生成账户
+     * @return
+     */
+    @RequestMapping("/generatUser")
+    @ResponseBody
+    public Object generatUser(HttpServletRequest request, Integer[] eids){
+        return userService.generatUser(eids);
+    }
+
 }

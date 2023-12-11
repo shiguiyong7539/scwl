@@ -56,7 +56,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/","/loginAdmin","/memberList","/costManage","/mangeState","/login",
 				"/logout","/admin","/userInfo","/index","/capitalList",
 				"/contract",
+				"/roleChoose",
+				"/userRoleChoose",
+				"/getShowData",
+				"/centerShowPhone",
 				"/roleList",
+				"/isLogin",
 				"/authority",
 				"/userList",
 				"/risk",
@@ -73,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/bootstrap/**",
 				"/fonts/**",
 				"/picture/**",
+				"/images/**",
 				"/images/**",
 				"/page/**"
 		);
@@ -99,14 +105,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest()
 				.authenticated()
 				//动态权限配置
-//				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-//					@Override
-//					public <O extends FilterSecurityInterceptor> O postProcess(O object) {
-//						object.setAccessDecisionManager(customUrlDecisionManager);
-//						object.setSecurityMetadataSource(customFilter);
-//						return object;
-//					}
-//				})
+				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+					@Override
+					public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+						object.setAccessDecisionManager(customUrlDecisionManager);
+						object.setSecurityMetadataSource(customFilter);
+						return object;
+					}
+				})
 				.and()
 				//禁用缓存
 				.headers()

@@ -45,11 +45,11 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
 			}
 			//判断用户角色是否为url所需角色
 //			Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-//			for (GrantedAuthority authority : authorities) {
-//				if (authority.getAuthority().equals(needRole)){
-//					return;
-//				}
-//			}
+////			for (GrantedAuthority authority : authorities) {
+////				if (authority.getAuthority().equals(needRole)){
+////					return;
+////				}
+////			}
 			Object principal = authentication.getPrincipal();
 			Gson gson = new Gson();
 			String json = gson.toJson(principal);
@@ -65,7 +65,7 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
 
 
 		}
-		throw new AccessDeniedException("权限不足，请联系管理员!");
+		throw new AccessDeniedException("沒有权限，请联系管理员!");
 	}
 
 	@Override

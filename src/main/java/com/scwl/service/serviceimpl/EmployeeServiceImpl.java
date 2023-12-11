@@ -31,9 +31,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public ResBean getEmpList(Integer pageNum, Integer pageSize) {
+    public ResBean getEmpList(Integer pageNum, Integer pageSize,Employee emp) {
         PageHelper.startPage(pageNum,pageSize);
         EmployeeExample employeeExample = new EmployeeExample();
+        EmployeeExample.Criteria criteria = employeeExample.createCriteria();
+        if(null!=emp.getName()&&""!=emp.getName()){
+            criteria.andNameLike("%"+emp.getName()+"%");
+        }
+        if(null!=emp.getPhone()&&""!=emp.getPhone()){
+            criteria.andPhoneLike("%"+emp.getPhone()+"%");
+        }
         employeeExample.setOrderByClause("id ASC");
         List<Employee> employees = employeeMapper.selectByExample(employeeExample);
         for (Employee employee : employees) {
@@ -53,6 +60,19 @@ public class EmployeeServiceImpl implements EmployeeService {
                 return  ResBean.error("添加失败");
         }
 
+    }
+
+    @Override
+    public ResBean updateMember(Employee employee) {
+        Employee employee1 = employeeMapper.selectByPrimaryKey(employee.getId());
+        if(null!=employee.getPhone()&&""!=employee.getPhone()){
+            employee1.setPhone(employee.getPhone());
+        }
+        if(null!=employee.getJobDuty()&&""!=employee.getJobDuty()){
+            employee1.setJobDuty(employee.getJobDuty());
+        }
+        employeeMapper.updateByPrimaryKey(employee1);
+        return  ResBean.success("修改成功");
     }
 
     @Override

@@ -10,6 +10,13 @@
     <result column="enable" property="enable" jdbcType="BIT" />
     <result column="last_login" property="lastLogin" jdbcType="TIMESTAMP" />
   </resultMap>
+  <resultMap id="UserWithRole" type="com.scwl.pojo.User" extends="BaseResultMap">
+    <collection property="roles" ofType="com.scwl.pojo.Role">
+      <id column="rid" property="id"/>
+      <result column="rname" property="name"/>
+      <result column="rnameZh" property="namezh"/>
+    </collection>
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -264,4 +271,21 @@
        )
     </foreach >
   </insert>
+  <select id="getAllUserAndRole" parameterType="com.scwl.pojo.User" resultMap="UserWithRole">
+    select u.*,r.nameZh as rnameZh,r.name as rname,r.id as rid
+    from user u
+    left join user_role ur
+    on u.id = ur.user_id
+    left join role r
+    on r.id = ur.rid
+    <where>
+      <if test="name != null and name != ''">
+        AND u.name = #{username}
+      </if>
+      <if test="phone != null and phone != ''">
+        AND u.phone = #{phone}
+      </if>
+    </where>
+
+  </select>
 </mapper>

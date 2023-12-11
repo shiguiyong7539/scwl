@@ -105,7 +105,12 @@
                 <li><a href="#" title="" onclick="rectify()">内部监督情况</a></li>
             </ul>
         </li>
-
+        <li class="charts"><a href="#" title="" onclick="toggle('role')" class="exp"><span>角色权限</span></a>
+            <ul class="sub ul_hidden" id="role">
+                <li><a href="#" title="" onclick="roleList()">角色</a></li>
+                <li><a href="#" title="" onclick="authority()">权限</a></li>
+            </ul>
+        </li>
         <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
             <ul class="sub ul_hidden" id="myInfo">
                 <li><a href="#" title="" onclick="userInfo()" id="idNo"></a></li>
@@ -223,15 +228,18 @@
                     </form>
                 </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>用户列表</h6>
-                    <div class="formAddEmp"><input type="submit" id="myUserBtn" value="添加用户" class="redB"></div></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myUserBtn" value="添加用户" class="redB"></div>
+                    <div class="formAddEmp"><input type="submit" onclick="addUserRole()" value="添加角色" class="redB"></div></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
-                        <td width="80">编号</td>
-                        <td width="80">名称</td>
-                        <td width="80">账号</td>
-                        <td width="80">最近登录时间</td>
+                        <td width="20"><input type="checkbox" onclick="selectAllUser()"></td>
+                        <td width="20">名称</td>
+                        <td width="50">账号</td>
+                        <td width="50">重置密码</td>
+                        <td width="50">角色</td>
+                        <td width="50">最近登录时间</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -342,6 +350,12 @@
     function rectify() {
         location.href="/rectify";
     }
+    function roleList() {
+        location.href="/roleList";
+    }
+    function authority() {
+        location.href="/authority";
+    }
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
@@ -406,9 +420,11 @@
                     for (var i = 0; i < data1.length; i++) {
                         var id =data1[i].id;
                         var type =data1[i].type;
-                        str_info+='<tr><td align="center">'+id+'</td>';
+                        str_info+='<tr><td align="center"><input class="checkUser" type="checkbox" value="'+id+'"></td>';
                         str_info+='<td align="center">'+data1[i].name+'</td>';
                         str_info+='<td align="center">'+data1[i].phone+'</td>';
+                        str_info+='<td align="center"><input style="width: 100%;" placeholder="不能低于6位数必须字母+数字" id="password_'+data1[i].id+'" onchange="resetPassword('+data1[i].id+')"></td>';
+                        str_info+='<td align="center">'+data1[i].roles[0].namezh+'</td>';
                         str_info+='<td align="center">'+dateFormat(2,data1[i].lastLogin)+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
@@ -449,24 +465,27 @@
 
 
   function dateFormat(type,utcTime) {
+      if (null!=utcTime) {
       var date = new Date(utcTime); // 创建Date对象
-     // 获取年、月、日、小时、分钟和秒
+      // 获取年、月、日、小时、分钟和秒
       var year = date.getFullYear();
       var month = date.getMonth() + 1; // 月份从0开始，所以要加1
       var day = date.getDate();
       var hours = date.getHours();
       var minutes = date.getMinutes();
       var seconds = date.getSeconds();
-     // 将日期和时间组件组合成字符串
-      var formatteddate = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) ;
-      var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) + ' ' + (hours>=10?hours:"0"+hours) + ':'
-          + (minutes>=10?minutes:"0"+minutes) + ':' + (seconds>=10?seconds:"0"+seconds);
-      if(type==1){
+      // 将日期和时间组件组合成字符串
+      var formatteddate = year + '-' + (month >= 10 ? month : "0" + month) + '-' + (day >= 10 ? day : "0" + day);
+      var formattedTime = year + '-' + (month >= 10 ? month : "0" + month) + '-' + (day >= 10 ? day : "0" + day) + ' ' + (hours >= 10 ? hours : "0" + hours) + ':'
+          + (minutes >= 10 ? minutes : "0" + minutes) + ':' + (seconds >= 10 ? seconds : "0" + seconds);
+      if (type == 1) {
           return formatteddate;
-      }else {
+      } else {
           return formattedTime;
       }
-
+  }else {
+          return "";
+      }
   }
 
 // 获取弹窗
@@ -529,53 +548,75 @@
         })
 
     }
-    function updateType(id,type) {
-        let message='';
-        if(type===1){
-            type='履行完毕'
-            message='您确认要把状态更新成履行完毕吗?';
-        }else {
-            type='履行中'
-            message='您确认要把状态更新回履行中吗?';
+
+    
+    function addUserRole() {
+        var selectedValues = document.querySelectorAll(".checkUser:checked");
+        var uids = [];
+        for (var i = 0; i < selectedValues.length; i++) {
+            uids.push(selectedValues[i].value);
         }
-        layer.confirm(message, {
-            title:'操作提示',
-            icon:0,
-            btn: ['确定','取消']
-        }, function(){
-            var index = layer.load();
-            $.ajax({
-                url: "/updateContract",
-                headers: {
-                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
-                },
-                data: ({
-                    id:id,
-                    type:type
-                }),
-                type: 'post',
-                success: function (resp) {
-                    layer.close(index);
-                    //成功提示
-                    if (resp.code == 200) {
-                        layer.msg("更新成功", {
-                            icon: 1,
-                            time: 1000
-                        }, function () {
-                            location.reload();
-                        });
-                    } else {
-                        //失败提示
-                        layer.msg(resp.msg, {
-                            icon: 2,
-                            time: 2000
-                        });
-                    }
+        if(uids.length==0){
+            layui.layer.msg('您沒有勾选任何用户');
+        }else {
+            localStorage.setItem("uids",uids);
+            layui.layer.open({
+                type:2,
+                title:"用户角色",
+                skin:"open_css",
+                area:['45%','50%'],
+                closeBtn: 1, //关闭按钮的样式，0是默认的
+                shadeClose: true, //点击弹出层外空白处
+                content: "/userRoleChoose",
+                success: function(layero, index){
+                    // 添加关闭事件
+                    layero.close(function(){
+                        // 刷新主页
+                        location.reload();
+                    });}
+            })
+        }
+    }
+
+    function selectAllUser() {
+        var checkboxes = document.getElementsByClassName("checkUser");
+        for (var i = 0; i < checkboxes.length; i++) {
+            if(checkboxes[i].checked){
+                checkboxes[i].checked=false;
+            }else{
+                checkboxes[i].checked= true;
+            }
+
+        }
+    }
+
+    function resetPassword(id) {
+        var password = document.getElementById("password_"+id).value;
+        $.ajax({
+            type: "get",
+            url: "/editUser",
+            headers: {
+                'Authorization':  localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:({
+                id:id,
+                password:password
+            }),
+            success: function (res) {
+                if(res.code === 200) {
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
+
+                }else {
+                    layui.layer.msg(res.message,{icon:2},{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
                 }
-            });
-        });
-
-
+            }
+        })
     }
 
 </script>

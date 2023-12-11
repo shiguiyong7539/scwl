@@ -35,8 +35,8 @@ public class EmployeeController {
      */
     @RequestMapping("/getEmployeeList")
     @ResponseBody
-    public Object getEmployeeList(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize){
-        return employeeService.getEmpList(pageNum,pageSize);
+    public Object getEmployeeList(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,Employee employee){
+        return employeeService.getEmpList(pageNum,pageSize,employee);
     }
 
 
@@ -50,6 +50,15 @@ public class EmployeeController {
         return employeeService.addEmployee(employee);
     }
 
+    /**
+     * 人事添加员工信息
+     * @return
+     */
+    @RequestMapping("/updateMember")
+    @ResponseBody
+    public Object updateMember(HttpServletRequest request, Employee employee ){
+        return employeeService.updateMember(employee);
+    }
     /**
      * 按年龄分组
      * @return
