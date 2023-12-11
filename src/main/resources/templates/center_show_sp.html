@@ -1,0 +1,213 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+	<title>沙磁文旅公司经营数字门户</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
+</head>
+
+<body>
+<div class="head clearfix">
+	<h1>沙磁文旅公司经营数字门户</h1>
+	<div class="time" id="showTime"></div>
+	<script>
+		var t = null;
+		t = setTimeout(time, 1000);//開始运行
+		function time() {
+			clearTimeout(t);//清除定时器
+			dt = new Date();
+			var y = dt.getFullYear();
+			var mt = dt.getMonth() + 1;
+			var day = dt.getDate();
+			var h = dt.getHours();//获取时
+			var m = dt.getMinutes();//获取分
+			var s = dt.getSeconds();//获取秒
+			document.getElementById("showTime").innerHTML = y + "/" + mt + "/" + day + " " + h + ":" + m + ":" + s + "";
+			t = setTimeout(time, 1000); //设定定时器，循环运行
+		}
+
+	</script>
+</div>
+<div class="mainbox">
+<div class="map" style="position: fixed;z-index: -1; top:50%;left:40%;" >
+	<div class="map">
+        <!-- <div class="map1"></div> -->
+        <div class="map2"></div>
+        <div class="map3"></div>
+      </div>
+</div>
+<div style="position: relative;z-index: 1;">
+	<ul class="clearfix nav1">
+		<li class="left_size">
+
+		</li>
+		<li class="center_size">
+			<div class="box">
+				<div class="tit">灵活使用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元</span>
+					<span class="btn_right"><span class="tit2">受限资金</span>
+					<span class="titAmount" id="unUse_money"></span><span class="titAmountRight">万元</span>
+					</span>
+				</div>
+				<div class="boxnav" id="capital_1" style="height: 213px;"></div>
+			</div>
+			<div class="box">
+				<div class="tit">经营收入<span class="titAmount" id="in_total"></span><span class="titAmountRight">万元</span>
+					<span class="btn_right">
+						<span id="asset_4_date" class="asset_4_date"></span>
+						<button class="infobtnChoose"  id="in_details">详情</button>
+						<button class="infobtn"  id="total_manage">总收入</button>
+					</span>
+				</div>
+				<div class="boxnav" style="height: 250px;" id="asset_4">
+				</div>
+			</div>
+			<div class="box">
+				<div class="tit">租金收入<span class="titAmount" id="rent_total"></span><span class="titAmountRight">万元</span>
+					<span class="btn_right"  id="asset_1_date"></span>
+				</div>
+				<div class="boxnav" style="height: 200px;" id="asset_1">
+				</div>
+			</div>
+			<div class="box">
+				<div class="tit">欠缴租金<span class="titAmount" id="arrears_now"></span><span class="titAmountRight">万元</span>
+					<span class="btn_right"  id="asset_2_date"></span>
+				</div>
+				<div class="fboxnavtechart" style="height: 200px;" id="asset_2">
+				</div>
+			</div>
+			<div class="box">
+				<div class="tit">出租率<span class="titAmount" id="letRate_now"></span><span class="titAmountRight"></span>
+					<span class="btn_right"  id="asset_3_date"></span>
+				</div>
+				<div class="boxnav" style="height: 200px;" id="asset_3">
+				</div>
+			</div>
+			<div class="box">
+				<div class="box">
+					<div class="tit">预算执行情况<span class="btn_right">
+						<button class="infobtnChoose"  id="now_month">当月</button>
+						<button class="infobtn"  id="now_year">当年</button></span></div>
+					<div class="boxnav" style="height: 300px;">
+						<div style="height: 50%;" id="fb06"></div>
+						<div style="height: 50%;" id="fb07"></div>
+					</div>
+				</div>
+				<div class="box">
+					<div class="tit">预算偏差率</div>
+					<div class="boxnav" style="height: 213px;" id="fb08"></div>
+				</div>
+			</div>
+			<div class="box">
+				<div class="tit">相关财务指标<span class="btn_right">
+					<div class="layui-inline">
+                    <select style="width: 100%"  lay-filter="demo" id="rate_type">
+                     <option value="1">融资计划完成率</option>
+                     <option value="2">运营费用节约率</option>
+                     <option value="3">营业收入增长率</option>
+                     <option value="4">营业现金比率</option>
+                     <option value="5">营业成本率</option>
+                   </select>
+                  </div>
+				</span></div>
+				<div class="boxnav" id="capital_2" style="height: 213px;">
+				</div>
+			</div>
+			<div class="box">
+				<div class="tit">人员情况<span class="titAmount" id="person_total"></span><span class="titAmountRight">人</span>
+					<span class="btn_right" id="personDate"></span>
+				</div>
+				<div class="boxnav" style="height: 360px;">
+					<div style="float: left; width: 45%; height: 170px" id="fb01"></div>
+					<div style="float: left; width: 55%; height: 170px" id="fb02"></div>
+					<div style="float: left; width: 43%; height: 170px" id="fb03"></div>
+					<div style="float: left; width: 57%; height: 170px" id="fb04"></div>
+				</div>
+			</div>
+			<div class="box">
+				<div class="tit">风控<span class="btn_right" id="fkdate"></span>
+				</div>
+				<div class="boxnav" style="height: 150px;">
+					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
+						<thead>
+						<tr>
+							<th>类  别</th>
+							<th>总件数</th>
+							<th>当年度件数</th>
+						</tr>
+						</thead>
+						<tbody id="risk_table">
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="box">
+				<div class="tit">合同履行（模块搭建中）</div>
+				<div class="boxnav" style="height: 180px;">
+					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
+						<thead>
+						<tr>
+							<th>部门</th>
+							<th>合同总数</th>
+							<th>履行中</th>
+							<th>履行完毕</th>
+						</tr>
+						</thead>
+						<tbody id="contract_table">
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="box">
+				<div class="tit">任务管理（模块搭建中）</div>
+				<div class="boxnav" style="height: 235px;">
+					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
+						<thead>
+						<tr>
+							<th>部门名</th>
+							<th>任务数</th>
+							<th>已完成数</th>
+							<th>未完成数</th>
+							<th>逾期数</th>
+						</tr>
+						</thead>
+						<tbody id="taskTable">
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</li>
+
+
+
+		<li class="right_size">
+
+		</li>
+	</ul>
+</div>
+</div>
+</body>
+<script>
+	function openRectify() {
+		layui.layer.open({
+			type:2,
+			title:"监督检查整改情况",
+			skin:"open_css",
+			area:['90%','90%'],
+			content: "/rectifyShow"
+		})
+
+	}
+
+</script>
+</html>
