@@ -420,17 +420,7 @@
                         str_info+='<td align="center">'+data1[i].id+'</td>';
                         str_info+='<td align="center">'+data1[i].name+'</td>';
                         str_info+='<td align="center">'+data1[i].url+'</td>';
-                        var roles = data1[i].roles;
-                        var rolesName="";
-                        for (var a = 0; a < roles.length; a++){
-                            var namezh = roles[a].namezh;
-                            if(rolesName==""){
-                                rolesName = namezh;
-                            }else {
-                                rolesName += ","+namezh;
-                            }
-                        }
-                        str_info+='<td align="center">'+rolesName+'</td></tr>';
+                        str_info+='<td align="center">'+data1[i].roles[0].namezh+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
 

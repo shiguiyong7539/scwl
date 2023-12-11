@@ -231,8 +231,8 @@
                 success: function (res) {
                     localStorage.removeItem("uids");
                     localStorage.removeItem("rids");
-                    location.reload();
                     layui.layer.msg(res.message);
+                    location.reload();
 
                 }})
         }

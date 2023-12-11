@@ -255,8 +255,8 @@
       SELECT
             m.*,
             r.id AS rid,
-            r.`name` AS rname,
-            r.nameZh AS rnameZh
+            GROUP_CONCAT(r.`name`) AS rname,
+            GROUP_CONCAT(r.`nameZh`) AS rnameZh
         FROM
             menu m,
             menu_role mr,
@@ -270,6 +270,7 @@
         <if test="roleName != null and roleName!=''" >
           and r.nameZh like #{roleName}
         </if>
+        GROUP BY m.id
         ORDER BY
             m.id
   </select>
