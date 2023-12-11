@@ -827,7 +827,7 @@ function echarts_5(rate) {
                     var showTagData = [];
                     var quarterly_data = [];
                     //显示title
-                    var showTtile = ['融资计划完成率','区国资考核指标'];
+                    var showTtile = ['融资计划完成率','区国资委考核指标'];
                     var data = res.obj.list;
                     var incomeRate = res.obj.incomeRate;
                     // for (let i = 0; i < data.length; i++) {
@@ -857,19 +857,19 @@ function echarts_5(rate) {
                             showData.push(incomeRate[i].finishRate);
                             showTagData.push(incomeRate[i].finishRateTag);
                         }else if(rate==2){
-                            showTtile = ['运营费用节约率','区国资考核指标'];
+                            showTtile = ['运营费用节约率','区国资委考核指标'];
                             showData.push(incomeRate[i].operatRate);
                             showTagData.push(incomeRate[i].operatRateTag);
                         }else if(rate==3){
-                            showTtile = ['营业收入增长率','区国资考核指标'];
+                            showTtile = ['营业收入增长率','区国资委考核指标'];
                             showData.push(incomeRate[i].incomeRate);
                             showTagData.push(incomeRate[i].incomeRateTag);
                         }else if(rate==4){
-                            showTtile = ['营业现金比率','区国资考核指标'];
+                            showTtile = ['营业现金比率','区国资委考核指标'];
                             showData.push(incomeRate[i].cashRate);
                             showTagData.push(incomeRate[i].cashRateTag);
                         }else if(rate==5){
-                            showTtile = ['营业成本率','区国资考核指标'];
+                            showTtile = ['营业成本率','区国资委考核指标'];
                             showData.push(incomeRate[i].costRate);
                             showTagData.push(incomeRate[i].costRateTag);
                         }
