@@ -257,7 +257,7 @@ public class LoginController {
             session.setAttribute("code","404");
             session.setAttribute("message",resBean.getMessage());
         }
-        return "redirect:getShowData";
+        return "forward:getShowData";
     }
     @RequestMapping("/getOaToken")
     @ResponseBody
