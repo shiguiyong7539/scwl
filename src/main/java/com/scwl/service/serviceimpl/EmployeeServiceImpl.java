@@ -16,10 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -81,8 +78,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Map> byEduGroup = employeeMapper.getByEduGroup();
         //按职称分组
         List<Map> byRankGroup = employeeMapper.getByRankGroup();
+        byRankGroup = sort(byRankGroup, 1);
         //按用工方式分组
         List<Map> byModeGroup = employeeMapper.getByModeGroup();
+        byModeGroup = sort(byModeGroup,2);
         HashMap<String, Object> map = new HashMap<>();
         map.put("age",byAgeGroup);
         map.put("edu",byEduGroup);
@@ -135,4 +134,55 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return map;
     }
+    //排序
+    private List<Map> sort(List<Map> list,int type){
+        List<Map> sort = new ArrayList<>();
+        if(type==1){
+            for (Map map : list) {
+                String rank = map.get("rank").toString();
+                if(rank.equals("高级")){
+                    sort.add(map);
+                    break;
+                }
+            }
+            for (Map map : list) {
+                String rank = map.get("rank").toString();
+                if(rank.equals("中级")){
+                    sort.add(map);
+                    break;
+                }
+            }
+            for (Map map : list) {
+                String rank = map.get("rank").toString();
+                if(rank.equals("初级")){
+                    sort.add(map);
+                    break;
+                }
+            }
+        }else {
+            for (Map map : list) {
+                String rank = map.get("employment_mode").toString();
+                if(rank.equals("正式聘用")){
+                    sort.add(map);
+                    break;
+                }
+            }
+            for (Map map : list) {
+                String rank = map.get("employment_mode").toString();
+                if(rank.equals("劳务外包")){
+                    sort.add(map);
+                    break;
+                }
+            }
+            for (Map map : list) {
+                String rank = map.get("employment_mode").toString();
+                if(rank.equals("劳务派遣")){
+                    sort.add(map);
+                    break;
+                }
+            }
+        }
+        return sort;
+    }
+
 }

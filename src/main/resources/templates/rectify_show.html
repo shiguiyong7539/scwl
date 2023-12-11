@@ -112,10 +112,10 @@
                     <thead>
                     <tr>
                         <td width="3%">编号</td>
-                        <td width="24%">名称</td>
+                        <td width="15%">名称</td>
                         <td width="8%">被监督部门</td>
-                        <td width="8%">状态</td>
                         <td width="8%">整改期限</td>
+                        <td width="8%">是否完成整改</td>
                         <td width="8%">操作</td>
                     </tr>
                     </thead>
@@ -211,8 +211,8 @@
                         str_info+='<tr><td align="center">'+data1[i].id+'</td>';
                         str_info+='<td align="center">'+data1[i].headLine+'</td>';
                         str_info+='<td align="center">'+data1[i].department+'</td>';
-                        str_info+='<td align="center">'+data1[i].status+'</td>';
                         str_info+='<td align="center">'+dateFormat(1,data1[i].deadline)+'</td>';
+                        str_info+='<td align="center">'+data1[i].status+'</td>';
                         str_info+='<td align="center" onclick="getDetails('+data1[i].id+')"><button class="redB">详情</button></td></tr>';
                     }
                     $("#myTable").html(str_info);

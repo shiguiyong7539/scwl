@@ -295,12 +295,14 @@
     SELECT FLOOR(TIMESTAMPDIFF(YEAR, birthday, CURDATE())  / 10) * 10 AS age_group, COUNT(id) AS count
     FROM employee
     GROUP BY age_group
+    ORDER BY age_group desc
   </select>
 
   <select id="getByEduGroup" resultType="java.util.Map">
     SELECT education, COUNT(id) AS count
     FROM employee
     GROUP BY education
+    ORDER BY education desc
   </select>
 
   <select id="getByRankGroup" resultType="java.util.Map">

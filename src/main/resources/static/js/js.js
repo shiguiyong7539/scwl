@@ -1054,7 +1054,7 @@ function echarts_5(rate) {
                             }
                         },
                         legend: {
-                            data: ['可用资金','不可用资金'],
+                            data: ['灵活使用资金','受限资金'],
                             top:'5%',
                             textStyle: {
                                 color: "#fff",
