@@ -242,14 +242,14 @@
                     <thead>
                     <tr>
                         <td width="20"><input type="checkbox" onclick="chooseEmpAll()"></td>
-                        <td width="80">编号</td>
-                        <td width="80">名称</td>
-                        <td width="80">性别</td>
-                        <td width="80">年龄</td>
-                        <td width="80">学历</td>
+                        <td width="10">编号</td>
+                        <td width="60">名称</td>
+                        <td width="20">性别</td>
+                        <td width="20">年龄</td>
+                        <td width="60">学历</td>
                         <td width="80">部门</td>
                         <td width="80">职务</td>
-                        <td width="80">职称</td>
+                        <td width="60">职称</td>
                         <td width="80">用工方式</td>
                         <td width="80">联系电话</td>
                         <td width="80">出生时间</td>
@@ -478,11 +478,28 @@
                         str_info+='<td align="center">'+data1[i].name+'</td>';
                         str_info+='<td align="center">'+data1[i].sex+'</td>';
                         str_info+='<td align="center">'+data1[i].age+'</td>';
-                        str_info+='<td align="center">'+data1[i].education+'</td>';
-                        str_info+='<td align="center">'+data1[i].department+'</td>';
+                        str_info+='<td><span id="education'+data1[i].id+'">'+data1[i].education+'</span><select style="width: 32%;float: right" id="education_'+data1[i].id+'" onchange="updateEdu('+data1[i].id+')">\n' +
+                            '                            <option value=""></option>\n' +
+                            '                            <option value="中专">中专</option>\n' +
+                            '                            <option value="大专">大专</option>\n' +
+                            '                            <option value="本科">本科</option>\n' +
+                            '                            <option value="研究生">研究生</option>\n' +
+                            '                            <option value="其它">其它</option>\n' +
+                            '                        </select></td>';
+                        str_info+='<td align="center"><input style="text-align: center;" id="department_'+data1[i].id+'" onchange="updateMember('+data1[i].id+')" value="'+isNull(data1[i].department)+'"></td>';
                         str_info+='<td align="center"><input style="text-align: center;" id="duty_'+data1[i].id+'" onchange="updateMember('+data1[i].id+')" value="'+isNull(data1[i].jobDuty)+'"></td>';
-                        str_info+='<td align="center">'+data1[i].rank+'</td>';
-                        str_info+='<td align="center">'+data1[i].employmentMode+'</td>';
+                        str_info+='<td><span id="rank'+data1[i].id+'">'+data1[i].rank+'</span><select style="width: 32%;float: right" id="rank_'+data1[i].id+'" onchange="updateEdu('+data1[i].id+')">\n' +
+                            '                            <option value=""></option>\n' +
+                            '                            <option value="初级">初级</option>\n' +
+                            '                            <option value="中级">中级</option>\n' +
+                            '                            <option value="高级">高级</option>\n' +
+                            '                        </select></td>';
+                        str_info+='<td><span id="employmentMode'+data1[i].id+'">'+data1[i].employmentMode+'</span><select style="width: 24%;float: right" id="employmentMode_'+data1[i].id+'" onchange="updateEdu('+data1[i].id+')">\n' +
+                        '                            <option value=""></option>\n' +
+                        '                            <option value="劳务外包">劳务外包</option>\n' +
+                        '                            <option value="劳务派遣">劳务派遣</option>\n' +
+                        '                            <option value="正式聘用">正式聘用</option>\n' +
+                            '                        </select></td>';
                         str_info+='<td align="center"><input style="text-align: center;" id="phone_'+data1[i].id+'" onchange="updateMember('+data1[i].id+')" value="'+isNull(data1[i].phone)+'"></td>';
                         str_info+='<td align="center">'+dateFormat(1,data1[i].birthday)+'</td></tr>';
                     }
@@ -650,6 +667,7 @@
     function updateMember(id) {
         let phone =  document.getElementById("phone_"+id).value;
         let jobDuty =  document.getElementById("duty_"+id).value;
+        let department =  document.getElementById("department_"+id).value;
         $.ajax({
             type: "post",
             url: "/updateMember",
@@ -659,14 +677,15 @@
             data:({
                 id:id,
                 phone:phone,
-                jobDuty:jobDuty
+                jobDuty:jobDuty,
+                department:department
             }),
             success: function (res) {
                 if(res && res.code===200){
                     modal.style.display = "none";
                     layui.layer.msg(res.message,{time:1000},function(){
                         layer.close(); //再执行关闭
-                        //  location.reload();
+                        //location.reload();
                     });
 
                 }
@@ -675,6 +694,45 @@
 
         })
 
+    }
+
+    function updateEdu(id) {
+        var education = document.getElementById("education_"+id).value;
+        var rank = document.getElementById("rank_"+id).value;
+        var employmentMode = document.getElementById("employmentMode_"+id).value;
+        $.ajax({
+            type: "post",
+            url: "/updateMember",
+            headers: {
+                'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:({
+                id:id,
+                education:education,
+                rank:rank,
+                employmentMode:employmentMode
+            }),
+            success: function (res) {
+                if(res && res.code===200){
+                    modal.style.display = "none";
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        if(education.length>0){
+                            $("#education"+id).html(education)
+                        }
+                        if(rank.length>0){
+                            $("#rank"+id).html(rank)
+                        }
+                        if(employmentMode.length>0){
+                            $("#employmentMode"+id).html(employmentMode)
+                        }
+                    });
+
+                }
+            }
+
+
+        })
     }
     function isNull(number) {
         if(null==number){

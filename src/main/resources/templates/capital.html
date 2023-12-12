@@ -307,16 +307,9 @@
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="costRateTag"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
-                        季度：
+                        月份：
                         <div class="formRight">
-                            <select id="quarterly"  style="width: 162px;" >
-                                <option value=""></option>
-                                <option value="1季度">1季度</option>
-                                <option value="2季度">2季度</option>
-                                <option value="3季度">3季度</option>
-                                <option value="4季度">4季度</option>
-
-                            </select>
+                            <input type="date"  style="width: 162px;" id="quarterly">
                         </div>
                     </div>
                     <div class="formRow2">
@@ -346,11 +339,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="formRow2">
-                        可用资金：
+                        灵活使用资金：
                         <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="useCapital"></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
-                        不可用资金：
+                        受限资金：
                         <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="unUseCapital"></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
@@ -505,36 +498,36 @@
                         if(data1[0].type==1){
                             for (var i = 0; i < data1.length; i++) {
                                 str_info+='<tr><td align="center">'+data1[i].id+'</td>';
-                                str_info+='<td align="center">'+isNull(data1[i].useCapital)+'</td>';
-                                str_info+='<td align="center">'+isNull(data1[i].unUseCapital)+'</td>';
+                                str_info+='<td align="center"><input style="text-align: center" id="useCapital_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',1)" value="'+isNull(data1[i].useCapital)+'"></td>';
+                                str_info+='<td align="center"><input style="text-align:center;" id="unUseCapital_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',1)" value="'+isNull(data1[i].unUseCapital)+'"></td>';
                                 str_info+='<td align="center">'+dateFormat(1,data1[i].addDate)+'</td></tr>';
                             }
                             str_thead='<tr>\n' +
-                                '                        <td width="80">编号</td>\n' +
-                                '                        <td width="80">可用资金</td>\n' +
-                                '                        <td width="80">不可用资金</td>\n' +
+                                '                        <td width="10">编号</td>\n' +
+                                '                        <td width="30">灵活使用资金</td>\n' +
+                                '                        <td width="30">受限资金</td>\n' +
                                 '                        <td width="80">日期</td>\n' +
                                 '                    </tr>';
                         }else {
                             for (var i = 0; i < data1.length; i++) {
                                 str_info+='<tr><td align="center">'+data1[i].id+'</td>';
                                 str_info+='<td align="center">'+(data1[i].quarterly==null?"":data1[i].quarterly)+'</td>';
-                                str_info+='<td align="center">'+percentage(data1[i].finishRate)+'</td>';
-                                str_info+='<td align="center">'+percentage(data1[i].operatRate)+'</td>';
-                                str_info+='<td align="center">'+percentage(data1[i].incomeRate)+'</td>';
-                                str_info+='<td align="center">'+percentage(data1[i].cashRate)+'</td>';
-                                str_info+='<td align="center">'+percentage(data1[i].costRate)+'</td>';
+                                str_info+='<td><input style="text-align: right;width: 89%;" id="finishRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].finishRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 89%;" id="operatRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].operatRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 89%;" id="incomeRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].incomeRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 89%;" id="cashRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].cashRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 89%;" id="costRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].costRate)+'">%</td>';
                                 str_info+='<td align="center">'+dateFormat(1,data1[i].addDate)+'</td></tr>';
                             }
                             str_thead='<tr>\n' +
-                                '                        <td width="80">编号</td>\n' +
-                                '                        <td width="80">季度</td>\n' +
-                                '                        <td width="80">融资计划完成率</td>\n' +
-                                '                        <td width="80">运营费用节约率</td>\n' +
-                                '                        <td width="80">营业收入增长率</td>\n' +
-                                '                        <td width="80">营业现金比率</td>\n' +
-                                '                        <td width="80">营业成本率</td>\n' +
-                                '                        <td width="80">日期</td>\n' +
+                                '                        <td width="10">编号</td>\n' +
+                                '                        <td width="30">季度</td>\n' +
+                                '                        <td width="30">融资计划完成率</td>\n' +
+                                '                        <td width="30">运营费用节约率</td>\n' +
+                                '                        <td width="30">营业收入增长率</td>\n' +
+                                '                        <td width="30">营业现金比率</td>\n' +
+                                '                        <td width="30">营业成本率</td>\n' +
+                                '                        <td width="30">日期</td>\n' +
                                 '                    </tr>';
                         }
 
@@ -787,6 +780,66 @@
             }
         }
 
+        function updateCapital(id,type) {
+            if(type==1){
+                let useCapital =  document.getElementById("useCapital_"+id).value;
+                let unUseCapital =  document.getElementById("unUseCapital_"+id).value;
+                $.ajax({
+                    type: "post",
+                    url: "/updateCapital",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data:({
+                        id:id,
+                        useCapital:useCapital,
+                        unUseCapital:unUseCapital
+                    }),
+                    success: function (res) {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+
+                    }
+
+                })
+            }else {
+                let finishRate =  document.getElementById("finishRate_"+id).value;
+                let operatRate =  document.getElementById("operatRate_"+id).value;
+                let incomeRate =  document.getElementById("incomeRate_"+id).value;
+                let cashRate =  document.getElementById("cashRate_"+id).value;
+                let costRate =  document.getElementById("costRate_"+id).value;
+                $.ajax({
+                    type: "post",
+                    url: "/updateCapital",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data:({
+                        id:id,
+                        finishRate:finishRate,
+                        operatRate:operatRate,
+                        incomeRate:incomeRate,
+                        cashRate:cashRate,
+                        costRate:costRate
+                    }),
+                    success: function (res) {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+
+                    }
+
+
+                })
+            }
+
+
+
+
+        }
     </script>
 </body>
 </html>

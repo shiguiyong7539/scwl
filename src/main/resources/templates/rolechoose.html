@@ -82,7 +82,8 @@
                     </form>
                 </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>角色信息</h6>
-                    <div class="formAddEmp"><input type="submit"  onclick="addMenuRoles()"  value="添加授权" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit"  onclick="addMenuRoles()"  value="添加授权" class="redB"></div>
+                    <div class="formAddEmp"><input type="submit"  onclick="deleteMenuRoles()"  value="删除授权" class="redB"></div>
                 </div>
 
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
@@ -234,6 +235,37 @@
                     localStorage.removeItem("rids");
                     layui.layer.msg(res.message);
                     location.reload();
+
+                }})
+        }
+    }
+
+    function deleteMenuRoles() {
+        var selectedValues = document.querySelectorAll(".checkRole:checked");
+        var rids = [];
+        for (var i = 0; i < selectedValues.length; i++) {
+            rids.push(selectedValues[i].value);
+        }
+        if(rids.length==0){
+            layui.layer.msg('您沒有勾选任何角色');
+        }else {
+            localStorage.setItem("rids",rids);
+            var data = {"mids": localStorage.getItem("mids"), "rids": localStorage.getItem("rids")};
+            console.log(data)
+            $.ajax({
+                type: "get",
+                url: "/deleteMenuRole",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data: data,
+                success: function (res) {
+                    localStorage.removeItem("mids");
+                    localStorage.removeItem("rids");
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload()
+                    });
 
                 }})
         }

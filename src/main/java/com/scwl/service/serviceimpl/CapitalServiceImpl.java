@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,13 +75,55 @@ public class CapitalServiceImpl implements CapitalService {
     public ResBean getCapitalByCenterShow() {
         HashMap<String, Object> hashMap = new HashMap<>();
         //可用和不可用资金
-        List<Capital> income = capitalMapper.getIncome();
+        List<Capital> income  = capitalMapper.getIncome();
         //比率
-        List<Capital> incomeRate = capitalMapper.getIncomeRate();
+        List<Capital> incomeRate  = capitalMapper.getIncomeRate();
         hashMap.put("list",income);
         hashMap.put("incomeRate",incomeRate);
-        hashMap.put("use_money",income.get(income.size()-1).getUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
-        hashMap.put("unUse_money",income.get(income.size()-1).getUnUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        if(income.size()>0){
+            hashMap.put("use_money",income.get(income.size()-1).getUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+            hashMap.put("unUse_money",income.get(income.size()-1).getUnUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        }else {
+            hashMap.put("use_money","");
+            hashMap.put("unUse_money","");
+        }
         return ResBean.success("success",hashMap);
+    }
+
+    @Override
+    public ResBean updateCapital(Capital capital) {
+        try{
+            Capital oldCapital = capitalMapper.selectByPrimaryKey(capital.getId());
+            if(oldCapital.getType()==1){
+                if(null!=capital.getUnUseCapital()){
+                    oldCapital.setUnUseCapital(capital.getUnUseCapital());
+                }
+                if(null!=capital.getUseCapital()){
+                    oldCapital.setUseCapital(capital.getUseCapital());
+                }
+            }else {
+                if(null!=capital.getFinishRate()){
+                    oldCapital.setFinishRate(capital.getFinishRate());
+                }
+                if(null!=capital.getOperatRate()){
+                    oldCapital.setOperatRate(capital.getOperatRate());
+                }
+                if(null!=capital.getIncomeRate()){
+                    oldCapital.setIncomeRate(capital.getIncomeRate());
+                }
+                if(null!=capital.getCashRate()){
+                    oldCapital.setCashRate(capital.getCashRate());
+                }
+                if(null!=capital.getCostRate()){
+                    oldCapital.setCostRate(capital.getCostRate());
+                }
+            }
+            capitalMapper.updateByPrimaryKey(oldCapital);
+            logService.addLog("UPDATE","capital",capital.getId(),"修改id为"+capital.getId()+"的资金状况信息");
+
+            return  ResBean.success("修改成功");
+        }catch (Exception e){
+            return  ResBean.error("修改失败");
+        }
     }
 }

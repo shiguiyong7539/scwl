@@ -232,16 +232,17 @@
                 </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>权限菜单</h6>
                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myCostBtn" value="添加菜单" class="redB"></div>
-                   <div class="formAddEmp"><input type="submit"  onclick="openRoles()"  value="添加授权" class="redB"></div>
+                   <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit"  onclick="openRoles()"  value="添加授权" class="redB"></div>
+                   <div class="formAddEmp"><input type="submit"  onclick="deleteRoles()"  value="删除授权" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
                         <td width="20"><input type="checkbox" onclick="selectAll()"></td>
                         <td width="20">序号</td>
-                        <td width="80">名称</td>
+                        <td width="60">名称</td>
                         <td width="30">URL</td>
-                        <td width="80">所需角色</td>
+                        <td width="100">所需角色</td>
                     </tr>
                     </thead>
                     <tbody id="myTable">
@@ -534,9 +535,6 @@
 
     }
     function openRoles() {
-      //  var selectedValues = $(".checkMenu:checked").val();
-      // 使用原生JavaScript
-      //  var selectedValues = document.querySelectorAll(".checkMenu");
         var selectedValues = document.querySelectorAll(".checkMenu:checked");
         var mids = [];
         for (var i = 0; i < selectedValues.length; i++) {
@@ -563,6 +561,33 @@
             })
         }
 
+    }
+    function deleteRoles() {
+        var selectedValues = document.querySelectorAll(".checkMenu:checked");
+        var mids = [];
+        for (var i = 0; i < selectedValues.length; i++) {
+            mids.push(selectedValues[i].value);
+        }
+        if(mids.length==0){
+            layui.layer.msg('您沒有勾选任何菜单');
+        }else {
+            localStorage.setItem("mids",mids);
+            layui.layer.open({
+                type:2,
+                title:"角色",
+                skin:"open_css",
+                area:['45%','50%'],
+                closeBtn: 1, //关闭按钮的样式，0是默认的
+                shadeClose: true, //点击弹出层外空白处
+                content: "/roleChoose",
+                success: function(layero, index){
+                    // 添加关闭事件
+                    layero.close(function(){
+                        // 刷新主页
+                        location.reload();
+                    });}
+            })
+        }
     }
 
     function selectAll() {

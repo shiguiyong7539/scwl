@@ -243,16 +243,7 @@
                     <div class="formAddEmp"><input type="submit" id="myStateBtn" value="添加经营状况" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
-                    <thead>
-                    <tr>
-                        <td width="80">编号</td>
-                        <td width="80">经营类型</td>
-                        <td width="80">项目名称</td>
-                        <td width="80">租金收入</td>
-                        <td width="80">欠缴租金</td>
-                        <td width="80">出租率</td>
-                        <td width="80">日期</td>
-                    </tr>
+                    <thead id="myThead">
                     </thead>
                     <tbody id="myTable">
                     </tbody>
@@ -453,17 +444,49 @@
                         var pages = parseInt(res.obj.pages);
                         var total = parseInt(res.obj.total);
                         // 获取表格元素
+                        /**
+                         *
+                         * @type {string}
+                         */
                         var str_info='';
+                        var str_thead='';
                         for (var i = 0; i < data1.length; i++) {
-                            str_info+='<tr><td align="center">'+data1[i].id+'</td>';
-                            str_info+='<td align="center">'+data1[i].type+'</td>';
-                            str_info+='<td align="center">'+data1[i].name+'</td>';
-                            str_info+='<td align="center"><input id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentIncome)+'"></td>';
-                            str_info+='<td align="center"><input id="rentArrears_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentArrears)+'"></td>';
-                            str_info+='<td align="center"><input id="letRate_input_'+data1[i].id+'"  onchange="updateState('+data1[i].id+')" style="text-align: right" value="'+isNull(data1[i].letRate)+'">%</td>';
-                            str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
+                            if(data1[i].type=='资产经营'){
+                                str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                                str_info+='<td align="center">'+data1[i].type+'</td>';
+                                str_info+='<td align="center">'+data1[i].name+'</td>';
+                                str_info+='<td align="center"><input id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentIncome)+'"></td>';
+                                str_info+='<td align="center"><input id="rentArrears_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentArrears)+'"></td>';
+                                str_info+='<td align="center"><input id="letRate_input_'+data1[i].id+'"  onchange="updateState('+data1[i].id+')" style="text-align: right" value="'+isNull(data1[i].letRate)+'">%</td>';
+                                str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
+
+                                str_thead='<tr>\n' +
+                                    '                         <td width="80">编号</td>\n' +
+                                    '                         <td width="80">经营类型</td>\n' +
+                                    '                         <td width="80">项目名称</td>\n' +
+                                    '                         <td width="80">租金收入</td>\n' +
+                                    '                         <td width="80">欠缴租金</td>\n' +
+                                    '                         <td width="80">出租率</td>\n' +
+                                    '                         <td width="80">日期</td>\n' +
+                                    '                         </tr>';
+                            }else {
+                                str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                                str_info+='<td align="center">'+data1[i].type+'</td>';
+                                str_info+='<td align="center">'+data1[i].name+'</td>';
+                                str_info+='<td align="center"><input style="text-align: center" id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentIncome)+'"></td>';
+                                str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
+                                str_thead='<tr>\n' +
+                                    '                         <td width="80">编号</td>\n' +
+                                    '                         <td width="80">经营类型</td>\n' +
+                                    '                         <td width="80">项目名称</td>\n' +
+                                    '                         <td width="80">业务收入</td>\n' +
+                                    '                         <td width="80">日期</td>\n' +
+                                    '                         </tr>';
+                            }
                         }
+                        $("#myThead").html(str_thead);
                         $("#myTable").html(str_info);
+
 
                         pagenum0=pageNo-1;
                         pagenum1=pageNo+1;
@@ -678,14 +701,14 @@
                     letRate:letRate
                 }),
                 success: function (res) {
-                    if(res && res.code===200){
+                    if(res && res.code===200) {
                         modal.style.display = "none";
+                    }
                         layui.layer.msg(res.message,{time:1000},function(){
                             layer.close(); //再执行关闭
-                          //  location.reload();
+                            location.reload();
                         });
 
-                    }
                 }
 
 

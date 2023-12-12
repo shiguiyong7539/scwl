@@ -43,4 +43,9 @@ public class MenuRolesController {
     public ResBean addUserRole(HttpServletRequest request, Integer[] uids,Integer[] rids){
         return menuService.addUserRole(uids,rids);
     }
+
+    @RequestMapping("/deleteMenuRole")
+    public ResBean deleteMenuRole(HttpServletRequest request, Integer[] mids,Integer[] rids){
+        return menuService.deleteMenuRole(mids,rids);
+    }
 }

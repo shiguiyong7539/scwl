@@ -54,13 +54,21 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public ResBean addMenu(Menu menu) {
-        menu.setEnabled(true);
-        menuMapper.insert(menu);
-        MenuRole menuRole = new MenuRole();
-        menuRole.setMid(menu.getId());
-        menuRole.setRid(1);
-        menuRoleMapper.insert(menuRole);
-        return ResBean.success("添加成功");
+        MenuExample menuExample = new MenuExample();
+        menuExample.createCriteria().andUrlEqualTo(menu.getUrl());
+        List<Menu> menus = menuMapper.selectByExample(menuExample);
+        if(menus.size()==0){
+            menu.setEnabled(true);
+            menuMapper.insert(menu);
+            MenuRole menuRole = new MenuRole();
+            menuRole.setMid(menu.getId());
+            menuRole.setRid(1);
+            menuRoleMapper.insert(menuRole);
+            return ResBean.success("添加成功");
+        }else {
+            return ResBean.success("此菜单的URL已经存在");
+        }
+
     }
 
     @Override
@@ -103,7 +111,7 @@ public class MenuServiceImpl implements MenuService {
         for (Integer uid : uids) {
             for (Integer rid : rids) {
                 UserRoleExample example = new UserRoleExample();
-                example.createCriteria().andUserIdEqualTo(uid).andRidEqualTo(rid);
+                example.createCriteria().andUserIdEqualTo(uid);
                 List<UserRole> userRoles = userRoleMapper.selectByExample(example);
                 if(userRoles.size()==0){
                     UserRole userRole = new UserRole();
@@ -118,6 +126,23 @@ public class MenuServiceImpl implements MenuService {
             }
         }
         return ResBean.success("授权成功");
+    }
+
+    @Override
+    public ResBean deleteMenuRole(Integer[] mids, Integer[] rids) {
+        for (Integer mid : mids) {
+            for (Integer rid : rids) {
+                MenuRoleExample example = new MenuRoleExample();
+                example.createCriteria().andMidEqualTo(mid).andRidEqualTo(rid);
+                List<MenuRole> menuRoles = menuRoleMapper.selectByExample(example);
+                if(menuRoles.size()>0) {
+                    for (MenuRole menuRole : menuRoles) {
+                        menuRoleMapper.deleteByPrimaryKey(menuRole.getId());
+                    }
+                }
+            }
+        }
+        return ResBean.success("授权删除成功");
     }
 
 

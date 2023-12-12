@@ -71,6 +71,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(null!=employee.getJobDuty()&&""!=employee.getJobDuty()){
             employee1.setJobDuty(employee.getJobDuty());
         }
+        if(null!=employee.getDepartment()&&""!=employee.getDepartment()){
+            employee1.setDepartment(employee.getDepartment());
+        }
+        if(null!=employee.getEducation()&&""!=employee.getEducation()){
+            employee1.setEducation(employee.getEducation());
+        }
+        if(null!=employee.getRank()&&""!=employee.getRank()){
+            employee1.setRank(employee.getRank());
+        }
+        if(null!=employee.getEmploymentMode()&&""!=employee.getEmploymentMode()){
+            employee1.setEmploymentMode(employee.getEmploymentMode());
+        }
         employeeMapper.updateByPrimaryKey(employee1);
         return  ResBean.success("修改成功");
     }

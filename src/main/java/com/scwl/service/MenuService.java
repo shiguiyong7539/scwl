@@ -16,4 +16,5 @@ public interface MenuService {
     ResBean getAllMenu(int pageNum,int pageSize,Menu menu);
     ResBean addMenuRole(Integer[] mids,Integer[] rids);
     ResBean addUserRole(Integer[] uids,Integer[] rids);
+    ResBean deleteMenuRole(Integer[] mids,Integer[] rids);
 }

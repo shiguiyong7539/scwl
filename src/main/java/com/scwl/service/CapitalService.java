@@ -12,5 +12,6 @@ public interface CapitalService {
   ResBean getCapitalByCenter(String period,String condition);
 
   ResBean getCapitalByCenterShow();
+  ResBean updateCapital(Capital capital);
 
  }

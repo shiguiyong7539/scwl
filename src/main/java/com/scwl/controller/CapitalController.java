@@ -63,5 +63,10 @@ public class CapitalController {
     public Object getCapitalByCenterShow(HttpServletRequest request){
         return  capitalService.getCapitalByCenterShow();
     }
+    @RequestMapping("/updateCapital")
+    public Object updateCapital(HttpServletRequest request,Capital capital){
+        return capitalService.updateCapital(capital);
+
+    }
 
 }
