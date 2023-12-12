@@ -806,6 +806,8 @@ function echarts_5(rate) {
             },
             success: function (res) {
                 if(res && res.code===200){
+                    $("#capitalDate").html( res.obj.incom_lastDate);
+                    $("#capital2Date").html( res.obj.rate_lastDate);
                    // 融资计划完成率 运营费用节约率 营业收入增长率 营业现金比率 营业成本率 可用资金
                   // finishRate;operatRate; incomeRate;cashRate;costRate; useCapital;addDate;remark;
                     //当前可用资金
@@ -862,7 +864,7 @@ function echarts_5(rate) {
                     }
 
                     for (let i = 0; i < incomeRate.length; i++) {
-                        quarterly_data.push(incomeRate[i].quarterly);
+                        quarterly_data.push(incomeRate[i].remark+'月');
                         if(rate==1){
                             showData.push(incomeRate[i].finishRate);
                             showTagData.push(incomeRate[i].finishRateTag);
@@ -1271,7 +1273,7 @@ function echarts_31() {
                             animation:true,
                             center: ['35%', '50%'],
                             radius: ['40%', '50%'],
-                            color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+                            color: ['#62c98d', '#2f89cf', '#4cb9cf', '#13e099','#e58c00','#0DE0A4'],
                             label: {show:false},
                             labelLine: {show:false},
                             data:ageData
@@ -1789,6 +1791,8 @@ function echarts_33(period) {
             }),
             success: function (res) {
                 if(res && res.code===200){
+                    $("#fb06Date").html(res.obj.lastDate);
+                    $("#fb08Date").html(res.obj.lastDate);
                     var moneyData;
                     if(period=='月'){
                         moneyData = res.obj.month;

@@ -36,6 +36,7 @@ public interface CapitalMapper {
 
     List<Capital> getIncome();
     List<Capital> getIncomeRate();
+    Capital getLastDate(Integer type);
 
 
 

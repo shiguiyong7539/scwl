@@ -79,4 +79,5 @@ public interface BudgetMapper {
     List<Budget> getBudgetByYear();
     List<Budget> getDepartment();
     List<Budget> getBudgetByDepartment(String department);
+    Budget getLastDate();
 }

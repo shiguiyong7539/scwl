@@ -419,20 +419,23 @@
 
   <select id="getIncome" parameterType="java.lang.String" resultMap="BaseResultMap">
       select use_capital,un_use_capital,
-      MONTH(add_date)  as remark
+      MONTH(quarterly)  as remark
     from capital
-   where type=1 and  DATE_FORMAT(add_date,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
-     GROUP BY DATE_FORMAT(add_date,'%Y-%m')
-     ORDER BY DATE_FORMAT(add_date,'%Y-%m')
+   where type=1 and  DATE_FORMAT(quarterly,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+     GROUP BY DATE_FORMAT(quarterly,'%Y-%m')
+     ORDER BY DATE_FORMAT(quarterly,'%Y-%m')
   </select>
   <select id="getIncomeRate" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
        finish_rate,finish_rate_tag,operat_rate,operat_rate_tag,income_rate,income_rate_Tag,
        cash_rate,cash_rate_tag,cost_rate,cost_rate_tag,quarterly,
-      YEAR(add_date)  as remark
+      MONTH(quarterly)  as remark
     from capital
-    where type=2 and    DATE_FORMAT(add_date,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 24 MONTH)
-     GROUP BY quarterly, YEAR(add_date)
-     ORDER BY DATE_FORMAT(add_date,'%Y-%m'),quarterly
+    where type=2 and    DATE_FORMAT(quarterly,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+     GROUP BY quarterly
+     ORDER BY DATE_FORMAT(quarterly,'%Y-%m')
+  </select>
+  <select id="getLastDate" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+       select quarterly  from capital where type=#{type}  ORDER BY quarterly DESC LIMIT 1
   </select>
 </mapper>

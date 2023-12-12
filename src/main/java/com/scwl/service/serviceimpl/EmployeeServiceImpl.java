@@ -2,6 +2,7 @@ package com.scwl.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import com.scwl.mapper.DepartmentMapper;
 import com.scwl.mapper.EmployeeMapper;
 import com.scwl.pojo.*;
@@ -41,6 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(null!=emp.getPhone()&&""!=emp.getPhone()){
             criteria.andPhoneLike("%"+emp.getPhone()+"%");
         }
+        criteria.andIsDeleteEqualTo(0);
         employeeExample.setOrderByClause("id ASC");
         List<Employee> employees = employeeMapper.selectByExample(employeeExample);
         for (Employee employee : employees) {
@@ -53,6 +55,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ResBean addEmployee(Employee employee) {
         try{
+            if(employee.getRank().equals("无")){
+                employee.setRank("");
+            }
+            employee.setIsDelete(0);
+            employee.setAddTime(new Date());
             employeeMapper.insert(employee);
             logService.addLog("INSERT","employee",employee.getId(),"新增id为"+employee.getId()+"的员工信息");
             return  ResBean.success("添加成功");
@@ -83,15 +90,28 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(null!=employee.getEmploymentMode()&&""!=employee.getEmploymentMode()){
             employee1.setEmploymentMode(employee.getEmploymentMode());
         }
+        employee.setAddTime(new Date());
         employeeMapper.updateByPrimaryKey(employee1);
         return  ResBean.success("修改成功");
+    }
+
+    @Override
+    public ResBean deleteMember(String ids) {
+        Gson gson = new Gson();
+        Integer[] idList = gson.fromJson(ids, Integer[].class);
+        for (Integer id : idList) {
+            Employee employee = employeeMapper.selectByPrimaryKey(id);
+            employee.setIsDelete(1);
+            employeeMapper.updateByPrimaryKey(employee);
+        }
+        return  ResBean.success("删除成功");
     }
 
     @Override
     public ResBean getByCenter() {
         //总人数
         int total = employeeMapper.getTotal();
-        //截止日期
+        //截至日期
         Employee employee = employeeMapper.getLastDate();
         //按年龄分组
         List<Map> byAgeGroup = employeeMapper.getByAgeGroup();
@@ -120,8 +140,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         map.put("rank",byRankGroup);
         map.put("mode",byModeGroup);
         map.put("total",total);
-        String str = new SimpleDateFormat("yyyy年MM月dd日").format(employee.getJoinTime());
-        map.put("latDate", "截止"+str);
+        String str = new SimpleDateFormat("yyyy年MM月dd日").format(employee.getAddTime());
+        map.put("latDate", "截至"+str);
         return ResBean.success("success",map);
     }
 
@@ -191,10 +211,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                     break;
                 }
             }
+            for (Map map : list) {
+                String rank = map.get("rank").toString();
+                if(rank.equals("无")){
+                    sort.add(map);
+                    break;
+                }
+            }
         }else {
             for (Map map : list) {
                 String rank = map.get("employment_mode").toString();
-                if(rank.equals("正式聘用")){
+                if(rank.equals("在职在编")){
                     sort.add(map);
                     break;
                 }

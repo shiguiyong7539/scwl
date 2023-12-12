@@ -215,17 +215,17 @@ public class RiskControlServiceImpl implements RiskControlService {
         //当年度监督整改总件数
         int totalYear1 = supervisionRectifyMapper.getTotalYear();
         map2.put("yearNum",totalYear1);
-        //截止日期
+        //截至日期
         RiskControl lastDate = riskControlMapper.getLastDate();
         SupervisionRectify lastDate1 = supervisionRectifyMapper.getLastDate();
         if(lastDate.getAddTime().compareTo(lastDate1.getAddTime())>0){
             String str = new SimpleDateFormat("yyyy年MM月dd日").format(lastDate.getAddTime());
-            map.put("lastDate","截止"+str);
-            map2.put("lastDate","截止"+str);
+            map.put("lastDate","截至"+str);
+            map2.put("lastDate","截至"+str);
         }else {
             String str = new SimpleDateFormat("yyyy年MM月dd日").format(lastDate1.getAddTime());
-            map.put("lastDate","截止"+str);
-            map2.put("lastDate","截止"+str);
+            map.put("lastDate","截至"+str);
+            map2.put("lastDate","截至"+str);
         }
         maps.add(map);
         maps.add(map2);

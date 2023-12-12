@@ -70,6 +70,7 @@
     animation-duration: 0.4s
 }
 
+
 /* 添加动画 */
 @-webkit-keyframes animatetop {
     from {top:-300px; opacity:0}
@@ -305,5 +306,11 @@ body .open_css .layui-layer-title{
         font-size: 10px!important;
 
     }
+    .tit4{
+        font-weight: 500;
+        font-size: 12px!important;
+        margin-left: 8%;
+    }
+
 
 }

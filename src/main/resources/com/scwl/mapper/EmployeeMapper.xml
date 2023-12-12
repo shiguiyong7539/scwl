@@ -14,6 +14,8 @@
     <result column="employment_mode" property="employmentMode" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="job_duty" property="jobDuty" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="DATE" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, name, sex, age, department, education, birthday, join_time, rank, employment_mode,
-    phone, job_duty
+    phone, job_duty, add_time, is_delete
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.EmployeeExample" >
     select
@@ -111,15 +113,15 @@
     insert into employee (id, name, sex,
       age, department, education,
       birthday, join_time, rank,
-      employment_mode, phone, job_duty
-      )
+      employment_mode, phone, job_duty,
+      add_time, is_delete)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
       #{age,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR},
       #{birthday,jdbcType=DATE}, #{joinTime,jdbcType=TIMESTAMP}, #{rank,jdbcType=VARCHAR},
-      #{employmentMode,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{jobDuty,jdbcType=VARCHAR}
-      )
+      #{employmentMode,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{jobDuty,jdbcType=VARCHAR},
+      #{addTime,jdbcType=DATE}, #{isDelete,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.scwl.pojo.Employee" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.scwl.pojo.Employee" >
     insert into employee
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -158,6 +160,12 @@
       <if test="jobDuty != null" >
         job_duty,
       </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -195,6 +203,12 @@
       </if>
       <if test="jobDuty != null" >
         #{jobDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=DATE},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -243,6 +257,12 @@
       <if test="record.jobDuty != null" >
         job_duty = #{record.jobDuty,jdbcType=VARCHAR},
       </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=DATE},
+      </if>
+      <if test="record.isDelete != null" >
+        is_delete = #{record.isDelete,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -261,7 +281,9 @@
     rank = #{record.rank,jdbcType=VARCHAR},
     employment_mode = #{record.employmentMode,jdbcType=VARCHAR},
     phone = #{record.phone,jdbcType=VARCHAR},
-    job_duty = #{record.jobDuty,jdbcType=VARCHAR}
+    job_duty = #{record.jobDuty,jdbcType=VARCHAR},
+    add_time = #{record.addTime,jdbcType=DATE},
+    is_delete = #{record.isDelete,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -302,6 +324,12 @@
       <if test="jobDuty != null" >
         job_duty = #{jobDuty,jdbcType=VARCHAR},
       </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=DATE},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -317,15 +345,18 @@
       rank = #{rank,jdbcType=VARCHAR},
       employment_mode = #{employmentMode,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      job_duty = #{jobDuty,jdbcType=VARCHAR}
+      job_duty = #{jobDuty,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=DATE},
+      is_delete = #{isDelete,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getTotal" resultType="java.lang.Integer">
-    select count(id) from employee
+<select id="getTotal" resultType="java.lang.Integer">
+    select count(id) from employee where is_delete = 0
   </select>
   <select id="getByAgeGroup" resultType="java.util.Map">
     SELECT FLOOR(TIMESTAMPDIFF(YEAR, birthday, CURDATE())  / 10) * 10 AS age_group, COUNT(id) AS count
     FROM employee
+    where is_delete = 0
     GROUP BY age_group
     ORDER BY age_group desc
   </select>
@@ -333,6 +364,7 @@
   <select id="getByEduGroup" resultType="java.util.Map">
     SELECT education, COUNT(id) AS count
     FROM employee
+    where is_delete = 0
     GROUP BY education
     ORDER BY education desc
   </select>
@@ -340,6 +372,7 @@
   <select id="getByRankGroup" resultType="java.util.Map">
     SELECT rank, COUNT(id) AS count
     FROM employee
+    where is_delete = 0
     GROUP BY rank
   </select>
 
@@ -347,9 +380,10 @@
   <select id="getByModeGroup" resultType="java.util.Map">
     SELECT employment_mode, COUNT(id) AS count
     FROM employee
+    where is_delete = 0
     GROUP BY employment_mode
   </select>
   <select id="getLastDate" parameterType="java.lang.String" resultMap="BaseResultMap">
-   select join_time  from employee  ORDER BY join_time DESC LIMIT 1
+   select add_time  from employee where is_delete = 0  ORDER BY add_time DESC LIMIT 1
   </select>
 </mapper>

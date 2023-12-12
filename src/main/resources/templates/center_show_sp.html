@@ -52,11 +52,13 @@
 		</li>
 		<li class="center_size">
 			<div class="box">
-				<div class="tit">灵活使用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元</span>
-					<span class="btn_right"><span class="tit2">受限资金</span>
+				<div class="tit">灵活使用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元</span></br>
+					受限资金
 					<span class="titAmount" id="unUse_money"></span><span class="titAmountRight">万元</span>
 					</span>
+					<span class="btn_right" id="capitalDate"></span>
 				</div>
+
 				<div class="boxnav" id="capital_1" style="height: 213px;"></div>
 			</div>
 			<div class="box">
@@ -94,6 +96,7 @@
 			<div class="box">
 				<div class="box">
 					<div class="tit">预算执行情况<span class="btn_right">
+						<span  id="fb06Date"></span>
 						<button class="infobtnChoose"  id="now_month">当月</button>
 						<button class="infobtn"  id="now_year">当年</button></span></div>
 					<div class="boxnav" style="height: 300px;">
@@ -102,12 +105,13 @@
 					</div>
 				</div>
 				<div class="box">
-					<div class="tit">预算偏差率</div>
+					<div class="tit">预算偏差率
+						<span class="btn_right" id="fb08Date"></span></div>
 					<div class="boxnav" style="height: 213px;" id="fb08"></div>
 				</div>
 			</div>
 			<div class="box">
-				<div class="tit">相关财务指标<span class="btn_right">
+				<div class="tit">相关财务指标<span style="margin-left: 8%;" id="capital2Date"></span><span class="btn_right">
 					<div class="layui-inline">
                     <select style="width: 100%"  lay-filter="demo" id="rate_type">
                      <option value="1">融资计划完成率</option>

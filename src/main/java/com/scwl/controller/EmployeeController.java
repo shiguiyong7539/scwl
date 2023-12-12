@@ -1,13 +1,11 @@
 package com.scwl.controller;
 
+import com.google.gson.Gson;
 import com.scwl.pojo.Employee;
 import com.scwl.pojo.ResBean;
 import com.scwl.service.EmployeeService;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.http.HttpStatus;
@@ -51,13 +49,24 @@ public class EmployeeController {
     }
 
     /**
-     * 人事添加员工信息
+     * 更新人事员工信息
      * @return
      */
     @RequestMapping("/updateMember")
     @ResponseBody
     public Object updateMember(HttpServletRequest request, Employee employee ){
         return employeeService.updateMember(employee);
+    }
+    /**
+     * 删除人事员工信息
+     * @return
+     */
+    @RequestMapping("/deleteMember")
+    @ResponseBody
+    public Object deleteMember(String ids){
+        return employeeService.deleteMember(ids);
+
+
     }
     /**
      * 按年龄分组

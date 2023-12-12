@@ -61,6 +61,14 @@ public class Employee {
      */
     private String jobDuty;
 
+    /**
+     */
+    private Date addTime;
+
+    /**
+     */
+    private Integer isDelete;
+
     public Integer getId() {
         return id;
     }
@@ -155,5 +163,21 @@ public class Employee {
 
     public void setJobDuty(String jobDuty) {
         this.jobDuty = jobDuty == null ? null : jobDuty.trim();
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
     }
 }

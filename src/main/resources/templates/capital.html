@@ -271,7 +271,7 @@
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="finishRate"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
-                        融资计划完成率指标：
+                        区国资委考核指标：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="finishRateTag"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
@@ -279,7 +279,7 @@
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="operatRate"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
-                        运营费用节约率指标：
+                        区国资委考核指标：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="operatRateTag"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
@@ -287,7 +287,7 @@
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="incomeRate"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
-                        营业收入增长率指标：
+                        区国资委考核指标：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="incomeRateTag"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
@@ -295,7 +295,7 @@
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="cashRate"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
-                        营业现金比率指标：
+                        区国资委考核指标：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="cashRateTag"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
@@ -303,7 +303,7 @@
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="costRate"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
-                        营业成本率指标：
+                        区国资委考核指标：
                         <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="costRateTag"><span>%</span></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
@@ -312,13 +312,6 @@
                             <input type="date"  style="width: 162px;" id="quarterly">
                         </div>
                     </div>
-                    <div class="formRow2">
-                        日期：
-                        <div class="formRight">
-                            <input type="date"  style="width: 162px;" id="addDate">
-                        </div>
-                    </div>
-
                     <div><button style="margin-left:20%;background: green;color: white;" onclick="addCapital()">提交</button></div>
                 </div>
                 <div class="modal-footer">
@@ -347,7 +340,7 @@
                         <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="unUseCapital"></div><div class="clear"></div>
                     </div>
                     <div class="formRow2">
-                        日期：
+                        月份：
                         <div class="formRight">
                             <input type="date"  style="width: 162px;" id="addDate">
                         </div>
@@ -498,12 +491,14 @@
                         if(data1[0].type==1){
                             for (var i = 0; i < data1.length; i++) {
                                 str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                                str_info+='<td align="center">'+(data1[i].quarterly==null?"":data1[i].quarterly)+'</td>';
                                 str_info+='<td align="center"><input style="text-align: center" id="useCapital_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',1)" value="'+isNull(data1[i].useCapital)+'"></td>';
                                 str_info+='<td align="center"><input style="text-align:center;" id="unUseCapital_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',1)" value="'+isNull(data1[i].unUseCapital)+'"></td>';
                                 str_info+='<td align="center">'+dateFormat(1,data1[i].addDate)+'</td></tr>';
                             }
                             str_thead='<tr>\n' +
                                 '                        <td width="10">编号</td>\n' +
+                                '                        <td width="30">月份</td>\n' +
                                 '                        <td width="30">灵活使用资金</td>\n' +
                                 '                        <td width="30">受限资金</td>\n' +
                                 '                        <td width="80">日期</td>\n' +
@@ -512,16 +507,16 @@
                             for (var i = 0; i < data1.length; i++) {
                                 str_info+='<tr><td align="center">'+data1[i].id+'</td>';
                                 str_info+='<td align="center">'+(data1[i].quarterly==null?"":data1[i].quarterly)+'</td>';
-                                str_info+='<td><input style="text-align: right;width: 89%;" id="finishRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].finishRate)+'">%</td>';
-                                str_info+='<td><input style="text-align: right;width: 89%;" id="operatRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].operatRate)+'">%</td>';
-                                str_info+='<td><input style="text-align: right;width: 89%;" id="incomeRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].incomeRate)+'">%</td>';
-                                str_info+='<td><input style="text-align: right;width: 89%;" id="cashRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].cashRate)+'">%</td>';
-                                str_info+='<td><input style="text-align: right;width: 89%;" id="costRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].costRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 85%;" id="finishRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].finishRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 85%;" id="operatRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].operatRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 85%;" id="incomeRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].incomeRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 85%;" id="cashRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].cashRate)+'">%</td>';
+                                str_info+='<td><input style="text-align: right;width: 85%;" id="costRate_'+data1[i].id+'" onchange="updateCapital('+data1[i].id+',2)" value="'+isNull(data1[i].costRate)+'">%</td>';
                                 str_info+='<td align="center">'+dateFormat(1,data1[i].addDate)+'</td></tr>';
                             }
                             str_thead='<tr>\n' +
                                 '                        <td width="10">编号</td>\n' +
-                                '                        <td width="30">季度</td>\n' +
+                                '                        <td width="30">月份</td>\n' +
                                 '                        <td width="30">融资计划完成率</td>\n' +
                                 '                        <td width="30">运营费用节约率</td>\n' +
                                 '                        <td width="30">营业收入增长率</td>\n' +
@@ -642,7 +637,6 @@
             var costRate = document.getElementById("costRate").value;
             var costRateTag = document.getElementById("costRateTag").value;
             var quarterly = document.getElementById("quarterly").value;
-            var addDate = document.getElementById("addDate").value;
             $.ajax({
                 type: "post",
                 url: "/addCapital",
@@ -661,19 +655,18 @@
                     cashRateTag:cashRateTag,
                     costRate:costRate,
                     costRateTag:costRateTag,
-                    quarterly:quarterly,
-                    addDate:new Date(addDate)
+                    quarterly:quarterly
                 }),
                 success: function (res) {
                     if(res && res.code===200) {
                         modal.style.display = "none";
-                    }
-                        layui.layer.msg(res.message,{time:1000},function(){
+                        layui.layer.msg(res.message, {time: 1000}, function () {
                             layer.close(); //再执行关闭
                             capitalposition();
                         });
-
-
+                    }else {
+                            layui.layer.msg(res.message,{time:1000});
+                        }
                 }
 
 
@@ -705,6 +698,8 @@
                             capitalposition();
                         });
 
+                    }else {
+                        layui.layer.msg(res.message,{time:1000});
                     }
                 }
 
@@ -712,24 +707,7 @@
             })
 
         }
-        function changeSelect2() {
-            var select1 = document.getElementById("name");
-            var select2 = document.getElementById("type");
-            var selectedValue = select1.value;
-            select2.innerHTML = ""; //清空第二个下拉菜单的内容
-            if (selectedValue === "资产经营") {
-                var optionArray = ["租金收入", "欠缴租金", "出租率"];
-            } else if (selectedValue === "经营业务收入") {
-                var optionArray = ["旧日长轨", "星河集市", "金沙艺术中心","灿若湖民宿","活动策划"];
-            } else {
-                var optionArray = [];
-            }
-            for (var i = 0; i < optionArray.length; i++) {
-                var option = document.createElement("option");
-                option.text = optionArray[i];
-                select2.add(option);
-            }
-        }
+
 
         //获取所有包含百分比转化
         function percentage(num) {
@@ -740,36 +718,6 @@
             }
 
 
-        }
-
-        function showColum() {
-            var select = document.getElementById("type").value;
-            var income = document.getElementsByClassName("income");
-            var expent = document.getElementsByClassName("expent");
-            if(select=="收入"){
-                for (var i = 0; i < income.length; i++) {
-                    income[i].style = "display:block"; // 修改为显示
-                }
-                for (var i = 0; i < expent.length; i++) {
-                    expent[i].style = "display:none"; // 修改为隐藏
-                }
-
-            }else if(select=="支出"){
-                for (var i = 0; i < income.length; i++) {
-                    income[i].style = "display:none"; // 修改为隐藏
-                }
-                for (var i = 0; i < expent.length; i++) {
-                    expent[i].style = "display:block"; // 修改为显示
-                }
-
-            }else {
-                for (var i = 0; i < income.length; i++) {
-                    income[i].style = "display:none"; // 修改为隐藏
-                }
-                for (var i = 0; i < expent.length; i++) {
-                    expent[i].style = "display:none"; // 修改为隐藏
-                }
-            }
         }
 
         function isNull(number) {

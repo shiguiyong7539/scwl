@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,8 +94,10 @@ public class BudGetServiceImpl implements BudGetService {
             hashMap.put("budgets",budgets);
             list.add(hashMap);
         }
-
+        //截至日期
+        Budget lastDate = budgetMapper.getLastDate();
         map.put("list",list);
+        map.put("lastDate", "截至"+new SimpleDateFormat("yyyy年MM月dd日").format(lastDate.getMonthDate()));
         return  ResBean.success("查詢成功",map);
     }
 }

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,11 +46,18 @@ public class CapitalServiceImpl implements CapitalService {
     @Override
     public ResBean addCapital(Capital capital)  {
         try{
-//            capital.setFinishRate(capital.getFinishRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-//            capital.setOperatRate(capital.getOperatRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-//            capital.setIncomeRate(capital.getIncomeRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-//            capital.setCashRate(capital.getCashRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
-//            capital.setCostRate(capital.getCostRate().divide(new BigDecimal(100),4, RoundingMode.HALF_UP));
+            String  res = "【资金比率】";
+            if(capital.getType()==1){
+                res = "【资金】";
+                capital.setQuarterly(new SimpleDateFormat("yyyy-MM-dd").format(capital.getAddDate()));
+            }
+            CapitalExample example = new CapitalExample();
+            example.createCriteria().andTypeEqualTo(capital.getType()).andQuarterlyEqualTo(capital.getQuarterly());
+            List<Capital> capitals = capitalMapper.selectByExample(example);
+            if(capitals.size()>0){
+                return  ResBean.error("添加失败，当前月份的"+res+"数据已经存在,不能再添加，只能修改");
+            }
+            capital.setAddDate(new Date());
             capitalMapper.insert(capital);
             logService.addLog("INSERT","capital",capital.getId(),"新增id为"+capital.getId()+"的资金状况信息");
 
@@ -87,6 +96,12 @@ public class CapitalServiceImpl implements CapitalService {
             hashMap.put("use_money","");
             hashMap.put("unUse_money","");
         }
+        //截至日期
+        Capital incom_lastDate = capitalMapper.getLastDate(1);
+        Capital rate_lastDate = capitalMapper.getLastDate(2);
+
+        hashMap.put("incom_lastDate",getDate(incom_lastDate.getQuarterly()));
+        hashMap.put("rate_lastDate",getDate(rate_lastDate.getQuarterly()));
         return ResBean.success("success",hashMap);
     }
 
@@ -125,5 +140,24 @@ public class CapitalServiceImpl implements CapitalService {
         }catch (Exception e){
             return  ResBean.error("修改失败");
         }
+    }
+
+    private String getDate(String str){
+        String[] split = str.split("-");
+        String res="";
+        for (int i = 0; i < 3; i++) {
+            if(i==0){
+                res=split[0];
+            }
+            if(i==1){
+              res += "年"+split[1];
+            }
+            if(i==2){
+                res += "月"+split[1]+"日";
+            }
+
+        }
+        return  "截至"+res;
+
     }
 }

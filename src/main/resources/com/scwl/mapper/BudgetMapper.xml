@@ -264,4 +264,7 @@
    group by MONTH(month_date)
    ORDER BY month_date
   </select>
+  <select id="getLastDate" resultMap="BaseResultMap">
+  select month_date from budget order by month_date desc limit 1
+  </select>
 </mapper>
