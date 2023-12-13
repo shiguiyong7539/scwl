@@ -2,6 +2,7 @@ package com.scwl.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import com.scwl.mapper.BudgetMapper;
 import com.scwl.pojo.Budget;
 import com.scwl.pojo.BudgetExample;
@@ -13,11 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BudGetServiceImpl implements BudGetService {
@@ -29,12 +28,18 @@ public class BudGetServiceImpl implements BudGetService {
     private LogService logService;
 
     @Override
-    public ResBean getAllBudget(int pageNum, int pageSize, Budget budget) {
+    public ResBean getAllBudget(int pageNum, int pageSize, Budget budget) throws ParseException {
         PageHelper.startPage(pageNum,pageSize);
         BudgetExample example = new BudgetExample();
         BudgetExample.Criteria criteria = example.createCriteria();
         if(null!=budget.getDepartment()&&budget.getDepartment()!=""){
             criteria.andDepartmentEqualTo(budget.getDepartment());
+        }
+        if(null!=budget.getRemark()&&""!=budget.getRemark()){
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date start = format.parse(budget.getRemark().substring(0, 7)+"-01");
+            Date end = format.parse(budget.getRemark().substring(0, 7)+"-31");
+            criteria.andMonthDateBetween(start,end);
         }
         List<Budget> budgets = budgetMapper.selectByExample(example);
         PageInfo<Budget> pageInfo = new PageInfo<>(budgets);
@@ -52,6 +57,34 @@ public class BudGetServiceImpl implements BudGetService {
         }catch (Exception e){
         return  ResBean.error("添加失败");
     }
+    }
+
+    @Override
+    public ResBean updateBudget(Budget budget) {
+        Budget oldBud = budgetMapper.selectByPrimaryKey(budget.getId());
+        if(null!=budget.getMonthFunds()){
+            oldBud.setMonthFunds(budget.getMonthFunds());
+        }
+        if(null!=budget.getRealFunds()){
+            oldBud.setRealFunds(budget.getRealFunds());
+        }
+        if(null!=budget.getDeviationRate()){
+            oldBud.setDeviationRate(budget.getDeviationRate());
+        }
+        budgetMapper.updateByPrimaryKey(oldBud);
+        logService.addLog("UPDATE","budget",budget.getId(),"更新id为"+budget.getId()+"的预算执行情况");
+        return  ResBean.success("修改成功");
+    }
+
+    @Override
+    public ResBean deleteBudget(String ids) {
+        Gson gson = new Gson();
+        Integer[] idList = gson.fromJson(ids, Integer[].class);
+        for (Integer id : idList) {
+            budgetMapper.deleteByPrimaryKey(id);
+            logService.addLog("DELETE","budget",id,"删除id为"+id+"的预算执行情况");
+        }
+        return  ResBean.success("删除成功");
     }
 
     @Override

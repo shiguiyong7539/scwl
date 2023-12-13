@@ -92,6 +92,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         employee.setAddTime(new Date());
         employeeMapper.updateByPrimaryKey(employee1);
+        logService.addLog("UPDATE","employee",employee.getId(),"更新id为"+employee.getId()+"的员工信息");
         return  ResBean.success("修改成功");
     }
 
@@ -103,6 +104,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = employeeMapper.selectByPrimaryKey(id);
             employee.setIsDelete(1);
             employeeMapper.updateByPrimaryKey(employee);
+            logService.addLog("DELETE","employee",id,"删除id为"+id+"的员工信息");
         }
         return  ResBean.success("删除成功");
     }

@@ -2,6 +2,7 @@ package com.scwl.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import com.scwl.mapper.ManageStateMapper;
 import com.scwl.pojo.ManageState;
 import com.scwl.pojo.ManageStateExample;
@@ -65,6 +66,16 @@ public class ManageStateServiceImpl implements ManageStateService {
         }catch (Exception e){
             return  ResBean.error("修改失败");
         }
+    }
+
+    @Override
+    public ResBean deleteState(String ids) {
+        Integer[] idList = new Gson().fromJson(ids, Integer[].class);
+        for (Integer id : idList) {
+            manageStateMapper.deleteByPrimaryKey(id);
+            logService.addLog("DELETE","manage_state",id,"删除id为"+id+"的经营状况信息");
+        }
+        return  ResBean.success("删除成功");
     }
 
     @Override

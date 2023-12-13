@@ -220,13 +220,31 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
+                <div class="layui-row">
+                    <form class="layui-col-md12 x-so" id="formId">
+                        <span>部门:</span>
+                        <select name="department">
+                            <option value=""></option>
+                            <option value="综合管理部">综合管理部</option>
+                            <option value="市场拓展部">市场拓展部</option>
+                            <option value="规划建设部">规划建设部</option>
+                            <option value="财务融资部">财务融资部</option>
+                            <option value="金沙艺术中心">金沙艺术中心</option>
+                        </select>
+                        <span>月份:</span>
+                        <input type="date"  style="width: 162px;" name="remark">
+                        <div id="sousuo" class="sousuo" onclick="getAllBudget(1)" >搜索</div>
+                    </form>
+                </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>预算信息</h6>
-                    <div class="formAddEmp"><input type="submit" id="myCostBtn" value="添加预算" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myCostBtn" value="添加预算" class="redB"></div>
+                    <div class="formAddEmp"><input type="submit" onclick="deleteBudget()"  value="删 除" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
                     <tr>
-                        <td width="80">编号</td>
+                        <td width="20"><input type="checkbox" onclick="selectAllBud()"></td>
+                        <td width="20">编号</td>
                         <td width="80">部门</td>
                         <td width="80">月度资金</td>
                         <td width="80">资金实际使用情况</td>
@@ -418,13 +436,11 @@
 
         $.ajax({
             type: "get",
-            url: "/getAllBudget",
+            url: "/getAllBudget?pageNum="+pageNum,
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
-            data:({
-                pageNum:pageNum
-            }),
+            data: $('#formId').serialize(),
             success: function (res) {
                 if(res && res.code===200){
                     var data = res.obj;
@@ -435,11 +451,12 @@
                    // 获取表格元素
                     var str_info='';
                     for (var i = 0; i < data1.length; i++) {
-                        str_info+='<tr><td align="center">'+data1[i].id+'</td>';
+                        str_info+='<tr><td align="center"><input class="checkBud" type="checkbox" value="'+data1[i].id+'"></td>';
+                        str_info+='<td align="center">'+data1[i].id+'</td>';
                         str_info+='<td align="center">'+data1[i].department+'</td>';
-                        str_info+='<td align="center">'+data1[i].monthFunds+'</td>';
-                        str_info+='<td align="center">'+data1[i].realFunds+'</td>';
-                        str_info+='<td align="center">'+percentage(data1[i].deviationRate)+'</td>';
+                        str_info+='<td align="center"><input id="monthFunds_'+data1[i].id+'"  onchange="updateBudget('+data1[i].id+',1)" style="text-align: center" value="'+isNull(data1[i].monthFunds)+'"></td>';
+                        str_info+='<td align="center"><input id="realFunds_'+data1[i].id+'"  onchange="updateBudget('+data1[i].id+',1)" style="text-align: center" value="'+isNull(data1[i].realFunds)+'"></td>';
+                        str_info+='<td align="center"><input id="deviationRate_'+data1[i].id+'"  onchange="updateBudget('+data1[i].id+',1)" style="text-align: right" value="'+isNull(data1[i].deviationRate)+'">%</td>';
                         str_info+='<td align="center">'+dateFormat(1,data1[i].monthDate)+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
@@ -579,7 +596,85 @@
 
     }
 
+    function deleteBudget() {
+        var selectedValues = document.querySelectorAll(".checkBud:checked");
+        var ids = [];
+        for (var i = 0; i < selectedValues.length; i++) {
+            ids.push(selectedValues[i].value);
+        }
+        if(ids.length==0){
+            layui.layer.msg('您沒有勾选');
+        }else {
+            $.ajax({
+                type: "post",
+                url: "/deleteBudget",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:{
+                    ids:JSON.stringify(ids)
+                },
+                success: function (res) {
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
 
+
+                }
+
+
+            })
+        }
+    }
+
+    function updateBudget(id) {
+        var monthFunds = document.getElementById("monthFunds_"+id).value;
+        var realFunds = document.getElementById("realFunds_"+id).value;
+        var deviationRate = document.getElementById("deviationRate_"+id).value;
+            $.ajax({
+                type: "post",
+                url: "/updateBudget",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    id:id,
+                    monthFunds:monthFunds,
+                    realFunds:realFunds,
+                    deviationRate:deviationRate
+                }),
+                success: function (res) {
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                    });
+
+
+                }
+
+
+            })
+
+    }
+
+    function selectAllBud() {
+        var checkboxes = document.getElementsByClassName("checkBud");
+        for (var i = 0; i < checkboxes.length; i++) {
+            if(checkboxes[i].checked){
+                checkboxes[i].checked=false;
+            }else{
+                checkboxes[i].checked= true;
+            }
+
+        }
+    }
+    function isNull(number) {
+        if(null==number){
+            return "";
+        }else {
+            return number;
+        }
+    }
 </script>
 </body>
 </html>

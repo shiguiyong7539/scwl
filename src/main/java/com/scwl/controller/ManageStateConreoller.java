@@ -49,6 +49,17 @@ public class ManageStateConreoller {
     public Object updateState(HttpServletRequest request, ManageState manageState){
         return  manageStateService.updateState(manageState);
     }
+
+    /**
+     * 删除
+     * @param request
+     * @param manageState
+     * @return
+     */
+    @RequestMapping("/deleteState")
+    public Object deleteState(HttpServletRequest request, String ids){
+        return  manageStateService.deleteState(ids);
+    }
     /**
      * 经营数据展览中心
      * @param request

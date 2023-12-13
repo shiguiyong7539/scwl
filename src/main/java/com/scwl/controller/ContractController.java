@@ -51,6 +51,17 @@ public class ContractController {
     }
 
     /**
+     * 删除
+     * @param request
+     * @param contract
+     * @return
+     */
+    @RequestMapping("/deleteContract")
+    public Object deleteContract(HttpServletRequest request, String ids){
+        return  contractService.deleteContract(ids);
+    }
+
+    /**
      * 合同数据图形化展示
      * @param request
      * @param

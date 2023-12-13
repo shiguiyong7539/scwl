@@ -81,6 +81,7 @@ public class UserServiceImpl implements UserService {
            Map<String,String> tokenMap = new HashMap<>();
            tokenMap.put("token",token);
            tokenMap.put("tokenHead",tokenHead);
+           logService.addLog("INSERT","user",user1.getId(),"id为"+user1.getId()+"的用户从OA系统登录到数据中心");
            return ResBean.success("登录成功",tokenMap);
        }catch (Exception e){
            return ResBean.error("用户不存在！");
@@ -107,6 +108,8 @@ public class UserServiceImpl implements UserService {
                 userRole.setUserId(user.getId());
                 userRole.setRid(2);
                 userRoleMapper.insert(userRole);
+                logService.addLog("INSERT","user",user.getId(),"新增id为"+user.getId()+"的用户信息");
+
             }
         }
         return ResBean.success("生成成功");

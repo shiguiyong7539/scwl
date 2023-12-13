@@ -7,6 +7,7 @@ import com.scwl.mapper.MenuRoleMapper;
 import com.scwl.mapper.RoleMapper;
 import com.scwl.mapper.UserRoleMapper;
 import com.scwl.pojo.*;
+import com.scwl.service.LogService;
 import com.scwl.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class MenuServiceImpl implements MenuService {
     private MenuRoleMapper menuRoleMapper;
     @Autowired
     private UserRoleMapper userRoleMapper;
+    @Autowired
+    private LogService logService;
     @Override
     public List<Menu> getMenusWithRole() {
         return menuMapper.getMenusWithRole();
@@ -49,6 +52,8 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public ResBean addRole(Role role) {
         roleMapper.insert(role);
+        logService.addLog("INSERT","role",role.getId(),"新增id为"+role.getId()+"的角色信息");
+
         return ResBean.success("添加成功");
     }
 
@@ -64,6 +69,8 @@ public class MenuServiceImpl implements MenuService {
             menuRole.setMid(menu.getId());
             menuRole.setRid(1);
             menuRoleMapper.insert(menuRole);
+            logService.addLog("INSERT","menu",menu.getId(),"新增id为"+menu.getId()+"的角色信息");
+            logService.addLog("INSERT","menu_role",menuRole.getId(),"绑定id为"+menuRole.getId()+"的角色权限信息");
             return ResBean.success("添加成功");
         }else {
             return ResBean.success("此菜单的URL已经存在");
@@ -100,6 +107,8 @@ public class MenuServiceImpl implements MenuService {
                     menuRole.setMid(mid);
                     menuRole.setRid(rid);
                     menuRoleMapper.insert(menuRole);
+                    logService.addLog("INSERT","menu_role",menuRole.getId(),"绑定id为"+menuRole.getId()+"的角色权限信息");
+
                 }
             }
         }
@@ -118,10 +127,14 @@ public class MenuServiceImpl implements MenuService {
                     userRole.setUserId(uid);
                     userRole.setRid(rid);
                     userRoleMapper.insert(userRole);
+                    logService.addLog("INSERT","user_role",userRole.getId(),"绑定用户id为"+userRole.getUserId()+"的角色信息");
                 }else {
                     UserRole userRole = userRoles.get(0);
                     userRole.setRid(rid);
                     userRoleMapper.updateByPrimaryKey(userRole);
+                    logService.addLog("UPDATE","user_role",userRole.getId(),"更新用户id为"+userRole.getUserId()+"的角色信息");
+
+
                 }
             }
         }
@@ -138,6 +151,8 @@ public class MenuServiceImpl implements MenuService {
                 if(menuRoles.size()>0) {
                     for (MenuRole menuRole : menuRoles) {
                         menuRoleMapper.deleteByPrimaryKey(menuRole.getId());
+                        logService.addLog("DELETE","menu_role",menuRole.getId(),"更新角色id为"+rid+"的菜单id为"+mid+"的权限信息");
+
                     }
                 }
             }

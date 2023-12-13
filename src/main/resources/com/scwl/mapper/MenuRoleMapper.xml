@@ -97,7 +97,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.scwl.pojo.MenuRole" >
+  <insert id="insert" parameterType="com.scwl.pojo.MenuRole" useGeneratedKeys="true" keyProperty="id">
     insert into menu_role (id, mid, rid)
     values (#{id,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER})
   </insert>

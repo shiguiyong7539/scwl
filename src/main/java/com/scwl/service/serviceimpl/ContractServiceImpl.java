@@ -2,6 +2,7 @@ package com.scwl.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import com.scwl.mapper.ContractMapper;
 import com.scwl.pojo.Capital;
 import com.scwl.pojo.Contract;
@@ -58,8 +59,12 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public ResBean updateContract(Contract contract) {
         try{
-            contract.setAddTime(new Date());
-            contractMapper.update(contract);
+           // contract.setAddTime(new Date());
+           // contractMapper.update(contract);
+            Contract old = contractMapper.selectByPrimaryKey(contract.getId());
+            old.setType(contract.getType());
+            old.setAddTime(new Date());
+            contractMapper.updateByPrimaryKey(old);
             logService.addLog("UPDATE","contract",contract.getId(),"更新id为"+contract.getId()+"的合同状态信息");
             return  ResBean.success("更新成功");
         }catch (Exception e){
@@ -67,6 +72,17 @@ public class ContractServiceImpl implements ContractService {
         }
 
     }
+
+    @Override
+    public ResBean deleteContract(String ids) {
+        Integer[] idList = new Gson().fromJson(ids, Integer[].class);
+        for (Integer id : idList) {
+            contractMapper.deleteByPrimaryKey(id);
+            logService.addLog("DELETE","contract",id,"删除id为"+id+"的合同状态信息");
+        }
+        return  ResBean.success("删除成功");
+    }
+
     @Override
     public ResBean getContractByCenter() {
         //合同总数

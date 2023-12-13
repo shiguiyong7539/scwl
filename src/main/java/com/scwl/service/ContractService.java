@@ -10,5 +10,6 @@ public interface ContractService {
     ResBean getAllContract(int pageNum,int pageSize,Contract contract);
     ResBean addContract(Contract contract);
     ResBean updateContract(Contract contract);
+    ResBean deleteContract(String ids);
     ResBean getContractByCenter();
 }

@@ -150,6 +150,7 @@ public class CapitalServiceImpl implements CapitalService {
         Integer[] idList = new Gson().fromJson(ids, Integer[].class);
         for (Integer id : idList) {
             capitalMapper.deleteByPrimaryKey(id);
+            logService.addLog("DELETE","capital",id,"删除id为"+id+"的资金状况信息");
         }
         return  ResBean.success("删除成功");
     }
