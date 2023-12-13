@@ -819,6 +819,34 @@
             layui.layer.msg("监督项目和事项不能为空！！！！",{icon:2},{time:1000});
             return;
         }
+        if(null==supervisionScope||supervisionScope.length==0){
+            layui.layer.msg("监督范围不能为空！！！！",{icon:2},{time:1000});
+            return;
+        }
+        if(null==headLine||headLine.length==0){
+            layui.layer.msg("名称不能为空！！！！",{icon:2},{time:1000});
+            return;
+        }
+        if(null==rectifyPerson||rectifyPerson.length==0){
+            layui.layer.msg("监督人不能为空！！！！",{icon:2},{time:1000});
+            return;
+        }
+        if(null==startTime||startTime.length==0){
+            layui.layer.msg("监督日期不能为空！！！！",{icon:2},{time:1000});
+            return;
+        }
+        if(null==existingProblem||existingProblem.length==0){
+            layui.layer.msg("存在问题不能为空！！！！",{icon:2},{time:1000});
+            return;
+        }
+        if(null==deadline||deadline.length==0){
+            layui.layer.msg("整改期限不能为空！！！！",{icon:2},{time:1000});
+            return;
+        }
+        if(null==supervisionWay||supervisionWay.length==0){
+            layui.layer.msg("监督方式不能为空！！！！",{icon:2},{time:1000});
+            return;
+        }
 
         $.ajax({
             type: "post",
@@ -830,7 +858,6 @@
                 headLine:headLine,
                 rectifyPerson:rectifyPerson,
                 department:department,
-                headLine:headLine,
                 titleIds:titlsIds,
                 matterIds:matterIds,
                 supervisionScope:supervisionScope,
