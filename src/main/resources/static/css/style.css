@@ -194,13 +194,13 @@ i{font-style: normal;}
     background-image: url(../images/lbx.png);
     opacity: 0.6;
     animation: rotate 15s linear infinite;
-    -webkit-animation: rotate 15s linear infinite;
+    -webkit-animation: rotate 50s linear infinite;
 }
   .map .map3 {
     width: 17.075rem;
     height: 17.075rem;
     background-image: url(../images/jt.png);
-    animation: rotate1 10s linear infinite;
+    animation: rotate1 50s linear infinite;
   }
   @keyframes rotate {
     from {
