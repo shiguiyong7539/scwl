@@ -17,6 +17,7 @@
 
 <body>
 <div class="head clearfix">
+	<div style="float: left;margin: 10px;"><a href="#" onclick="goAdmin()" title=""><img src="/images/icons/light/frames.png" alt="" /><span>管理中心</span></a></div>
 	<h1>沙磁文旅公司经营数据门户</h1>
 	<div class="time" id="showTime"></div>
 	<script>
@@ -31,7 +32,7 @@
 			var h = dt.getHours();//获取时
 			var m = dt.getMinutes();//获取分
 			var s = dt.getSeconds();//获取秒
-			document.getElementById("showTime").innerHTML = y + "/" + mt + "/" + day + " " + h + ":" + m + ":" + s + "";
+			document.getElementById("showTime").innerHTML = y + "/" + mt + "/" + day + " " + h + ":" + (m>=10?m:"0"+m) + ":" + (s>=10?s:"0"+s) + "";
 			t = setTimeout(time, 1000); //设定定时器，循环运行
 		}
 
@@ -221,6 +222,8 @@
 		})
 
 	}
-
+ function goAdmin() {
+  location.href="/admin";
+ }
 </script>
 </html>

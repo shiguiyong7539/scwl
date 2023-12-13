@@ -574,14 +574,14 @@ function echarts_4() {
                        },
                        legend: {
                            data:title_data,
-                           top:'5%',
+                           top:'1%',
                            textStyle: {
                                color: "#fff",
                                fontSize: '10',
 
                            },
 
-                           itemGap: 35
+                           itemGap: 1
                        },
                        grid: {
                            left: '0%',
@@ -2010,14 +2010,14 @@ function echarts_33(period) {
                         },
                         legend: {
                             data: rateTitle,
-                            top:'5%',
+                            top:'1%',
                             textStyle: {
                                 color: "#fff",
                                 fontSize: '10',
 
                             },
 
-                            itemGap: 5
+                            itemGap: 1
                         },
                         grid: {
                             left: '0%',

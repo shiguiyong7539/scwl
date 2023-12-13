@@ -244,6 +244,9 @@ public class LoginController {
      */
     @RequestMapping("/oaLogin")
     public String oaLogin(HttpServletRequest request,String phone){
+        if(null==phone||phone.length()==0){
+            return "forward:getShowData";
+        }else {
         ResBean resBean = userService.oaLogin(phone);
         HttpSession session = request.getSession();
         if(resBean.getCode()==200){
@@ -258,6 +261,7 @@ public class LoginController {
             session.setAttribute("message",resBean.getMessage());
         }
         return "forward:getShowData";
+        }
     }
     @RequestMapping("/getOaToken")
     @ResponseBody
