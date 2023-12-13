@@ -13,5 +13,6 @@ public interface CapitalService {
 
   ResBean getCapitalByCenterShow();
   ResBean updateCapital(Capital capital);
+  ResBean deleteCapital(String ids);
 
  }

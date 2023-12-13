@@ -455,9 +455,9 @@
                                 str_info+='<tr><td align="center">'+data1[i].id+'</td>';
                                 str_info+='<td align="center">'+data1[i].type+'</td>';
                                 str_info+='<td align="center">'+data1[i].name+'</td>';
-                                str_info+='<td align="center"><input id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentIncome)+'"></td>';
-                                str_info+='<td align="center"><input id="rentArrears_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentArrears)+'"></td>';
-                                str_info+='<td align="center"><input id="letRate_input_'+data1[i].id+'"  onchange="updateState('+data1[i].id+')" style="text-align: right" value="'+isNull(data1[i].letRate)+'">%</td>';
+                                str_info+='<td align="center"><input id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',1)" value="'+isNull(data1[i].rentIncome)+'"></td>';
+                                str_info+='<td align="center"><input id="rentArrears_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',1)" value="'+isNull(data1[i].rentArrears)+'"></td>';
+                                str_info+='<td align="center"><input id="letRate_input_'+data1[i].id+'"  onchange="updateState('+data1[i].id+',1)" style="text-align: right" value="'+isNull(data1[i].letRate)+'">%</td>';
                                 str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
 
                                 str_thead='<tr>\n' +
@@ -473,7 +473,7 @@
                                 str_info+='<tr><td align="center">'+data1[i].id+'</td>';
                                 str_info+='<td align="center">'+data1[i].type+'</td>';
                                 str_info+='<td align="center">'+data1[i].name+'</td>';
-                                str_info+='<td align="center"><input style="text-align: center" id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+')" value="'+isNull(data1[i].rentIncome)+'"></td>';
+                                str_info+='<td align="center"><input style="text-align: center" id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',2)" value="'+isNull(data1[i].rentIncome)+'"></td>';
                                 str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
                                 str_thead='<tr>\n' +
                                     '                         <td width="80">编号</td>\n' +
@@ -683,36 +683,62 @@
 
 
 
-        function updateState(id) {
-           let rentIncome =  document.getElementById("rentIncome_input_"+id).value;
-           let rentArrears =  document.getElementById("rentArrears_input_"+id).value;
-           let letRate =  document.getElementById("letRate_input_"+id).value;
-
-            $.ajax({
-                type: "post",
-                url: "/updateState",
-                headers: {
-                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
-                },
-                data:({
-                    id:id,
-                    rentIncome:rentIncome,
-                    rentArrears:rentArrears,
-                    letRate:letRate
-                }),
-                success: function (res) {
-                    if(res && res.code===200) {
-                        modal.style.display = "none";
-                    }
+        function updateState(id,type) {
+            if(type==1){
+                let rentIncome =  document.getElementById("rentIncome_input_"+id).value;
+                let rentArrears =  document.getElementById("rentArrears_input_"+id).value;
+                let letRate =  document.getElementById("letRate_input_"+id).value;
+                $.ajax({
+                    type: "post",
+                    url: "/updateState",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data:({
+                        id:id,
+                        rentIncome:rentIncome,
+                        rentArrears:rentArrears,
+                        letRate:letRate
+                    }),
+                    success: function (res) {
+                        if(res && res.code===200) {
+                            modal.style.display = "none";
+                        }
                         layui.layer.msg(res.message,{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
                         });
 
-                }
+                    }
 
 
-            })
+                })
+
+            }else {
+                let rentIncome =  document.getElementById("rentIncome_input_"+id).value;
+                $.ajax({
+                    type: "post",
+                    url: "/updateState",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data:({
+                        id:id,
+                        rentIncome:rentIncome
+                    }),
+                    success: function (res) {
+                        if(res && res.code===200) {
+                            modal.style.display = "none";
+                        }
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                        });
+
+                    }
+
+
+                })
+
+            }
 
         }
 

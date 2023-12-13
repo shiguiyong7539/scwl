@@ -69,4 +69,10 @@ public class CapitalController {
 
     }
 
+    @RequestMapping("/deleteCapital")
+    public Object deleteCapital(HttpServletRequest request,String ids){
+        return capitalService.deleteCapital(ids);
+
+    }
+
 }

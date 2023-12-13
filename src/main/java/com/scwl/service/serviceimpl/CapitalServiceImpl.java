@@ -2,6 +2,7 @@ package com.scwl.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import com.scwl.mapper.CapitalMapper;
 import com.scwl.pojo.*;
 import com.scwl.service.CapitalService;
@@ -33,8 +34,10 @@ public class CapitalServiceImpl implements CapitalService {
         CapitalExample.Criteria criteria = example.createCriteria();
         if(null!=capital.getType()){
             criteria.andTypeEqualTo(capital.getType());
-            if(null!=capital.getQuarterly()&&""!=capital.getQuarterly()&&capital.getType()==2){
-            criteria.andQuarterlyEqualTo(capital.getQuarterly());
+            if(null!=capital.getQuarterly()&&""!=capital.getQuarterly()){
+                String quarterly = capital.getQuarterly();
+                String substring = quarterly.substring(0, 7);
+                criteria.andQuarterlyLike("%"+substring+"%");
             }
         }
 
@@ -142,6 +145,15 @@ public class CapitalServiceImpl implements CapitalService {
         }
     }
 
+    @Override
+    public ResBean deleteCapital(String ids) {
+        Integer[] idList = new Gson().fromJson(ids, Integer[].class);
+        for (Integer id : idList) {
+            capitalMapper.deleteByPrimaryKey(id);
+        }
+        return  ResBean.success("删除成功");
+    }
+
     private String getDate(String str){
         String[] split = str.split("-");
         String res="";
@@ -153,7 +165,7 @@ public class CapitalServiceImpl implements CapitalService {
               res += "年"+split[1];
             }
             if(i==2){
-                res += "月"+split[1]+"日";
+                res += "月"+split[2]+"日";
             }
 
         }
