@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="encode_phone" jdbcType="VARCHAR" property="encodePhone" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="enable" property="enable" jdbcType="BIT" />
@@ -110,11 +111,11 @@
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.User" useGeneratedKeys="true" keyProperty="id">
     insert into user (id, name, phone,
-      username, password, enable,
-      last_login)
+      encode_phone, username, password,
+      enable, last_login)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
-      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{enable,jdbcType=BIT},
-      #{lastLogin,jdbcType=TIMESTAMP})
+      #{encodePhone,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{enable,jdbcType=BIT}, #{lastLogin,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.User" >
     insert into user
@@ -241,6 +242,7 @@
     update user
     set name = #{name,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
+      encode_phone = #{encodePhone,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       enable = #{enable,jdbcType=BIT},
@@ -251,12 +253,12 @@
     select
     <include refid="Base_Column_List" />
     from user
-    where  username = #{username,jdbcType=VARCHAR}
+    where  username = #{username,jdbcType=VARCHAR} and  enable = 1
   </select>
 
   <insert id="insertBatch">
     INSERT INTO user
-    (id, name, phone,
+    (id, name, phone,encode_phone,
     username, password, enable,
     last_login)
     VALUES
@@ -264,6 +266,7 @@
       ( #{user.id},
         #{user.name},
         #{user.phone},
+        #{encodePhone,jdbcType=VARCHAR},
         #{user.username},
         #{user.password},
         #{user.enable},
@@ -279,6 +282,7 @@
     left join role r
     on r.id = ur.rid
     <where>
+       u.enable = 1
       <if test="name != null and name != ''">
         AND u.name = #{username}
       </if>
@@ -286,6 +290,8 @@
         AND u.phone = #{phone}
       </if>
     </where>
-
+  </select>
+  <select id="selectByEncodePhone" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select * from user where encode_phone = #{encodePhone}
   </select>
 </mapper>

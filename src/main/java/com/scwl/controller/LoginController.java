@@ -243,11 +243,11 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/oaLogin")
-    public String oaLogin(HttpServletRequest request,String phone){
-        if(null==phone||phone.length()==0){
+    public String oaLogin(HttpServletRequest request,String accessKey){
+        if(null==accessKey||accessKey.length()==0){
             return "forward:getShowData";
         }else {
-        ResBean resBean = userService.oaLogin(phone);
+        ResBean resBean = userService.oaLogin(accessKey);
         HttpSession session = request.getSession();
         if(resBean.getCode()==200){
             Object obj = resBean.getObj();

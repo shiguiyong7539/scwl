@@ -22,6 +22,12 @@ public class User implements UserDetails {
      */
     private String phone;
 
+
+    /**
+     * 加密手机号码
+     */
+    private String encodePhone;
+
     /**
      * 用户登录名
      */
@@ -38,6 +44,14 @@ public class User implements UserDetails {
 
 
     List<Role>  roles;
+
+    public String getEncodePhone() {
+        return encodePhone;
+    }
+
+    public void setEncodePhone(String encodePhone) {
+        this.encodePhone = encodePhone;
+    }
 
     public List<Role> getRoles() {
         return roles;

@@ -11,6 +11,7 @@ import com.scwl.pojo.*;
 import com.scwl.service.LogService;
 import com.scwl.service.UserService;
 import com.scwl.utils.JwtTokenUtil;
+import com.scwl.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import sun.security.provider.MD5;
 
 import java.util.*;
 
@@ -52,6 +54,10 @@ public class UserServiceImpl implements UserService {
     public ResBean getUserList(int pageNum, int pageSize, User user) {
         PageHelper.startPage(pageNum,pageSize);
         List<User> users = userMapper.getAllUserAndRole(user);
+//        for (User u : users) {
+//            u.setEncodePhone(MD5Util.encryptSHA(u.getPhone()));
+//            userMapper.updateByPrimaryKey(u);
+//        }
         PageInfo<User> pageInfo = new PageInfo<>(users);
         return ResBean.success("success",pageInfo);
     }
@@ -59,30 +65,34 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResBean oaLogin(String phone) {
        try{
-           UserDetails userDetails = userDetailsService.loadUserByUsername(phone);
-           if (!userDetails.isEnabled()){
-               return ResBean.error("账号被禁用，请联系管理员！");
+           User user = userMapper.selectByEncodePhone(phone);
+           if(null!=user) {
+               UserDetails userDetails = userDetailsService.loadUserByUsername(user.getPhone());
+               if (!userDetails.isEnabled()) {
+                   return ResBean.error("账号被禁用，请联系管理员！");
+               }
+               user.setLastLogin(new Date());
+               userMapper.updateByPrimaryKey(user);
+               //更新security登录用户对象
+               UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
+                       , null, userDetails.getAuthorities());
+               SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+               // 为用户设置权限
+               List<Role> roles = roleMapper.getRoles(user.getId());
+               List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+               for (Role role : roles) {
+                   grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+               }
+               //生成token
+               String token = jwtTokenUtil.generateToken(userDetails);
+               Map<String, String> tokenMap = new HashMap<>();
+               tokenMap.put("token", token);
+               tokenMap.put("tokenHead", tokenHead);
+               logService.addLog("INSERT", "user", user.getId(), "id为" + user.getId() + "的用户从OA系统登录到数据中心");
+               return ResBean.success("登录成功", tokenMap);
+           }else {
+               return ResBean.error("用户不存在！");
            }
-           User user1 = userMapper.getAdminByUserName(phone);
-           user1.setLastLogin(new Date());
-           userMapper.updateByPrimaryKey(user1);
-           //更新security登录用户对象
-           UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
-                   ,null,userDetails.getAuthorities());
-           SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-           // 为用户设置权限
-          List<Role> roles =   roleMapper.getRoles(user1.getId());
-           List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-           for (Role role : roles) {
-               grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-           }
-           //生成token
-           String token = jwtTokenUtil.generateToken(userDetails);
-           Map<String,String> tokenMap = new HashMap<>();
-           tokenMap.put("token",token);
-           tokenMap.put("tokenHead",tokenHead);
-           logService.addLog("INSERT","user",user1.getId(),"id为"+user1.getId()+"的用户从OA系统登录到数据中心");
-           return ResBean.success("登录成功",tokenMap);
        }catch (Exception e){
            return ResBean.error("用户不存在！");
        }
@@ -101,6 +111,7 @@ public class UserServiceImpl implements UserService {
                 user.setUsername(employee.getPhone());
                 user.setPhone(employee.getPhone());
                 user.setName(employee.getName());
+                user.setEncodePhone(MD5Util.encryptSHA(employee.getPhone()));
                 user.setEnable(true);
                 user.setPassword(passwordEncoder.encode("Scwl1234"));
                 userMapper.insert(user);
@@ -182,6 +193,7 @@ public class UserServiceImpl implements UserService {
             User exist = userMapper.getAdminByUserName(user.getPhone());
             if(null==exist){
                 user.setUsername(user.getPhone());
+                user.setEncodePhone(MD5Util.encryptSHA(user.getPhone()));
                 user.setEnable(true);
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
                 userMapper.insert(user);
@@ -209,6 +221,7 @@ public class UserServiceImpl implements UserService {
         if(null!=user.getPhone()&&""!=user.getPhone()){
             oldUser.setPhone(user.getPhone());
             oldUser.setUsername(user.getPhone());
+            oldUser.setEncodePhone(MD5Util.encryptSHA(user.getPhone()));
         }
         int i = userMapper.updateByPrimaryKey(oldUser);
         if(i==1){
@@ -220,8 +233,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResBean deleteUser(User user) {
-        int i = userMapper.deleteByPrimaryKey(user.getId());
-        if(i==1){
+
+        User u = userMapper.selectByPrimaryKey(user.getId());
+        if(null!=u){
+            u.setEnable(false);
+            userMapper.updateByPrimaryKey(u);
             logService.addLog("DELETE","user",user.getId(),"删除id为"+user.getId()+"的用户");
             return  ResBean.success("删除成功",null);
         }

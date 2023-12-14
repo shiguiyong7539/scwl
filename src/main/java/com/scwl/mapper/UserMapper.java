@@ -30,6 +30,7 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User getAdminByUserName(String userName);
+    User selectByEncodePhone(String encodePhone);
 
     int insertBatchUser(@Param("list")List<User> userList);
 

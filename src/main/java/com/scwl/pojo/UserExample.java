@@ -341,6 +341,76 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andEncodePhoneIsNull() {
+            addCriterion("encode_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneIsNotNull() {
+            addCriterion("encode_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneEqualTo(String value) {
+            addCriterion("encode_phone =", value, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneNotEqualTo(String value) {
+            addCriterion("encode_phone <>", value, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneGreaterThan(String value) {
+            addCriterion("encode_phone >", value, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("encode_phone >=", value, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneLessThan(String value) {
+            addCriterion("encode_phone <", value, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneLessThanOrEqualTo(String value) {
+            addCriterion("encode_phone <=", value, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneLike(String value) {
+            addCriterion("encode_phone like", value, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneNotLike(String value) {
+            addCriterion("encode_phone not like", value, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneIn(List<String> values) {
+            addCriterion("encode_phone in", values, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneNotIn(List<String> values) {
+            addCriterion("encode_phone not in", values, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneBetween(String value1, String value2) {
+            addCriterion("encode_phone between", value1, value2, "encodePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andEncodePhoneNotBetween(String value1, String value2) {
+            addCriterion("encode_phone not between", value1, value2, "encodePhone");
+            return (Criteria) this;
+        }
+
         public Criteria andUsernameIsNull() {
             addCriterion("username is null");
             return (Criteria) this;
