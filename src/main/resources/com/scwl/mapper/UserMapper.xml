@@ -77,7 +77,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, phone, username, password, enable, last_login
+    id, name, phone,encode_phone, username, password, enable, last_login
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.UserExample" >
     select

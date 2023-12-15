@@ -49,8 +49,8 @@ public class BudGetServiceImpl implements BudGetService {
     @Override
     public ResBean addBudget(Budget budget) {
         try{
-//            BigDecimal rate = (budget.getRealFunds().subtract(budget.getMonthFunds())).divide(budget.getMonthFunds(), 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
-//            budget.setDeviationRate(rate);
+            BigDecimal rate = (budget.getRealFunds().subtract(budget.getMonthFunds())).divide(budget.getMonthFunds(), 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
+            budget.setDeviationRate(rate);
             budgetMapper.insert(budget);
             logService.addLog("INSERT","budget",budget.getId(),"新增id为"+budget.getId()+"的预算执行情况");
             return  ResBean.success("添加成功");

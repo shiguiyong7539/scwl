@@ -67,29 +67,34 @@ public class UserServiceImpl implements UserService {
        try{
            User user = userMapper.selectByEncodePhone(phone);
            if(null!=user) {
-               UserDetails userDetails = userDetailsService.loadUserByUsername(user.getPhone());
-               if (!userDetails.isEnabled()) {
+               UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+
+               if (null==userDetails||!passwordEncoder.matches(user.getPassword(),userDetails.getPassword())){
+                   return ResBean.error("用户名或密码不正确");
+               }
+               if (!userDetails.isEnabled()){
                    return ResBean.error("账号被禁用，请联系管理员！");
                }
-               user.setLastLogin(new Date());
-               userMapper.updateByPrimaryKey(user);
+               User user1 = userMapper.getAdminByUserName(user.getUsername());
+               user1.setLastLogin(new Date());
+               userMapper.updateByPrimaryKey(user1);
                //更新security登录用户对象
                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
-                       , null, userDetails.getAuthorities());
+                       ,null,userDetails.getAuthorities());
                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                // 为用户设置权限
-               List<Role> roles = roleMapper.getRoles(user.getId());
+               List<Role> roles =   roleMapper.getRoles(user1.getId());
                List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
                for (Role role : roles) {
+                   // grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
                    grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
                }
                //生成token
                String token = jwtTokenUtil.generateToken(userDetails);
-               Map<String, String> tokenMap = new HashMap<>();
-               tokenMap.put("token", token);
-               tokenMap.put("tokenHead", tokenHead);
-               logService.addLog("INSERT", "user", user.getId(), "id为" + user.getId() + "的用户从OA系统登录到数据中心");
-               return ResBean.success("登录成功", tokenMap);
+               Map<String,String> tokenMap = new HashMap<>();
+               tokenMap.put("token",token);
+               tokenMap.put("tokenHead",tokenHead);
+               return ResBean.success("登录成功",tokenMap);
            }else {
                return ResBean.error("用户不存在！");
            }

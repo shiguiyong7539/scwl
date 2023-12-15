@@ -93,6 +93,11 @@
 <script type="text/javascript" src="js/login.js"></script>
 <script type="text/javascript">
 $(function() {
+	var devices = ["phone", "pad", "pod", "iPhone", "iPod", "ios", "iPad", "Android", "Mobile", "BlackBerry", "IEMobile", "MQQBrowser", "JUC", "Fennec", "wOSBrowser", "BrowserNG", "WebOS", "Symbian", "Windows Phone"];
+	var userAgentInfo = navigator.userAgent;
+	var isMobile = devices.some(function(device) {
+		return userAgentInfo.indexOf(device) > 0;
+	});
 	$("#aui-btn-reg").click(function() {
 		if (!verifyCheck._click()) return;
 		var username = $.trim($('#phone').val());
@@ -110,7 +115,12 @@ $(function() {
 					console.log(res.obj);
 					localStorage.setItem('token', 'Bearer '+res.obj.token);
 					//  location.href="/admin?Authorization="+'Bearer '+res.obj.token;
-					location.href="/centerShow";
+					if(isMobile) {
+						location.href="/centerShowPhone";
+					} else {
+						location.href="/centerShow";
+					}
+
 				}else {
 					layui.layer.msg(res.message,{icon:2},{time:3000},function(){
 						layer.close(); //再执行关闭

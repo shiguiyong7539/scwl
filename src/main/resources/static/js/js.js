@@ -1854,12 +1854,12 @@ function echarts_33(period) {
 
                     }
 
-                    option = {
+                    option1 = {
                         title: {
                             zlevel: 0,
                             text: ['{name|计划累计}', '{value|' + planTotal + '}{name|万元}'].join('\n'),
                             top: '28%',
-                            left: '34%',
+                            left: '19%',
                             textAlign: 'center',
                             textStyle: {
                                 rich: {
@@ -1887,8 +1887,9 @@ function echarts_33(period) {
                         legend: {
                             type: 'scroll',
                             orient: 'vertical',
-                            top:'25%',
-                            right:0,
+                            top:'20%',
+                           // right:0,
+                            left:'40%',
                             itemWidth: 10,
                             itemHeight: 10,
                             data:planTitle,
@@ -1897,7 +1898,7 @@ function echarts_33(period) {
                                 fontSize:'10',
                             },
                             formatter: function(name) {
-                                var data = option.series[0].data;
+                                var data = option1.series[0].data;
                                 for (let i = 0; i < data.length; i++) {
                                     if(name === data[i].name){
                                         var percent = (data[i].value / planTotal * 100).toFixed(2) + '%';
@@ -1911,7 +1912,7 @@ function echarts_33(period) {
                             {
                                 name:'月度资金',
                                 type:'pie',
-                                center: ['35%', '50%'],
+                                center: ['20%', '50%'],
                                 radius: ['65%', '75%'],
                                 color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
                                 // 这里与方法一的label设置的一样
@@ -1928,7 +1929,7 @@ function echarts_33(period) {
                             zlevel: 0,
                             text: ['{name|实际累计}', '{value|' + realTotal + '}{name|万元}'].join('\n'),
                             top: '28%',
-                            left: '34%',
+                            left: '19%',
                             textAlign: 'center',
                             textStyle: {
                                 rich: {
@@ -1956,8 +1957,8 @@ function echarts_33(period) {
                         legend: {
                             type: 'scroll',
                             orient: 'vertical',
-                            top:'25%',
-                            right:0,
+                            top:'20%',
+                            left:'40%',
                             itemWidth: 10,
                             itemHeight: 10,
                             data:realTitle,
@@ -1980,7 +1981,7 @@ function echarts_33(period) {
                             {
                                 name:'资金实际使用情况',
                                 type:'pie',
-                                center: ['35%', '50%'],
+                                center: ['20%', '50%'],
                                 radius: ['65%', '75%'],
                                 color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
                                 // 这里与方法一的label设置的一样
@@ -2175,7 +2176,7 @@ function echarts_33(period) {
                         ]
                     };
                     // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option);
+                    myChart.setOption(option1);
                     myChart2.setOption(option2);
                     myChart3.setOption(option3);
 
