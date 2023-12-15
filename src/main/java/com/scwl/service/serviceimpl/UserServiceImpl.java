@@ -54,10 +54,6 @@ public class UserServiceImpl implements UserService {
     public ResBean getUserList(int pageNum, int pageSize, User user) {
         PageHelper.startPage(pageNum,pageSize);
         List<User> users = userMapper.getAllUserAndRole(user);
-//        for (User u : users) {
-//            u.setEncodePhone(MD5Util.encryptSHA(u.getPhone()));
-//            userMapper.updateByPrimaryKey(u);
-//        }
         PageInfo<User> pageInfo = new PageInfo<>(users);
         return ResBean.success("success",pageInfo);
     }
@@ -68,10 +64,6 @@ public class UserServiceImpl implements UserService {
            User user = userMapper.selectByEncodePhone(phone);
            if(null!=user) {
                UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-
-               if (null==userDetails||!passwordEncoder.matches(user.getPassword(),userDetails.getPassword())){
-                   return ResBean.error("用户名或密码不正确");
-               }
                if (!userDetails.isEnabled()){
                    return ResBean.error("账号被禁用，请联系管理员！");
                }
@@ -86,7 +78,6 @@ public class UserServiceImpl implements UserService {
                List<Role> roles =   roleMapper.getRoles(user1.getId());
                List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
                for (Role role : roles) {
-                   // grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
                    grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
                }
                //生成token
@@ -94,8 +85,10 @@ public class UserServiceImpl implements UserService {
                Map<String,String> tokenMap = new HashMap<>();
                tokenMap.put("token",token);
                tokenMap.put("tokenHead",tokenHead);
+               logService.addLog("LOGIN","user",user.getId(),"从OA系统登录成功！");
                return ResBean.success("登录成功",tokenMap);
            }else {
+               logService.addLog("LOGIN_ERROR","user",0,"从OA系统登录失败！"+phone);
                return ResBean.error("用户不存在！");
            }
        }catch (Exception e){
