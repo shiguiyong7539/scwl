@@ -287,7 +287,7 @@
                     </div>
 
                     <div class="formRow">
-                        租金收入：
+                       <span id="rentIncomeType"> 租金收入：</span>
                         <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentIncome"></div><div class="clear"></div>
                     </div>
                     <div class="formRow rent_show">
@@ -659,6 +659,7 @@
             var rent_show = document.getElementsByClassName("rent_show");
             var project_show = document.getElementsByClassName("project_show");
             if(name=="资产经营"){
+                $("#rentIncomeType").html("租金收入:");
                 for (var i = 0; i < rent_show.length; i++) {
                     rent_show[i].style = "display:block"; // 修改为隐藏
                 }
@@ -667,6 +668,7 @@
                 }
 
             }else if(name=="经营业务收入"){
+                $("#rentIncomeType").html("业务收入:");
                 for (var i = 0; i < rent_show.length; i++) {
                     rent_show[i].style = "display:none"; // 修改为隐藏
                 }
