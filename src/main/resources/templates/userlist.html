@@ -424,7 +424,12 @@
                         str_info+='<td align="center">'+data1[i].name+'</td>';
                         str_info+='<td align="center">'+data1[i].phone+'</td>';
                         str_info+='<td align="center"><input style="width: 100%;" placeholder="不能低于6位数必须字母+数字" id="password_'+data1[i].id+'" onchange="resetPassword('+data1[i].id+')"></td>';
-                        str_info+='<td align="center">'+data1[i].roles[0].namezh+'</td>';
+                       if(data1[i].roles.length>0){
+                           str_info+='<td align="center">'+data1[i].roles[0].namezh+'</td>';
+                       }else {
+                           str_info+='<td align="center"></td>';
+                       }
+
                         str_info+='<td align="center">'+dateFormat(2,data1[i].lastLogin)+'</td></tr>';
                     }
                     $("#myTable").html(str_info);
