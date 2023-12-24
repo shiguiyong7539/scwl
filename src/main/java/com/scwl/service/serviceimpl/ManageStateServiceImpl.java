@@ -45,6 +45,10 @@ public class ManageStateServiceImpl implements ManageStateService {
             if(manageState.getType().equals("资产经营")){
                 manageState.setName("资产经营");
             }
+            ManageState currentMonth = manageStateMapper.getCurrentMonth(manageState.getType());
+            if(null!=currentMonth){
+                return  ResBean.success("当月已经存在无法再添加，请前去修改!");
+            }
             manageStateMapper.insert(manageState);
             logService.addLog("INSERT","manage_state",manageState.getId(),"新增id为"+manageState.getId()+"的经营状况信息");
             return  ResBean.success("添加成功");

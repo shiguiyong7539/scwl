@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
-    <title>涉诉情况</title>
+    <title>权限菜单</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -410,6 +410,7 @@
             data: $('#formId').serialize(),
             success: function (res) {
                 if(res && res.code===200){
+                    layer.msg(res.message, { icon: 1,time: 1000});
                     var data = res.obj;
                     var data1 = res.obj.list;
                     var pageNo = parseInt(res.obj.pageNum);

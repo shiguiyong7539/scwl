@@ -17,6 +17,7 @@
     color:#666;
     position: relative;
     margin-top: 5px;
+    margin-bottom: 20px;
 }
 .fitem{
     padding: 1px 1px 1px 10px !important;
@@ -40,6 +41,66 @@
     margin-right: 18px;
 }
 
+.formRow3 {
+    padding: 1%;
+    /* text-align: center; */
+    clear: both;
+    border-bottom: 1px solid #E2E2E2;
+    border-top: 1px solid white;
+    position: relative;
+    display: flex;
+}
+.formRow3 .formRight {
+    display: block;
+    float: right;
+    width: 50%;
+    margin-right: 30%;
+}
+.formRow3 .formLeft {
+    display: block;
+    width: 50%;
+    margin-left: 18%;
+}
+.formRow4 {
+    padding: 1%;
+    /* text-align: center; */
+    clear: both;
+    border-bottom: 1px solid #E2E2E2;
+    border-top: 1px solid white;
+    position: relative;
+    display: flex;
+}
+.formRow4 .formRight {
+    display: block;
+    float: right;
+    width: 40%;
+    margin-right: 30%;
+}
+.formRow4 .formLeft {
+    display: block;
+    width: 60%;
+    margin-left: 18%;
+}
+.formRow5 {
+    padding: 1%;
+    /* text-align: center; */
+    clear: both;
+    border-bottom: 1px solid #E2E2E2;
+    border-top: 1px solid white;
+    position: relative;
+    display: flex;
+}
+.formRow5 .formRight {
+    display: block;
+    float: right;
+    width: 40%;
+    margin-right: 35%;
+}
+.formRow5 .formLeft {
+    display: block;
+    width: 60%;
+    margin-left: 30%;
+}
 /* 弹窗 (background) */
 .modal {
     display: none; /* 默认隐藏 */

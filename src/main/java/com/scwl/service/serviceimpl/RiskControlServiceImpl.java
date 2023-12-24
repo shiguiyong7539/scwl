@@ -41,7 +41,7 @@ public class RiskControlServiceImpl implements RiskControlService {
         example.setOrderByClause("add_time desc");
         List<RiskControl> contracts = riskControlMapper.selectByExample(example);
         PageInfo<RiskControl> pageInfo = new PageInfo<>(contracts);
-        return ResBean.success("success",pageInfo);
+        return ResBean.success("查询成功",pageInfo);
     }
 
     @Override

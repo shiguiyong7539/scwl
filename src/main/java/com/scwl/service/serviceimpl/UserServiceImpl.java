@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(pageNum,pageSize);
         List<User> users = userMapper.getAllUserAndRole(user);
         PageInfo<User> pageInfo = new PageInfo<>(users);
-        return ResBean.success("success",pageInfo);
+        return ResBean.success("查询成功",pageInfo);
     }
 
     @Override

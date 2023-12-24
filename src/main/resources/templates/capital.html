@@ -224,8 +224,8 @@
                     <form class="layui-col-md12 x-so" id="formId">
                         <span>状态:</span>
                         <select name="type">
-                            <option value="1">资金</option>
-                            <option value="2">资金比率</option>
+                            <option value="1">资金情况</option>
+                            <option value="2">国资委考核指标</option>
                         </select>
                         <span>月份:</span>
                         <input type="date"  style="width: 162px;" name="quarterly">
@@ -233,8 +233,8 @@
                     </form>
                 </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>资金状况信息</h6>
-                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myStateBtn" value="添加比率状况" class="redB"></div>
-                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myStateBtn2" value="添加资金状况" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="addRateHtml(1)" value="添加资金状况" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit"  onclick="addRateHtml(2)" value="添加指标状况" class="redB"></div>
                     <div class="formAddEmp"><input type="submit" onclick="deleteCap()" value="删除" class="redB"></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
@@ -249,105 +249,6 @@
                 <span id="pagefoot"></span></span>
             <div class="clear"></div>
         </div>
-
-        <!-- 弹窗1 -->
-        <div id="myStateModal" class="modal">
-
-            <!-- 弹窗内容 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h2>比率状况信息</h2>
-                </div>
-                <div class="modal-body">
-
-                    <div class="formRow2">
-                        融资计划完成率：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="finishRate"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        区国资委考核指标：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="finishRateTag"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        运营费用节约率：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="operatRate"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        区国资委考核指标：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="operatRateTag"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        营业收入增长率：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="incomeRate"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        区国资委考核指标：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="incomeRateTag"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        营业现金比率：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="cashRate"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        区国资委考核指标：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="cashRateTag"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        营业成本率：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="costRate"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        区国资委考核指标：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="costRateTag"><span>%</span></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        月份：
-                        <div class="formRight">
-                            <input type="date"  style="width: 162px;" id="quarterly">
-                        </div>
-                    </div>
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addCapital()">提交</button></div>
-                </div>
-                <div class="modal-footer">
-                    <h3></h3>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- 弹窗2 -->
-        <div id="myStateModal2" class="modal">
-
-            <!-- 弹窗内容 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h2>资金状况信息</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="formRow2">
-                        灵活使用资金：
-                        <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="useCapital"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        受限资金：
-                        <div class="formRight"><input type="number" step="0.01"  class="validate[required]"  id="unUseCapital"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow2">
-                        月份：
-                        <div class="formRight">
-                            <input type="date"  style="width: 162px;" id="addDate">
-                        </div>
-                    </div>
-
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addCapital2()">提交</button></div>
-                </div>
-                <div class="modal-footer">
-                    <h3></h3>
-                </div>
-            </div>
-
         </div>
     </div>
     <!-- Footer line -->
@@ -476,6 +377,7 @@
                 data: $('#formId').serialize(),
                 success: function (res) {
                     if(res && res.code===200){
+                        layer.msg(res.message, { icon: 1,time: 1000});
                         var data = res.obj;
                         var data1 = res.obj.list;
                         var pageNo = parseInt(res.obj.pageNum);
@@ -589,39 +491,6 @@
 
         }
 
-        // 获取弹窗
-        var modal = document.getElementById('myStateModal');
-        var modal2 = document.getElementById('myStateModal2');
-
-        // 打开弹窗的按钮对象
-        var btn = document.getElementById("myStateBtn");
-        var btn2 = document.getElementById("myStateBtn2");
-
-        // 获取 <span> 元素，用于关闭弹窗 that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // 点击按钮打开弹窗
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-        btn2.onclick = function() {
-            modal2.style.display = "block";
-        }
-        // 点击 <span> (x), 关闭弹窗
-        span.onclick = function() {
-            modal.style.display = "none";
-            modal2.style.display = "none";
-        }
-
-        // 在用户点击其他地方时，关闭弹窗
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-            if (event.target == modal2) {
-                modal2.style.display = "none";
-            }
-        }
 
         function addCapital() {
             var finishRate = document.getElementById("finishRate").value;
@@ -829,6 +698,95 @@
 
             }
         }
+
+
+        function addRateHtml(type) {
+            var html_info=" <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                        <span class='formLeft'>融资计划完成率：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"finishRate\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                         <span class='formLeft'>区国资委考核指标： </span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"finishRateTag\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 运营费用节约率：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"operatRate\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 区国资委考核指标：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"operatRateTag\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 营业收入增长率：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"incomeRate\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 区国资委考核指标：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"incomeRateTag\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 营业现金比率：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"cashRate\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 区国资委考核指标：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"cashRateTag\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                      <span class='formLeft'>  营业成本率：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%'  type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"costRate\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                      <span class='formLeft'>  区国资委考核指标：</span>\n" +
+                "                        <div class=\"formRight\"><input style='width: 85%' type=\"number\" step=\"0.01\" placeholder=\"请只输入比例数字\"  class=\"validate[required]\"  id=\"costRateTag\"><span>%</span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\" style='text-align: center'>\n" +
+                "                      <span class='formLeft'>  月份：</span>\n" +
+                "                        <div class=\"formRight\">\n" +
+                "                            <input style='width: 91%' type=\"date\"  style=\"width: 162px;\" id=\"quarterly\">\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                    <div><button style=\"margin-left:45%;background: green;color: white;\" onclick=\"addCapital()\">提交</button></div>";
+
+            var html_info1="<div class=\"formRow3\">\n" +
+                "                       <span class='formLeft'>   灵活使用资金：</span>\n" +
+                "                        <div class=\"formRight\"><input type=\"number\" step=\"0.01\"  class=\"validate[required]\"  id=\"useCapital\"></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\">\n" +
+                "                        <span class='formLeft'>  受限资金：</span>\n" +
+                "                        <div class=\"formRight\"><input type=\"number\" step=\"0.01\"  class=\"validate[required]\"  id=\"unUseCapital\"></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow3\">\n" +
+                "                       <span class='formLeft'>   月份：</span>\n" +
+                "                        <div class=\"formRight\">\n" +
+                "                            <input type=\"date\"  style=\"width: 162px;\" id=\"addDate\">\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "\n" +
+                "                    <div><button style=\"margin-left:45%;background: green;color: white;\" onclick=\"addCapital2()\">提交</button></div>";
+            if(type==1){
+                layui.layer.open({
+                    type:1,
+                    title:"资金管理",
+                    skin:"open_css",
+                    area:['40%','50%'],
+                    // shadeClose: true, //点击弹出层外空白处
+                    content:html_info1
+                })
+            }else {
+                layui.layer.open({
+                    type:1,
+                    title:"国资委考核指标完成情况",
+                    skin:"open_css",
+                    area:['40%','80%'],
+                    // shadeClose: true, //点击弹出层外空白处
+                    content:html_info
+                })
+            }
+
+        }
+
     </script>
 </body>
 </html>

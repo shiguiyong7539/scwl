@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
-    <title>经营管理</title>
+    <title>租金收入</title>
     <link href="css/main.css" rel="stylesheet" type="text/css" />
     <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
 
@@ -58,13 +58,7 @@
     <script type="text/javascript" src="js/plugins/calendar.min.js"></script>
     <script type="text/javascript" src="js/plugins/elfinder.min.js"></script>
     <script type="text/javascript" src="js/layui.js"></script>
-
-
-    <!-- <script type="text/javascript" src="js/custom.js"></script>-->
-
-    <!-- <script type="text/javascript" src="js/charts/chart.js"></script>
- -->
-    <!-- Shared on MafiaShare.net  --><!-- Shared on MafiaShare.net  --></head>
+</head>
 
 <body>
 
@@ -86,6 +80,15 @@
                 <li><a href="#" title="" onclick="costManage()">预算执行</a></li>
                 <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('asset')" class="exp"><span>租金管理</span></a>
+            <ul class="sub ul_hidden" id="asset">
+                <li><a href="#" title="" onclick="assetList()">资产列表</a></li>
+                <li><a href="#" title="" onclick="lesseList()">租户列表</a></li>
+                <li><a href="#" title="" onclick="leaseInfolist()">租约列表</a></li>
+                <li><a href="#" title="" onclick="rentList()">租金收入</a></li>
             </ul>
         </li>
 
@@ -113,11 +116,12 @@
         </li>
         <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
             <ul class="sub ul_hidden" id="myInfo">
-                <li><a href="#" title="" onclick="userInfo()" id="idNo"></a></li>
-                <li><a href="#" title="" onclick="userInfo()" id="idName"></a></li>
+                <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
+                <li><a href="#" title="#" onclick="userInfo()" id="idName"></a></li>
                 <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
             </ul>
         </li>
+
     </ul>
 </div>
 
@@ -222,29 +226,39 @@
             <div class="widget">
                 <div class="layui-row">
                     <form class="layui-col-md12 x-so" id="formId">
-                        <span>经营类型:</span>
-                        <select name="type">
-                            <option value="资产经营">资产经营</option>
-                            <option value="经营业务收入">经营业务收入</option>
-                        </select>
-                        <span>项目名称:</span>
-                        <select name="name">
+                        资产名称: <input  style=" width: 10%;" type="text" name="assetName"  placeholder="名称" autocomplete="off" class="layui-input">
+                        租户名称: <input  style=" width: 10%;" type="text" name="lesseeName"  placeholder="名称" autocomplete="off" class="layui-input">
+                        <span>状态:</span>
+                        <select name="status">
                             <option value=""></option>
-                            <option value="旧日长轨">旧日长轨</option>
-                            <option value="星河集市">星河集市</option>
-                            <option value="金沙艺术中心">金沙艺术中心</option>
-                            <option value="灿若湖民宿">灿若湖民宿</option>
-                            <option value="活动策划">活动策划</option>
+                            <option value="1">已交</option>
+                            <option value="2">欠费</option>
+                            <option value="3">免租</option>
                         </select>
-                        <div id="sousuo" class="sousuo" onclick="manageStateList(1)" >搜索</div>
+                        <div id="sousuo" class="sousuo" onclick="getBillList(1)" >搜索</div>
                     </form>
                 </div>
-                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>经营状况信息</h6>
-                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myStateBtn" value="添加经营状况" class="redB"></div>
-                    <div class="formAddEmp"><input type="submit" onclick="deleteState()"  value="删 除" class="redB"></div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>租金信息</h6>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="exportBill()"><input type="submit" value="导出租金明细" class="redB"></a></div>
+<!--                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="addRentBill()" value="添加" class="redB"></div>-->
+<!--                    <div class="formAddEmp"><input type="submit" onclick="deleteBill()" value="删除" class="redB"></div>-->
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
-                    <thead id="myThead">
+                    <thead>
+                    <tr>
+                        <td width="20"><input type="checkbox" onclick="selectAll()"></td>
+                        <td width="20">序号</td>
+                        <td width="110">资产名</td>
+                        <td width="80">承租人</td>
+                        <td width="80">电话</td>
+                        <td width="80">建筑面积(㎡)</td>
+                        <td width="80">租金已缴</td>
+                        <td width="80">租金欠费</td>
+                        <td width="80">状态</td>
+                        <td width="80">支付日期</td>
+                        <td width="50">备注</td>
+                        <td width="80">交租时间</td>
+                    </tr>
                     </thead>
                     <tbody id="myTable">
                     </tbody>
@@ -257,63 +271,12 @@
         </div>
 
         <!-- 弹窗 -->
-        <div id="myStateModal" class="modal">
 
-            <!-- 弹窗内容 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h2>经营管理</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="formRow">
-                        经营类型：
-                        <div class="formRight"><select id="type"  style="width: 162px;" onchange="showColum()">
-                            <option value=""></option>
-                            <option value="资产经营">资产经营</option>
-                            <option value="经营业务收入">经营业务收入</option>
-                        </select></div>
-                    </div>
-                    <div class="formRow project_show">
-                        项目名称：
-                        <div class="formRight"><select id="name" style="width: 162px;">
-                            <option value=""></option>
-                            <option value="旧日长轨">旧日长轨</option>
-                            <option value="星河集市">星河集市</option>
-                            <option value="金沙艺术中心">金沙艺术中心</option>
-                            <option value="灿若湖民宿">灿若湖民宿</option>
-                            <option value="活动策划">活动策划</option>
-                        </select></div>
-                    </div>
+        <input type="hidden" id="commit_title_ids"/>
+        <input type="hidden" id="commit_matter_ids"/>
 
-                    <div class="formRow">
-                       <span id="rentIncomeType"> 租金收入：</span>
-                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentIncome"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow rent_show">
-                        欠缴租金：
-                        <div class="formRight"><input type="number" step="0.01" class="validate[required]"  id="rentArrears"></div><div class="clear"></div>
-                    </div>
-                    <div class="formRow rent_show">
-                        出租率：
-                        <div class="formRight"><input type="number" step="0.01" placeholder="请输入除去百分号的比例数字"  class="validate[required]"  id="letRate"><span>%</span></div><div class="clear"></div>
-                    </div>
 
-                    <div class="formRow">
-                        日期：
-                        <div class="formRight">
-                            <input type="date"  style="width: 162px;" id="periodicTime">
-                        </div>
-                    </div>
 
-                    <div><button style="margin-left:20%;background: green;color: white;" onclick="addManageState()">提交</button></div>
-                </div>
-                <div class="modal-footer">
-                    <h3></h3>
-                </div>
-            </div>
-
-        </div>
 
 
     </div>
@@ -324,11 +287,11 @@
 
 
     <div class="clear"></div>
+
     <script type="text/javascript">
         $(function () {
-            toggle("userManage");
+            toggle('asset');
             initData();
-            manageStateList(1);
         } );
 
 
@@ -343,6 +306,7 @@
                             layer.close(); //再执行关闭
                             location.href="/admin";
                         });
+
                     }
                 }
             })
@@ -387,6 +351,18 @@
         function authority() {
             location.href="/authority";
         }
+        function assetList() {
+            location.href="/assetList";
+        }
+        function lesseList() {
+            location.href="/lesseList";
+        }
+        function leaseInfolist() {
+            location.href="/leaseInfolist";
+        }
+        function rentList() {
+            location.href="/rentList";
+        }
         function toggle(id) {
             var x = document.getElementById(id);
             if (x.className === "sub ul_hidden") {
@@ -406,10 +382,12 @@
                     },
                     success: function (res) {
                         if(res.code === 200) {
+                            // JSON.stringify()
                             document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
                             document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
                             document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
                             document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
+                            getBillList(1);
                         }else {
                             layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                                 layer.close(); //再执行关闭
@@ -430,14 +408,14 @@
             }
         }
 
-        function manageStateList(pageNum) {
+        function getBillList(pageNum) {
             $.ajax({
                 type: "get",
-                url: "/getAllManageState?pageNum="+pageNum,
+                url: "/rentBill/getBillList?pageNum="+pageNum,
                 headers: {
                     'Authorization': localStorage.getItem("token") // 在请求头中添加token
                 },
-                data: $('#formId').serialize(),
+                data:$('#formId').serialize(),
                 success: function (res) {
                     if(res && res.code===200){
                         layer.msg(res.message, { icon: 1,time: 1000});
@@ -447,76 +425,52 @@
                         var pages = parseInt(res.obj.pages);
                         var total = parseInt(res.obj.total);
                         // 获取表格元素
-                        /**
-                         *
-                         * @type {string}
-                         */
                         var str_info='';
-                        var str_thead='';
                         for (var i = 0; i < data1.length; i++) {
-                            if(data1[i].type=='资产经营'){
-                                str_info+='<tr><td align="center"><input class="checkSta" type="checkbox" value="'+data1[i].id+'"></td>';
-                                str_info+='<td align="center">'+data1[i].id+'</td>';
-                                str_info+='<td align="center">'+data1[i].type+'</td>';
-                                str_info+='<td align="center">'+data1[i].name+'</td>';
-                                str_info+='<td align="center"><input id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',1)" value="'+isNull(data1[i].rentIncome)+'"></td>';
-                                str_info+='<td align="center"><input id="rentArrears_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',1)" value="'+isNull(data1[i].rentArrears)+'"></td>';
-                                str_info+='<td align="center"><input id="letRate_input_'+data1[i].id+'"  onchange="updateState('+data1[i].id+',1)" style="text-align: right" value="'+isNull(data1[i].letRate)+'">%</td>';
-                                str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
-
-                                str_thead='<tr><td width="20"><input type="checkbox" onclick="selectAllState()"></td>\n' +
-                                    '                         <td width="20">编号</td>\n' +
-                                    '                         <td width="80">经营类型</td>\n' +
-                                    '                         <td width="80">项目名称</td>\n' +
-                                    '                         <td width="80">租金收入</td>\n' +
-                                    '                         <td width="80">欠缴租金</td>\n' +
-                                    '                         <td width="80">出租率</td>\n' +
-                                    '                         <td width="80">日期</td>\n' +
-                                    '                         </tr>';
-                            }else {
-                                str_info+='<tr><td align="center"><input class="checkSta" type="checkbox" value="'+data1[i].id+'"></td>';
-                                str_info+='<td align="center">'+data1[i].id+'</td>';
-                                str_info+='<td align="center">'+data1[i].type+'</td>';
-                                str_info+='<td align="center">'+data1[i].name+'</td>';
-                                str_info+='<td align="center"><input style="text-align: center" id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',2)" value="'+isNull(data1[i].rentIncome)+'"></td>';
-                                str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
-                                str_thead='<tr><td width="20"><input type="checkbox" onclick="selectAllState()"></td>\n' +
-                                    '                         <td width="20">编号</td>\n' +
-                                    '                         <td width="80">经营类型</td>\n' +
-                                    '                         <td width="80">项目名称</td>\n' +
-                                    '                         <td width="80">业务收入</td>\n' +
-                                    '                         <td width="80">日期</td>\n' +
-                                    '                         </tr>';
+                            str_info+='<tr><td align="center"><input class="choose" type="checkbox" value="'+data1[i].id+'"></td>';
+                            str_info+='<td align="center">'+data1[i].id+'</td>';
+                            str_info+='<td align="center">'+data1[i].assetName+'</td>';
+                            str_info+='<td align="center">'+data1[i].lesseeName+'</td>';
+                            str_info+='<td align="center">'+data1[i].phone+'</td>';
+                            str_info+='<td align="center">'+data1[i].acreage+'</td>';
+                            str_info+='<td align="center">'+data1[i].amount+'</td>';
+                            str_info+='<td align="center">'+data1[i].amountOwed+'</td>';
+                            if(data1[i].status===1){
+                                str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: red;text-decoration: none;">已交</a></td>';
+                            }else if(data1[i].status===2){
+                                str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: red;text-decoration: none;">欠费</a></td>';
+                            } else {
+                                str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#"  style="color: green;text-decoration: none;">免租</a></td>';
                             }
+                            str_info+='<td align="center">'+(data1[i].rentDay==null?"":dateFormat(1,data1[i].rentDay))+'</td>';
+                            str_info+='<td align="center"><div  class="text-over" title="'+(data1[i].remark==null?"":data1[i].remark)+'">'+(data1[i].remark==null?"":data1[i].remark)+'</div></td>';
+                            str_info+='<td align="center">'+dateFormat(1,data1[i].addTime)+'</td></tr>';
                         }
-                        $("#myThead").html(str_thead);
                         $("#myTable").html(str_info);
-
 
                         pagenum0=pageNo-1;
                         pagenum1=pageNo+1;
                         pagenum2=pageNo+2;
                         pagenum3=pageNo+3;
-                        var htm="<a  href='#' onclick='manageStateList(1)'>首页 </a>";
+                        var htm="<a  href='#' onclick='getBillList(1)'>首页 </a>";
                         if(data.pageNum >1){
-                            htm+="<a  href='#' onclick='manageStateList("+data.prePage+")'>上一页 </a>"
+                            htm+="<a  href='#' onclick='getBillList("+data.prePage+")'>上一页 </a>"
                         }
                         if(pagenum0 >=1){
-                            htm+="<a  href='#' onclick='manageStateList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                            htm+="<a  href='#' onclick='getBillList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
                         }
                         htm+="<button class='current'>"+data.pageNum+"</button>";
                         if(pagenum1 <= pages){
-                            htm+="<a  href='#' onclick='manageStateList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                            htm+="<a  href='#' onclick='getBillList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
                         }
                         if(pagenum2 <= pages){
-                            htm+="<a  href='#' onclick='manageStateList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                            htm+="<a  href='#' onclick='getBillList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
                         }
                         if(pagenum3 <= pages){
-                            htm+="<a  href='#' onclick='manageStateList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                            htm+="<a  href='#' onclick='getBillList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
                         }
-                        htm+="<a  href='#' onclick='manageStateList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='manageStateList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                        htm+="<a  href='#' onclick='getBillList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='getBillList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                         $("#pagefoot").html(htm);
-                        layui.layer.msg(res.message,{icon:1},{time:2000});
                     }else {
                         //失败提示
                         layer.msg(res.message, {
@@ -533,7 +487,93 @@
 
         }
 
+        function addRentBill() {
+            var html_info=" <div class=\"formRow4\" style='text-align: center'>\n" +
+                "                        <span class='formLeft'>名称：</span>\n" +
+                "                        <div class=\"formRight\"><input  class=\"validate[required]\"  id=\"assetName\"><span></span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow4\" style='text-align: center'>\n" +
+                "                         <span class='formLeft'>面积(㎡)： </span>\n" +
+                "                        <div class=\"formRight\"><input  type=\"number\" step=\"0.01\" placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"acreage\"></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow4\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 地址：</span>\n" +
+                "                        <div class=\"formRight\"><input  class=\"validate[required]\"  id=\"address\"><span></span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow4\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 状态：</span>\n" +
+                "                        <div  class=\"formRight\"><select style='width: 165px;'  id=\"status\">\n" +
+                "                            <option value=\"\"></option>\n" +
+                "                            <option value=\"1\">空置中</option>\n" +
+                "                            <option value=\"2\">租赁中</option>\n" +
+                "                        </select></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow4\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 备注：</span>\n" +
+                "                        <div class=\"formRight\"><input  class=\"validate[required]\"  id=\"remark\"><span></span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div><button style=\"margin-left:45%;background: green;color: white;\" onclick=\"addBill()\">提交</button></div>";
+            layui.layer.open({
+                type:1,
+                title:"资产管理",
+                skin:"open_css",
+                area:['40%','50%'],
+                // shadeClose: true, //点击弹出层外空白处
+                content:html_info
+            })
 
+
+        }
+        function addBill() {
+            var assetName = document.getElementById("assetName").value;
+            var acreage = document.getElementById("acreage").value;
+            var address = document.getElementById("address").value;
+            var status = document.getElementById("status").value;
+            var remark = document.getElementById("remark").value;
+            if(null==assetName||assetName==""){
+                layui.layer.msg("名称不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==acreage||acreage==""){
+                layui.layer.msg("面积不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==address||address==""){
+                layui.layer.msg("地址不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==status||status==""){
+                layui.layer.msg("状态不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/asset/addAsset",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    assetName:assetName,
+                    acreage:acreage,
+                    address:address,
+                    status:status,
+                    remark:remark
+                }),
+                success: function (res) {
+                    if(res && res.code===200){
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            capitalposition();
+                        });
+
+                    }else {
+                        layui.layer.msg(res.message,{time:1000});
+                    }
+                }
+
+
+            })
+        }
 
         function dateFormat(type,utcTime) {
             var date = new Date(utcTime); // 创建Date对象
@@ -556,211 +596,73 @@
 
         }
 
-        // 获取弹窗
-        var modal = document.getElementById('myStateModal');
 
-        // 打开弹窗的按钮对象
-        var btn = document.getElementById("myStateBtn");
-
-        // 获取 <span> 元素，用于关闭弹窗 that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // 点击按钮打开弹窗
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // 点击 <span> (x), 关闭弹窗
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // 在用户点击其他地方时，关闭弹窗
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        function updateStatus(id,type) {
+            let message='';
+            let html='';
+            if(type===1){
+                type=2
+                message='您确认要把状态更新成吗?';
+                html='<a href="#"  style="color: green;text-decoration: none;" onclick="updateStatus('+id+',2)">租赁中</a>';
+            }else {
+                type=1
+                message='您确认要把状态更新程空置中吗?';
+                html='<a href="#" style="color: red;text-decoration: none;"  onclick="updateStatus('+id+',1)">空置中</a>';
             }
-        }
+            layer.confirm(message, {
+                title:'操作提示',
+                icon:0,
+                btn: ['确定','取消']
+            }, function(){
+                var index = layer.load();
+                $.ajax({
+                    url: "/asset/editAsset",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data: ({
+                        id:id,
+                        status:type
+                    }),
+                    type: 'post',
+                    success: function (resp) {
+                        layer.close(index);
+                        //成功提示
+                        if (resp.code == 200) {
+                            document.getElementById("status_"+id).innerHTML=html;
+                            layer.msg("更新成功", {
+                                icon: 1,
+                                time: 1000
+                            }, function () {
 
-        function addManageState() {
-            var type = document.getElementById("type").value;
-            var name = document.getElementById("name").value;
-            var rentIncome = document.getElementById("rentIncome").value;
-            var rentArrears = document.getElementById("rentArrears").value;
-            var letRate = document.getElementById("letRate").value;
-            var periodicTime = document.getElementById("periodicTime").value;
-            if(type==""){
-                layui.layer.msg("经营类型不能为空!!!",{icon:2},{time:2000},function(){
-                    return ;
+                            });
+                        } else {
+                            //失败提示
+                            layer.msg(resp.msg, {
+                                icon: 2,
+                                time: 2000
+                            });
+                        }
+                    }
                 });
-            }
-            var data=[];
-            data.push({name:"periodicTime",value:new Date(periodicTime)});
-            data.push({name:"type",value:type});
-            data.push({name:"rentIncome",value:rentIncome});
-            if(name=="资产经营"){
-             data.push({name:"name",value:type});
-             data.push({name:"rentArrears",value:rentArrears});
-             data.push({name:"letRate",value:letRate});
-            }else{
-                data.push({name:"name",value:name});
-            }
-            $.ajax({
-                type: "post",
-                url: "/addState",
-                headers: {
-                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
-                },
-                data:data,
-                success: function (res) {
-                    if(res && res.code===200) {
-                        modal.style.display = "none";
-                    }
-                        layui.layer.msg(res.message,{time:1000},function(){
-                            layer.close(); //再执行关闭
-                            location.reload();
-                        });
+            });
 
-
-                }
-
-
-            })
 
         }
 
-        function changeSelect2() {
-            var select1 = document.getElementById("name");
-            var select2 = document.getElementById("type");
-            var selectedValue = select1.value;
-            select2.innerHTML = ""; //清空第二个下拉菜单的内容
-            if (selectedValue === "资产经营") {
-                var optionArray = ["租金收入", "欠缴租金", "出租率"];
-            } else if (selectedValue === "经营业务收入") {
-                var optionArray = ["旧日长轨", "星河集市", "金沙艺术中心","灿若湖民宿","活动策划"];
-            } else {
-                var optionArray = [];
-            }
-            for (var i = 0; i < optionArray.length; i++) {
-                var option = document.createElement("option");
-                option.text = optionArray[i];
-                select2.add(option);
-            }
-        }
 
-        function isNull(number) {
-            if(null==number){
-                return "";
-            }else {
-                return number;
-            }
-        }
-
-        function showColum() {
-            var name = document.getElementById("type").value;
-            var rent_show = document.getElementsByClassName("rent_show");
-            var project_show = document.getElementsByClassName("project_show");
-            if(name=="资产经营"){
-                $("#rentIncomeType").html("租金收入:");
-                for (var i = 0; i < rent_show.length; i++) {
-                    rent_show[i].style = "display:block"; // 修改为隐藏
-                }
-                for (var i = 0; i < project_show.length; i++) {
-                    project_show[i].style = "display:none"; // 修改为隐藏
-                }
-
-            }else if(name=="经营业务收入"){
-                $("#rentIncomeType").html("业务收入:");
-                for (var i = 0; i < rent_show.length; i++) {
-                    rent_show[i].style = "display:none"; // 修改为隐藏
-                }
-                for (var i = 0; i < project_show.length; i++) {
-                    project_show[i].style = "display:block"; // 修改为显示
-                }
-
-            }else {
-                for (var i = 0; i < rent_show.length; i++) {
-                    rent_show[i].style = "display:none"; // 修改为隐藏
-                }
-                for (var i = 0; i < project_show.length; i++) {
-                    project_show[i].style = "display:none"; // 修改为隐藏
-                }
-            }
-        }
-
-
-
-        function updateState(id,type) {
-            if(type==1){
-                let rentIncome =  document.getElementById("rentIncome_input_"+id).value;
-                let rentArrears =  document.getElementById("rentArrears_input_"+id).value;
-                let letRate =  document.getElementById("letRate_input_"+id).value;
-                $.ajax({
-                    type: "post",
-                    url: "/updateState",
-                    headers: {
-                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
-                    },
-                    data:({
-                        id:id,
-                        rentIncome:rentIncome,
-                        rentArrears:rentArrears,
-                        letRate:letRate
-                    }),
-                    success: function (res) {
-                        if(res && res.code===200) {
-                            modal.style.display = "none";
-                        }
-                        layui.layer.msg(res.message,{time:1000},function(){
-                            layer.close(); //再执行关闭
-                        });
-
-                    }
-
-
-                })
-
-            }else {
-                let rentIncome =  document.getElementById("rentIncome_input_"+id).value;
-                $.ajax({
-                    type: "post",
-                    url: "/updateState",
-                    headers: {
-                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
-                    },
-                    data:({
-                        id:id,
-                        rentIncome:rentIncome
-                    }),
-                    success: function (res) {
-                        if(res && res.code===200) {
-                            modal.style.display = "none";
-                        }
-                        layui.layer.msg(res.message,{time:1000},function(){
-                            layer.close(); //再执行关闭
-                        });
-
-                    }
-
-
-                })
-
-            }
-
-        }
-
-        function deleteState() {
-            var selectedValues = document.querySelectorAll(".checkSta:checked");
+        function deleteAsset() {
+            var selectedValues = document.querySelectorAll(".choose:checked");
             var ids = [];
             for (var i = 0; i < selectedValues.length; i++) {
                 ids.push(selectedValues[i].value);
             }
             if(ids.length==0){
-                layui.layer.msg('您沒有勾选');
+                layui.layer.msg('您沒有勾选资产');
             }else {
                 $.ajax({
-                    type: "post",
-                    url: "/deleteState",
+                    type: "get",
+                    url: "/asset/deleteAsset",
                     headers: {
                         'Authorization': localStorage.getItem("token") // 在请求头中添加token
                     },
@@ -772,18 +674,13 @@
                             layer.close(); //再执行关闭
                             location.reload();
                         });
+                    }})
 
 
-                    }
-
-
-                })
             }
         }
-
-
-        function selectAllState() {
-            var checkboxes = document.getElementsByClassName("checkSta");
+        function selectAll() {
+            var checkboxes = document.getElementsByClassName("choose");
             for (var i = 0; i < checkboxes.length; i++) {
                 if(checkboxes[i].checked){
                     checkboxes[i].checked=false;
@@ -792,6 +689,24 @@
                 }
 
             }
+        }
+
+        function exportBill() {
+            $.ajax({
+                type: "get",
+                url: "/rentBill/exportBill",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                success: function (res) {
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        if(res.code==200){
+                            window.location.href="/rentBill/exportExcel";
+                        }
+                    });
+                }})
+
         }
     </script>
 </body>

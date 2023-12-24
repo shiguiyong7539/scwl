@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scwl.mapper.RentBillMapper" >
+  <resultMap id="BaseResultMap" type="com.scwl.pojo.RentBill" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="asset_id" property="assetId" jdbcType="INTEGER" />
+    <result column="lessee_id" property="lesseeId" jdbcType="INTEGER" />
+    <result column="lease_info_id" property="leaseInfoId" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="amount_owed" property="amountOwed" jdbcType="DECIMAL" />
+    <result column="rent_day" property="rentDay" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="DATE" />
+  </resultMap>
+  <resultMap id="BillAndAssetAndLesse" type="com.scwl.vo.RentBillVo" extends="BaseResultMap">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="asset_id" property="assetId" jdbcType="INTEGER" />
+    <result column="lessee_id" property="lesseeId" jdbcType="INTEGER" />
+    <result column="lease_info_id" property="leaseInfoId" jdbcType="INTEGER" />
+    <result column="rent_day" property="rentDay" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="DATE" />
+    <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
+    <result column="acreage" property="acreage" jdbcType="DOUBLE" />
+    <result column="assetAddress" property="assetAddress" jdbcType="VARCHAR" />
+    <result column="assetStatus" property="assetStatus" jdbcType="INTEGER" />
+    <result column="lessee_name" property="lesseeName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="identity_card" property="identityCard" jdbcType="VARCHAR" />
+    <result column="personAddress" property="personAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, asset_id, lessee_id, lease_info_id, amount, amount_owed, rent_day, status, remark,
+    is_delete, add_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.RentBillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rent_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from rent_bill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from rent_bill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.scwl.pojo.RentBillExample" >
+    delete from rent_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.scwl.pojo.RentBill" useGeneratedKeys="true" keyProperty="id">
+    insert into rent_bill (id, asset_id, lessee_id,
+      lease_info_id, amount, amount_owed,
+      rent_day, status, remark,
+      is_delete, add_time)
+    values (#{id,jdbcType=INTEGER}, #{assetId,jdbcType=INTEGER}, #{lesseeId,jdbcType=INTEGER},
+      #{leaseInfoId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{amountOwed,jdbcType=DECIMAL},
+      #{rentDay,jdbcType=DATE}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+      #{isDelete,jdbcType=INTEGER}, #{addTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.scwl.pojo.RentBill" >
+    insert into rent_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="assetId != null" >
+        asset_id,
+      </if>
+      <if test="lesseeId != null" >
+        lessee_id,
+      </if>
+      <if test="leaseInfoId != null" >
+        lease_info_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="amountOwed != null" >
+        amount_owed,
+      </if>
+      <if test="rentDay != null" >
+        rent_day,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="assetId != null" >
+        #{assetId,jdbcType=INTEGER},
+      </if>
+      <if test="lesseeId != null" >
+        #{lesseeId,jdbcType=INTEGER},
+      </if>
+      <if test="leaseInfoId != null" >
+        #{leaseInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="amountOwed != null" >
+        #{amountOwed,jdbcType=DECIMAL},
+      </if>
+      <if test="rentDay != null" >
+        #{rentDay,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.scwl.pojo.RentBillExample" resultType="java.lang.Integer" >
+    select count(*) from rent_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rent_bill
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.assetId != null" >
+        asset_id = #{record.assetId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lesseeId != null" >
+        lessee_id = #{record.lesseeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.leaseInfoId != null" >
+        lease_info_id = #{record.leaseInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.amountOwed != null" >
+        amount_owed = #{record.amountOwed,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rentDay != null" >
+        rent_day = #{record.rentDay,jdbcType=DATE},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDelete != null" >
+        is_delete = #{record.isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rent_bill
+    set id = #{record.id,jdbcType=INTEGER},
+    asset_id = #{record.assetId,jdbcType=INTEGER},
+    lessee_id = #{record.lesseeId,jdbcType=INTEGER},
+    lease_info_id = #{record.leaseInfoId,jdbcType=INTEGER},
+    amount = #{record.amount,jdbcType=DECIMAL},
+    amount_owed = #{record.amountOwed,jdbcType=DECIMAL},
+    rent_day = #{record.rentDay,jdbcType=DATE},
+    status = #{record.status,jdbcType=INTEGER},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    is_delete = #{record.isDelete,jdbcType=INTEGER},
+    add_time = #{record.addTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scwl.pojo.RentBill" >
+    update rent_bill
+    <set >
+      <if test="assetId != null" >
+        asset_id = #{assetId,jdbcType=INTEGER},
+      </if>
+      <if test="lesseeId != null" >
+        lessee_id = #{lesseeId,jdbcType=INTEGER},
+      </if>
+      <if test="leaseInfoId != null" >
+        lease_info_id = #{leaseInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="amountOwed != null" >
+        amount_owed = #{amountOwed,jdbcType=DECIMAL},
+      </if>
+      <if test="rentDay != null" >
+        rent_day = #{rentDay,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scwl.pojo.RentBill" >
+    update rent_bill
+    set asset_id = #{assetId,jdbcType=INTEGER},
+      lessee_id = #{lesseeId,jdbcType=INTEGER},
+      lease_info_id = #{leaseInfoId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      amount_owed = #{amountOwed,jdbcType=DECIMAL},
+      rent_day = #{rentDay,jdbcType=DATE},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getBillList" parameterType="com.scwl.vo.RentBillVo" resultMap="BillAndAssetAndLesse">
+    select b.*,a.asset_name,a.acreage,a.address as assetAddress,a.status as assetStatus,
+    l.lessee_name,l.phone,l.sex,l.identity_card,l.address as personAddress
+    from rent_bill b
+    join rent_asset a on a.id = b.asset_id
+    join rent_lessee l on l.id = b.lessee_id
+    <where>
+      <if test="assetName != null and assetName !=''" >
+        a.asset_name like concat('%',#{assetName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="lesseeName != null and lesseeName !=''" >
+        and l.lessee_name like concat('%',#{lesseeName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="phone != null and phone !=''" >
+        and l.phone like concat('%',#{phone,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="assetAddress != null and assetAddress !=''" >
+        and a.address like concat('%',#{assetAddress,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="status != null" >
+        and b.status  = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  <select id="getByInfoId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  select * from rent_bill where lease_info_id = #{infoId}  and DATE(add_time) = CURDATE();
+  </select>
+  <select id="isExist" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  select * from rent_bill where lessee_id = #{lesseeId}  and status = 2  order by add_time
+  </select>
+  <select id="getAmountAndAmountOwedLastMonth"  resultMap="BaseResultMap">
+    select sum(amount),sum(amount_owed) from rent_bill  WHERE MONTH(add_time) = MONTH(CURDATE() - INTERVAL 1 MONTH)) AND YEAR(add_time) = YEAR(CURDATE() - INTERVAL 1 MONTH));
+  </select>
+  <select id="getAmountAndAmountOwed"  resultMap="BaseResultMap">
+    select sum(amount),sum(amount_owed) from rent_bill  WHERE MONTH(add_time) = MONTH(CURDATE()) AND YEAR(add_time) = YEAR(CURDATE());
+  </select>
+  <select id="getLastMonthBill" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+    select * from rent_bill  WHERE  lease_info_id = #{infoId} and MONTH(add_time) = #{month} AND YEAR(add_time) = #{year};
+  </select>
+</mapper>

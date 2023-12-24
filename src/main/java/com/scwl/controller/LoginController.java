@@ -310,5 +310,39 @@ public class LoginController {
     }
 
 
+    /**
+     * 资产列表
+     * @return
+     */
+    @RequestMapping("/assetList")
+    public String assetList(){
+        return "rentasset";
+    }
+
+    /**
+     * 租户列表
+     * @return
+     */
+    @RequestMapping("/lesseList")
+    public String lesseList(){
+        return "rentlesse";
+    }
+    /**
+     * 租约列表
+     * @return
+     */
+    @RequestMapping("/leaseInfolist")
+    public String leaseInfolist(){
+        return "rentleaseinfo";
+    }
+    /**
+     * 租金收入
+     * @return
+     */
+    @RequestMapping("/rentList")
+    public String rentList(){
+        return "rentbill";
+    }
+
 
 }

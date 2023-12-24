@@ -46,6 +46,24 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
+    public ResBean generateLog(String type,String tableName,Integer rowId,String conent) {
+        try{
+            SysLog sysLog = new SysLog();
+            sysLog.setOperationType(type);
+            sysLog.setTableName(tableName);
+            sysLog.setRowId(rowId);
+            sysLog.setConent(conent);
+            sysLog.setOperationTime(new Date());
+            sysLog.setUserId(0);
+            sysLog.setConent(conent);
+            logMapper.insert(sysLog);
+            return  ResBean.success("添加成功");
+        }catch (Exception e){
+            return  ResBean.error("添加失败");
+        }
+    }
+
+    @Override
     public ResBean getLog(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         SysLogExample logExample = new SysLogExample();

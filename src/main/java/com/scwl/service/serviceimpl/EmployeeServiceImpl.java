@@ -49,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setAge(getAge(new SimpleDateFormat("yyyy-MM-dd").format(employee.getBirthday())));
         }
         PageInfo<Employee> pageInfo = new PageInfo<>(employees);
-        return  ResBean.success("",pageInfo);
+        return  ResBean.success("查询成功",pageInfo);
     }
 
     @Override

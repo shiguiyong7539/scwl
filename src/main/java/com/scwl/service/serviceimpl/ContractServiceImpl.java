@@ -41,7 +41,7 @@ public class ContractServiceImpl implements ContractService {
        example.setOrderByClause("add_time desc");
         List<Contract> contracts = contractMapper.selectByExample(example);
         PageInfo<Contract> pageInfo = new PageInfo<>(contracts);
-        return ResBean.success("success",pageInfo);
+        return ResBean.success("查询成功",pageInfo);
     }
 
     @Override

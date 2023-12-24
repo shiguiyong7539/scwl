@@ -1,0 +1,1133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+    <title>租约列表</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="css/style_sc.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/spinner/ui.spinner.js"></script>
+    <script type="text/javascript" src="js/plugins/spinner/jquery.mousewheel.js"></script>
+
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/forms/uniform.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.cleditor.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.validationEngine-en.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.validationEngine.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/autogrowtextarea.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.dualListBox.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/jquery.inputlimiter.min.js"></script>
+    <script type="text/javascript" src="js/plugins/forms/chosen.jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/wizard/jquery.form.js"></script>
+    <script type="text/javascript" src="js/plugins/wizard/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/plugins/wizard/jquery.form.wizard.js"></script>
+
+    <script type="text/javascript" src="js/plugins/uploader/plupload.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/plupload.html5.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/plupload.html4.js"></script>
+    <script type="text/javascript" src="js/plugins/uploader/jquery.plupload.queue.js"></script>
+
+    <script type="text/javascript" src="js/plugins/tables/datatable.js"></script>
+    <script type="text/javascript" src="js/plugins/tables/tablesort.min.js"></script>
+    <script type="text/javascript" src="js/plugins/tables/resizable.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/ui/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.collapsible.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.progress.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.timeentry.min.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.colorpicker.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.breadcrumbs.js"></script>
+    <script type="text/javascript" src="js/plugins/ui/jquery.sourcerer.js"></script>
+
+    <script type="text/javascript" src="js/plugins/calendar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/elfinder.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+
+
+    <!-- <script type="text/javascript" src="js/custom.js"></script>-->
+
+    <!-- <script type="text/javascript" src="js/charts/chart.js"></script>
+ -->
+    <!-- Shared on MafiaShare.net  --><!-- Shared on MafiaShare.net  --></head>
+
+<body>
+
+<!-- Left side content -->
+<div id="leftSide">
+    <div class="logo"><a href="#"><img src=" " alt="" /></a></div>
+
+    <div class="sidebarSep mt0"></div>
+
+
+
+    <!-- Left navigation -->
+    <ul id="menu" class="nav">
+        <li class="dash"><a href="#" onclick="index_html()" class="active"><span>首页</span></a></li>
+        <li class="charts"><a href="#" title="" onclick="toggle('userManage')" class="exp"><span>系统管理</span></a>
+            <ul class="sub ul_hidden" id="userManage">
+                <li><a href="#" title="" onclick="hetong()">合同履行</a></li>
+                <li><a href="#" title="" onclick="mangeState()">经营管理</a></li>
+                <li><a href="#" title="" onclick="costManage()">预算执行</a></li>
+                <li><a href="#" onclick="memberList()" title="">人事信息</a></li>
+                <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('asset')" class="exp"><span>租金管理</span></a>
+            <ul class="sub ul_hidden" id="asset">
+                <li><a href="#" title="" onclick="assetList()">资产列表</a></li>
+                <li><a href="#" title="" onclick="lesseList()">租户列表</a></li>
+                <li><a href="#" title="" onclick="leaseInfolist()">租约列表</a></li>
+                <li><a href="#" title="" onclick="rentList()">租金收入</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
+            <ul class="sub ul_hidden" id="taskManage">
+                <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
+                <li><a href="#" title="" onclick="tasklist('市场部')">市场部</a></li>
+                <li><a href="#" title="" onclick="tasklist('财务部')">财务部</a></li>
+                <li><a href="#" title="" onclick="tasklist('规建部')">规建部</a></li>
+                <li><a href="#" title="" onclick="tasklist('金沙艺术中心')">金沙艺术中心</a></li>
+            </ul>
+        </li>
+
+        <li class="charts"><a href="#" title="" onclick="toggle('fengKongManage')" class="exp"><span>风控管理</span></a>
+            <ul class="sub ul_hidden" id="fengKongManage">
+                <li><a href="#" title="" onclick="fengkong()">涉诉情况</a></li>
+                <li><a href="#" title="" onclick="rectify()">内部监督情况</a></li>
+            </ul>
+        </li>
+        <li class="charts"><a href="#" title="" onclick="toggle('role')" class="exp"><span>角色权限</span></a>
+            <ul class="sub ul_hidden" id="role">
+                <li><a href="#" title="" onclick="roleList()">角色</a></li>
+                <li><a href="#" title="" onclick="authority()">权限</a></li>
+            </ul>
+        </li>
+        <li class="tables"><a href="#" title="" onclick="toggle('myInfo')"  class="exp"><span>个人档案</span><strong></strong></a>
+            <ul class="sub ul_hidden" id="myInfo">
+                <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
+                <li><a href="#" title="#" onclick="userInfo()" id="idName"></a></li>
+                <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+
+
+<!-- Right side -->
+<div id="rightSide">
+
+    <!-- Top fixed navigation -->
+    <div class="topNav">
+        <div class="wrapper">
+            <div class="welcome"><a href="#" title=""><img src="images/userPic.png" alt="" /></a><span id="loginUser"></span></div>
+            <div class="welcome"><a href="#" title=""></a><span id="messages" style="color: red"></span></div>
+            <div class="userNav">
+                <ul>
+                    <li><a href="#" title=""><img src="images/icons/topnav/logout.png" alt="" /><span onclick="logOut()">退出</span></a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- Responsive header -->
+    <div class="resp">
+        <div class="respHead">
+            <a href="#" title=""><img src="images/loginLogo.png" alt="" /></a>
+        </div>
+
+        <div class="cLine"></div>
+        <div class="smalldd">
+            <span class="goTo"><img src="images/icons/light/home.png" alt="" />Dashboard</span>
+            <ul class="smallDropdown">
+                <li><a href="#" title=""><img src="images/icons/light/home.png" alt="" />Dashboard</a></li>
+                <li><a href="#" title=""><img src="images/icons/light/stats.png" alt="" />Statistics and charts</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/pencil.png" alt="" />Forms stuff<strong>4</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Form elements</a></li>
+                        <li><a href="#" title="">Validation</a></li>
+                        <li><a href="#" title="">WYSIWYG and file uploader</a></li>
+                        <li class="last"><a href="#" title="">Wizards</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title=""><img src="images/icons/light/users.png" alt="" />Interface elements</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/frames.png" alt="" />Tables<strong>3</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Static tables</a></li>
+                        <li><a href="#" title="">Dynamic table</a></li>
+                        <li class="last"><a href="#" title="">Sortable &amp; resizable tables</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/fullscreen.png" alt="" />Widgets and grid<strong>2</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Widgets</a></li>
+                        <li class="last"><a href="#" title="">Grid</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/alert.png" alt="" />Error pages<strong>6</strong></a>
+                    <ul class="sub">
+                        <li><a href="#" title="">403 page</a></li>
+                        <li><a href="#" title="">404 page</a></li>
+                        <li><a href="#" title="">405 page</a></li>
+                        <li><a href="#" title="">500 page</a></li>
+                        <li><a href="#" title="">503 page</a></li>
+                        <li class="last"><a href="#" title="">Website is offline</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" title=""><img src="images/icons/light/files.png" alt="" />File manager</a></li>
+                <li><a href="#" title="" class="exp"><img src="images/icons/light/create.png" alt="" />Other pages<strong>3</strong></a>
+                    <ul>
+                        <li><a href="#" title="">Typography</a></li>
+                        <li><a href="#" title="">Calendar</a></li>
+                        <li class="last"><a href="#" title="">Gallery</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="cLine"></div>
+    </div>
+
+    <!-- Title area -->
+    <div class="titleArea">
+        <div class="wrapper">
+            <div class="pageTitle">
+            </div>
+            <div class="middleNav">
+
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="line"></div>
+    <!-- Main content wrapper -->
+    <div class="wrapper">
+
+        <!-- Note -->
+        <div class="nNote nInformation hideit">
+            <p>亲爱的<strong>沙磁文旅 </strong>（Lv1，重庆市地区领导人）</p>
+        </div>
+
+        <!-- Widgets -->
+        <div class="widgets">
+            <div class="widget">
+                <div class="layui-row">
+                    <form class="layui-col-md12 x-so" id="formId">
+                        资产名称: <input  style=" width: 10%;" type="text" name="assetName"  placeholder="名称" autocomplete="off" class="layui-input">
+                        租户名称: <input  style=" width: 10%;" type="text" name="lesseeName"  placeholder="名称" autocomplete="off" class="layui-input">
+                        地址:<input  style=" width: 10%;" type="text" name="address"  placeholder="地址" autocomplete="off" class="layui-input">
+                        <span>状态:</span>
+                        <select name="status">
+                            <option value=""></option>
+                            <option value="1">租赁中</option>
+                            <option value="2">到期</option>
+                            <option value="3">提前退租</option>
+                        </select>
+                        <div id="sousuo" class="sousuo" onclick="getLeaseInfoList(1)" >搜索</div>
+                    </form>
+                </div>
+                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>租约信息</h6>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="addRentLesase()" value="添加租约" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="reletLesase()" value="续租" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="outLesase()" value="退租" class="redB"></div>
+                    <div class="formAddEmp"><input type="submit" onclick="deleteLesase()" value="删除租约" class="redB"></div>
+                </div>
+                <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
+                    <thead>
+                    <tr>
+                        <td width="20"><input type="checkbox" onclick="selectAll()"></td>
+                        <td width="20">序号</td>
+                        <td width="100">资产名</td>
+                        <td width="80">承租人</td>
+                        <td width="80">电话</td>
+                        <td width="50">交租周期</td>
+                        <td width="80">建筑面积(㎡)</td>
+                        <td width="80">租期起算日</td>
+                        <td width="80">租期结算日</td>
+                        <td width="80">租金</td>
+                        <td width="80">租赁保证金</td>
+                        <td width="80">状态</td>
+                        <td width="40">备注</td>
+                        <td width="80">退租日期</td>
+                        <td width="80">添加时间</td>
+                    </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    </tbody>
+                </table>
+            </div>
+
+            <span class="page-new">
+                <span id="pagefoot"></span></span>
+            <div class="clear"></div>
+        </div>
+
+        <!-- 弹窗 -->
+
+        <input type="hidden" id="commit_title_ids"/>
+        <input type="hidden" id="commit_matter_ids"/>
+
+
+
+
+
+    </div>
+    <!-- Footer line -->
+    <div id="footer">
+        <div class="wrapper">Copyright © 2023 沙磁文旅版权所有 </div>
+    </div>
+
+
+    <div class="clear"></div>
+
+    <script type="text/javascript">
+        $(function () {
+            toggle('asset');
+            initData();
+        } );
+
+
+        function logOut() {
+            $.ajax({
+                type: "GET",
+                url: "/logout",
+                success: function (res) {
+                    if(res && res.code === 200) {
+                        localStorage.removeItem('token');
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.href="/admin";
+                        });
+
+                    }
+                }
+            })
+        }
+        function index_html() {
+            location.href="/admin";
+        }
+        function userInfo() {
+            location.href="/userInfo";
+        }
+        function login() {
+            location.href="/loginAdmin";
+        }
+        function memberList() {
+            location.href="/memberList";
+        }
+        function costManage() {
+            location.href="/costManage";
+        }
+        function mangeState() {
+            location.href="/mangeState";
+        }
+        function capitalposition() {
+            location.href="/capitalList";
+        }
+        function tasklist(project) {
+            localStorage.setItem("project",project);
+            location.href="/taskList";
+        }
+        function hetong() {
+            location.href="/contract";
+        }
+        function fengkong() {
+            location.href="/risk";
+        }
+        function rectify() {
+            location.href="/rectify";
+        }
+        function roleList() {
+            location.href="/roleList";
+        }
+        function authority() {
+            location.href="/authority";
+        }
+        function assetList() {
+            location.href="/assetList";
+        }
+        function lesseList() {
+            location.href="/lesseList";
+        }
+        function leaseInfolist() {
+            location.href="/leaseInfolist";
+        }
+        function rentList() {
+            location.href="/rentList";
+        }
+        function toggle(id) {
+            var x = document.getElementById(id);
+            if (x.className === "sub ul_hidden") {
+                x.className = "sub";
+            } else {
+                x.className = "sub ul_hidden";
+            }
+        }
+        function initData() {
+            var token = localStorage.getItem("token");
+            if(token){
+                $.ajax({
+                    type: "get",
+                    url: "/isLogin",
+                    headers: {
+                        'Authorization': token // 在请求头中添加token
+                    },
+                    success: function (res) {
+                        if(res.code === 200) {
+                            // JSON.stringify()
+                            document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
+                            document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
+                            document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
+                            document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
+                            getLeaseInfoList(1);
+                        }else {
+                            layui.layer.msg(res.message,{icon:2},{time:1000},function(){
+                                layer.close(); //再执行关闭
+                                location.reload();
+                            });
+                        }
+                    },
+                    error:function (res) {
+                        layui.layer.msg(res.message,{icon:2},{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+                    }
+                })
+            }else {
+                var info ="您还未登录，暂时无法显示当前页面的敏感数据哟！"+"<a href='#' onclick='login()'>立即登录</a>";
+                document.getElementById("messages").innerHTML = info;
+            }
+        }
+
+        function getLeaseInfoList(pageNum) {
+            $.ajax({
+                type: "get",
+                url: "/rentLeaseInfo/getLeaseInfoList?pageNum="+pageNum,
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:$('#formId').serialize(),
+                success: function (res) {
+                    if(res && res.code===200){
+                        layer.msg(res.message, { icon: 1,time: 1000});
+                        var data = res.obj;
+                        var data1 = res.obj.list;
+                        var pageNo = parseInt(res.obj.pageNum);
+                        var pages = parseInt(res.obj.pages);
+                        var total = parseInt(res.obj.total);
+                        // 获取表格元素
+                        var str_info='';
+                        for (var i = 0; i < data1.length; i++) {
+                            str_info+='<tr><td align="center"><input class="choose" type="checkbox" value="'+data1[i].id+'"></td>';
+                            str_info+='<td align="center">'+data1[i].id+'</td>';
+                            str_info+='<td align="center">'+data1[i].assetName+'</td>';
+                            str_info+='<td align="center">'+data1[i].lesseeName+'</td>';
+                            str_info+='<td align="center">'+data1[i].phone+'</td>';
+                            str_info+='<td align="center">'+data1[i].rentCycle+'</td>';
+                            str_info+='<td align="center">'+data1[i].acreage+'</td>';
+                            str_info+='<td align="center">'+dateFormat(1,data1[i].leaseDate)+'</td>';
+                            str_info+='<td align="center">'+dateFormat(1,data1[i].payDate)+'</td>';
+                            str_info+='<td align="center">'+data1[i].leaseUnitPrice+'</td>';
+                            str_info+='<td align="center">'+(data1[i].cashPledge==null?"":data1[i].cashPledge)+'</td>';
+                            //1.租赁中，2，正常完了不在续约，3，提前退租）
+                            if(data1[i].status===1){
+                                str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: green;text-decoration: none;">租赁中</a></td>';
+                            }else if(data1[i].status===2){
+                                str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: grey;text-decoration: none;">到期</a></td>';
+
+                            }else {
+                                str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#"  style="color: red;text-decoration: none;">提前退租</a></td>';
+                            }
+                            str_info+='<td align="center"><div  class="text-over" style="color: red">'+(data1[i].remark==null?"":data1[i].remark)+'</div></td>';
+                            str_info+='<td align="center">'+(data1[i].quitDate==null?"":dateFormat(1,data1[i].quitDate))+'</td>';
+                            str_info+='<td align="center">'+dateFormat(1,data1[i].addTime)+'</td></tr>';
+                        }
+                        $("#myTable").html(str_info);
+
+                        pagenum0=pageNo-1;
+                        pagenum1=pageNo+1;
+                        pagenum2=pageNo+2;
+                        pagenum3=pageNo+3;
+                        var htm="<a  href='#' onclick='getLeaseInfoList(1)'>首页 </a>";
+                        if(data.pageNum >1){
+                            htm+="<a  href='#' onclick='getLeaseInfoList("+data.prePage+")'>上一页 </a>"
+                        }
+                        if(pagenum0 >=1){
+                            htm+="<a  href='#' onclick='getLeaseInfoList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        }
+                        htm+="<button class='current'>"+data.pageNum+"</button>";
+                        if(pagenum1 <= pages){
+                            htm+="<a  href='#' onclick='getLeaseInfoList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        }
+                        if(pagenum2 <= pages){
+                            htm+="<a  href='#' onclick='getLeaseInfoList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        }
+                        if(pagenum3 <= pages){
+                            htm+="<a  href='#' onclick='getLeaseInfoList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        }
+                        htm+="<a  href='#' onclick='getLeaseInfoList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='getLeaseInfoList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                        $("#pagefoot").html(htm);
+                    }else {
+                        //失败提示
+                        layer.msg(res.message, {
+                            icon: 2,
+                            time: 2000
+                        });
+                    }
+
+                }
+
+
+
+            })
+
+        }
+
+        function addRentLesase() {
+            var html_info=" <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 资产名称：</span>\n" +
+                "                        <div class=\"formRight\"><input onclick='chooseAsset()' class=\"validate[required]\"  id=\"assetId\"><span></span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                     <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 租户名称：</span>\n" +
+                "                        <div class=\"formRight\"><input onclick='chooseLesse()' class=\"validate[required]\"  id=\"lesseId\"><span></span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                         <span class='formLeft'>月租金： </span>\n" +
+                "                        <div class=\"formRight\"><input  type=\"number\" step=\"0.01\" placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"leaseUnitPrice\"></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                         <span class='formLeft'>押金： </span>\n" +
+                "                        <div class=\"formRight\"><input  type=\"number\" step=\"0.01\" placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"cashPledge\"></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 交租周期：</span>\n" +
+                "                        <div  class=\"formRight\"><select style='width: 165px;'  id=\"rentCycle\">\n" +
+                "                            <option value=\"\"></option>\n" +
+                "                            <option value=\"月度\">月度</option>\n" +
+                "                            <option value=\"季度\">季度</option>\n" +
+                "                            <option value=\"年度\">年度</option>\n" +
+                "                        </select></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 状态：</span>\n" +
+                "                        <div  class=\"formRight\"><select style='width: 165px;'  id=\"status\">\n" +
+                "                            <option value=\"\"></option>\n" +
+                "                            <option value=\"1\">租赁中</option>\n" +
+                "                            <option value=\"2\">到期</option>\n" +
+                "                            <option value=\"3\">提前退租</option>\n" +
+                "                        </select></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 租赁日：</span>\n" +
+                "                        <div  class=\"formRight\"><input type=\"date\"  style=\"width: 162px;\" id=\"leaseDate\">  </div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 交租日：</span>\n" +
+                "                        <div  class=\"formRight\"><input type=\"date\"  style=\"width: 162px;\" id=\"payDate\">  </div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 到期日：</span>\n" +
+                "                        <div  class=\"formRight\"><input type=\"date\"  style=\"width: 162px;\" id=\"expireDate\">  </div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                         <span class='formLeft'>免租期（月）： </span>\n" +
+                "                        <div class=\"formRight\"><input  type=\"number\"  placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"freeMonth\"></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 备注：</span>\n" +
+                "                        <div class=\"formRight\"><input  class=\"validate[required]\"  id=\"remark\"><span></span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                    <div><button style=\"margin-left:45%;background: green;color: white;\" onclick=\"addLesase()\">提交</button></div>";
+            layui.layer.open({
+                type:1,
+                title:"租约管理",
+                skin:"open_css",
+                area:['50%','70%'],
+                // shadeClose: true, //点击弹出层外空白处
+                content:html_info
+            })
+
+
+        }
+        function addLesase() {
+            var assetId = $("#assetId").text();
+            var lesseId = $("#lesseId").text();
+            var leaseUnitPrice = document.getElementById("leaseUnitPrice").value;
+            var cashPledge = document.getElementById("cashPledge").value;
+            var rentCycle = document.getElementById("rentCycle").value;
+            var status = document.getElementById("status").value;
+            var leaseDate = document.getElementById("leaseDate").value;
+            var payDate = document.getElementById("payDate").value;
+            var expireDate = document.getElementById("expireDate").value;
+            var status = document.getElementById("status").value;
+            var freeMonth = document.getElementById("freeMonth").value;
+            var remark = document.getElementById("remark").value;
+            if(null==assetId||assetId==""){
+                layui.layer.msg("资产名称不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==lesseId||lesseId==""){
+                layui.layer.msg("租户不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==leaseUnitPrice||leaseUnitPrice==""){
+                layui.layer.msg("租赁单价不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==rentCycle||rentCycle==""){
+                layui.layer.msg("交租周期不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==status||status==""){
+                layui.layer.msg("状态不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==leaseDate||leaseDate==""){
+                layui.layer.msg("租赁日不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==payDate||payDate==""){
+                layui.layer.msg("交租日不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            if(null==expireDate||expireDate==""){
+                layui.layer.msg("到期日不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/rentLeaseInfo/addLeaseInfo",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    assetId:assetId,
+                    lesseeId:lesseId,
+                    leaseUnitPrice:leaseUnitPrice,
+                    cashPledge:cashPledge,
+                    rentCycle:rentCycle,
+                    status:status,
+                    leaseDate:new Date(leaseDate),
+                    payDate:new Date(payDate),
+                    expireDate:new Date(expireDate),
+                    freeMonth:freeMonth,
+                    remark:remark
+                }),
+                success: function (res) {
+                    if(res && res.code===200){
+                        
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+
+                    }else {
+                        layui.layer.msg(res.message,{time:1000});
+                    }
+                }
+
+
+            })
+        }
+
+        function dateFormat(type,utcTime) {
+            var date = new Date(utcTime); // 创建Date对象
+            // 获取年、月、日、小时、分钟和秒
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1; // 月份从0开始，所以要加1
+            var day = date.getDate();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+            // 将日期和时间组件组合成字符串
+            var formatteddate = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) ;
+            var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) + ' ' + (hours>=10?hours:"0"+hours) + ':'
+                + (minutes>=10?minutes:"0"+minutes) + ':' + (seconds>=10?seconds:"0"+seconds);
+            if(type==1){
+                return formatteddate;
+            }else {
+                return formattedTime;
+            }
+
+        }
+
+        function reletLesase() {
+            var selectedValues = document.querySelectorAll(".choose:checked");
+            var ids = [];
+            for (var i = 0; i < selectedValues.length; i++) {
+                ids.push(selectedValues[i].value);
+            }
+            if(ids.length==0){
+                layui.layer.msg("您沒有勾选租约",{icon:2},{time:1000});
+                return;
+            }
+            if(ids.length>1){
+                layui.layer.msg("一次只能勾选一个租约",{icon:2},{time:1000});
+                return;
+            }
+            var html_info="<div class=\"formRow5\" style='text-align: center'>\n" +
+            "                       <span class='formLeft'> 到期日：</span>\n" +
+            "                        <div  class=\"formRight\"><input type=\"date\"  style=\"width: 162px;\" id=\"reletExpireDate\">  </div>\n" +
+            "                    </div>\n" +
+            "                    <div><button style=\"margin-left:45%;background: green;color: white;\" onclick=\"reletLesaseDo()\">提交</button></div>";
+            layui.layer.open({
+                type:1,
+                title:"续租到期日",
+                skin:"open_css",
+                area:['45%','50%'],
+                closeBtn: 1, //关闭按钮的样式，0是默认的
+                shadeClose: true, //点击弹出层外空白处
+                content: html_info
+            })
+        }
+        function reletLesaseDo() {
+            var selectedValues = document.querySelectorAll(".choose:checked");
+            var ids = [];
+            for (var i = 0; i < selectedValues.length; i++) {
+                ids.push(selectedValues[i].value);
+            }
+
+            var expireDate = document.getElementById("reletExpireDate").value;
+            $.ajax({
+                url: "/rentLeaseInfo/editLeaseInfo",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data: ({
+                    id:ids[0],
+                    expireDate:expireDate
+                }),
+                type: 'post',
+                success: function (res) {
+                    layui.layer.msg(res.message,{time:1000},function(){
+                        layer.close(); //再执行关闭
+                        location.reload();
+                    });
+                }
+            });
+        }
+
+        function outLesase() {
+            var selectedValues = document.querySelectorAll(".choose:checked");
+            var ids = [];
+            for (var i = 0; i < selectedValues.length; i++) {
+                ids.push(selectedValues[i].value);
+            }
+            if(ids.length==0){
+                layui.layer.msg("您沒有勾选租约",{icon:2},{time:1000});
+                return;
+            }
+            layer.confirm("确定退租吗?", {
+                title:'操作提示',
+                icon:0,
+                btn: ['确定','取消']
+            }, function(){
+                $.ajax({
+                    url: "/rentLeaseInfo/editLeaseInfo",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data: ({
+                        id:ids[0],
+                        remark:JSON.stringify(ids)
+                    }),
+                    type: 'post',
+                    success: function (res) {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+                    }
+                });
+            })
+
+        }
+        function updateStatus(id,type) {
+            let message='';
+            let html='';
+            if(type===1){
+                type=2
+                message='您确认要把状态更新成租赁中吗?';
+                html='<a href="#"  style="color: green;text-decoration: none;" onclick="updateStatus('+id+',2)">租赁中</a>';
+            }else {
+                type=1
+                message='您确认要把状态更新程空置中吗?';
+                html='<a href="#" style="color: red;text-decoration: none;"  onclick="updateStatus('+id+',1)">空置中</a>';
+            }
+            layer.confirm(message, {
+                title:'操作提示',
+                icon:0,
+                btn: ['确定','取消']
+            }, function(){
+                var index = layer.load();
+                $.ajax({
+                    url: "/asset/editAsset",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data: ({
+                        id:id,
+                        status:type
+                    }),
+                    type: 'post',
+                    success: function (resp) {
+                        layer.close(index);
+                        //成功提示
+                        if (resp.code == 200) {
+                            document.getElementById("status_"+id).innerHTML=html;
+                            layer.msg("更新成功", {
+                                icon: 1,
+                                time: 1000
+                            }, function () {
+
+                            });
+                        } else {
+                            //失败提示
+                            layer.msg(resp.msg, {
+                                icon: 2,
+                                time: 2000
+                            });
+                        }
+                    }
+                });
+            });
+
+
+        }
+
+
+        function deleteLesase() {
+            var selectedValues = document.querySelectorAll(".choose:checked");
+            var ids = [];
+            for (var i = 0; i < selectedValues.length; i++) {
+                ids.push(selectedValues[i].value);
+            }
+            if(ids.length==0){
+                layui.layer.msg("您沒有勾选租约",{icon:2},{time:1000});
+
+            }else {
+                layer.confirm("确定删除吗?", {
+                    title:'操作提示',
+                    icon:0,
+                    btn: ['确定','取消']
+                }, function(){
+                $.ajax({
+                    type: "get",
+                    url: "/asset/deleteAsset",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data:{
+                        ids:JSON.stringify(ids)
+                    },
+                    success: function (res) {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+                    }})
+
+
+            })}
+        }
+        function selectAll() {
+            var checkboxes = document.getElementsByClassName("choose");
+            for (var i = 0; i < checkboxes.length; i++) {
+                if(checkboxes[i].checked){
+                    checkboxes[i].checked=false;
+                }else{
+                    checkboxes[i].checked= true;
+                }
+
+            }
+        }
+
+        function chooseAsset() {
+            var asset_html='   <div class="widgets">\n' +
+                '            <div class="widget">\n' +
+                '                <div class="layui-row">\n' +
+                '                    <form class="layui-col-md12 x-so" id="assetformId">\n' +
+                '                        名称: <input  style=" width: 10%;" type="text" name="assetName"  placeholder="名称" autocomplete="off" class="layui-input">\n' +
+                '                        地址:<input  style=" width: 10%;" type="text" name="address"  placeholder="地址" autocomplete="off" class="layui-input">\n' +
+                '                        <span>状态:</span>\n' +
+                '                        <select name="status">\n' +
+                '                            <option value=""></option>\n' +
+                '                            <option value="1">空置中</option>\n' +
+                '                            <option value="2">租赁中</option>\n' +
+                '                        </select>\n' +
+                '                        <div id="sousuo" class="sousuo" onclick="getAssetList(1)" >搜索</div>\n' +
+                '                    </form>\n' +
+                '                </div>\n' +
+                '                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>资产信息</h6>\n' +
+                '               </div>\n' +
+                '                <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">\n' +
+                '                    <thead>\n' +
+                '                    <tr>\n' +
+                '                        <td width="20"</td>\n' +
+                '                        <td width="80">名称</td>\n' +
+                '                        <td width="80">面积(㎡)</td>\n' +
+                '                        <td width="80">地址</td>\n' +
+                '                        <td width="80">状态</td>\n' +
+                '                    </tr>\n' +
+                '                    </thead>\n' +
+                '                    <tbody id="assetTable">\n' +
+                '                    </tbody>\n' +
+                '                </table>\n' +
+                '            </div>\n' +
+                '\n' +
+                '            <span class="page-new">\n' +
+                '                <span id="asset_pagefoot"></span></span>\n' +
+                '            <div class="clear"></div>\n' +
+                '        </div>';
+              layui.layer.open({
+                type:1,
+                title:"资产选择",
+                skin:"open_css",
+                area:['45%','50%'],
+                closeBtn: 1, //关闭按钮的样式，0是默认的
+                shadeClose: true, //点击弹出层外空白处
+                content: asset_html,
+            })
+
+        }
+        function getAssetList(pageNum) {
+            $.ajax({
+                type: "get",
+                url: "/asset/getAssetList?pageNum="+pageNum,
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:$('#assetformId').serialize(),
+                success: function (res) {
+                    if(res && res.code===200){
+                        layer.msg(res.message, { icon: 1,time: 1000});
+                        var data = res.obj;
+                        var data1 = res.obj.list;
+                        var pageNo = parseInt(res.obj.pageNum);
+                        var pages = parseInt(res.obj.pages);
+                        var total = parseInt(res.obj.total);
+                        // 获取表格元素
+                        var str_info='';
+                        for (var i = 0; i < data1.length; i++) {
+                            str_info+='<tr><td align="center"><button style="padding: 5px 5px;border: 1px solid;font-weight: 500;"   onclick="chooseAssetId('+data1[i].id+','+data1[i].status+')" ">选择</button></td>';
+                            str_info+='<td align="center" id="assetName_'+data1[i].id+'">'+data1[i].assetName+'</td>';
+                            str_info+='<td align="center">'+data1[i].acreage+'</td>';
+                            str_info+='<td align="center">'+(data1[i].address==null?"":data1[i].address)+'</td>';
+                            if(data1[i].status===1){
+                                str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: red;text-decoration: none;">空置中</a></td>';
+                            }else {
+                                str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#"  style="color: green;text-decoration: none;">租赁中</a></td>';
+                            }
+                            str_info+='</tr>';
+                        }
+                        $("#assetTable").html(str_info);
+
+                        pagenum0=pageNo-1;
+                        pagenum1=pageNo+1;
+                        pagenum2=pageNo+2;
+                        pagenum3=pageNo+3;
+                        var htm="<a  href='#' onclick='getAssetList(1)'>首页 </a>";
+                        if(data.pageNum >1){
+                            htm+="<a  href='#' onclick='getAssetList("+data.prePage+")'>上一页 </a>"
+                        }
+                        if(pagenum0 >=1){
+                            htm+="<a  href='#' onclick='getAssetList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        }
+                        htm+="<button class='current'>"+data.pageNum+"</button>";
+                        if(pagenum1 <= pages){
+                            htm+="<a  href='#' onclick='getAssetList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        }
+                        if(pagenum2 <= pages){
+                            htm+="<a  href='#' onclick='getAssetList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        }
+                        if(pagenum3 <= pages){
+                            htm+="<a  href='#' onclick='getAssetList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        }
+                        htm+="<a  href='#' onclick='getAssetList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='getAssetList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                        $("#asset_pagefoot").html(htm);
+                    }else {
+                        //失败提示
+                        layer.msg(res.message, {
+                            icon: 2,
+                            time: 2000
+                        });
+                    }
+
+                }
+
+
+
+            })
+
+        }
+
+        function chooseAssetId(id,status) {
+            if(status==2){
+                layui.layer.msg("此资产已经在租赁中，请筛选空置中的资产",{icon:2},{time:1000});
+                return;
+            }
+            $("#assetId").val(document.getElementById("assetName_"+id).innerHTML);
+            $("#assetId").text(id);
+            //提示
+            layui.layer.msg("选择成功，请关闭资产页面",{icon:1},{time:1000},function(){
+                layer.close(); //再执行关闭
+            });
+
+        }
+
+        function chooseLesse() {
+            var lesse_html='<div class="widgets">\n' +
+                '            <div class="widget">\n' +
+                '                <div class="layui-row">\n' +
+                '                    <form class="layui-col-md12 x-so" id="lesseformId">\n' +
+                '                        名称: <input  style=" width: 10%;" type="text" name="lesseeName"  placeholder="名称" autocomplete="off" class="layui-input">\n' +
+                '                        地址:<input  style=" width: 10%;" type="text" name="address"  placeholder="地址" autocomplete="off" class="layui-input">\n' +
+                '                        电话:<input  style=" width: 10%;" type="text" name="phone"  placeholder="电话" autocomplete="off" class="layui-input">\n' +
+                '                        身份证:<input  style=" width: 10%;" type="text" name="identityCard"  placeholder="身份证" autocomplete="off" class="layui-input">\n' +
+                '                        <span>性别:</span>\n' +
+                '                        <select name="sex">\n' +
+                '                            <option value=""></option>\n' +
+                '                            <option value="男">男</option>\n' +
+                '                            <option value="女">女</option>\n' +
+                '                        </select>\n' +
+                '                        <div id="sousuo" class="sousuo" onclick="getLessetList(1)" >搜索</div>\n' +
+                '                    </form>\n' +
+                '                </div>\n' +
+                '                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>租户信息</h6>\n' +
+                '                </div>\n' +
+                '                <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">\n' +
+                '                    <thead>\n' +
+                '                    <tr>\n' +
+                '                        <td width="20"></td>\n' +
+                '                        <td width="80">名称</td>\n' +
+                '                        <td width="30">性别</td>\n' +
+                '                        <td width="80">电话</td>\n' +
+                '                        <td width="80">身份证</td>\n' +
+                '                        <td width="80">账户余额</td>\n' +
+                '                    </tr>\n' +
+                '                    </thead>\n' +
+                '                    <tbody id="lesseTable">\n' +
+                '                    </tbody>\n' +
+                '                </table>\n' +
+                '            </div>\n' +
+                '\n' +
+                '            <span class="page-new">\n' +
+                '                <span id="lesse_pagefoot"></span></span>\n' +
+                '            <div class="clear"></div>\n' +
+                '        </div>';
+            layui.layer.open({
+                type:1,
+                title:"租户选择",
+                skin:"open_css",
+                area:['45%','50%'],
+                closeBtn: 1, //关闭按钮的样式，0是默认的
+                shadeClose: true, //点击弹出层外空白处
+                content: lesse_html,
+            })
+
+        }
+        function getLessetList(pageNum) {
+            $.ajax({
+                type: "get",
+                url: "/rentLessee/getLesseeList?pageNum="+pageNum,
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:$('#lesseformId').serialize(),
+                success: function (res) {
+                    if(res && res.code===200){
+                        layer.msg(res.message, { icon: 1,time: 1000});
+                        var data = res.obj;
+                        var data1 = res.obj.list;
+                        var pageNo = parseInt(res.obj.pageNum);
+                        var pages = parseInt(res.obj.pages);
+                        var total = parseInt(res.obj.total);
+                        // 获取表格元素
+                        var str_info='';
+                        for (var i = 0; i < data1.length; i++) {
+                            str_info+='<tr><td align="center"><button style="padding: 5px 5px;border: 1px solid;font-weight: 500;"  onclick="chooseLesseId('+data1[i].id+','+data1[i].account+')" ">选择</button></td>';
+                            str_info+='<td align="center" id="lesseName_'+data1[i].id+'">'+data1[i].lesseeName+'</td>';
+                            str_info+='<td align="center">'+(data1[i].sex==null?"":data1[i].sex)+'</td>';
+                            str_info+='<td align="center">'+data1[i].phone+'</td>';
+                            str_info+='<td align="center">'+(data1[i].identityCard==null?"":data1[i].identityCard)+'</td>';
+                            str_info+='<td align="center">'+(data1[i].account==null?"":data1[i].account)+'</td>';
+                            str_info+='</tr>';
+                        }
+                        $("#lesseTable").html(str_info);
+
+                        pagenum0=pageNo-1;
+                        pagenum1=pageNo+1;
+                        pagenum2=pageNo+2;
+                        pagenum3=pageNo+3;
+                        var htm="<a  href='#' onclick='getLessetList(1)'>首页 </a>";
+                        if(data.pageNum >1){
+                            htm+="<a  href='#' onclick='getLessetList("+data.prePage+")'>上一页 </a>"
+                        }
+                        if(pagenum0 >=1){
+                            htm+="<a  href='#' onclick='getLessetList("+pagenum0+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum0+"</button></a>"
+                        }
+                        htm+="<button class='current'>"+data.pageNum+"</button>";
+                        if(pagenum1 <= pages){
+                            htm+="<a  href='#' onclick='getLessetList("+pagenum1+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum1 +" </button></a>"
+                        }
+                        if(pagenum2 <= pages){
+                            htm+="<a  href='#' onclick='getLessetList("+pagenum2+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum2 +" </button></a>"
+                        }
+                        if(pagenum3 <= pages){
+                            htm+="<a  href='#' onclick='getLessetList("+pagenum3+")'><button style='margin: 1px 1px;border: 1px solid;'>"+pagenum3+ "</button> </a>"
+                        }
+                        htm+="<a  href='#' onclick='getLessetList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='getLessetList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
+                        $("#lesse_pagefoot").html(htm);
+                    }else {
+                        //失败提示
+                        layer.msg(res.message, {
+                            icon: 2,
+                            time: 2000
+                        });
+                    }
+
+                }
+
+
+
+            })
+
+        }
+        function chooseLesseId(id,account) {
+            if(account<=0){
+                layui.layer.msg("余额不足，请先给租户预存租金",{icon:2},{time:1000});
+                return;
+            }
+            $("#lesseId").val(document.getElementById("lesseName_"+id).innerHTML);
+            $("#lesseId").text(id);
+            //提示
+            layui.layer.msg("选择成功，请关闭租户页面",{icon:1},{time:1000},function(){
+                layer.close(); //再执行关闭
+            });
+
+        }
+
+    </script>
+</body>
+</html>

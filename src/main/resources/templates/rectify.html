@@ -409,6 +409,7 @@
             data:$('#formId').serialize(),
             success: function (res) {
                 if(res && res.code===200){
+                    layer.msg(res.message, { icon: 1,time: 1000});
                     var data = res.obj;
                     var data1 = res.obj.list;
                     var pageNo = parseInt(res.obj.pageNum);
