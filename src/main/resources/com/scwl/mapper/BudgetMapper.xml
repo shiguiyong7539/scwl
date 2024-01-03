@@ -244,15 +244,14 @@
     select department,month_funds,real_funds,MONTH(month_date) as remark
     from budget
     where
-    (DATE_FORMAT(month_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m'))
-    or (DATE_FORMAT(month_date, '%Y-%m') = DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%Y-%m'))
+     DATE_FORMAT(month_date, '%Y-%m') = DATE_FORMAT(CURDATE() - INTERVAL #{monthNum} MONTH, '%Y-%m')
     group by department
   </select>
 
   <select id="getBudgetByYear" resultMap="BaseResultMap">
-   select department,sum(month_funds) as month_funds,sum(real_funds) as real_funds,YEAR(month_date) as remark
+   select department,IFNULL(SUM(month_funds),0) as month_funds,IFNULL(SUM(real_funds),0) as real_funds,YEAR(month_date) as remark
    from budget
-   where YEAR(month_date) = YEAR(CURDATE())
+   where YEAR(month_date) = YEAR(CURDATE()) - #{yearNum}
    group by department
   </select>
   <select id="getDepartment"  resultMap="BaseResultMap">

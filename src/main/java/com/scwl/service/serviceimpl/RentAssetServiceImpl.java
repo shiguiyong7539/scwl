@@ -4,9 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.scwl.mapper.RentAssetMapper;
-import com.scwl.pojo.RentAsset;
-import com.scwl.pojo.RentAssetExample;
-import com.scwl.pojo.ResBean;
+import com.scwl.mapper.RentLeaseInfoMapper;
+import com.scwl.pojo.*;
 import com.scwl.service.LogService;
 import com.scwl.service.RentAssetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,8 @@ public class RentAssetServiceImpl implements RentAssetService {
 
     @Autowired
     private RentAssetMapper assetMapper;
+    @Autowired
+    private RentLeaseInfoMapper infoMapper;
     @Autowired
     private LogService logService;
 
@@ -58,6 +59,7 @@ public class RentAssetServiceImpl implements RentAssetService {
         try {
             rentAsset.setAddTime(new Date());
             rentAsset.setIsDelete(0);
+            rentAsset.setUseAcreageNum(rentAsset.getUseAcreage());
             assetMapper.insert(rentAsset);
             logService.addLog("INSERT","rent_asset",rentAsset.getId(),"新增id为"+rentAsset.getId()+"的资产信息");
             return  ResBean.success("添加成功");
@@ -81,6 +83,16 @@ public class RentAssetServiceImpl implements RentAssetService {
                 oldAsset.setAcreage(rentAsset.getAcreage());
             }
             if(null!=rentAsset.getStatus()){
+                if(rentAsset.getStatus()==1){
+                    //去查询当前是否租赁中的租约
+                    RentLeaseInfoExample example = new RentLeaseInfoExample();
+                    RentLeaseInfoExample.Criteria criteria = example.createCriteria();
+                     criteria.andStatusEqualTo(1).andAssetIdEqualTo(rentAsset.getId());
+                    List<RentLeaseInfo> leaseInfos = infoMapper.selectByExample(example);
+                    if(leaseInfos.size()>0){
+                        return  ResBean.error("修改失败，当前该资产有租约正在履行，不能更改当前状态");
+                    }
+                }
                 oldAsset.setStatus(rentAsset.getStatus());
             }
             if(null!=rentAsset.getRemark()&&""!=rentAsset.getRemark()){

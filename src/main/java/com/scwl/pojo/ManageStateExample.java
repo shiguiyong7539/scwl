@@ -489,6 +489,66 @@ public class ManageStateExample {
             return (Criteria) this;
         }
 
+        public Criteria andCurrentTotalIsNull() {
+            addCriterion("current_total is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalIsNotNull() {
+            addCriterion("current_total is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalEqualTo(BigDecimal value) {
+            addCriterion("current_total =", value, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalNotEqualTo(BigDecimal value) {
+            addCriterion("current_total <>", value, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalGreaterThan(BigDecimal value) {
+            addCriterion("current_total >", value, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("current_total >=", value, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalLessThan(BigDecimal value) {
+            addCriterion("current_total <", value, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("current_total <=", value, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalIn(List<BigDecimal> values) {
+            addCriterion("current_total in", values, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalNotIn(List<BigDecimal> values) {
+            addCriterion("current_total not in", values, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("current_total between", value1, value2, "currentTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentTotalNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("current_total not between", value1, value2, "currentTotal");
+            return (Criteria) this;
+        }
+
         public Criteria andLetRateIsNull() {
             addCriterion("let_rate is null");
             return (Criteria) this;

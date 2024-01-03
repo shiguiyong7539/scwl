@@ -7,6 +7,7 @@
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="rent_income" property="rentIncome" jdbcType="DECIMAL" />
     <result column="rent_arrears" property="rentArrears" jdbcType="DECIMAL" />
+    <result column="current_total" property="currentTotal" jdbcType="DECIMAL" />
     <result column="let_rate" property="letRate" jdbcType="DECIMAL" />
     <result column="periodic_time" property="periodicTime" jdbcType="DATE" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -70,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, type, rent_income, rent_arrears, let_rate, periodic_time, remark
+    id, name, type, rent_income, rent_arrears, current_total, let_rate, periodic_time, 
+    remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.ManageStateExample" >
     select
@@ -104,11 +106,13 @@
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.ManageState" useGeneratedKeys="true" keyProperty="id">
     insert into manage_state (id, name, type, 
-      rent_income, rent_arrears, let_rate, 
-      periodic_time, remark)
+      rent_income, rent_arrears, current_total, 
+      let_rate, periodic_time, remark
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{rentIncome,jdbcType=DECIMAL}, #{rentArrears,jdbcType=DECIMAL}, #{letRate,jdbcType=DECIMAL}, 
-      #{periodicTime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
+      #{rentIncome,jdbcType=DECIMAL}, #{rentArrears,jdbcType=DECIMAL}, #{currentTotal,jdbcType=DECIMAL}, 
+      #{letRate,jdbcType=DECIMAL}, #{periodicTime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.ManageState" >
     insert into manage_state
@@ -127,6 +131,9 @@
       </if>
       <if test="rentArrears != null" >
         rent_arrears,
+      </if>
+      <if test="currentTotal != null" >
+        current_total,
       </if>
       <if test="letRate != null" >
         let_rate,
@@ -153,6 +160,9 @@
       </if>
       <if test="rentArrears != null" >
         #{rentArrears,jdbcType=DECIMAL},
+      </if>
+      <if test="currentTotal != null" >
+        #{currentTotal,jdbcType=DECIMAL},
       </if>
       <if test="letRate != null" >
         #{letRate,jdbcType=DECIMAL},
@@ -189,6 +199,9 @@
       <if test="record.rentArrears != null" >
         rent_arrears = #{record.rentArrears,jdbcType=DECIMAL},
       </if>
+      <if test="record.currentTotal != null" >
+        current_total = #{record.currentTotal,jdbcType=DECIMAL},
+      </if>
       <if test="record.letRate != null" >
         let_rate = #{record.letRate,jdbcType=DECIMAL},
       </if>
@@ -210,6 +223,7 @@
       type = #{record.type,jdbcType=VARCHAR},
       rent_income = #{record.rentIncome,jdbcType=DECIMAL},
       rent_arrears = #{record.rentArrears,jdbcType=DECIMAL},
+      current_total = #{record.currentTotal,jdbcType=DECIMAL},
       let_rate = #{record.letRate,jdbcType=DECIMAL},
       periodic_time = #{record.periodicTime,jdbcType=DATE},
       remark = #{record.remark,jdbcType=VARCHAR}
@@ -232,6 +246,9 @@
       <if test="rentArrears != null" >
         rent_arrears = #{rentArrears,jdbcType=DECIMAL},
       </if>
+      <if test="currentTotal != null" >
+        current_total = #{currentTotal,jdbcType=DECIMAL},
+      </if>
       <if test="letRate != null" >
         let_rate = #{letRate,jdbcType=DECIMAL},
       </if>
@@ -250,6 +267,7 @@
       type = #{type,jdbcType=VARCHAR},
       rent_income = #{rentIncome,jdbcType=DECIMAL},
       rent_arrears = #{rentArrears,jdbcType=DECIMAL},
+      current_total = #{currentTotal,jdbcType=DECIMAL},
       let_rate = #{letRate,jdbcType=DECIMAL},
       periodic_time = #{periodicTime,jdbcType=DATE},
       remark = #{remark,jdbcType=VARCHAR}
@@ -315,7 +333,7 @@
   </select>
   <select id="getManageStateByManage" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
-        type,name,sum(rent_income) as rent_income,periodic_time,
+        type,name, IFNULL(sum(rent_income),0) as rent_income,periodic_time,
         MONTH(periodic_time) as remark
     from manage_state
    where  type ='经营业务收入'and name= #{name} and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
@@ -323,13 +341,13 @@
      ORDER BY DATE_FORMAT(periodic_time,'%Y-%m')
   </select>
   <select id="getTotalByThisYear" parameterType="java.lang.String"  resultMap="BaseResultMap">
-    SELECT SUM(rent_income) AS rent_income,SUM(rent_arrears) AS rent_arrears
+    SELECT  IFNULL(SUM(rent_income),0) AS rent_income, IFNULL(SUM(rent_arrears),0) AS rent_arrears
     FROM manage_state
     WHERE type = #{type} and YEAR(periodic_time) = YEAR(CURDATE());
   </select>
   <select id="getManageStateByTotal" parameterType="java.lang.String" resultMap="BaseResultMap">
       select
-        type,sum(rent_income) as rent_income,periodic_time,
+        type, IFNULL(sum(rent_income),0) as rent_income,periodic_time,
         MONTH(periodic_time) as remark
     from manage_state
    where  type ='经营业务收入' and DATE_FORMAT(periodic_time,'%Y-%m-01') >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
@@ -348,7 +366,13 @@
   <select id="getLastMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from manage_state where type = #{type} and MONTH(periodic_time) = MONTH(CURDATE() - INTERVAL 1 MONTH)) AND YEAR(periodic_time) = YEAR(CURDATE() - INTERVAL 1 MONTH));
   </select>
+  <select id="getLastTwoMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from manage_state where type = #{type} and MONTH(periodic_time) = MONTH(CURDATE() - INTERVAL 2 MONTH)) AND YEAR(periodic_time) = YEAR(CURDATE() - INTERVAL 2 MONTH));
+  </select>
   <select id="getCurrentMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from manage_state where type = #{type} and MONTH(periodic_time) = MONTH(CURDATE()) AND YEAR(periodic_time) = YEAR(CURDATE());
+  </select>
+  <select id="getafter" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   select * from manage_state where type = '资金管理' and MONTH(periodic_time) >= #{month} AND YEAR(periodic_time) >= #{yarn};
   </select>
 </mapper>

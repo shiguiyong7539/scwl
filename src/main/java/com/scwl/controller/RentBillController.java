@@ -64,6 +64,14 @@ public class RentBillController {
         return rentBillService.deleteBill(ids);
     }
 
+    /**
+     * 补交欠费
+     */
+    @RequestMapping("/deductArrears")
+    @ResponseBody
+    public Object deductArrears(HttpServletRequest request, String ids){
+        return rentBillService.deductArrears(ids);
+    }
 
     /**租金明细导出
      * "ID\t姓名\t年龄"

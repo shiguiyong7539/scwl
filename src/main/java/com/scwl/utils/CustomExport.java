@@ -54,7 +54,7 @@ public class CustomExport {
                         freeMoney =  freeMoney.add(info.getLeaseUnitPrice());
                     }
                 }else {
-                    content +=  "\t" + " ";
+                    content +=  "\t";
                 }
 
             }

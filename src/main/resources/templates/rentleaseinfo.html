@@ -260,13 +260,13 @@
                         <td width="80">承租人</td>
                         <td width="80">电话</td>
                         <td width="50">交租周期</td>
-                        <td width="80">建筑面积(㎡)</td>
+                        <td width="80">租赁面积(㎡)</td>
                         <td width="80">租期起算日</td>
                         <td width="80">租期结算日</td>
                         <td width="80">租金</td>
                         <td width="80">租赁保证金</td>
                         <td width="80">状态</td>
-                        <td width="40">备注</td>
+                        <td width="40">提示</td>
                         <td width="80">退租日期</td>
                         <td width="80">添加时间</td>
                     </tr>
@@ -402,14 +402,13 @@
                         }else {
                             layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                                 layer.close(); //再执行关闭
-                                location.reload();
+                                location.href="/loginAdmin";
                             });
                         }
                     },
                     error:function (res) {
                         layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
                         });
                     }
                 })
@@ -444,7 +443,7 @@
                             str_info+='<td align="center">'+data1[i].lesseeName+'</td>';
                             str_info+='<td align="center">'+data1[i].phone+'</td>';
                             str_info+='<td align="center">'+data1[i].rentCycle+'</td>';
-                            str_info+='<td align="center">'+data1[i].acreage+'</td>';
+                            str_info+='<td align="center">'+(data1[i].rentAcreage==null?"":data1[i].rentAcreage)+'</td>';
                             str_info+='<td align="center">'+dateFormat(1,data1[i].leaseDate)+'</td>';
                             str_info+='<td align="center">'+dateFormat(1,data1[i].payDate)+'</td>';
                             str_info+='<td align="center">'+data1[i].leaseUnitPrice+'</td>';
@@ -504,13 +503,17 @@
         }
 
         function addRentLesase() {
-            var html_info=" <div class=\"formRow5\" style='text-align: center'>\n" +
+            var html_info="<div class=\"formRow5\" style='text-align: center'>\n" +
+                "                       <span class='formLeft'> 租户名称：</span>\n" +
+                "                        <div class=\"formRight\"><input onclick='chooseLesse()' class=\"validate[required]\"  id=\"lesseId\"><span></span></div><div class=\"clear\"></div>\n" +
+                "                    </div>\n" +
+                "                     <div class=\"formRow5\" style='text-align: center'>\n" +
                 "                       <span class='formLeft'> 资产名称：</span>\n" +
                 "                        <div class=\"formRight\"><input onclick='chooseAsset()' class=\"validate[required]\"  id=\"assetId\"><span></span></div><div class=\"clear\"></div>\n" +
                 "                    </div>\n" +
-                "                     <div class=\"formRow5\" style='text-align: center'>\n" +
-                "                       <span class='formLeft'> 租户名称：</span>\n" +
-                "                        <div class=\"formRight\"><input onclick='chooseLesse()' class=\"validate[required]\"  id=\"lesseId\"><span></span></div><div class=\"clear\"></div>\n" +
+                "                    <div class=\"formRow5\" style='text-align: center'>\n" +
+                "                         <span class='formLeft'>租赁面积(㎡)： </span>\n" +
+                "                        <div class=\"formRight\"><input onchange='checkAcreage()' type=\"number\" step=\"0.01\" placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"rentAcreage\"></div><div class=\"clear\"></div>\n" +
                 "                    </div>\n" +
                 "                    <div class=\"formRow5\" style='text-align: center'>\n" +
                 "                         <span class='formLeft'>月租金： </span>\n" +
@@ -551,13 +554,14 @@
                 "                        <div  class=\"formRight\"><input type=\"date\"  style=\"width: 162px;\" id=\"expireDate\">  </div>\n" +
                 "                    </div>\n" +
                 "                    <div class=\"formRow5\" style='text-align: center'>\n" +
-                "                         <span class='formLeft'>免租期（月）： </span>\n" +
+                "                         <span class='formLeft'>免租期(月)： </span>\n" +
                 "                        <div class=\"formRight\"><input  type=\"number\"  placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"freeMonth\"></div><div class=\"clear\"></div>\n" +
                 "                    </div>\n" +
                 "                    <div class=\"formRow5\" style='text-align: center'>\n" +
                 "                       <span class='formLeft'> 备注：</span>\n" +
                 "                        <div class=\"formRight\"><input  class=\"validate[required]\"  id=\"remark\"><span></span></div><div class=\"clear\"></div>\n" +
                 "                    </div>\n" +
+                "                    <input type='hidden' id='rentAcreageNum'/>" +
                 "                    <div><button style=\"margin-left:45%;background: green;color: white;\" onclick=\"addLesase()\">提交</button></div>";
             layui.layer.open({
                 type:1,
@@ -573,6 +577,7 @@
         function addLesase() {
             var assetId = $("#assetId").text();
             var lesseId = $("#lesseId").text();
+            var rentAcreage = document.getElementById("rentAcreage").value;
             var leaseUnitPrice = document.getElementById("leaseUnitPrice").value;
             var cashPledge = document.getElementById("cashPledge").value;
             var rentCycle = document.getElementById("rentCycle").value;
@@ -587,6 +592,16 @@
                 layui.layer.msg("资产名称不能为空！！！！",{icon:2},{time:1000});
                 return;
             }
+            if(null==rentAcreage||rentAcreage==""){
+                layui.layer.msg("租赁面积不能为空！！！！",{icon:2},{time:1000});
+                return;
+            }
+            var acreageNum = document.getElementById("rentAcreageNum").value;
+            if(rentAcreage>acreageNum){
+                layui.layer.msg("租赁面积不足，当前最多可租面积"+acreageNum+"(㎡)",{icon:2});
+                return ;
+            }
+
             if(null==lesseId||lesseId==""){
                 layui.layer.msg("租户不能为空！！！！",{icon:2},{time:1000});
                 return;
@@ -624,6 +639,7 @@
                 data:({
                     assetId:assetId,
                     lesseeId:lesseId,
+                    rentAcreage:rentAcreage,
                     leaseUnitPrice:leaseUnitPrice,
                     cashPledge:cashPledge,
                     rentCycle:rentCycle,
@@ -932,7 +948,7 @@
                         for (var i = 0; i < data1.length; i++) {
                             str_info+='<tr><td align="center"><button style="padding: 5px 5px;border: 1px solid;font-weight: 500;"   onclick="chooseAssetId('+data1[i].id+','+data1[i].status+')" ">选择</button></td>';
                             str_info+='<td align="center" id="assetName_'+data1[i].id+'">'+data1[i].assetName+'</td>';
-                            str_info+='<td align="center">'+data1[i].acreage+'</td>';
+                            str_info+='<td align="center" id="acreageNum_'+data1[i].id+'">'+(data1[i].useAcreageNum==null?0:data1[i].useAcreageNum)+'</td>';
                             str_info+='<td align="center">'+(data1[i].address==null?"":data1[i].address)+'</td>';
                             if(data1[i].status===1){
                                 str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: red;text-decoration: none;">空置中</a></td>';
@@ -989,6 +1005,7 @@
             }
             $("#assetId").val(document.getElementById("assetName_"+id).innerHTML);
             $("#assetId").text(id);
+            $("#rentAcreageNum").val(document.getElementById("acreageNum_"+id).innerHTML);
             //提示
             layui.layer.msg("选择成功，请关闭资产页面",{icon:1},{time:1000},function(){
                 layer.close(); //再执行关闭
@@ -1125,6 +1142,16 @@
             layui.layer.msg("选择成功，请关闭租户页面",{icon:1},{time:1000},function(){
                 layer.close(); //再执行关闭
             });
+
+        }
+
+        function checkAcreage() {
+            var rentAcreage = document.getElementById("rentAcreage").value;
+            var acreageNum = document.getElementById("rentAcreageNum").value;
+            if(rentAcreage>acreageNum){
+                layui.layer.msg("租赁面积不足，当前最多可租面积"+acreageNum+"(㎡)",{icon:2});
+                return ;
+            }
 
         }
 

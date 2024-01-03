@@ -6,9 +6,11 @@ import com.google.gson.Gson;
 import com.scwl.mapper.*;
 import com.scwl.pojo.*;
 import com.scwl.service.LogService;
+import com.scwl.service.ManageStateService;
 import com.scwl.service.RentBillService;
 import com.scwl.vo.RentBillVo;
 import com.scwl.vo.RentLeaseInfoVo;
+import lombok.val;
 import org.apache.poi.hssf.record.DVALRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,8 @@ public class RentBillServiceImpl implements RentBillService {
     private RentLeaseInfoMapper infoMapper;
     @Autowired
     private ManageStateMapper manageStateMapper;
+    @Autowired
+    private ManageStateService manageStateService;
     @Autowired
     private LogService logService;
     @Override
@@ -82,6 +86,43 @@ public class RentBillServiceImpl implements RentBillService {
         }catch (Exception e){
             return ResBean.error(e.getMessage());
         }
+    }
+
+    @Override
+    public ResBean deductArrears(String ids) {
+        BigDecimal zero = new BigDecimal(0);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Gson gson = new Gson();
+        Integer[] idList = gson.fromJson(ids, Integer[].class);
+        for (Integer id : idList) {
+            RentBill bill = rentBillMapper.selectByPrimaryKey(id);
+            BigDecimal amountOwed = bill.getAmountOwed();
+            RentLessee rentLessee = lesseeMapper.selectByPrimaryKey(bill.getLesseeId());
+            if(rentLessee.getAccount().compareTo(amountOwed)>=0){
+                bill.setAmount(bill.getAmount().add(amountOwed));
+                bill.setAmountOwed(zero);
+                bill.setStatus(1);
+                rentBillMapper.updateByPrimaryKey(bill);
+                rentLessee.setAccount(rentLessee.getAccount().subtract(amountOwed));
+                lesseeMapper.updateByPrimaryKey(rentLessee);
+                manageStateService.deductArrears(bill,amountOwed);
+                //查询该租约是否还有欠费租金
+                RentBill totalBill = rentBillMapper.getAmountOwed(bill.getLeaseInfoId());
+                if(totalBill.getAmountOwed().compareTo(zero)==0){
+                    //更新租约状态
+                    RentLeaseInfo rentLeaseInfo = infoMapper.selectByPrimaryKey(bill.getLeaseInfoId());
+                    rentLeaseInfo.setStatus(1);
+                    infoMapper.updateByPrimaryKey(rentLeaseInfo);
+                }
+                logService.addLog("UPDATE", "rent_bill", id, "给租户" + rentLessee.getLesseeName() + "补交"+format.format(bill.getAddTime())+"的"+amountOwed+"元租金");
+
+            }else {
+                return ResBean.success("操作失败，当前租户->"+rentLessee.getLesseeName()+"余额不足");
+            }
+
+
+        }
+        return ResBean.success("操作成功");
     }
 
     /**
@@ -186,16 +227,24 @@ public class RentBillServiceImpl implements RentBillService {
     public ResBean auToMonthBill() {
         //获取当天是否为月初1号
         int one = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        ManageState lastManage = manageStateMapper.getLastMonth("资金管理");
         if(one == 1){
             //更新上月最新数据（）上个月月底的账单是下个月1号凌晨生成
             RentBill lastBill = rentBillMapper.getAmountAndAmountOwedLastMonth();
-            ManageState lastManage = manageStateMapper.getLastMonth("资金管理");
-            updateManageState(lastManage,lastBill);
+            ManageState lastTwoManage = manageStateMapper.getLastTwoMonth("资金管理");
+            if(null==lastTwoManage){
+                lastTwoManage.setCurrentTotal(new BigDecimal(0));
+            }
+            if(null!=lastManage){
+                updateManageState(lastManage,lastTwoManage,lastBill);
+            }else {
+                lastManage.setCurrentTotal(new BigDecimal(0));
+            }
         }
             //汇总当天当月的租金收入情况
             RentBill bill = rentBillMapper.getAmountAndAmountOwed();
             ManageState manage = manageStateMapper.getCurrentMonth("资金管理");
-            updateManageState(manage,bill);
+            updateManageState(manage,lastManage,bill);
 
         return ResBean.success("资金管理月账单更新成功！");
     }
@@ -250,20 +299,15 @@ public class RentBillServiceImpl implements RentBillService {
 
     }
 
-    public void updateManageState(ManageState manage,RentBill bill){
-        //目前出租率
-        int total = assetMapper.getTotal();
-        int rent = assetMapper.getRent();
-        BigDecimal letRate = new BigDecimal(rent).divide(new BigDecimal(total), 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
-        ManageState manageState = new ManageState();
-        //查询当月资金管理是否存在账单
+    public void updateManageState(ManageState manage,ManageState lastManage,RentBill bill){
+         //查询当月资金管理是否存在账单
         manage.setName("资金管理");
         manage.setType("资金管理");
-        manage.setLetRate(letRate);
         manage.setRentIncome(bill.getAmount());
         manage.setLetRate(bill.getAmountOwed());
-        manage.setPeriodicTime(new Date());
-        if (null == manage) {
+        manage.setCurrentTotal(bill.getAmountOwed().add(lastManage.getCurrentTotal()));
+        if (null == manage.getId()) {
+            manage.setPeriodicTime(new Date());
             manageStateMapper.insert(manage);
         } else {
             manageStateMapper.updateByPrimaryKey(manage);

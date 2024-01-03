@@ -239,7 +239,8 @@
                     </form>
                 </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>租金信息</h6>
-                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="exportBill()"><input type="submit" value="导出租金明细" class="redB"></a></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="deductArrears()"><input type="submit" value="补交欠费" class="redB"></a></div>
+<!--                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="exportBill()"><input type="submit" value="导出租金明细" class="redB"></a></div>-->
 <!--                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="addRentBill()" value="添加" class="redB"></div>-->
 <!--                    <div class="formAddEmp"><input type="submit" onclick="deleteBill()" value="删除" class="redB"></div>-->
                 </div>
@@ -251,7 +252,7 @@
                         <td width="110">资产名</td>
                         <td width="80">承租人</td>
                         <td width="80">电话</td>
-                        <td width="80">建筑面积(㎡)</td>
+                        <td width="80">租赁面积(㎡)</td>
                         <td width="80">租金已缴</td>
                         <td width="80">租金欠费</td>
                         <td width="80">状态</td>
@@ -391,14 +392,13 @@
                         }else {
                             layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                                 layer.close(); //再执行关闭
-                                location.reload();
+                                location.href="/loginAdmin";
                             });
                         }
                     },
                     error:function (res) {
                         layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
                         });
                     }
                 })
@@ -432,7 +432,7 @@
                             str_info+='<td align="center">'+data1[i].assetName+'</td>';
                             str_info+='<td align="center">'+data1[i].lesseeName+'</td>';
                             str_info+='<td align="center">'+data1[i].phone+'</td>';
-                            str_info+='<td align="center">'+data1[i].acreage+'</td>';
+                            str_info+='<td align="center">'+(data1[i].acreage==null?"":data1[i].acreage)+'</td>';
                             str_info+='<td align="center">'+data1[i].amount+'</td>';
                             str_info+='<td align="center">'+data1[i].amountOwed+'</td>';
                             if(data1[i].status===1){
@@ -699,14 +699,43 @@
                     'Authorization': localStorage.getItem("token") // 在请求头中添加token
                 },
                 success: function (res) {
-                    layui.layer.msg(res.message,{time:1000},function(){
+                    layui.layer.msg(res.message,{icon:1},{time:1000},function(){
                         layer.close(); //再执行关闭
-                        if(res.code==200){
-                            window.location.href="/rentBill/exportExcel";
-                        }
                     });
+                    if(res.code==200){
+                        location.href="/rentBill/exportExcel";
+                    }
                 }})
 
+        }
+
+        function deductArrears() {
+            var selectedValues = document.querySelectorAll(".choose:checked");
+            var ids = [];
+            for (var i = 0; i < selectedValues.length; i++) {
+                ids.push(selectedValues[i].value);
+            }
+            if(ids.length==0){
+                layui.layer.msg('您沒有勾选租金账单');
+            }else {
+                $.ajax({
+                    type: "get",
+                    url: "/rentBill/deductArrears",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data:{
+                        ids:JSON.stringify(ids)
+                    },
+                    success: function (res) {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+                    }})
+
+
+            }
         }
     </script>
 </body>

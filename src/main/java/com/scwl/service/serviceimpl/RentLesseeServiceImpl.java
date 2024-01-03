@@ -4,12 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.scwl.mapper.RentBillMapper;
+import com.scwl.mapper.RentLeaseInfoMapper;
 import com.scwl.mapper.RentLesseeMapper;
-import com.scwl.pojo.RentBill;
-import com.scwl.pojo.RentLessee;
-import com.scwl.pojo.RentLesseeExample;
-import com.scwl.pojo.ResBean;
+import com.scwl.pojo.*;
 import com.scwl.service.LogService;
+import com.scwl.service.ManageStateService;
 import com.scwl.service.RentLesseeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,11 @@ public class RentLesseeServiceImpl implements RentLesseeService {
     private LogService logService;
     @Autowired
     private RentLesseeMapper rentLesseeMapper;
+    @Autowired
+    private ManageStateService manageStateService;
+
+    @Autowired
+    private RentLeaseInfoMapper infoMapper;
 
     @Autowired
     private RentBillMapper rentBillMapper;
@@ -94,19 +98,6 @@ public class RentLesseeServiceImpl implements RentLesseeService {
             if(null!=rentLessee.getSex()&&""!=rentLessee.getSex()){
                 oldLessee.setSex(rentLessee.getSex());
             }
-            if(null!=rentLessee.getAccount()){
-                BigDecimal zero = new BigDecimal(0);
-                //预存租户账户余额
-                    //判断是否欠租
-                    if(oldLessee.getAccount().compareTo(zero)<0&&rentLessee.getAccount().compareTo(zero)>0){
-                        //扣除欠租
-                        RentDeduction(rentLessee);
-                    }
-                BigDecimal account = rentLessee.getAccount();
-                oldLessee.setAccount(oldLessee.getAccount().add(account));
-                content="给租户->"+oldLessee.getLesseeName()+"预存"+account+"元；预存前："+oldLessee.getAccount()+"元；预存后："+oldLessee.getAccount()+"元；";
-
-            }
             rentLesseeMapper.updateByPrimaryKey(oldLessee);
             logService.addLog("UPDATE","rent_asset",rentLessee.getId(),content);
             return  ResBean.success("修改成功");
@@ -132,11 +123,26 @@ public class RentLesseeServiceImpl implements RentLesseeService {
     @Transactional
     public ResBean prestore(RentLessee rentLessee) {
         try{
+            String content="";
         RentLessee oldLesse = rentLesseeMapper.selectByPrimaryKey(rentLessee.getId());
-        BigDecimal account = oldLesse.getAccount();
-        oldLesse.setAccount(account.add(rentLessee.getAccount()));
+        if(rentLessee.getRemark().equals("1")){
+            BigDecimal account = oldLesse.getAccount();
+            oldLesse.setAccount(account.add(rentLessee.getAccount()));
+             content="给用户->"+oldLesse.getLesseeName()+"预存"+rentLessee.getAccount()+"元；"+"预存前是:"+account+"元;"+"预存后是:"+oldLesse.getAccount()+"元";
+
+        }else {
+            BigDecimal zero = new BigDecimal(0);
+            //预存租户账户余额
+            //判断是否欠租
+            if(oldLesse.getAccount().compareTo(zero)<0&&rentLessee.getAccount().compareTo(zero)>0){
+                //扣除欠租
+                RentDeduction(rentLessee);
+            }
+            BigDecimal account = rentLessee.getAccount();
+            oldLesse.setAccount(oldLesse.getAccount().add(account));
+             content="[自动扣租]给租户->"+oldLesse.getLesseeName()+"预存"+account+"元；预存前："+oldLesse.getAccount()+"元；预存后："+oldLesse.getAccount()+"元；";
+        }
         rentLesseeMapper.updateByPrimaryKey(oldLesse);
-        String content="给用户->"+oldLesse.getLesseeName()+"预存"+rentLessee.getAccount()+"元；"+"预存前是:"+account+"元;"+"预存后是:"+oldLesse.getAccount()+"元";
         logService.addLog("UPDATE", "rent_asset", rentLessee.getId(), content);
         return  ResBean.success("预存成功");
         }catch (Exception e){
@@ -177,6 +183,17 @@ public class RentLesseeServiceImpl implements RentLesseeService {
                 bill.setStatus(1);
                 bill.setRentDay(new Date());
                 rentBillMapper.updateByPrimaryKey(bill);
+                //扣除当前月份起每个月的总欠费
+                manageStateService.deductArrears(bill,amountOwed);
+                //更新租约状态
+                //查询该租约是否还有欠费租金
+                RentBill totalBill = rentBillMapper.getAmountOwed(bill.getLeaseInfoId());
+                if(totalBill.getAmountOwed().compareTo(zero)==0){
+                    //更新租约状态
+                    RentLeaseInfo rentLeaseInfo = infoMapper.selectByPrimaryKey(bill.getLeaseInfoId());
+                    rentLeaseInfo.setStatus(1);
+                    infoMapper.updateByPrimaryKey(rentLeaseInfo);
+                }
                 account = owed;
             }else {
                 //不够扣或者刚好扣
@@ -188,6 +205,8 @@ public class RentLesseeServiceImpl implements RentLesseeService {
                 }
                 bill.setRentDay(new Date());
                 rentBillMapper.updateByPrimaryKey(bill);
+                //扣除当前月份起每个月的总欠费
+                manageStateService.deductArrears(bill,account);
                 break;
             }
         }

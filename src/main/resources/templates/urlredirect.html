@@ -20,11 +20,26 @@ $(function() {
 	var isMobile = devices.some(function(device) {
 		return userAgentInfo.indexOf(device) > 0;
 	});
-	if(isMobile) {
-		location.href="/centerShowPhone";
-	} else {
-		location.href="/centerShow";
-	}
+           $.ajax({
+                type: "get",
+                url: "/getOaToken",
+                success: function (res) {
+                    if(res.code === 200) {
+                        localStorage.setItem('token', 'Bearer '+res.message);
+                        if(isMobile) {
+                            location.href="/centerShowPhone";
+                        } else {
+                            location.href="/centerShow";
+                        }
+                    }else {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                        });
+                    }
+                }
+            })
+
+
 
 });
 </script>

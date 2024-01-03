@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="lessee_id" property="lesseeId" jdbcType="INTEGER" />
     <result column="asset_id" property="assetId" jdbcType="INTEGER" />
+    <result column="rent_acreage" property="rentAcreage" jdbcType="DOUBLE" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="rent_cycle" property="rentCycle" jdbcType="VARCHAR" />
     <result column="lease_date" property="leaseDate" jdbcType="DATE" />
@@ -101,8 +102,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, lessee_id, asset_id, status, rent_cycle, lease_date, pay_date, expire_date, quit_date,
-    lease_unit_price, cash_pledge, free_month, free_month_num, remark, is_delete, add_time
+    id, lessee_id, asset_id, rent_acreage, status, rent_cycle, lease_date, pay_date, 
+    expire_date, quit_date, lease_unit_price, cash_pledge, free_month, free_month_num, 
+    remark, is_delete, add_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.RentLeaseInfoExample" >
     select
@@ -119,7 +121,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
     from rent_lease_info
     where id = #{id,jdbcType=INTEGER}
@@ -135,18 +137,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.RentLeaseInfo" useGeneratedKeys="true" keyProperty="id">
-    insert into rent_lease_info (id, lessee_id, asset_id,
-      status, rent_cycle, lease_date,
-      pay_date, expire_date, quit_date,
-      lease_unit_price, cash_pledge, free_month,
-      free_month_num, remark, is_delete,
-      add_time)
-    values (#{id,jdbcType=INTEGER}, #{lesseeId,jdbcType=INTEGER}, #{assetId,jdbcType=INTEGER},
-      #{status,jdbcType=INTEGER}, #{rentCycle,jdbcType=VARCHAR}, #{leaseDate,jdbcType=DATE},
-      #{payDate,jdbcType=DATE}, #{expireDate,jdbcType=DATE}, #{quitDate,jdbcType=DATE},
-      #{leaseUnitPrice,jdbcType=DECIMAL}, #{cashPledge,jdbcType=DECIMAL}, #{freeMonth,jdbcType=INTEGER},
-      #{freeMonthNum,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER},
-      #{addTime,jdbcType=DATE})
+    insert into rent_lease_info (id, lessee_id, asset_id, 
+      rent_acreage, status, rent_cycle, 
+      lease_date, pay_date, expire_date, 
+      quit_date, lease_unit_price, cash_pledge, 
+      free_month, free_month_num, remark, 
+      is_delete, add_time)
+    values (#{id,jdbcType=INTEGER}, #{lesseeId,jdbcType=INTEGER}, #{assetId,jdbcType=INTEGER}, 
+      #{rentAcreage,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, #{rentCycle,jdbcType=VARCHAR}, 
+      #{leaseDate,jdbcType=DATE}, #{payDate,jdbcType=DATE}, #{expireDate,jdbcType=DATE}, 
+      #{quitDate,jdbcType=DATE}, #{leaseUnitPrice,jdbcType=DECIMAL}, #{cashPledge,jdbcType=DECIMAL}, 
+      #{freeMonth,jdbcType=INTEGER}, #{freeMonthNum,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=INTEGER}, #{addTime,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.RentLeaseInfo" >
     insert into rent_lease_info
@@ -159,6 +161,9 @@
       </if>
       <if test="assetId != null" >
         asset_id,
+      </if>
+      <if test="rentAcreage != null" >
+        rent_acreage,
       </if>
       <if test="status != null" >
         status,
@@ -209,6 +214,9 @@
       </if>
       <if test="assetId != null" >
         #{assetId,jdbcType=INTEGER},
+      </if>
+      <if test="rentAcreage != null" >
+        #{rentAcreage,jdbcType=DOUBLE},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -269,6 +277,9 @@
       <if test="record.assetId != null" >
         asset_id = #{record.assetId,jdbcType=INTEGER},
       </if>
+      <if test="record.rentAcreage != null" >
+        rent_acreage = #{record.rentAcreage,jdbcType=DOUBLE},
+      </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -316,21 +327,22 @@
   <update id="updateByExample" parameterType="map" >
     update rent_lease_info
     set id = #{record.id,jdbcType=INTEGER},
-    lessee_id = #{record.lesseeId,jdbcType=INTEGER},
-    asset_id = #{record.assetId,jdbcType=INTEGER},
-    status = #{record.status,jdbcType=INTEGER},
-    rent_cycle = #{record.rentCycle,jdbcType=VARCHAR},
-    lease_date = #{record.leaseDate,jdbcType=DATE},
-    pay_date = #{record.payDate,jdbcType=DATE},
-    expire_date = #{record.expireDate,jdbcType=DATE},
-    quit_date = #{record.quitDate,jdbcType=DATE},
-    lease_unit_price = #{record.leaseUnitPrice,jdbcType=DECIMAL},
-    cash_pledge = #{record.cashPledge,jdbcType=DECIMAL},
-    free_month = #{record.freeMonth,jdbcType=INTEGER},
-    free_month_num = #{record.freeMonthNum,jdbcType=INTEGER},
-    remark = #{record.remark,jdbcType=VARCHAR},
-    is_delete = #{record.isDelete,jdbcType=INTEGER},
-    add_time = #{record.addTime,jdbcType=DATE}
+      lessee_id = #{record.lesseeId,jdbcType=INTEGER},
+      asset_id = #{record.assetId,jdbcType=INTEGER},
+      rent_acreage = #{record.rentAcreage,jdbcType=DOUBLE},
+      status = #{record.status,jdbcType=INTEGER},
+      rent_cycle = #{record.rentCycle,jdbcType=VARCHAR},
+      lease_date = #{record.leaseDate,jdbcType=DATE},
+      pay_date = #{record.payDate,jdbcType=DATE},
+      expire_date = #{record.expireDate,jdbcType=DATE},
+      quit_date = #{record.quitDate,jdbcType=DATE},
+      lease_unit_price = #{record.leaseUnitPrice,jdbcType=DECIMAL},
+      cash_pledge = #{record.cashPledge,jdbcType=DECIMAL},
+      free_month = #{record.freeMonth,jdbcType=INTEGER},
+      free_month_num = #{record.freeMonthNum,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_delete = #{record.isDelete,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=DATE}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -343,6 +355,9 @@
       </if>
       <if test="assetId != null" >
         asset_id = #{assetId,jdbcType=INTEGER},
+      </if>
+      <if test="rentAcreage != null" >
+        rent_acreage = #{rentAcreage,jdbcType=DOUBLE},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -390,6 +405,7 @@
     update rent_lease_info
     set lessee_id = #{lesseeId,jdbcType=INTEGER},
       asset_id = #{assetId,jdbcType=INTEGER},
+      rent_acreage = #{rentAcreage,jdbcType=DOUBLE},
       status = #{status,jdbcType=INTEGER},
       rent_cycle = #{rentCycle,jdbcType=VARCHAR},
       lease_date = #{leaseDate,jdbcType=DATE},
@@ -412,9 +428,9 @@
     join rent_asset a on a.id = r.asset_id
     join rent_lessee l on l.id = r.lessee_id
     <where>
-       r.is_delete = 0
+      r.is_delete = 0
       <if test="assetName != null and assetName !=''" >
-       and a.asset_name like concat('%',#{assetName,jdbcType=VARCHAR},'%')
+        and a.asset_name like concat('%',#{assetName,jdbcType=VARCHAR},'%')
       </if>
       <if test="lesseeName != null and lesseeName !=''" >
         and l.lessee_name like concat('%',#{lesseeName,jdbcType=VARCHAR},'%')
@@ -431,9 +447,15 @@
     </where>
   </select>
   <select id="getCurrentInfo" resultMap="BaseResultMap">
-    select * from rent_lease_info where status = 1 and is_delete = 0 and DATE(pay_date) =  DATE_SUB(CURDATE(), INTERVAL 1 DAY);
+    select * from rent_lease_info where status = 1 and is_delete = 0 and DATE(pay_date) =  DATE_SUB(CURDATE(), INTERVAL 1 DAY) and is_delete = 0;
   </select>
   <select id="getExpire" resultMap="BaseResultMap">
-    select * from rent_lease_info where status = 1 and is_delete = 0 and DATE(expire_date) =  DATE_SUB(CURDATE(), INTERVAL 1 DAY);
+    select * from rent_lease_info where status = 1 and is_delete = 0 and DATE(expire_date) =  DATE_SUB(CURDATE(), INTERVAL 1 DAY) and is_delete = 0;
+  </select>
+  <select id="getLastTotalAcreage" resultMap="BaseResultMap">
+  select IFNULL(SUM(rent_acreage), 0) from rent_lease_info  WHERE MONTH(add_time) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(add_time) = YEAR(CURDATE() - INTERVAL 1 MONTH) and is_delete = 0;
+  </select>
+  <select id="getTotalAcreage" resultMap="BaseResultMap">
+    select IFNULL(SUM(rent_acreage), 0) from rent_lease_info  WHERE MONTH(add_time) = MONTH(CURDATE()) AND YEAR(add_time) = YEAR(CURDATE()) and is_delete = 0;
   </select>
 </mapper>

@@ -5,6 +5,8 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
     <result column="acreage" property="acreage" jdbcType="DOUBLE" />
+    <result column="use_acreage" property="useAcreage" jdbcType="DOUBLE" />
+    <result column="use_acreage_num" property="useAcreageNum" jdbcType="DOUBLE" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -70,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, asset_name, acreage, address, status, remark, is_delete, add_time
+    id, asset_name, acreage, use_acreage, use_acreage_num, address, status, remark, is_delete, 
+    add_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.scwl.pojo.RentAssetExample" >
     select
@@ -87,7 +90,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
     from rent_asset
     where id = #{id,jdbcType=INTEGER}
@@ -103,12 +106,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.scwl.pojo.RentAsset" useGeneratedKeys="true" keyProperty="id">
-    insert into rent_asset (id, asset_name, acreage,
-      address, status, remark,
-      is_delete, add_time)
-    values (#{id,jdbcType=INTEGER}, #{assetName,jdbcType=VARCHAR}, #{acreage,jdbcType=DOUBLE},
-      #{address,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
-      #{isDelete,jdbcType=INTEGER}, #{addTime,jdbcType=DATE})
+    insert into rent_asset (id, asset_name, acreage, 
+      use_acreage, use_acreage_num, address, 
+      status, remark, is_delete, 
+      add_time)
+    values (#{id,jdbcType=INTEGER}, #{assetName,jdbcType=VARCHAR}, #{acreage,jdbcType=DOUBLE}, 
+      #{useAcreage,jdbcType=DOUBLE}, #{useAcreageNum,jdbcType=DOUBLE}, #{address,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.scwl.pojo.RentAsset" >
     insert into rent_asset
@@ -121,6 +126,12 @@
       </if>
       <if test="acreage != null" >
         acreage,
+      </if>
+      <if test="useAcreage != null" >
+        use_acreage,
+      </if>
+      <if test="useAcreageNum != null" >
+        use_acreage_num,
       </if>
       <if test="address != null" >
         address,
@@ -147,6 +158,12 @@
       </if>
       <if test="acreage != null" >
         #{acreage,jdbcType=DOUBLE},
+      </if>
+      <if test="useAcreage != null" >
+        #{useAcreage,jdbcType=DOUBLE},
+      </if>
+      <if test="useAcreageNum != null" >
+        #{useAcreageNum,jdbcType=DOUBLE},
       </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
@@ -183,6 +200,12 @@
       <if test="record.acreage != null" >
         acreage = #{record.acreage,jdbcType=DOUBLE},
       </if>
+      <if test="record.useAcreage != null" >
+        use_acreage = #{record.useAcreage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.useAcreageNum != null" >
+        use_acreage_num = #{record.useAcreageNum,jdbcType=DOUBLE},
+      </if>
       <if test="record.address != null" >
         address = #{record.address,jdbcType=VARCHAR},
       </if>
@@ -206,13 +229,15 @@
   <update id="updateByExample" parameterType="map" >
     update rent_asset
     set id = #{record.id,jdbcType=INTEGER},
-    asset_name = #{record.assetName,jdbcType=VARCHAR},
-    acreage = #{record.acreage,jdbcType=DOUBLE},
-    address = #{record.address,jdbcType=VARCHAR},
-    status = #{record.status,jdbcType=INTEGER},
-    remark = #{record.remark,jdbcType=VARCHAR},
-    is_delete = #{record.isDelete,jdbcType=INTEGER},
-    add_time = #{record.addTime,jdbcType=DATE}
+      asset_name = #{record.assetName,jdbcType=VARCHAR},
+      acreage = #{record.acreage,jdbcType=DOUBLE},
+      use_acreage = #{record.useAcreage,jdbcType=DOUBLE},
+      use_acreage_num = #{record.useAcreageNum,jdbcType=DOUBLE},
+      address = #{record.address,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_delete = #{record.isDelete,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=DATE}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -225,6 +250,12 @@
       </if>
       <if test="acreage != null" >
         acreage = #{acreage,jdbcType=DOUBLE},
+      </if>
+      <if test="useAcreage != null" >
+        use_acreage = #{useAcreage,jdbcType=DOUBLE},
+      </if>
+      <if test="useAcreageNum != null" >
+        use_acreage_num = #{useAcreageNum,jdbcType=DOUBLE},
       </if>
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
@@ -248,6 +279,8 @@
     update rent_asset
     set asset_name = #{assetName,jdbcType=VARCHAR},
       acreage = #{acreage,jdbcType=DOUBLE},
+      use_acreage = #{useAcreage,jdbcType=DOUBLE},
+      use_acreage_num = #{useAcreageNum,jdbcType=DOUBLE},
       address = #{address,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
@@ -255,14 +288,10 @@
       add_time = #{addTime,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
   <select id="getByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select id from rent_asset where asset_name = #{name} and is_delete = 0 limit 1
   </select>
-  <select id="getTotal" resultType="java.lang.Integer">
-    select count(id) from rent_asset  and is_delete = 0
-  </select>
-  <select id="getRent" resultType="java.lang.Integer">
-    select count(id)  from rent_asset where status = 1 and is_delete = 0
+  <select id="getTotal" resultMap="BaseResultMap">
+    select IFNULL(SUM(use_acreage), 0),IFNULL(SUM(use_acreage_num), 0) from rent_asset  and is_delete = 0
   </select>
 </mapper>

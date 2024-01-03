@@ -238,7 +238,9 @@
                         <select name="status">
                             <option value=""></option>
                             <option value="1">空置中</option>
-                            <option value="2">租赁中</option>
+                            <option value="2">部分出租</option>
+                            <option value="2">全部出租</option>
+                            <option value="2">自用</option>
                         </select>
                         <div id="sousuo" class="sousuo" onclick="getAssetList(1)" >搜索</div>
                     </form>
@@ -246,7 +248,7 @@
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>资产信息</h6>
                     <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="addRentAsset()" value="添加资产" class="redB"></div>
                     <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="deleteAsset()" value="删除资产" class="redB"></div>
-                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="exportAsset()"><input type="submit" value="导出资产" class="redB"></a></div>
+<!--                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="exportAsset()"><input type="submit" value="导出资产" class="redB"></a></div>-->
 <!--                    <div class="formAddEmp">-->
 <!--                        <form  enctype="multipart/form-data">-->
 <!--                            <input type="file" name="assetFile" id="assetFile" accept=".xls,.xlsx">-->
@@ -262,7 +264,9 @@
                         <td width="20"><input type="checkbox" onclick="selectAll()"></td>
                         <td width="20">序号</td>
                         <td width="110">名称</td>
-                        <td width="80">面积(㎡)</td>
+                        <td width="80">总面积(㎡)</td>
+                        <td width="80">总可用面积(㎡)</td>
+                        <td width="80">实时可用面积(㎡)</td>
                         <td width="80">地址</td>
                         <td width="80">状态</td>
                         <td width="80">备注</td>
@@ -400,14 +404,13 @@
                     }else {
                         layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
+                            location.href="/loginAdmin";
                         });
                     }
                 },
                 error:function (res) {
                     layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                         layer.close(); //再执行关闭
-                        location.reload();
                     });
                 }
             })
@@ -440,11 +443,17 @@
                         str_info+='<td align="center">'+data1[i].id+'</td>';
                         str_info+='<td align="center">'+data1[i].assetName+'</td>';
                         str_info+='<td align="center">'+data1[i].acreage+'</td>';
+                        str_info+='<td align="center">'+(data1[i].useAcreage==null?"":data1[i].useAcreage)+'</td>';
+                        str_info+='<td align="center">'+(data1[i].useAcreageNum==null?"":data1[i].useAcreageNum)+'</td>';
                         str_info+='<td align="center"><input id="address_'+data1[i].id+'"  onchange="updateAsset('+data1[i].id+')" style="text-align: center" value="'+(data1[i].address==null?"":data1[i].address)+'"></td>';
                         if(data1[i].status===1){
-                            str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#" style="color: red;text-decoration: none;"  onclick="updateStatus('+data1[i].id+',1)">空置中</a></td>';
-                        }else {
-                            str_info+='<td align="center" id="status_'+data1[i].id+'"><a href="#"  style="color: green;text-decoration: none;" onclick="updateStatus('+data1[i].id+',2)">租赁中</a></td>';
+                            str_info+='<td align="center" style="color: red">空置中</td>';
+                        }else if(data1[i].status===2){
+                            str_info+='<td align="center" style="color: greenyellow">部分出租</td>';
+                        }else if(data1[i].status===3){
+                            str_info+='<td align="center" style="color:darkseagreen">全部出租</td>';
+                        }else{
+                            str_info+='<td align="center" style="color: green">自用</td>';
                         }
                         str_info+='<td align="center"><div  class="text-over" title="'+(data1[i].remark==null?"":data1[i].remark)+'">'+(data1[i].remark==null?"":data1[i].remark)+'</div></td>';
                         str_info+='<td align="center">'+dateFormat(1,data1[i].addTime)+'</td></tr>';
@@ -493,8 +502,12 @@
            "                        <div class=\"formRight\"><input  class=\"validate[required]\"  id=\"assetName\"><span></span></div><div class=\"clear\"></div>\n" +
            "                    </div>\n" +
            "                    <div class=\"formRow4\" style='text-align: center'>\n" +
-           "                         <span class='formLeft'>面积(㎡)： </span>\n" +
+           "                         <span class='formLeft'>总面积(㎡)： </span>\n" +
            "                        <div class=\"formRight\"><input  type=\"number\" step=\"0.01\" placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"acreage\"></div><div class=\"clear\"></div>\n" +
+           "                    </div>\n" +
+           "                    <div class=\"formRow4\" style='text-align: center'>\n" +
+           "                         <span class='formLeft'>总可用面积(㎡)： </span>\n" +
+           "                        <div class=\"formRight\"><input  type=\"number\" step=\"0.01\" placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"useAcreage\"></div><div class=\"clear\"></div>\n" +
            "                    </div>\n" +
            "                    <div class=\"formRow4\" style='text-align: center'>\n" +
            "                       <span class='formLeft'> 地址：</span>\n" +
@@ -527,6 +540,7 @@
    function addAsset() {
        var assetName = document.getElementById("assetName").value;
        var acreage = document.getElementById("acreage").value;
+       var useAcreage = document.getElementById("useAcreage").value;
        var address = document.getElementById("address").value;
        var status = document.getElementById("status").value;
        var remark = document.getElementById("remark").value;
@@ -535,9 +549,14 @@
            return;
        }
        if(null==acreage||acreage==""){
-           layui.layer.msg("面积不能为空！！！！",{icon:2},{time:1000});
+           layui.layer.msg("总面积不能为空！！！！",{icon:2},{time:1000});
            return;
        }
+       if(null==useAcreage||useAcreage==""){
+           layui.layer.msg("总可用面积不能为空！！！！",{icon:2},{time:1000});
+           return;
+       }
+
        if(null==address||address==""){
            layui.layer.msg("地址不能为空！！！！",{icon:2},{time:1000});
            return;
@@ -555,6 +574,7 @@
            data:({
                assetName:assetName,
                acreage:acreage,
+               useAcreage:useAcreage,
                address:address,
                status:status,
                remark:remark
@@ -625,24 +645,15 @@
                     status:type
                 }),
                 type: 'post',
-                success: function (resp) {
-                    layer.close(index);
+                success: function (res) {
+                    let icon =1;
                     //成功提示
-                    if (resp.code == 200) {
+                    if (res.code == 200) {
                         document.getElementById("status_"+id).innerHTML=html;
-                        layer.msg("更新成功", {
-                            icon: 1,
-                            time: 1000
-                        }, function () {
-
-                        });
                     } else {
-                        //失败提示
-                        layer.msg(resp.msg, {
-                            icon: 2,
-                            time: 2000
-                        });
+                        icon =2
                     }
+                    layui.layer.msg(res.message,{icon:icon},{time:1000});
                 }
             });
         });
@@ -662,14 +673,7 @@
                 address:address
             }),
             success: function (res) {
-                if(res && res.code===200){
-                    layui.layer.msg(res.message,{time:1000},function(){
-                        layer.close(); //再执行关闭
-                    });
-
-                }else {
-                    layui.layer.msg(res.message,{time:1000});
-                }
+                layui.layer.msg(res.message,{time:1000});
             }
 
 
@@ -721,12 +725,12 @@
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
             success: function (res) {
-                layui.layer.msg(res.message,{time:1000},function(){
+                layui.layer.msg(res.message,{icon:1},{time:1000},function(){
                     layer.close(); //再执行关闭
-                    if(res.code==200){
-                    window.location.href="/asset/exportExcel";
-                    }
                 });
+                if(res.code==200){
+                    location.href="/asset/exportExcel";
+                }
             }})
 
     }

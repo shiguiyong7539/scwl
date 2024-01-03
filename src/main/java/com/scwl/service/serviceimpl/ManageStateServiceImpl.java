@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.scwl.mapper.ManageStateMapper;
 import com.scwl.pojo.ManageState;
 import com.scwl.pojo.ManageStateExample;
+import com.scwl.pojo.RentBill;
 import com.scwl.pojo.ResBean;
 import com.scwl.service.LogService;
 import com.scwl.service.ManageStateService;
@@ -15,10 +16,10 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 public class ManageStateServiceImpl implements ManageStateService {
@@ -86,15 +87,22 @@ public class ManageStateServiceImpl implements ManageStateService {
     public ResBean getManageStateByCenter() {
         HashMap<String, Object> hashMap = new HashMap<>();
         //租金收入（欠收）当年度总额
-        ManageState totalByThisYear = manageStateMapper.getTotalByThisYear("资产经营");
+       // ManageState totalByThisYear = manageStateMapper.getTotalByThisYear("资产经营");
         //租金总收入
-        hashMap.put("rent_total",totalByThisYear.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        //hashMap.put("rent_total",totalByThisYear.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         //经营业务收入当年度总额
-        ManageState totalByThisYear1 = manageStateMapper.getTotalByThisYear("经营业务收入");
-        hashMap.put("in_total",totalByThisYear1.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+       // ManageState totalByThisYear1 = manageStateMapper.getTotalByThisYear("经营业务收入");
+       // hashMap.put("in_total",totalByThisYear1.getRentIncome().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
 
         //租金收入（图形化）
         List<ManageState> income = manageStateMapper.getDataByColumn("rent_income", "资产经营");
+        BigDecimal zero = new BigDecimal(0);
+        BigDecimal rent_total = zero;
+        for (ManageState manageState : income) {
+            rent_total = rent_total.add(manageState.getRentIncome());
+        }
+        //租金收入（欠收）当年度总额
+        hashMap.put("rent_total",rent_total.divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         hashMap.put("income",income);
         String  income_lastDate= new SimpleDateFormat("yyyy年MM月dd日").format(income.get(income.size() - 1).getPeriodicTime());
         hashMap.put("income_lastDate","截至"+income_lastDate);
@@ -110,20 +118,27 @@ public class ManageStateServiceImpl implements ManageStateService {
         hashMap.put("rate_lastDate","截至"+rate_lastDate);
         //经营业务（图形化）
         List<Map<String,Object>> list = new ArrayList<>();
+        BigDecimal in_total = zero;
         List<ManageState> allName = manageStateMapper.getAllName();
             for (ManageState manageState : allName) {
                 List<ManageState> manageStateList = manageStateMapper.getManageStateByManage(manageState.getName());
                 HashMap<String, Object> map1 = new HashMap<>();
                 map1.put("manage",manageStateList);
                 list.add(map1);
+                for (ManageState state : manageStateList) {
+                    in_total = in_total.add(state.getRentIncome());
+                }
             }
+        hashMap.put("in_total",in_total.divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         //欠收(当前)
-        for (int i = 0; i < arrears.size(); i++) {
-            if(null!=arrears.get(arrears.size()-(i+1)).getRentArrears()){
-                hashMap.put("arrears_now",arrears.get(arrears.size()-(i+1)).getRentArrears().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
-                break;
-            }
-        }
+        List<ManageState> current_total = manageStateMapper.getDataByColumn("current_total", "资产经营");
+        hashMap.put("arrears_now",current_total.get(arrears.size()-1).getCurrentTotal()==null?0:current_total.get(arrears.size()-1).getCurrentTotal().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+//        for (int i = 0; i < arrears.size(); i++) {
+//            if(null!=arrears.get(arrears.size()-(i+1)).getRentArrears()){
+//                hashMap.put("arrears_now",arrears.get(arrears.size()-(i+1)).getRentArrears().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+//                break;
+//            }
+//        }
 
          hashMap.put("list",list);
         //经营业务收入截至日期
@@ -143,5 +158,20 @@ public class ManageStateServiceImpl implements ManageStateService {
         //经营业务收入当年度总额
         List<ManageState> list = manageStateMapper.getManageStateByTotal();
         return ResBean.success("success",list);
+    }
+
+    @Override
+    public void deductArrears(RentBill bill, BigDecimal money) {
+        //扣除当前月份起的总欠费
+        Date addTime = bill.getAddTime();
+        LocalDate localDate = addTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int year = localDate.getYear();
+        int month = localDate.getMonthValue();
+        //获取当前月份后的所有账单
+        List<ManageState> afterList = manageStateMapper.getafter(year, month);
+        for (ManageState state : afterList) {
+            state.setCurrentTotal(state.getCurrentTotal().subtract(money));
+            manageStateMapper.updateByPrimaryKey(state);
+        }
     }
 }

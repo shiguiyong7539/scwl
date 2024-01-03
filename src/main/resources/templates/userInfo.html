@@ -88,7 +88,14 @@
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
             </ul>
         </li>
-
+        <li class="charts"><a href="#" title="" onclick="toggle('asset')" class="exp"><span>租金管理</span></a>
+            <ul class="sub ul_hidden" id="asset">
+                <li><a href="#" title="" onclick="assetList()">资产列表</a></li>
+                <li><a href="#" title="" onclick="lesseList()">租户列表</a></li>
+                <li><a href="#" title="" onclick="leaseInfolist()">租约列表</a></li>
+                <li><a href="#" title="" onclick="rentList()">租金收入</a></li>
+            </ul>
+        </li>
         <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
             <ul class="sub ul_hidden" id="taskManage">
                 <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
@@ -115,7 +122,8 @@
             <ul class="sub ul_hidden" id="myInfo">
                 <li><a href="#" title="#" onclick="userInfo()" id="idNo"></a></li>
                 <li><a href="#" title="#" onclick="userInfo()" id="idName"></a></li>
-                <li class="last"><a href="#" title="" onclick="userInfo()" id="idPhone"></a></li>
+                <li class="last"><a href="#" title="手机" onclick="userInfo()" id="idPhone"></a></li>
+                <input type="hidden" id="oldPhone"/>
             </ul>
         </li>
 
@@ -248,7 +256,7 @@
                                 <label>密码(已加密)：<span class="req">*</span></label>
                                 <div class="formRight"><input type="text" class="validate[required,custom[onlyNumberSp]]"  id="passWord"></div><div class="clear"></div>
                             </div>
-                            <div class="formSubmit"><input type="submit" onclick="editInfo()" value="修改" class="redB"></div>
+                            <div class="formSubmit" style="margin-left: 20%;float: left;"><input type="submit" onclick="editInfo()" value="修改" class="redB"></div>
                             <div class="clear"></div>
                      <
 
@@ -354,6 +362,7 @@
 <script type="text/javascript">
 
     $(function () {
+        toggle('myInfo')
         initData();
     } );
     function logOut() {
@@ -415,6 +424,18 @@
     function authority() {
         location.href="/authority";
     }
+    function assetList() {
+        location.href="/assetList";
+    }
+    function lesseList() {
+        location.href="/lesseList";
+    }
+    function leaseInfolist() {
+        location.href="/leaseInfolist";
+    }
+    function rentList() {
+        location.href="/rentList";
+    }
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
@@ -434,6 +455,7 @@
                 },
                 success: function (res) {
                     if(res.code === 200) {
+                        $("#oldPhone").val(res.obj.phone);
                         document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
                         document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
                         document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
@@ -445,14 +467,13 @@
                     }else {
                         layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
+                            location.href="/loginAdmin";
                         });
                     }
                 },
                 error:function (res) {
                     layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                         layer.close(); //再执行关闭
-                        location.reload();
                     });
                 }
             })
@@ -468,33 +489,71 @@
         var username = document.getElementById("userName").value;
         var password = document.getElementById("passWord").value;
         var phone = document.getElementById("phone").value;
-        $.ajax({
-            type: "get",
-            url: "/editUser",
-            headers: {
-                'Authorization':  localStorage.getItem("token") // 在请求头中添加token
-            },
-            data:({
-                id:id,
-                name:username,
-                password:password,
-                phone:phone
-             }),
-            success: function (res) {
-                if(res.code === 200) {
-                    layui.layer.msg(res.message,{time:1000},function(){
-                       layer.close(); //再执行关闭
-                       location.reload();
-                    });
+        var oldPhone = $("#oldPhone").val();
+        if(phone!=oldPhone){
+            let msg='您确定要修改电话号码吗?如果修改后跟OA系统不一致将无法从OA系统进入此系统';
+            layer.confirm(msg, {
+                title:'操作提示',
+                icon:0,
+                btn: ['确定','取消']
+            }, function(){
+                $.ajax({
+                    type: "get",
+                    url: "/editUser",
+                    headers: {
+                        'Authorization':  localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data:({
+                        id:id,
+                        name:username,
+                        password:password,
+                        phone:phone
+                    }),
+                    success: function (res) {
+                        if(res.code === 200) {
+                            layui.layer.msg(res.message,{time:1000});
+                            location.href='/loginAdmin';
 
-                }else {
-                    layui.layer.msg(res.message,{icon:2},{time:1000},function(){
-                        layer.close(); //再执行关闭
-                        location.reload();
-                    });
+                        }else {
+                            layui.layer.msg(res.message,{icon:2},{time:1000},function(){
+                                layer.close(); //再执行关闭
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+
+            });
+        }else {
+            $.ajax({
+                type: "get",
+                url: "/editUser",
+                headers: {
+                    'Authorization':  localStorage.getItem("token") // 在请求头中添加token
+                },
+                data:({
+                    id:id,
+                    name:username,
+                    password:password
+                }),
+                success: function (res) {
+                    if(res.code === 200) {
+                        layui.layer.msg(res.message,{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+
+                    }else {
+                        layui.layer.msg(res.message,{icon:2},{time:1000},function(){
+                            layer.close(); //再执行关闭
+                            location.reload();
+                        });
+                    }
                 }
-            }
-        })
+            })
+        }
+
+
     }
 
 

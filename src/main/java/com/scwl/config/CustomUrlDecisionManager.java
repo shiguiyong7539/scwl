@@ -53,14 +53,17 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
 			Object principal = authentication.getPrincipal();
 			Gson gson = new Gson();
 			String json = gson.toJson(principal);
-			String roles = JSONPath.read(json,"roles").toString();
-			Type listType = new TypeToken<List<Role>>() {}.getType();
-			List<Role> roleList = gson.fromJson(roles, listType);
-			for (Role role : roleList) {
-				if(needRole.equals(role.getName())){
-					return;
+			if(json.contains("roles")){
+				String roles = JSONPath.read(json,"roles").toString();
+				Type listType = new TypeToken<List<Role>>() {}.getType();
+				List<Role> roleList = gson.fromJson(roles, listType);
+				for (Role role : roleList) {
+					if(needRole.equals(role.getName())){
+						return;
+					}
 				}
 			}
+
 
 
 

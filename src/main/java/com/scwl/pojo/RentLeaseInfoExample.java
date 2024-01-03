@@ -349,6 +349,66 @@ public class RentLeaseInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andRentAcreageIsNull() {
+            addCriterion("rent_acreage is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageIsNotNull() {
+            addCriterion("rent_acreage is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageEqualTo(Double value) {
+            addCriterion("rent_acreage =", value, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageNotEqualTo(Double value) {
+            addCriterion("rent_acreage <>", value, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageGreaterThan(Double value) {
+            addCriterion("rent_acreage >", value, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageGreaterThanOrEqualTo(Double value) {
+            addCriterion("rent_acreage >=", value, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageLessThan(Double value) {
+            addCriterion("rent_acreage <", value, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageLessThanOrEqualTo(Double value) {
+            addCriterion("rent_acreage <=", value, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageIn(List<Double> values) {
+            addCriterion("rent_acreage in", values, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageNotIn(List<Double> values) {
+            addCriterion("rent_acreage not in", values, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageBetween(Double value1, Double value2) {
+            addCriterion("rent_acreage between", value1, value2, "rentAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andRentAcreageNotBetween(Double value1, Double value2) {
+            addCriterion("rent_acreage not between", value1, value2, "rentAcreage");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;

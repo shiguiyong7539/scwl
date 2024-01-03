@@ -1,10 +1,12 @@
 package com.scwl.service;
 
 import com.scwl.pojo.ManageState;
+import com.scwl.pojo.RentBill;
 import com.scwl.pojo.ResBean;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 public interface ManageStateService {
 
@@ -14,4 +16,5 @@ public interface ManageStateService {
  ResBean deleteState(String ids);
  ResBean getManageStateByCenter();
  ResBean getTotalManage();
+ void deductArrears(RentBill  bill, BigDecimal money);
 }

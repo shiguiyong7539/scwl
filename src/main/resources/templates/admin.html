@@ -59,12 +59,7 @@
     <script type="text/javascript" src="js/plugins/elfinder.min.js"></script>
     <script type="text/javascript" src="js/layui.js"></script>
 
-
-<!--    <script type="text/javascript" src="js/custom.js"></script>-->
-
-<!--    <script type="text/javascript" src="js/charts/chart.js"></script>-->
-
-    <!-- Shared on MafiaShare.net  --><!-- Shared on MafiaShare.net  --></head>
+</head>
 
 <body>
 
@@ -271,28 +266,6 @@
         initData();
     })
 
-    function getOaToken() {
-        var token = localStorage.getItem("token");
-        if(token){
-            initData();
-        }else {
-            $.ajax({
-                type: "get",
-                url: "/getOaToken",
-                success: function (res) {
-                    if(res.code === 200) {
-                        localStorage.setItem('token', 'Bearer '+res.message);
-                        initData();
-                    }else {
-                        layui.layer.msg(res.message,{time:1000},function(){
-                            layer.close(); //再执行关闭
-                        });
-                    }
-                }
-            })
-        }
-    }
-
     function initData() {
         var token = localStorage.getItem("token");
         if(token){
@@ -312,14 +285,13 @@
                     }else {
                         layui.layer.msg(res.message,{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
+                            location.href="/loginAdmin";
                         });
                     }
                 },
                 error:function (res) {
                     layui.layer.msg(res.message,{time:1000},function(){
                         layer.close(); //再执行关闭
-                        location.reload();
                     });
                 }
             })

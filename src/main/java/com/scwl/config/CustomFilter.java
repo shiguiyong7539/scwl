@@ -52,9 +52,9 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
 			}
 		}
 		//没匹配的url默认登录可访问
-		if(method.equals("GET")){
-			return SecurityConfig.createList("ROLE_LOGIN");
-		}
+//		if(method.equals("GET")){
+//			return SecurityConfig.createList("ROLE_LOGIN");
+//		}
 		return SecurityConfig.createList("ROLE_");
 	}
 

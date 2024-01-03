@@ -88,7 +88,14 @@
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
             </ul>
         </li>
-
+        <li class="charts"><a href="#" title="" onclick="toggle('asset')" class="exp"><span>租金管理</span></a>
+            <ul class="sub ul_hidden" id="asset">
+                <li><a href="#" title="" onclick="assetList()">资产列表</a></li>
+                <li><a href="#" title="" onclick="lesseList()">租户列表</a></li>
+                <li><a href="#" title="" onclick="leaseInfolist()">租约列表</a></li>
+                <li><a href="#" title="" onclick="rentList()">租金收入</a></li>
+            </ul>
+        </li>
         <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
             <ul class="sub ul_hidden" id="taskManage">
                 <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
@@ -228,7 +235,7 @@
                     </form>
                 </div>
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>用户列表</h6>
-                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" id="myUserBtn" value="添加用户" class="redB"></div>
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit"  onclick="addUserHtml()" value="添加用户" class="redB"></div>
                     <div class="formAddEmp"><input type="submit" onclick="addUserRole()" value="添加角色" class="redB"></div></div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
@@ -251,39 +258,7 @@
                 <span id="pagefoot"></span></span>
             <div class="clear"></div>
         </div>
-    <!-- 弹窗 -->
-    <div id="myUserModal" class="modal">
 
-        <!-- 弹窗内容 -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>用户信息</h2>
-            </div>
-            <div class="modal-body">
-                <div class="formRow">
-                    昵称：
-                    <div class="formRight"><input type="text" class="validate[required]"  id="add_name"></div><div class="clear"></div>
-                </div>
-                <div class="formRow">
-                    电话：
-                    <div class="formRight"><input type="text" class="validate[required]"  id="add_phone"></div><div class="clear"></div>
-                </div>
-
-                <div class="formRow">
-                    密码：
-                    <div class="formRight"><input type="text" class="validate[required]"  id="add_password"></div><div class="clear"></div>
-                </div>
-
-
-                <div><button style="margin-left:20%;background: green;color: white;" onclick="addUser()">提交</button></div>
-            </div>
-            <div class="modal-footer">
-                <h3></h3>
-            </div>
-        </div>
-
-    </div>
 
 </div>
     <!-- Footer line -->
@@ -295,6 +270,7 @@
     <div class="clear"></div>
 <script type="text/javascript">
     $(function () {
+        toggle('myInfo')
         initData();
         userList(1);
     } );
@@ -356,6 +332,18 @@
     function authority() {
         location.href="/authority";
     }
+    function assetList() {
+        location.href="/assetList";
+    }
+    function lesseList() {
+        location.href="/lesseList";
+    }
+    function leaseInfolist() {
+        location.href="/leaseInfolist";
+    }
+    function rentList() {
+        location.href="/rentList";
+    }
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
@@ -382,14 +370,13 @@
                     }else {
                         layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
+                            location.href="/loginAdmin";
                         });
                     }
                 },
                 error:function (res) {
                     layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                         layer.close(); //再执行关闭
-                        location.reload();
                     });
                 }
             })
@@ -494,32 +481,6 @@
       }
   }
 
-// 获取弹窗
-    var modal = document.getElementById('myUserModal');
-
-    // 打开弹窗的按钮对象
-    var btn = document.getElementById("myUserBtn");
-
-    // 获取 <span> 元素，用于关闭弹窗 that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // 点击按钮打开弹窗
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // 点击 <span> (x), 关闭弹窗
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // 在用户点击其他地方时，关闭弹窗
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-
     function addUser() {
         var name = document.getElementById("add_name").value;
         var phone = document.getElementById("add_phone").value;
@@ -622,6 +583,31 @@
                     });
                 }
             }
+        })
+    }
+
+    function addUserHtml() {
+        var html_info=" <div class=\"formRow4\" style='text-align: center'>\n" +
+            "                        <span class='formLeft'>名称：</span>\n" +
+            "                        <div class=\"formRight\"><input  class=\"validate[required]\"  id=\"add_name\"><span></span></div><div class=\"clear\"></div>\n" +
+            "                    </div>\n" +
+            "                    <div class=\"formRow4\" style='text-align: center'>\n" +
+            "                         <span class='formLeft'>电话： </span>\n" +
+            "                        <div class=\"formRight\"><input  type=\"number\" step=\"0.01\" placeholder=\"请只输入数字\"   class=\"validate[required]\"  id=\"add_phone\"></div><div class=\"clear\"></div>\n" +
+            "                    </div>\n" +
+            "                    <div class=\"formRow4\" style='text-align: center'>\n" +
+            "                       <span class='formLeft'> 密码：</span>\n" +
+            "                        <div class=\"formRight\"><input  class=\"validate[required]\"  id=\"add_phone\"><span></span></div><div class=\"clear\"></div>\n" +
+            "                    </div>\n" +
+            "                    <div><button style=\"margin-left:45%;background: green;color: white;\" onclick=\"addUser()\">提交</button></div>";
+
+        layui.layer.open({
+            type:1,
+            title:"添加用户",
+            skin:"open_css",
+            area:['40%','50%'],
+            // shadeClose: true, //点击弹出层外空白处
+            content:html_info
         })
     }
 

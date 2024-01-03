@@ -358,6 +358,126 @@ public class RentAssetExample {
             return (Criteria) this;
         }
 
+        public Criteria andUseAcreageIsNull() {
+            addCriterion("use_acreage is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageIsNotNull() {
+            addCriterion("use_acreage is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageEqualTo(Double value) {
+            addCriterion("use_acreage =", value, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNotEqualTo(Double value) {
+            addCriterion("use_acreage <>", value, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageGreaterThan(Double value) {
+            addCriterion("use_acreage >", value, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageGreaterThanOrEqualTo(Double value) {
+            addCriterion("use_acreage >=", value, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageLessThan(Double value) {
+            addCriterion("use_acreage <", value, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageLessThanOrEqualTo(Double value) {
+            addCriterion("use_acreage <=", value, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageIn(List<Double> values) {
+            addCriterion("use_acreage in", values, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNotIn(List<Double> values) {
+            addCriterion("use_acreage not in", values, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageBetween(Double value1, Double value2) {
+            addCriterion("use_acreage between", value1, value2, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNotBetween(Double value1, Double value2) {
+            addCriterion("use_acreage not between", value1, value2, "useAcreage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumIsNull() {
+            addCriterion("use_acreage_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumIsNotNull() {
+            addCriterion("use_acreage_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumEqualTo(Double value) {
+            addCriterion("use_acreage_num =", value, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumNotEqualTo(Double value) {
+            addCriterion("use_acreage_num <>", value, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumGreaterThan(Double value) {
+            addCriterion("use_acreage_num >", value, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumGreaterThanOrEqualTo(Double value) {
+            addCriterion("use_acreage_num >=", value, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumLessThan(Double value) {
+            addCriterion("use_acreage_num <", value, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumLessThanOrEqualTo(Double value) {
+            addCriterion("use_acreage_num <=", value, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumIn(List<Double> values) {
+            addCriterion("use_acreage_num in", values, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumNotIn(List<Double> values) {
+            addCriterion("use_acreage_num not in", values, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumBetween(Double value1, Double value2) {
+            addCriterion("use_acreage_num between", value1, value2, "useAcreageNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseAcreageNumNotBetween(Double value1, Double value2) {
+            addCriterion("use_acreage_num not between", value1, value2, "useAcreageNum");
+            return (Criteria) this;
+        }
+
         public Criteria andAddressIsNull() {
             addCriterion("address is null");
             return (Criteria) this;

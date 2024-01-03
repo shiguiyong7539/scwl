@@ -153,4 +153,22 @@ public class JwtTokenUtil {
 	}
 
 
+	/**
+	 * 从token中获取荷载
+	 * @param token
+	 * @return
+	 */
+	public Claims tokenIsExpired(String token) {
+		Claims claims = null;
+		try {
+			claims = Jwts.parser()
+					.setSigningKey(secret)
+					.parseClaimsJws(token)
+					.getBody();
+		} catch (Exception e) {
+			return  null;
+		}
+		return claims;
+	}
+
 }

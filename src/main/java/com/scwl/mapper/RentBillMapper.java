@@ -83,4 +83,5 @@ public interface RentBillMapper {
     RentBill getAmountAndAmountOwedLastMonth();
     RentBill getAmountAndAmountOwed();
     RentBill getLastMonthBill(Integer infoId,Integer month,Integer year);
+    RentBill getAmountOwed(Integer infoId);
 }

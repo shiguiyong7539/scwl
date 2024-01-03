@@ -1,7 +1,7 @@
 ﻿ $(window).load(function(){$(".loading").fadeOut()})
 $(function () {
+    initData();
     //echarts_1();
-    getOaToken();
 function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
@@ -1794,7 +1794,7 @@ function echarts_33(period) {
                     $("#fb06Date").html(res.obj.lastDate);
                     $("#fb08Date").html(res.obj.lastDate);
                     var moneyData;
-                    if(period=='月'){
+                    if(period=='当月'||period=='上月'){
                         moneyData = res.obj.month;
                     }else {
                         moneyData = res.obj.year;
@@ -2261,7 +2261,7 @@ function currentDate(type) {
         // 修改class
         element2.className = "infobtnChoose";
         element.className = "infobtn";
-        echarts_33('年');
+        echarts_33('当年');
     })
     $("#total_manage").on("click", function() {
         // 获取元素
@@ -2288,35 +2288,20 @@ function currentDate(type) {
         var selected = $(this).val();
         echarts_5(selected);
     });
+    $("#monthType").on("change", function() {
+        // 在这里编写你的函数逻辑
+        var selected = $(this).val();
+        echarts_33(selected);
+    });
 
 
-function getOaToken() {
-        var token = localStorage.getItem("token");
-        if(token){
-            initData();
-        }else {
-            $.ajax({
-                type: "get",
-                url: "/getOaToken",
-                success: function (res) {
-                    if(res.code === 200) {
-                        localStorage.setItem('token', 'Bearer '+res.message);
-                        initData();
-                    }else {
-                        layui.layer.msg(res.message,{time:1000},function(){
-                            layer.close(); //再执行关闭
-                        });
-                    }
-                }
-            })
-        }
-    }
+
 
 function initData() {
     echarts_4();
     echarts_5(1);
     echarts_31();
-    echarts_33('月');
+    echarts_33('当月');
     getTaskTable();
     getContractTable();
     getRiskTable();

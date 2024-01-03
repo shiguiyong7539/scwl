@@ -26,6 +26,13 @@ public class RentLeaseInfo {
     @ExcelIgnore
     private Integer assetId;
 
+
+    /**
+     * 租用面积
+     */
+    @ExcelProperty("租用面积")
+    private Double rentAcreage;
+
     /**
      * 租约状态（1.租赁中，2，正常完了不在续约，3，提前退租）
      */
@@ -235,5 +242,13 @@ public class RentLeaseInfo {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public Double getRentAcreage() {
+        return rentAcreage;
+    }
+
+    public void setRentAcreage(Double rentAcreage) {
+        this.rentAcreage = rentAcreage;
     }
 }

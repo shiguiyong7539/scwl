@@ -29,6 +29,11 @@ public class ManageState {
     private BigDecimal rentArrears;
 
     /**
+     * 当前欠收总额
+     */
+    private BigDecimal currentTotal;
+
+    /**
      * 出租率
      */
     private BigDecimal letRate;
@@ -79,6 +84,14 @@ public class ManageState {
 
     public void setRentArrears(BigDecimal rentArrears) {
         this.rentArrears = rentArrears;
+    }
+
+    public BigDecimal getCurrentTotal() {
+        return currentTotal;
+    }
+
+    public void setCurrentTotal(BigDecimal currentTotal) {
+        this.currentTotal = currentTotal;
     }
 
     public BigDecimal getLetRate() {

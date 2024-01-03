@@ -82,4 +82,7 @@ public interface RentLeaseInfoMapper {
     List<RentLeaseInfo> getCurrentInfo();
 
     List<RentLeaseInfo> getExpire();
+
+    RentLeaseInfo getLastTotalAcreage();
+    RentLeaseInfo getTotalAcreage();
 }

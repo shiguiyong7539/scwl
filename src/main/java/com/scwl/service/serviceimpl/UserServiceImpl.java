@@ -216,7 +216,7 @@ public class UserServiceImpl implements UserService {
         if(null!=user.getName()&&""!=user.getName()){
             oldUser.setName(user.getName());
         }
-        if(null!=user.getPhone()&&""!=user.getPhone()){
+        if(null!=user.getPhone()&&!oldUser.getPhone().equals(user.getPhone())){
             oldUser.setPhone(user.getPhone());
             oldUser.setUsername(user.getPhone());
             oldUser.setEncodePhone(MD5Util.encryptSHA(user.getPhone()));

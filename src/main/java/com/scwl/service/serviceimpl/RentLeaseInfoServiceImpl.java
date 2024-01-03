@@ -3,10 +3,7 @@ package com.scwl.service.serviceimpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
-import com.scwl.mapper.RentAssetMapper;
-import com.scwl.mapper.RentBillMapper;
-import com.scwl.mapper.RentLeaseInfoMapper;
-import com.scwl.mapper.RentLesseeMapper;
+import com.scwl.mapper.*;
 import com.scwl.pojo.*;
 import com.scwl.service.LogService;
 import com.scwl.service.RentLeaseInfoService;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -36,6 +34,9 @@ public class RentLeaseInfoServiceImpl implements RentLeaseInfoService {
     private RentAssetMapper rentAssetMapper;
     @Autowired
     private RentLesseeMapper rentLesseeMapper;
+
+    @Autowired
+    private ManageStateMapper manageStateMapper;
 
     @Autowired
     private RentBillMapper billMapper;
@@ -80,7 +81,15 @@ public class RentLeaseInfoServiceImpl implements RentLeaseInfoService {
             rentLeaseInfo.setPayDate(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
             rentLeaseInfo.setIsDelete(0);
             rentLeaseInfoMapper.insert(rentLeaseInfo);
-            rentAsset.setStatus(2);
+            //更新当月出租率
+            updateManage();
+            BigDecimal subtract = new BigDecimal(rentAsset.getUseAcreageNum()).subtract(new BigDecimal(rentLeaseInfo.getRentAcreage()));
+            rentAsset.setUseAcreageNum(subtract.doubleValue());
+            if(subtract.compareTo(new BigDecimal(0))==0){
+                rentAsset.setStatus(3);
+            }else {
+                rentAsset.setStatus(2);
+            }
             rentAssetMapper.updateByPrimaryKey(rentAsset);
             rentLessee.setAccount(rentLessee.getAccount().subtract(rentLeaseInfo.getLeaseUnitPrice()).subtract(rentLeaseInfo.getCashPledge()));
             rentLessee.setPledgeAmount(rentLessee.getPledgeAmount().add(rentLeaseInfo.getCashPledge()));
@@ -238,6 +247,33 @@ public class RentLeaseInfoServiceImpl implements RentLeaseInfoService {
            }
         }
         return  ResBean.success("退租成功");
+
+    }
+
+    public void updateManage(){
+        //获取当前资产可租用总面积和实时剩余的可租用总面积
+        RentAsset asset = rentAssetMapper.getCurrentAcreageRate();
+        BigDecimal useAcreageNum = new BigDecimal(asset.getUseAcreageNum());
+        BigDecimal useAcreage = new BigDecimal(asset.getUseAcreage());
+        BigDecimal subtract = useAcreage.subtract(useAcreageNum);
+        BigDecimal letRate = subtract.divide(useAcreage, 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
+        //获取当月资金管理账单
+        ManageState manage = manageStateMapper.getCurrentMonth("资金管理");
+        BigDecimal zero = new BigDecimal(0);
+        manage.setLetRate(letRate);
+        if(null==manage.getId()){
+            manage.setName("资金管理");
+            manage.setType("资金管理");
+            manage.setRentIncome(zero);
+            manage.setRentArrears(zero);
+            manage.setCurrentTotal(zero);
+            manage.setPeriodicTime(new Date());
+            manageStateMapper.insert(manage);
+        }else {
+            manageStateMapper.updateByPrimaryKey(manage);
+        }
+
+
 
     }
 }

@@ -88,7 +88,14 @@
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
             </ul>
         </li>
-
+        <li class="charts"><a href="#" title="" onclick="toggle('asset')" class="exp"><span>租金管理</span></a>
+            <ul class="sub ul_hidden" id="asset">
+                <li><a href="#" title="" onclick="assetList()">资产列表</a></li>
+                <li><a href="#" title="" onclick="lesseList()">租户列表</a></li>
+                <li><a href="#" title="" onclick="leaseInfolist()">租约列表</a></li>
+                <li><a href="#" title="" onclick="rentList()">租金收入</a></li>
+            </ul>
+        </li>
         <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
             <ul class="sub ul_hidden" id="taskManage">
                 <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
@@ -387,6 +394,18 @@
         function authority() {
             location.href="/authority";
         }
+        function assetList() {
+            location.href="/assetList";
+        }
+        function lesseList() {
+            location.href="/lesseList";
+        }
+        function leaseInfolist() {
+            location.href="/leaseInfolist";
+        }
+        function rentList() {
+            location.href="/rentList";
+        }
         function toggle(id) {
             var x = document.getElementById(id);
             if (x.className === "sub ul_hidden") {
@@ -413,14 +432,13 @@
                         }else {
                             layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                                 layer.close(); //再执行关闭
-                                location.reload();
+                                location.href="/loginAdmin";
                             });
                         }
                     },
                     error:function (res) {
                         layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
                         });
                     }
                 })
@@ -459,19 +477,21 @@
                                 str_info+='<td align="center">'+data1[i].id+'</td>';
                                 str_info+='<td align="center">'+data1[i].type+'</td>';
                                 str_info+='<td align="center">'+data1[i].name+'</td>';
-                                str_info+='<td align="center"><input id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',1)" value="'+isNull(data1[i].rentIncome)+'"></td>';
-                                str_info+='<td align="center"><input id="rentArrears_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',1)" value="'+isNull(data1[i].rentArrears)+'"></td>';
-                                str_info+='<td align="center"><input id="letRate_input_'+data1[i].id+'"  onchange="updateState('+data1[i].id+',1)" style="text-align: right" value="'+isNull(data1[i].letRate)+'">%</td>';
-                                str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
+                                str_info+='<td align="center">'+(data1[i].rentIncome==null?"":data1[i].rentIncome)+'</td>';
+                                str_info+='<td align="center">'+(data1[i].rentArrears==null?"":data1[i].rentArrears)+'</td>';
+                                str_info+='<td align="center">'+(data1[i].currentTotal==null?"":data1[i].currentTotal)+'</td>';
+                                str_info+='<td align="center">'+(data1[i].letRate==null?"":data1[i].letRate)+'%</td>';
+                                str_info+='<td align="center">'+dateFormat(3,data1[i].periodicTime)+'</td></tr>';
 
                                 str_thead='<tr><td width="20"><input type="checkbox" onclick="selectAllState()"></td>\n' +
                                     '                         <td width="20">编号</td>\n' +
                                     '                         <td width="80">经营类型</td>\n' +
                                     '                         <td width="80">项目名称</td>\n' +
                                     '                         <td width="80">租金收入</td>\n' +
-                                    '                         <td width="80">欠缴租金</td>\n' +
+                                    '                         <td width="80">当月欠缴租金</td>\n' +
+                                    '                         <td width="80">总欠缴租金</td>\n' +
                                     '                         <td width="80">出租率</td>\n' +
-                                    '                         <td width="80">日期</td>\n' +
+                                    '                         <td width="80">月份</td>\n' +
                                     '                         </tr>';
                             }else {
                                 str_info+='<tr><td align="center"><input class="checkSta" type="checkbox" value="'+data1[i].id+'"></td>';
@@ -479,13 +499,13 @@
                                 str_info+='<td align="center">'+data1[i].type+'</td>';
                                 str_info+='<td align="center">'+data1[i].name+'</td>';
                                 str_info+='<td align="center"><input style="text-align: center" id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',2)" value="'+isNull(data1[i].rentIncome)+'"></td>';
-                                str_info+='<td align="center">'+dateFormat(1,data1[i].periodicTime)+'</td></tr>';
+                                str_info+='<td align="center">'+dateFormat(3,data1[i].periodicTime)+'</td></tr>';
                                 str_thead='<tr><td width="20"><input type="checkbox" onclick="selectAllState()"></td>\n' +
                                     '                         <td width="20">编号</td>\n' +
                                     '                         <td width="80">经营类型</td>\n' +
                                     '                         <td width="80">项目名称</td>\n' +
                                     '                         <td width="80">业务收入</td>\n' +
-                                    '                         <td width="80">日期</td>\n' +
+                                    '                         <td width="80">月份</td>\n' +
                                     '                         </tr>';
                             }
                         }
@@ -546,12 +566,15 @@
             var seconds = date.getSeconds();
             // 将日期和时间组件组合成字符串
             var formatteddate = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) ;
+            var ym = year + '-' + (month>=10?month:"0"+month);
             var formattedTime = year + '-' + (month>=10?month:"0"+month) + '-' + (day>=10?day:"0"+day) + ' ' + (hours>=10?hours:"0"+hours) + ':'
                 + (minutes>=10?minutes:"0"+minutes) + ':' + (seconds>=10?seconds:"0"+seconds);
             if(type==1){
                 return formatteddate;
-            }else {
+            }else if(type==2){
                 return formattedTime;
+            }else {
+                return ym;
             }
 
         }

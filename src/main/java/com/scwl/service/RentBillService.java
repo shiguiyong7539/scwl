@@ -13,6 +13,7 @@ public interface RentBillService {
     ResBean addBill(RentBill rentBill);
     ResBean editBill(RentBill rentBill);
     ResBean deleteBill(String ids);
+    ResBean deductArrears(String ids);
     ResBean generateBill();
     ResBean auToMonthBill();
     List<Map<String,Object>> exportExcel();

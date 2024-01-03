@@ -323,9 +323,10 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getBillList" parameterType="com.scwl.vo.RentBillVo" resultMap="BillAndAssetAndLesse">
-    select b.*,a.asset_name,a.acreage,a.address as assetAddress,a.status as assetStatus,
+    select b.*,a.asset_name,i.rent_acreage as acreage,a.address as assetAddress,a.status as assetStatus,
     l.lessee_name,l.phone,l.sex,l.identity_card,l.address as personAddress
     from rent_bill b
+    join rent_lease_info i
     join rent_asset a on a.id = b.asset_id
     join rent_lessee l on l.id = b.lessee_id
     <where>
@@ -353,12 +354,15 @@
   select * from rent_bill where lessee_id = #{lesseeId}  and status = 2  order by add_time
   </select>
   <select id="getAmountAndAmountOwedLastMonth"  resultMap="BaseResultMap">
-    select sum(amount),sum(amount_owed) from rent_bill  WHERE MONTH(add_time) = MONTH(CURDATE() - INTERVAL 1 MONTH)) AND YEAR(add_time) = YEAR(CURDATE() - INTERVAL 1 MONTH));
+    select IFNULL(SUM(amount), 0),IFNULL(SUM(amount_owed),0) from rent_bill  WHERE MONTH(add_time) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(add_time) = YEAR(CURDATE() - INTERVAL 1 MONTH);
   </select>
   <select id="getAmountAndAmountOwed"  resultMap="BaseResultMap">
-    select sum(amount),sum(amount_owed) from rent_bill  WHERE MONTH(add_time) = MONTH(CURDATE()) AND YEAR(add_time) = YEAR(CURDATE());
+    select IFNULL(SUM(amount), 0),IFNULL(SUM(amount_owed),0) from rent_bill  WHERE MONTH(add_time) = MONTH(CURDATE()) AND YEAR(add_time) = YEAR(CURDATE());
   </select>
   <select id="getLastMonthBill" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
     select * from rent_bill  WHERE  lease_info_id = #{infoId} and MONTH(add_time) = #{month} AND YEAR(add_time) = #{year};
+  </select>
+  <select id="getAmountOwed" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select IFNULL(SUM(amount_owed),0) from rent_bill  WHERE  lease_info_id = #{infoId}
   </select>
 </mapper>

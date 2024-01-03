@@ -88,7 +88,14 @@
                 <li><a href="#" title="" onclick="capitalposition()">资金状况</a></li>
             </ul>
         </li>
-
+        <li class="charts"><a href="#" title="" onclick="toggle('asset')" class="exp"><span>租金管理</span></a>
+            <ul class="sub ul_hidden" id="asset">
+                <li><a href="#" title="" onclick="assetList()">资产列表</a></li>
+                <li><a href="#" title="" onclick="lesseList()">租户列表</a></li>
+                <li><a href="#" title="" onclick="leaseInfolist()">租约列表</a></li>
+                <li><a href="#" title="" onclick="rentList()">租金收入</a></li>
+            </ul>
+        </li>
         <li class="charts"><a href="#" title="" onclick="toggle('taskManage')" class="exp"><span>任务管理</span></a>
             <ul class="sub ul_hidden" id="taskManage">
                 <li><a href="#" title="" onclick="tasklist('综合部')">综合部</a></li>
@@ -354,6 +361,18 @@
     function authority() {
         location.href="/authority";
     }
+    function assetList() {
+        location.href="/assetList";
+    }
+    function lesseList() {
+        location.href="/lesseList";
+    }
+    function leaseInfolist() {
+        location.href="/leaseInfolist";
+    }
+    function rentList() {
+        location.href="/rentList";
+    }
     function toggle(id) {
         var x = document.getElementById(id);
         if (x.className === "sub ul_hidden") {
@@ -381,14 +400,13 @@
                     }else {
                         layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                             layer.close(); //再执行关闭
-                            location.reload();
+                            location.href="/loginAdmin";
                         });
                     }
                 },
                 error:function (res) {
                     layui.layer.msg(res.message,{icon:2},{time:1000},function(){
                         layer.close(); //再执行关闭
-                        location.reload();
                     });
                 }
             })

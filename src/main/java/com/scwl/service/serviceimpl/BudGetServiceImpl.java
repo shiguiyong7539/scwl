@@ -89,12 +89,14 @@ public class BudGetServiceImpl implements BudGetService {
 
     @Override
     public ResBean getBudgetByCenter(String condition) {
+        int num = 0;
         HashMap<String, Object> map = new HashMap<>();
         BigDecimal planTotal=new BigDecimal(0);
         BigDecimal realTotal=new BigDecimal(0);
-        if(condition.equals("月")){
-            //当月月度资金/当月资金实际使用情况
-            List<Budget> budgetByMonth = budgetMapper.getBudgetByMonth();
+        if(condition.contains("月")){
+            //当月月度资金/当月资金实际使用情况.
+            if(condition.equals("上月")){num = 1;}
+            List<Budget> budgetByMonth = budgetMapper.getBudgetByMonth(num);
             for (Budget budget : budgetByMonth) {
                 budget.setMonthFunds(budget.getMonthFunds().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
                 budget.setRealFunds(budget.getRealFunds().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
@@ -106,7 +108,9 @@ public class BudGetServiceImpl implements BudGetService {
 
         }else {
          //当年月度资金/当年资金实际使用情况
-            List<Budget> budgetByYear = budgetMapper.getBudgetByYear();
+
+            if(condition.equals("去年")){num = 1;}
+            List<Budget> budgetByYear = budgetMapper.getBudgetByYear(num);
             for (Budget budget : budgetByYear) {
                 budget.setMonthFunds(budget.getMonthFunds().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
                 budget.setRealFunds(budget.getRealFunds().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));

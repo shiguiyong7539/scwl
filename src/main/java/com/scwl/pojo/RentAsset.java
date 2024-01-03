@@ -21,11 +21,26 @@ public class RentAsset {
     private String assetName;
 
     /**
-     * 面积(㎡)
+     * 总面积(㎡)
      */
-    @ExcelProperty("面积(㎡)")
+    @ExcelProperty("总面积(㎡)")
     @ColumnWidth(20)
     private Double acreage;
+
+
+    /**
+     * 可用面积
+     */
+    @ExcelProperty("总可用面积(㎡)")
+    @ColumnWidth(20)
+    private Double useAcreage;
+
+    /**
+     * 实时可用面积
+     */
+    @ExcelProperty("实时可用面积(㎡)")
+    @ColumnWidth(20)
+    private Double useAcreageNum;
 
     /**
      * 资产地址
@@ -123,5 +138,21 @@ public class RentAsset {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public Double getUseAcreage() {
+        return useAcreage;
+    }
+
+    public void setUseAcreage(Double useAcreage) {
+        this.useAcreage = useAcreage;
+    }
+
+    public Double getUseAcreageNum() {
+        return useAcreageNum;
+    }
+
+    public void setUseAcreageNum(Double useAcreageNum) {
+        this.useAcreageNum = useAcreageNum;
     }
 }

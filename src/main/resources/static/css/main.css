@@ -699,7 +699,7 @@ input[type=submit], input[type=reset], input[type=button], button { padding: 7px
 
 /* General widgets styles */
 
-.widget { background: #f9f9f9; border: 1px solid #cdcdcd; margin-top: 32px; clear: both; }
+.widget { background: #f9f9f9; border: 1px solid #cdcdcd; margin-top: 32px; clear: both;overflow-x: auto;white-space: nowrap; }
 .widget .title { height: 36px; background: #efefef url(../images/backgrounds/titleBg.png) repeat-x; border-bottom: 1px solid #cdcdcd; }
 .widget .title .titleIcon { float: left; padding: 11px 11px; border-right: 1px solid #D5D5D5; }
 

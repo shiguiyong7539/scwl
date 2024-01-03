@@ -77,6 +77,6 @@ public interface RentAssetMapper {
 
     RentAsset getByName(String name);
 
-    int getTotal();
-    int getRent();
+    RentAsset getCurrentAcreageRate();
+
 }
