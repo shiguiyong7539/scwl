@@ -364,10 +364,10 @@
      ORDER BY DATE_FORMAT(periodic_time,'%Y-%m')
   </select>
   <select id="getLastMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select * from manage_state where type = #{type} and MONTH(periodic_time) = MONTH(CURDATE() - INTERVAL 1 MONTH)) AND YEAR(periodic_time) = YEAR(CURDATE() - INTERVAL 1 MONTH));
+    select * from manage_state where type = #{type} and MONTH(periodic_time) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(periodic_time) = YEAR(CURDATE() - INTERVAL 1 MONTH);
   </select>
   <select id="getLastTwoMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select * from manage_state where type = #{type} and MONTH(periodic_time) = MONTH(CURDATE() - INTERVAL 2 MONTH)) AND YEAR(periodic_time) = YEAR(CURDATE() - INTERVAL 2 MONTH));
+    select * from manage_state where type = #{type} and MONTH(periodic_time) = MONTH(CURDATE() - INTERVAL 2 MONTH) AND YEAR(periodic_time) = YEAR(CURDATE() - INTERVAL 2 MONTH);
   </select>
   <select id="getCurrentMonth" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from manage_state where type = #{type} and MONTH(periodic_time) = MONTH(CURDATE()) AND YEAR(periodic_time) = YEAR(CURDATE());
