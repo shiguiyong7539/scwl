@@ -2301,7 +2301,7 @@ function initData() {
     echarts_4();
     echarts_5(1);
     echarts_31();
-    echarts_33('当月');
+    echarts_33('上月');
     getTaskTable();
     getContractTable();
     getRiskTable();

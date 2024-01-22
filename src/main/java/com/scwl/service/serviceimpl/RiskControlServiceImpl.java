@@ -75,7 +75,7 @@ public class RiskControlServiceImpl implements RiskControlService {
         }
         List<SupervisionRectify> supervisionRectifies = supervisionRectifyMapper.selectByExample(example);
         PageInfo<SupervisionRectify> pageInfo = new PageInfo<>(supervisionRectifies);
-        return ResBean.success("success",pageInfo);
+        return ResBean.success("查询成功",pageInfo);
     }
 
     @Override

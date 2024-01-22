@@ -230,7 +230,7 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
-                <div class="layui-row">
+                <div class="layui-row" style="margin-bottom: 1%;">
                     <form class="layui-col-md12 x-so" id="formId">
                         名称: <input  style=" width: 10%;" type="text" name="lesseeName"  placeholder="名称" autocomplete="off" class="layui-input">
                         地址:<input  style=" width: 10%;" type="text" name="address"  placeholder="地址" autocomplete="off" class="layui-input">
@@ -251,16 +251,16 @@
                         <div id="sousuo" class="sousuo" onclick="getLessetList(1)" >搜索</div>
                     </form>
                 </div>
-                <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>租户信息</h6>
+                <div class="title" style="margin-bottom: 2%;"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>租户信息</h6>
                     <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="addRentLesse()" value="添加租户" class="redB"></div>
                     <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="deleteLesse()" value="删除租户" class="redB"></div>
                     <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="prestore()" value="预存租金" class="redB"></div>
-<!--                    <div class="formAddEmp">-->
-<!--                        <form  enctype="multipart/form-data">-->
-<!--                            <input type="file" name="lesseFile" id="lesseFile" accept=".xls,.xlsx">-->
-<!--                            <button style="float: left"  onclick="uploadFile()" class="redB" >上传</button>-->
-<!--                        </form>-->
-<!--                    </div>-->
+<!--                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="exportLesse()" value="导出租户" class="redB"></div>-->
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="getUploadTemp()"><input type="submit" value="下载导入模版" class="redB"></a></div>
+
+                    <div class="formAddEmp"><input type="submit" onclick="uploadFile()" value="导入租户" class="redB">
+                        <input type="file" name="lesseFile" id="lesseFile" accept=".xls,.xlsx">
+                    </div>
                 </div>
 
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
@@ -829,32 +829,58 @@
         }
         function uploadFile() {
             var fileInput = document.getElementById('lesseFile');
-            var file = fileInput.files[0];
-            var formData = new FormData();
-            formData.append('lesseFile', file);
+            if(fileInput.files.length ==0){
+                layui.layer.msg("您还没选择上传的文件",{icon:2},{time:2000});
+                return;
+            }else {
+                var file = fileInput.files[0];
+                var formData = new FormData();
+                formData.append('lesseFile', file);
+                $.ajax({
+                    type: "post",
+                    url: "/rentLessee/uploadLesseeFile",
+                    headers: {
+                        'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,//这个很有必要，不然不行
+                    dataType: "json",
+                    mimeType: "multipart/form-data",
+                    success: function (res) {
+                        if (res && res.code === 200) {
+                            layui.layer.msg(res.message, {time: 1000}, function () {
+                                location.reload();
+                            });
+
+                        }
+                    }
+
+
+                })
+            }
+        }
+
+        function exportLesse() {
             $.ajax({
-                type: "post",
-                url: "/rentLessee/uploadLesseeFile",
+                type: "get",
+                url: "/rentLessee/exportLesse",
                 headers: {
                     'Authorization': localStorage.getItem("token") // 在请求头中添加token
                 },
-                data:formData,
-                contentType: false,
-                processData: false,//这个很有必要，不然不行
-                dataType: "json",
-                mimeType: "multipart/form-data",
                 success: function (res) {
-                    if(res && res.code===200){
-                        layui.layer.msg(res.message,{time:1000},function(){
-                            location.reload();
-                        });
-
+                    layui.layer.msg(res.message,{icon:1},{time:1000},function(){
+                        layer.close(); //再执行关闭
+                    });
+                    if(res.code==200){
+                        location.href="/rentLessee/exportExcel";
                     }
-                }
+                }})
 
+        }
 
-            })
-
+        function getUploadTemp() {
+            location.href="/rentLessee/exportExcelTemp";
         }
     </script>
 </body>

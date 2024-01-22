@@ -375,4 +375,7 @@
   <select id="getafter" parameterType="java.lang.Integer" resultMap="BaseResultMap">
    select * from manage_state where type = '资金管理' and MONTH(periodic_time) >= #{month} AND YEAR(periodic_time) >= #{yarn};
   </select>
+  <select id="getByMonth" parameterType="com.scwl.pojo.ManageState"  resultMap="BaseResultMap">
+    select * from manage_state where type = #{manageState.type} and name = #{manageState.name} and MONTH(periodic_time) = MONTH(#{manageState.periodicTime}) AND YEAR(periodic_time) = YEAR(#{manageState.periodicTime}) limit 1;
+  </select>
 </mapper>

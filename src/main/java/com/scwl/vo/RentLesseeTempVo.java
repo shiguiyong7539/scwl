@@ -1,4 +1,4 @@
-package com.scwl.pojo;
+package com.scwl.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
@@ -8,7 +8,7 @@ import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class RentLessee {
+public class RentLesseeTempVo {
     /**
      */
     @ExcelProperty("序号")
@@ -78,9 +78,7 @@ public class RentLessee {
     private Integer isDelete;
     /**
      */
-    @ExcelProperty("添加时间")
-    @DateTimeFormat("YYYY-MM-dd")
-    @ColumnWidth(15)
+    @ExcelIgnore
     private Date addTime;
 
     public Integer getIsDelete() {

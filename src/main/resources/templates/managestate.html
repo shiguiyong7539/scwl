@@ -477,10 +477,10 @@
                                 str_info+='<td align="center">'+data1[i].id+'</td>';
                                 str_info+='<td align="center">'+data1[i].type+'</td>';
                                 str_info+='<td align="center">'+data1[i].name+'</td>';
-                                str_info+='<td align="center">'+(data1[i].rentIncome==null?"":data1[i].rentIncome)+'</td>';
-                                str_info+='<td align="center">'+(data1[i].rentArrears==null?"":data1[i].rentArrears)+'</td>';
+                                str_info+='<td align="center"><input id="rentIncome_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',1)" value="'+isNull(data1[i].rentIncome)+'"></td>';
+                                str_info+='<td align="center"><input id="rentArrears_input_'+data1[i].id+'" onchange="updateState('+data1[i].id+',1)" value="'+isNull(data1[i].rentArrears)+'"></td>';
                                 str_info+='<td align="center">'+(data1[i].currentTotal==null?"":data1[i].currentTotal)+'</td>';
-                                str_info+='<td align="center">'+(data1[i].letRate==null?"":data1[i].letRate)+'%</td>';
+                                str_info+='<td align="center"><input id="letRate_input_'+data1[i].id+'"  onchange="updateState('+data1[i].id+',1)" style="text-align: right" value="'+isNull(data1[i].letRate)+'">%</td>';
                                 str_info+='<td align="center">'+dateFormat(3,data1[i].periodicTime)+'</td></tr>';
 
                                 str_thead='<tr><td width="20"><input type="checkbox" onclick="selectAllState()"></td>\n' +

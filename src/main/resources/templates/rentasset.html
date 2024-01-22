@@ -230,7 +230,7 @@
         <!-- Widgets -->
         <div class="widgets">
             <div class="widget">
-                <div class="layui-row">
+                <div class="layui-row" style="margin-bottom: 1%;">
                     <form class="layui-col-md12 x-so" id="formId">
                         名称: <input  style=" width: 10%;" type="text" name="assetName"  placeholder="名称" autocomplete="off" class="layui-input">
                         地址:<input  style=" width: 10%;" type="text" name="address"  placeholder="地址" autocomplete="off" class="layui-input">
@@ -249,14 +249,10 @@
                     <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="addRentAsset()" value="添加资产" class="redB"></div>
                     <div class="formAddEmp" style="float: left; margin-right: 5px;"><input type="submit" onclick="deleteAsset()" value="删除资产" class="redB"></div>
 <!--                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="exportAsset()"><input type="submit" value="导出资产" class="redB"></a></div>-->
-<!--                    <div class="formAddEmp">-->
-<!--                        <form  enctype="multipart/form-data">-->
-<!--                            <input type="file" name="assetFile" id="assetFile" accept=".xls,.xlsx">-->
-<!--                            <span id="message"></span>-->
-<!--                            <button style="float: left" onclick="uploadFile()" class="redB" >上传</button>-->
-
-<!--                        </form>-->
-<!--                    </div>-->
+                    <div class="formAddEmp" style="float: left; margin-right: 5px;"><a href="#" onclick="getUploadTemp()"><input type="submit" value="下载导入模版" class="redB"></a></div>
+                    <div class="formAddEmp"><a href="#" onclick="uploadFile()"><input type="submit" value="导入资产" class="redB"></a>
+                        <input type="file" name="assetFile" id="assetFile" accept=".xls,.xlsx">
+                    </div>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
                     <thead>
@@ -518,7 +514,9 @@
            "                        <div  class=\"formRight\"><select style='width: 165px;'  id=\"status\">\n" +
            "                            <option value=\"\"></option>\n" +
            "                            <option value=\"1\">空置中</option>\n" +
-           "                            <option value=\"2\">租赁中</option>\n" +
+           "                            <option value=\"2\">部分出租</option>\n" +
+           "                            <option value=\"3\">全部出租</option>\n" +
+           "                            <option value=\"4\">自用</option>\n" +
            "                        </select></div><div class=\"clear\"></div>\n" +
            "                    </div>\n" +
            "                    <div class=\"formRow4\" style='text-align: center'>\n" +
@@ -735,7 +733,9 @@
 
     }
 
-
+    function getUploadTemp() {
+        location.href="/asset/exportExcelTemp";
+    }
 
     function selectAll() {
         var checkboxes = document.getElementsByClassName("choose");
@@ -753,34 +753,34 @@
         var fileInput = document.getElementById('assetFile');
         var file = fileInput.files[0];
         if(fileInput.files.length ==0){
-            layui.layer.msg("您还没选择上传的文件",{icon:2},{time:2000});
+            layui.layer.msg("您还没选择上传的文件",{icon:2},{time:10000});
             return;
-        }
-        var formData = new FormData();
-        formData.append('assetFile', file);
-        $.ajax({
-            type: "post",
-            url: "/asset/uploadAssetFile",
-            headers: {
-                'Authorization': localStorage.getItem("token") // 在请求头中添加token
-            },
-            data:formData,
-            contentType: false,
-            processData: false,//这个很有必要，不然不行
-            dataType: "json",
-            mimeType: "multipart/form-data",
-            success: function (res) {
-                if(res && res.code===200){
-                    layui.layer.msg(res.message,{time:1000},function(){
-                        location.reload();
-                    });
+        }else {
+            var formData = new FormData();
+            formData.append('assetFile', file);
+            $.ajax({
+                type: "post",
+                url: "/asset/uploadAssetFile",
+                headers: {
+                    'Authorization': localStorage.getItem("token") // 在请求头中添加token
+                },
+                data: formData,
+                contentType: false,
+                processData: false,//这个很有必要，不然不行
+                dataType: "json",
+                mimeType: "multipart/form-data",
+                success: function (res) {
+                    if (res && res.code === 200) {
+                        layui.layer.msg(res.message, {time: 1000}, function () {
+                            location.reload();
+                        });
 
+                    }
                 }
-            }
 
 
-        })
-
+            })
+        }
 
     }
 </script>

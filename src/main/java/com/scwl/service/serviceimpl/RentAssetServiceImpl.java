@@ -126,21 +126,29 @@ public class RentAssetServiceImpl implements RentAssetService {
 
     @Override
     public ResBean uploadAssetFile(List<String[]> data) throws ParseException {
-
-        for (int i = 1; i < data.size(); i++) {
+       //序号	资产名	总面积(㎡)	总可用面积(㎡)	实时可用面积(㎡)	资产地址	状态	添加时间
+        Double zero = 0.00;
+        for (int i = 0; i < data.size(); i++) {
             RentAsset rentAsset = new RentAsset();
             String[] strings = data.get(i);
-            if(null!=strings[1]&&""!=strings[1]){
-            rentAsset.setAssetName(strings[0]);
-            rentAsset.setAcreage(Double.parseDouble(strings[1]));
-            rentAsset.setAddress(strings[2]);
-            if(strings[3].equals("空置")){
-                rentAsset.setStatus(1);
-            }else {
+            rentAsset.setAssetName(strings[1]);
+            rentAsset.setAcreage(strings[2]==""?zero:Double.parseDouble(strings[2]));
+            rentAsset.setUseAcreage(strings[3]==""?zero:Double.parseDouble(strings[3]));
+            rentAsset.setUseAcreageNum(strings[4]==""?zero:Double.parseDouble(strings[4]));
+            rentAsset.setAddress(strings[5]);
+            if(strings[6].contains("自用")){
+                rentAsset.setStatus(4);
+            }else if(strings[6].contains("部分")){
                 rentAsset.setStatus(2);
+            }else if(strings[6].contains("全部")){
+                rentAsset.setStatus(3);
+            }else {
+                rentAsset.setStatus(1);
             }
+            rentAsset.setIsDelete(0);
             rentAsset.setAddTime(new Date());
-            assetMapper.insert(rentAsset);}
+            assetMapper.insert(rentAsset);
+
         }
         return  ResBean.success("上传成功");
     }

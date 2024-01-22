@@ -10,6 +10,7 @@ import java.util.List;
 public interface RentLesseeService {
 
     ResBean getLesseeList(Integer pageNum, Integer pageSize, RentLessee rentLessee);
+    List<RentLessee> getAllLessee();
     ResBean addLessee(RentLessee rentLessee);
     ResBean editLessee(RentLessee rentLessee);
     ResBean deleteLessee(String ids);

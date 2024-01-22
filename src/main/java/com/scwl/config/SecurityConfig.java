@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/contract",
 				"/roleChoose",
 				"/*/exportExcel",
+				"/*/exportExcelTemp",
 				"/userRoleChoose",
 				"/getShowData",
 				"/centerShowPhone",

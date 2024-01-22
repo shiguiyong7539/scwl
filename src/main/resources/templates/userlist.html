@@ -445,6 +445,9 @@
                     }
                     htm+="<a  href='#' onclick='userList("+data.nextPage+")'> 下一页</a><a  href='#' onclick='userList("+data.pages+")'> 尾页</a><span > 共有"+data.pages+"页 </span>"
                     $("#pagefoot").html(htm);
+                }else {
+                    //失败提示
+                    layer.msg(res.message, {icon: 2,  time: 2000 });
                 }
 
             }

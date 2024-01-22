@@ -63,12 +63,19 @@ public class RentLesseeServiceImpl implements RentLesseeService {
     }
 
     @Override
+    public List<RentLessee> getAllLessee() {
+        return rentLesseeMapper.selectByExample(new RentLesseeExample());
+
+    }
+
+    @Override
     public ResBean addLessee(RentLessee rentLessee) {
         try {
             if(null==rentLessee.getAccount()){
                 rentLessee.setAccount(new BigDecimal(0));
             }
             rentLessee.setIsDelete(0);
+            rentLessee.setStatus(1);
             rentLessee.setAddTime(new Date());
             rentLesseeMapper.insert(rentLessee);
             logService.addLog("INSERT","rent_asset",rentLessee.getId(),"新增id为"+rentLessee.getId()+"的租户信息");
@@ -123,6 +130,7 @@ public class RentLesseeServiceImpl implements RentLesseeService {
     @Transactional
     public ResBean prestore(RentLessee rentLessee) {
         try{
+            BigDecimal zero = new BigDecimal(0);
             String content="";
         RentLessee oldLesse = rentLesseeMapper.selectByPrimaryKey(rentLessee.getId());
         if(rentLessee.getRemark().equals("1")){
@@ -131,7 +139,6 @@ public class RentLesseeServiceImpl implements RentLesseeService {
              content="给用户->"+oldLesse.getLesseeName()+"预存"+rentLessee.getAccount()+"元；"+"预存前是:"+account+"元;"+"预存后是:"+oldLesse.getAccount()+"元";
 
         }else {
-            BigDecimal zero = new BigDecimal(0);
             //预存租户账户余额
             //判断是否欠租
             if(oldLesse.getAccount().compareTo(zero)<0&&rentLessee.getAccount().compareTo(zero)>0){
@@ -141,6 +148,9 @@ public class RentLesseeServiceImpl implements RentLesseeService {
             BigDecimal account = rentLessee.getAccount();
             oldLesse.setAccount(oldLesse.getAccount().add(account));
              content="[自动扣租]给租户->"+oldLesse.getLesseeName()+"预存"+account+"元；预存前："+oldLesse.getAccount()+"元；预存后："+oldLesse.getAccount()+"元；";
+        }
+        if(oldLesse.getAccount().compareTo(zero)>=0){
+            oldLesse.setStatus(1);
         }
         rentLesseeMapper.updateByPrimaryKey(oldLesse);
         logService.addLog("UPDATE", "rent_asset", rentLessee.getId(), content);
@@ -152,16 +162,20 @@ public class RentLesseeServiceImpl implements RentLesseeService {
 
     @Override
     public ResBean uploadLesseeFile(List<String[]> data) throws ParseException {
-        for (int i = 1; i < data.size(); i++) {
+        //序号	姓名	电话	性别	身份证	住址	账户余额	押金总额	状态	添加时间
+        BigDecimal zero = new BigDecimal(0);
+        for (int i = 0; i < data.size(); i++) {
             String[] strings = data.get(i);
             RentLessee rentLessee = new RentLessee();
-            rentLessee.setLesseeName(strings[0]);
-           // rentLessee.setSex(strings[1]);
-            rentLessee.setPhone(strings[1]);
-          //  rentLessee.setAddress(strings[3]);
-          //  rentLessee.setIdentityCard(strings[4]);
-          //  rentLessee.setAddress(strings[5]);
-            rentLessee.setAccount(new BigDecimal(0));
+            rentLessee.setLesseeName(strings[1]);
+            rentLessee.setPhone(strings[2]);
+            rentLessee.setSex(strings[3]);
+            rentLessee.setIdentityCard(strings[4]);
+            rentLessee.setAddress(strings[5]);
+            rentLessee.setAccount(strings[6]==""?zero:new BigDecimal(strings[6]));
+            rentLessee.setPledgeAmount(strings[7]==""?zero:new BigDecimal(strings[7]));
+            rentLessee.setStatus(1);
+            rentLessee.setIsDelete(0);
             rentLessee.setAddTime(new Date());
             rentLesseeMapper.insert(rentLessee);
         }

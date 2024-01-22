@@ -85,7 +85,7 @@
             <div class="widget">
                 <div class="layui-row">
                     <form class="layui-col-md12 x-so" id="formId">
-                        <div>名　称:<input   type="text" name="headLine"  placeholder="名称" autocomplete="off" class="layui-input myInput"></div>
+                        <div>名　称:<input style="width: 153px;"  type="text" name="headLine"  placeholder="名称" autocomplete="off" class="layui-input myInput"></div>
                         <div>状　态:<select name="status">
                             <option value=""></option>
                             <option value="整改中">整改中</option>
@@ -109,15 +109,8 @@
                 <div class="title"><img src="images/icons/dark/stats.png" alt="" class="titleIcon"><h6>监督整改信息</h6>
                 </div>
                 <table  cellpadding="0" cellspacing="0" width="100%" class="sTable">
-                    <thead>
-                    <tr>
-                        <td width="3%">编号</td>
-                        <td width="15%">名称</td>
-                        <td width="8%">被监督部门</td>
-                        <td width="8%">整改期限</td>
-                        <td width="8%">是否完成整改</td>
-                        <td width="8%">操作</td>
-                    </tr>
+                    <thead id="mythead">
+
                     </thead>
                     <tbody id="myTable">
                     </tbody>
@@ -216,6 +209,16 @@
                         str_info+='<td align="center">'+data1[i].status+'</td>';
                         str_info+='<td align="center" onclick="getDetails('+data1[i].id+')"><button class="redB">详情</button></td></tr>';
                     }
+
+                    let head='<tr>\n' +
+                        '                        <td width="20">编号</td>\n' +
+                        '                        <td width="300">名称</td>\n' +
+                        '                        <td width="120">被监督部门</td>\n' +
+                        '                        <td width="80">整改期限</td>\n' +
+                        '                        <td width="80">是否完成整改</td>\n' +
+                        '                        <td width="50">操作</td>\n' +
+                        '                    </tr>';
+                    $("#mythead").html(head);
                     $("#myTable").html(str_info);
 
                     pagenum0=pageNo-1;
