@@ -375,3 +375,25 @@ body .open_css .layui-layer-title{
 
 
 }
+
+
+body .specific-popup{
+    border-radius: 20px;
+    color:black;
+}
+body .specific-popup .layui-layer-title{
+    color: #fff;
+    background: #033c76;
+    border-radius: 20px 20px 0 0!important;
+    text-align: center!important;
+    font-weight: bold;
+}
+
+body .specific-popup .layui-layer-content{
+    color: #fff;
+    font-size: 16px;
+    background: #033c76;
+    background: -webkit-radial-gradient(50% 35%, farthest-corner,#034f8e,#034987,#02366d,#002353);
+    background: radial-gradient(50% 35%, farthest-corner,#034f8e,#034987,#02366d,#002353);
+
+}

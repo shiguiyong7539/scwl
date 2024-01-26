@@ -206,7 +206,24 @@ function echarts_4() {
                     rate_data.push(res.obj.rate[i].letRate);
                 }
 
+                for (let i = 0; i < manage_date2.length; i++) {
+                    if (income_data1[i] == undefined) {
+                        income_data1.unshift('');
+                    }
+                    if (income_data2[i] == undefined) {
+                        income_data2.unshift('');
+                    }
+                    if (income_data3[i] == undefined) {
+                        income_data3.unshift('');
+                    }
+                    if (income_data4[i] == undefined) {
+                        income_data4.unshift('');
+                    }
+                    if (income_data5[i] == undefined) {
+                        income_data5.unshift('');
+                    }
 
+                }
 
 
                 option = {
@@ -509,7 +526,7 @@ function echarts_4() {
                        yAxis: [{
                            type: 'value',
                            axisLabel: {
-                               //formatter: '{value} %'
+                               formatter: '{value} %',
                                show:true,
                                textStyle: {
                                    color: "rgba(255,255,255,.6)",
@@ -762,7 +779,7 @@ function echarts_4() {
                        ]
                    };
                 //当前出租率
-                document.getElementById("letRate_now").innerText = rate_data[rate_data.length-1]+'%';
+                document.getElementById("letRate_now").innerText = (rate_data[rate_data.length-1]==null?rate_data[rate_data.length-2]:rate_data[rate_data.length-1])+'%';
                    myChart.setOption(option);
                    myChart2.setOption(option2);
                    myChart3.setOption(option3);
@@ -794,7 +811,7 @@ function echarts_5(rate) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('capital_1'));
         var myChart2 = echarts.init(document.getElementById('capital_2'));
-     //   var myChart3 = echarts.init(document.getElementById('capital_3'));
+        //   var myChart3 = echarts.init(document.getElementById('capital_3'));
         $.ajax({
             type: "get",
             url: "/getCapitalByCenterShow",
@@ -808,8 +825,8 @@ function echarts_5(rate) {
                 if(res && res.code===200){
                     $("#capitalDate").html( res.obj.incom_lastDate);
                     $("#capital2Date").html( res.obj.rate_lastDate);
-                   // 融资计划完成率 运营费用节约率 营业收入增长率 营业现金比率 营业成本率 可用资金
-                  // finishRate;operatRate; incomeRate;cashRate;costRate; useCapital;addDate;remark;
+                    // 融资计划完成率 运营费用节约率 营业收入增长率 营业现金比率 营业成本率 可用资金
+                    // finishRate;operatRate; incomeRate;cashRate;costRate; useCapital;addDate;remark;
                     //当前可用资金
                     document.getElementById("use_money").innerText = res.obj.use_money;
                     document.getElementById("unUse_money").innerText = res.obj.unUse_money;
@@ -886,6 +903,22 @@ function echarts_5(rate) {
                             showTagData.push(incomeRate[i].costRateTag);
                         }
 
+                    }
+                    for (let i = 0; i < quarterly_data.length; i++) {
+                        if (showData[i] == undefined) {
+                            showData.unshift('');
+                        }
+                        if (showTagData[i] == undefined) {
+                            showTagData.unshift('');
+                        }
+                    }
+                    for (let i = 0; i < income_date.length; i++) {
+                        if (useCapitalData[i] == undefined) {
+                            useCapitalData.unshift('');
+                        }
+                        if (unUseCapitalData[i] == undefined) {
+                            unUseCapitalData.unshift('');
+                        }
                     }
 
                     option = {
@@ -1062,7 +1095,7 @@ function echarts_5(rate) {
                                     show: true,
                                     type: ['line', 'bar']
                                 }
-                               // ,dataView: { readOnly: false }
+                                // ,dataView: { readOnly: false }
                             }
                         },
                         legend: {
@@ -1852,6 +1885,24 @@ function echarts_33(period) {
                         }
                         rateTitle.push(budgets[0].department);
 
+                    }
+
+                    for (let i = 0; i < rateTime.length; i++) {
+                        if (rateData[i] == undefined) {
+                            rateData.unshift('');
+                        }
+                        if (rateData2[i] == undefined) {
+                            rateData2.unshift('');
+                        }
+                        if (rateData3[i] == undefined) {
+                            rateData3.unshift('');
+                        }
+                        if (rateData4[i] == undefined) {
+                            rateData4.unshift('');
+                        }
+                        if (rateData5[i] == undefined) {
+                            rateData5.unshift('');
+                        }
                     }
 
                     option1 = {

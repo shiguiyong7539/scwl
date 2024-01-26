@@ -221,7 +221,6 @@
         }else {
             localStorage.setItem("rids",rids);
             var data = {"uids": localStorage.getItem("uids"), "rids": localStorage.getItem("rids")};
-            console.log(data)
             $.ajax({
                 type: "get",
                 url: "/addUserRole",

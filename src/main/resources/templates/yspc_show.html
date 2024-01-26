@@ -1,0 +1,329 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
+</head>
+
+<body>
+<div class="tit">预算偏差率
+	<span class="btn_right" id="fb08Date"></span>
+</div>
+<div class="boxnav" style="height:80%;" id="fb08"></div>
+
+</div>
+</div>
+</body>
+<script>
+	window.onload = function(){
+		echarts_321('上月');
+	}
+
+	function echarts_321(period) {
+		// 基于准备好的dom，初始化echarts实例
+		var myChart3 = echarts.init(document.getElementById('fb08'));
+		$.ajax({
+			type: "get",
+			url: "/getBudgetByCenter",
+			headers: {
+				'Authorization': localStorage.getItem("token") // 在请求头中添加token
+			},
+			data:({
+				condition:period
+			}),
+			success: function (res) {
+				if(res && res.code===200){
+
+					$("#fb08Date").html(res.obj.lastDate);
+					var moneyData;
+					if(period=='当月'||period=='上月'){
+						moneyData = res.obj.month;
+					}else {
+						moneyData = res.obj.year;
+					}
+					var list = res.obj.list;
+					//月度资金
+					var planTotal=res.obj.planTotal;
+					var planData = [];
+					var planTitle = [];
+					//资金实际使用情况
+					var realData=[];
+					var realTotal=res.obj.realTotal;
+					var realTitle = [];
+
+					//预算偏差率
+					var rateData=[];
+					var rateData2=[];
+					var rateData3=[];
+					var rateData4=[];
+					var rateData5=[];
+					var rateTime=[];
+					var rateTitle=[];
+
+					for (let i = 0; i < list.length; i++) {
+						var budgets  = list[i].budgets;
+						if(budgets[0].department==='综合管理部'){
+							for (let i = 0; i < budgets.length; i++) {
+								rateTime.push(budgets[i].remark+'月');
+								rateData.push(budgets[i].deviationRate);
+							}
+						}else if(budgets[0].department==='市场拓展部'){
+							for (let i = 0; i < budgets.length; i++) {
+								rateData2.push(budgets[i].deviationRate);
+							}
+						}else if(budgets[0].department==='规划建设部'){
+							for (let i = 0; i < budgets.length; i++) {
+								rateData3.push(budgets[i].deviationRate);
+							}
+						}else if(budgets[0].department==='财务融资部'){
+							for (let i = 0; i < budgets.length; i++) {
+								rateData4.push(budgets[i].deviationRate);
+							}
+
+						}else if(budgets[0].department==='金沙艺术中心'){
+							for (let i = 0; i < budgets.length; i++) {
+								rateData5.push(budgets[i].deviationRate);
+							}
+						}
+						rateTitle.push(budgets[0].department);
+
+					}
+
+					for (let i = 0; i < rateTime.length; i++) {
+						if (rateData[i] == undefined) {
+							rateData.unshift('');
+						}
+						if (rateData2[i] == undefined) {
+							rateData2.unshift('');
+						}
+						if (rateData3[i] == undefined) {
+							rateData3.unshift('');
+						}
+						if (rateData4[i] == undefined) {
+							rateData4.unshift('');
+						}
+						if (rateData5[i] == undefined) {
+							rateData5.unshift('');
+						}
+					}
+
+
+					option3 = {
+						//  backgroundColor: '#00265f',
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'shadow'
+							},
+							formatter: function(params) {
+								var axisValue = params[0].axisValue + '</br>';
+								var result='';
+								params.forEach(function(item) {
+									result += item.seriesName + ': ' + item.value + ' %<br>';
+								});
+								return axisValue+result;
+							}
+						},
+						legend: {
+							data: rateTitle,
+							top:'1%',
+							textStyle: {
+								color: "#fff",
+								fontSize: '10',
+
+							},
+
+							itemGap: 1
+						},
+						grid: {
+							left: '0%',
+							top:'40px',
+							right: '0%',
+							bottom: '0',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: rateTime,
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel:  {
+								interval: 0,
+								// rotate:50,
+								show: true,
+								splitNumber: 5,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+						}],
+						yAxis: [{
+							type: 'value',
+							axisLabel: {
+								//formatter: '{value} %'
+								show:true,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1	)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							splitLine: {
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+								}
+							}
+						}],
+						series: [{
+							name: '综合管理部',
+							type: 'line',
+							smooth: true,
+							data:rateData,
+							symbol: 'circle',
+							symbolSize: 10,
+							smooth: true,
+							animationDuration: 2000,
+							itemStyle: {
+								normal: {
+									color: '#2f89cf',
+									shadowBlur: 0,
+									shadowColor: "#2f89cf",
+									shadowOffsetX: 0,
+									shadowOffsetY: 0
+								}
+							}
+						},{
+							name: '市场拓展部',
+							type: 'line',
+							smooth: true,
+							data:rateData2,
+							symbol: 'circle',
+							symbolSize: 10,
+							smooth: true,
+							animationDuration: 2000,
+							itemStyle: {
+								normal: {
+									color: '#cf8427',
+									shadowBlur: 0,
+									shadowColor: "#cf8427",
+									shadowOffsetX: 0,
+									shadowOffsetY: 0
+								}
+							}
+						}
+							,{
+								name: '规划建设部',
+								type: 'line',
+								smooth: true,
+								data:rateData3,
+								symbol: 'circle',
+								symbolSize: 10,
+								smooth: true,
+								animationDuration: 2000,
+								itemStyle: {
+									normal: {
+										color: '#cf3b26',
+										shadowBlur: 0,
+										shadowColor: "#cf3b26",
+										shadowOffsetX: 0,
+										shadowOffsetY: 0
+									}
+								}
+							}
+							,{
+								name: '财务融资部',
+								type: 'line',
+								smooth: true,
+								data:rateData4,
+								symbol: 'circle',
+								symbolSize: 10,
+								smooth: true,
+								animationDuration: 2000,
+								itemStyle: {
+									normal: {
+										color: '#4acf28',
+										shadowBlur: 0,
+										shadowColor: "#4acf28",
+										shadowOffsetX: 0,
+										shadowOffsetY: 0
+									}
+								}
+							}
+							,{
+								name: '金沙艺术中心',
+								type: 'line',
+								smooth: true,
+								data:rateData5,
+								symbol: 'circle',
+								symbolSize: 10,
+								smooth: true,
+								animationDuration: 2000,
+								itemStyle: {
+									normal: {
+										color: '#f7ff2c',
+										shadowBlur: 0,
+										shadowColor: "#f7ff2c",
+										shadowOffsetX: 0,
+										shadowOffsetY: 0
+									}
+								}
+							}
+						]
+					};
+					// 使用刚指定的配置项和数据显示图表。
+
+					myChart3.setOption(option3);
+
+
+					window.addEventListener("resize",function(){
+
+						myChart3.resize();
+					});
+
+
+				}else {
+					var info = '<div class="lookNo">'+res.message+'</div>';
+					$("#fb08").html(info);
+				}
+
+			}
+
+
+
+		})
+
+
+
+	}
+
+</script>
+</html>

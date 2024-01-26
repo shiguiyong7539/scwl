@@ -130,7 +130,12 @@ public class ManageStateServiceImpl implements ManageStateService {
         hashMap.put("in_total",in_total.divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
         //欠收(当前)
         List<ManageState> current_total = manageStateMapper.getDataByColumn("current_total", "资产经营");
-        hashMap.put("arrears_now",current_total.get(arrears.size()-1).getCurrentTotal()==null?0:current_total.get(arrears.size()-1).getCurrentTotal().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+        for (int i = current_total.size()-1; i >=0; i--) {
+            if(current_total.get(i).getCurrentTotal()!=null){
+             hashMap.put("arrears_now",current_total.get(i).getCurrentTotal().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+             break;
+            }
+        }
 //        for (int i = 0; i < arrears.size(); i++) {
 //            if(null!=arrears.get(arrears.size()-(i+1)).getRentArrears()){
 //                hashMap.put("arrears_now",arrears.get(arrears.size()-(i+1)).getRentArrears().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));

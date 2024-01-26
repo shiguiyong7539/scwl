@@ -223,7 +223,6 @@
         }else {
             localStorage.setItem("rids",rids);
             var data = {"mids": localStorage.getItem("mids"), "rids": localStorage.getItem("rids")};
-            console.log(data)
             $.ajax({
                 type: "get",
                 url: "/addMenuRole",
@@ -252,7 +251,6 @@
         }else {
             localStorage.setItem("rids",rids);
             var data = {"mids": localStorage.getItem("mids"), "rids": localStorage.getItem("rids")};
-            console.log(data)
             $.ajax({
                 type: "get",
                 url: "/deleteMenuRole",

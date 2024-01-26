@@ -49,7 +49,7 @@
 <div style="position: relative;z-index: 1;">
 	<ul class="clearfix nav1">
 		<li class="left_size">
-			<div class="box">
+			<div class="box" id="task_open" onclick="openBigWindow('task_open')">
 				<div class="tit">任务管理（模块搭建中）</div>
 				<div class="boxnav" style="height: 235px;">
 					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -68,7 +68,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="box">
+			<div class="box" id="fk_open" onclick="openBigWindow('fk_open')">
 				<div class="tit">风控管理
 					<span class="btn_right" id="fkdate"></span>
 				</div>
@@ -86,7 +86,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="box">
+			<div class="box" id="ht_open" onclick="openBigWindow('ht_open')">
 				<div class="tit">合同履行（模块搭建中）</div>
 				<div class="boxnav" style="height: 203px;">
 					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -105,7 +105,7 @@
 				</div>
 			</div>
 			<div class="box">
-				<div class="tit">人员情况<span class="titAmount" id="person_total"></span><span class="titAmountRight">人</span>
+				<div class="tit" onclick="openWindow('/renYuanShow')">人员情况<span class="titAmount" id="person_total"></span><span class="titAmountRight">人</span>
 					<span class="btn_right" id="personDate"></span>
 				</div>
 				<div class="boxnav" style="height: 360px;">
@@ -128,7 +128,7 @@
 				<div class="boxnav mapc" style="height: 1155px; position: relative">
 						<div class="box">
 							<div class="box">
-								<div class="tit">经营收入<span class="titAmount" id="in_total"></span><span class="titAmountRight">万元</span>
+								<div class="tit" onclick="openWindow('/jysrShow')">经营收入<span class="titAmount" id="in_total"></span><span class="titAmountRight">万元</span>
 									<span class="btn_right">
 										<span id="asset_4_date" class="asset_4_date"></span>
 										<button class="infobtnChoose"  id="in_details">详情</button>
@@ -138,17 +138,17 @@
 								<div class="boxnav" style="height: 250px;" id="asset_4">
 								</div>
 							</div>
-							<div class="tit">租金收入<span class="titAmount" id="rent_total"></span><span class="titAmountRight">万元</span>
+							<div class="tit" onclick="openWindow('/zjsrShow')">租金收入<span class="titAmount" id="rent_total"></span><span class="titAmountRight">万元</span>
 								<span class="btn_right"  id="asset_1_date"></span>
 							</div>
 							<div class="boxnav" style="height: 200px;" id="asset_1">
 							</div>
-							<div class="tit">欠缴租金<span class="titAmount" id="arrears_now"></span><span class="titAmountRight">万元</span>
+							<div class="tit" onclick="openWindow('/qjzjShow')">欠缴租金<span class="titAmount" id="arrears_now"></span><span class="titAmountRight">万元</span>
 								<span class="btn_right"  id="asset_2_date"></span>
 							</div><br>
 							<div class="fboxnavtechart" style="height: 200px;" id="asset_2">
 							</div>
-							<div class="tit">出租率<span class="titAmount" id="letRate_now"></span><span class="titAmountRight"></span>
+							<div class="tit" onclick="openWindow('/czlShow')">出租率<span class="titAmount" id="letRate_now"></span><span class="titAmountRight"></span>
 								<span class="btn_right"  id="asset_3_date"></span>
 							</div>
 							<div class="boxnav" style="height: 200px;" id="asset_3">
@@ -161,13 +161,13 @@
 		<li class="right_size">
 			<div class="box">
 <!--				<div class="centerTit">资金状况</div>-->
-				<div class="tit">灵活使用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元</span></br>
+				<div class="tit"  onclick="openWindow('/usezjShow')">灵活使用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元</span></br>
 				受限资金
 				    <span class="titAmount" id="unUse_money"></span><span class="titAmountRight">万元</span>
 					<span class="btn_right" id="capitalDate"></span>
 				</div>
 				<div class="boxnav" id="capital_1" style="height: 213px;"></div>
-				<div class="tit">相关财务指标<span style="margin-left: 8%;" id="capital2Date"></span><span class="btn_right">
+				<div class="tit" onclick="openWindow('/cwzbShow')">相关财务指标<span style="margin-left: 8%;" id="capital2Date"></span><span class="btn_right">
 					<div class="layui-inline">
                     <select style="width: 100%"  lay-filter="demo" id="rate_type">
                      <option value="1">融资计划完成率</option>
@@ -187,7 +187,7 @@
 
 
 			<div class="box">
-				<div class="tit">预算执行情况<span class="btn_right">
+				<div class="tit" onclick="openWindow('/yszxShow')">预算执行情况<span class="btn_right">
 					<span  id="fb06Date"></span>
 <!--					<button class="infobtnChoose"  id="now_month">当月</button>-->
 					<div class="layui-inline btn_right">
@@ -204,7 +204,7 @@
 				</div>
 			</div>
 			<div class="box">
-				<div class="tit">预算偏差率
+				<div class="tit" onclick="openWindow('/yspcShow')">预算偏差率
 					<span class="btn_right" id="fb08Date"></span>
 				</div>
 				<div class="boxnav" style="height: 213px;" id="fb08"></div>
@@ -227,10 +227,36 @@
 			shadeClose: true, //点击弹出层外空白处
 			content: "/rectifyShow"
 		})
-
 	}
  function goAdmin() {
   location.href="/admin";
  }
+
+	function openBigWindow(id) {
+		var element = document.getElementById(id);
+		var content = element.innerHTML;
+		let html_info ='<div class="box">'+content+'</div>';
+		layui.layer.open({
+			type:1,
+			 title:'',
+			skin:"specific-popup",
+			area:['80%','80%'],
+			shadeClose: true, //点击弹出层外空白处
+			content:html_info
+		})
+
+	}
+
+	function openWindow(url) {
+		layui.layer.open({
+			type:2,
+			title:"",
+			skin:"open_css",
+			area:['85%','85%'],
+			closeBtn: 1, //关闭按钮的样式，0是默认的
+			shadeClose: true, //点击弹出层外空白处
+			content: url
+		})
+	}
 </script>
 </html>

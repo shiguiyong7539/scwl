@@ -1,0 +1,254 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
+</head>
+
+<body>
+<div class="tit">租金收入<span class="titAmount" id="rent_total"></span><span class="titAmountRight">万元</span>
+	<span class="btn_right"  id="asset_1_date"></span>
+</div>
+<div class="boxnav" style="height: 80%;" id="asset_1">
+</div>
+</div>
+</body>
+<script>
+	window.onload = function() {
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('asset_1'));
+
+			myChart.clear();
+			$.ajax({
+				type: "get",
+				url: "/getManageStateByCenter",
+				headers: {
+					'Authorization': localStorage.getItem("token") // 在请求头中添加token
+				},
+				success: function (res) {
+					if(res && res.code===200){
+						//租金总收入
+						document.getElementById("rent_total").innerText = res.obj.rent_total;
+						$("#asset_1_date").html(res.obj.income_lastDate);
+						var manage_date =[];
+						var income_data =[];
+						var income_date =[];
+						var arrears_date =[];
+						var arrears_data =[];
+						var rate_date =[];
+						var rate_data =[];
+						var manage_date1 =[];
+						var manage_date2 =[];
+						var manage_date3 =[];
+						var manage_date4 =[];
+						var manage_date5 =[];
+						var income_data1 =[];
+						var income_data2 =[];
+						var income_data3 =[];
+						var income_data4 =[];
+						var income_data5 =[];
+						var title_data=[];
+
+						for (let i = 0; i < res.obj.list.length; i++) {
+							var manage = res.obj.list[i].manage;
+							title_data.push(manage[0].name);
+							if(manage[0].name==='旧日长轨'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date1.push(manage[i].remark+'月');
+									income_data1.push(manage[i].rentIncome);
+								}
+							}
+							if(manage[0].name==='星河集市'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date2.push(manage[i].remark+'月');
+									income_data2.push(manage[i].rentIncome);
+								}
+							}
+							if(manage[0].name==='金沙艺术中心'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date3.push(manage[i].remark+'月');
+									income_data3.push(manage[i].rentIncome);
+								}
+							}
+							if(manage[0].name==='灿若湖民宿'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date4.push(manage[i].remark+'月');
+									income_data4.push(manage[i].rentIncome);
+								}
+							}
+							if(manage[0].name==='活动策划'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date5.push(manage[i].remark+'月');
+									income_data5.push(manage[i].rentIncome);
+								}
+							}
+
+
+
+						}
+
+						for (let i = 0; i < res.obj.income.length; i++) {
+							income_date.push(res.obj.income[i].remark+'月');
+							income_data.push(res.obj.income[i].rentIncome);
+						}
+
+						for (let i = 0; i < res.obj.arrears.length; i++) {
+							arrears_date.push(res.obj.arrears[i].remark+'月');
+							arrears_data.push(res.obj.arrears[i].rentArrears);
+						}
+
+						for (let i = 0; i < res.obj.rate.length; i++) {
+							rate_date.push(res.obj.rate[i].remark+'月');
+							rate_data.push(res.obj.rate[i].letRate);
+						}
+
+
+
+
+						option = {
+							//  backgroundColor: '#00265f',
+							tooltip: {
+								trigger: 'axis',
+								axisPointer: {
+									type: 'shadow'
+								},
+								formatter: function(params) {
+									var axisValue = params[0].axisValue + '</br>';
+									var seriesName = params[0].seriesName + ':';
+									var unit = params[0].value + ' 元';
+									return axisValue+seriesName+unit;
+								}
+							},
+							toolbox: {
+								show: true,
+								feature: {
+									magicType: {
+										show: true,
+										type: ['line', 'bar']
+									}
+								}
+							},
+							legend: {
+								data: ['租金收入'],
+								top:'5%',
+								textStyle: {
+									color: "#fff",
+									fontSize: '10',
+
+								},
+
+								itemGap: 5
+							},
+							grid: {
+								left: '1%',
+								top:'40px',
+								right: '1%',
+								bottom: '0',
+								containLabel: true
+							},
+							xAxis: [{
+								type: 'category',
+								data: income_date,
+								axisLine: {
+									show: true,
+									lineStyle: {
+										color: "rgba(255,255,255,.1)",
+										width: 1,
+										type: "solid"
+									},
+								},
+								axisTick: {
+									show: false,
+								},
+								axisLabel:  {
+									interval: 0,
+									// rotate:50,
+									show: true,
+									splitNumber: 5,
+									textStyle: {
+										color: "rgba(255,255,255,.6)",
+										fontSize: '10',
+									},
+								},
+							}],
+							yAxis: [{
+								type: 'value',
+								axisLabel: {
+									//formatter: '{value} %'
+									show:true,
+									textStyle: {
+										color: "rgba(255,255,255,.6)",
+										fontSize: '10',
+									},
+								},
+								axisTick: {
+									show: false,
+								},
+								axisLine: {
+									show: true,
+									lineStyle: {
+										color: "rgba(255,255,255,.1	)",
+										width: 1,
+										type: "solid"
+									},
+								},
+								splitLine: {
+									lineStyle: {
+										color: "rgba(255,255,255,.1)",
+									}
+								}
+							}],
+							series: [{
+								name: '租金收入',
+								type: 'line',
+								smooth: true,
+								data:income_data,
+								symbol: 'circle',
+								symbolSize: 10,
+								smooth: true,
+								animationDuration: 2000,
+								itemStyle: {
+									normal: {
+										color: '#fcff2d',
+										shadowBlur: 0,
+										shadowColor: "#fcff2d",
+										shadowOffsetX: 0,
+										shadowOffsetY: 0
+									}
+								}
+							}
+							]
+						};
+
+						myChart.setOption(option);
+
+
+
+						window.addEventListener("resize",function(){
+							myChart.resize();
+						});
+
+
+
+					}else {
+						var info ='<div class="lookNo">'+res.message+'</div>';
+						$("#asset_1").html(info);
+
+
+					}
+
+				}})
+
+	}
+
+</script>
+</html>

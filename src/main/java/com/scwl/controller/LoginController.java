@@ -335,7 +335,7 @@ public class LoginController {
     public String leaseInfolist(){
         return "rentleaseinfo";
     }
-    /**
+     /**
      * 租金收入
      * @return
      */
@@ -344,5 +344,46 @@ public class LoginController {
         return "rentbill";
     }
 
+
+    @RequestMapping("/renYuanShow")
+    public String renYuanShow(){
+        return "renyuan_show";
+    }
+
+    @RequestMapping("/jysrShow")
+    public String jysrShow(){
+        return "jysr_show";
+    }
+
+    @RequestMapping("/zjsrShow")
+    public String zjsrShow(){
+        return "zjsr_show";
+    }
+    @RequestMapping("/qjzjShow")
+    public String qjzjShow(){
+        return "qjzj_show";
+    }
+    @RequestMapping("/czlShow")
+    public String czlShow(){
+        return "czl_show";
+    }
+    @RequestMapping("/usezjShow")
+    public String usezjShow(){
+        return "usezj_show";
+    }
+    @RequestMapping("/cwzbShow")
+    public String cwzbShow(){
+        return "cwzb_show";
+    }
+
+    @RequestMapping("/yszxShow")
+    public String yszxShow(){
+        return "yszx_show";
+    }
+
+    @RequestMapping("/yspcShow")
+    public String yspcShow(){
+        return "yspc_show";
+    }
 
 }

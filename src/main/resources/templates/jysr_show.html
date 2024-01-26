@@ -1,0 +1,534 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
+</head>
+
+<body>
+<div class="tit" >经营收入<span class="titAmount" id="in_total"></span><span class="titAmountRight">万元</span>
+	<span class="btn_right">
+										<span id="asset_4_date" class="asset_4_date"></span>
+										<button class="infobtnChoose"  id="in_details">详情</button>
+										<button class="infobtn"  id="total_manage">总收入</button>
+									</span>
+</div>
+<div class="boxnav" style="height: 80%;" id="asset_4">
+</div>
+</div>
+</body>
+<script>
+	window.onload = function() {
+		echarts_4();
+	}
+	function total_manage() {
+		var myChart = echarts.init(document.getElementById('asset_4'));
+		myChart.clear();
+		$.ajax({
+			type: "get",
+			url: "/getTotalManage",
+			headers: {
+				'Authorization': localStorage.getItem("token") // 在请求头中添加token
+			},
+			success: function (res) {
+				if(res && res.code===200){
+					//经营业务总收入
+					var income_data =[];
+					var manage_date =[];
+
+
+					for (let i = 0; i < res.obj.length; i++) {
+						manage_date.push(res.obj[i].remark+'月');
+						income_data.push(res.obj[i].rentIncome);
+					}
+					option = {
+						//  backgroundColor: '#00265f',
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'shadow'
+							},
+							formatter: function(params) {
+								var axisValue = params[0].axisValue + '</br>';
+								var result='';
+								params.forEach(function(item) {
+									result += item.seriesName + ': ' + item.value + ' 元<br>';
+								});
+								return axisValue+result;
+							}
+						},
+						legend: {
+							data: ['总收入'],
+							top:'5%',
+							textStyle: {
+								color: "#fff",
+								fontSize: '10',
+
+							},
+
+							itemGap: 35
+						},
+						grid: {
+							left: '0%',
+							top:'40px',
+							right: '0%',
+							bottom: '0',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: manage_date,
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel:  {
+								interval: 0,
+								// rotate:50,
+								show: true,
+								splitNumber: 5,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+						}],
+						yAxis: [{
+							type: 'value',
+							axisLabel: {
+								//formatter: '{value} %'
+								show:true,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1	)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							splitLine: {
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+								}
+							}
+						}],
+						series: [{
+							name: '总收入',
+							type: 'line',
+							smooth: true,
+							data:income_data,
+
+							// itemStyle: {
+							//     normal: {
+							//         color:'#2f89cf',
+							//         opacity: 1,
+							//         barBorderRadius: 5,
+							//     }
+							// }
+							symbol: 'circle',
+							symbolSize: 10,
+							smooth: true,
+							animationDuration: 2000,
+							itemStyle: {
+								normal: {
+									color: '#cf2f13',
+									shadowBlur: 0,
+									shadowColor: "#cf2f13",
+									shadowOffsetX: 0,
+									shadowOffsetY: 0
+								}
+							}
+						}
+						]
+					};
+
+					myChart.setOption(option);
+					window.addEventListener("resize",function(){
+						myChart.resize();
+					});
+
+				}}})
+	}
+
+
+	$("#total_manage").on("click", function() {
+		// 获取元素
+		var element = document.getElementById("in_details");
+		// 获取元素
+		var element2 = document.getElementById("total_manage");
+		// 修改class
+		element2.className = "infobtnChoose";
+		element.className = "infobtn";
+		total_manage();
+	})
+	$("#in_details").on("click", function() {
+		// 获取元素
+		var element = document.getElementById("in_details");
+		// 获取元素
+		var element2 = document.getElementById("total_manage");
+		// 修改class
+		element.className = "infobtnChoose";
+		element2.className = "infobtn";
+		echarts_4();
+	})
+	function echarts_4() {
+		// 基于准备好的dom，初始化echarts实例
+		var myChart4 = echarts.init(document.getElementById('asset_4'));
+		myChart4.clear();
+		$.ajax({
+			type: "get",
+			url: "/getManageStateByCenter",
+			headers: {
+				'Authorization': localStorage.getItem("token") // 在请求头中添加token
+			},
+			success: function (res) {
+				if(res && res.code===200){
+					//经营业务总收入
+					document.getElementById("in_total").innerText = res.obj.in_total;
+					$("#asset_4_date").html(res.obj.manage_lastDate);
+
+					var manage_date =[];
+					var income_data =[];
+					var income_date =[];
+					var arrears_date =[];
+					var arrears_data =[];
+					var rate_date =[];
+					var rate_data =[];
+					var manage_date1 =[];
+					var manage_date2 =[];
+					var manage_date3 =[];
+					var manage_date4 =[];
+					var manage_date5 =[];
+					var income_data1 =[];
+					var income_data2 =[];
+					var income_data3 =[];
+					var income_data4 =[];
+					var income_data5 =[];
+					var title_data=[];
+
+					for (let i = 0; i < res.obj.list.length; i++) {
+						var manage = res.obj.list[i].manage;
+						title_data.push(manage[0].name);
+						if(manage[0].name==='旧日长轨'){
+							for (let i = 0; i < manage.length; i++) {
+								manage_date1.push(manage[i].remark+'月');
+								income_data1.push(manage[i].rentIncome);
+							}
+						}
+						if(manage[0].name==='星河集市'){
+							for (let i = 0; i < manage.length; i++) {
+								manage_date2.push(manage[i].remark+'月');
+								income_data2.push(manage[i].rentIncome);
+							}
+						}
+						if(manage[0].name==='金沙艺术中心'){
+							for (let i = 0; i < manage.length; i++) {
+								manage_date3.push(manage[i].remark+'月');
+								income_data3.push(manage[i].rentIncome);
+							}
+						}
+						if(manage[0].name==='灿若湖民宿'){
+							for (let i = 0; i < manage.length; i++) {
+								manage_date4.push(manage[i].remark+'月');
+								income_data4.push(manage[i].rentIncome);
+							}
+						}
+						if(manage[0].name==='活动策划'){
+							for (let i = 0; i < manage.length; i++) {
+								manage_date5.push(manage[i].remark+'月');
+								income_data5.push(manage[i].rentIncome);
+							}
+						}
+
+
+
+					}
+
+					for (let i = 0; i < res.obj.income.length; i++) {
+						income_date.push(res.obj.income[i].remark+'月');
+						income_data.push(res.obj.income[i].rentIncome);
+					}
+
+					for (let i = 0; i < res.obj.arrears.length; i++) {
+						arrears_date.push(res.obj.arrears[i].remark+'月');
+						arrears_data.push(res.obj.arrears[i].rentArrears);
+					}
+
+					for (let i = 0; i < res.obj.rate.length; i++) {
+						rate_date.push(res.obj.rate[i].remark+'月');
+						rate_data.push(res.obj.rate[i].letRate);
+					}
+
+					for (let i = 0; i < manage_date2.length; i++) {
+						if (income_data1[i] == undefined) {
+							income_data1.unshift('');
+						}
+						if (income_data2[i] == undefined) {
+							income_data2.unshift('');
+						}
+						if (income_data3[i] == undefined) {
+							income_data3.unshift('');
+						}
+						if (income_data4[i] == undefined) {
+							income_data4.unshift('');
+						}
+						if (income_data5[i] == undefined) {
+							income_data5.unshift('');
+						}
+
+					}
+
+
+					// 使用刚指定的配置项和数据显示图表。
+					option4 = {
+						//  backgroundColor: '#00265f',
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'shadow'
+							},
+							formatter: function(params) {
+								var axisValue = params[0].axisValue + '</br>';
+								var result='';
+								params.forEach(function(item) {
+									result += item.seriesName + ': ' + item.value + ' 元<br>';
+								});
+								return axisValue+result;
+							}
+						},
+						legend: {
+							data:title_data,
+							top:'1%',
+							textStyle: {
+								color: "#fff",
+								fontSize: '10',
+
+							},
+
+							itemGap: 1
+						},
+						grid: {
+							left: '0%',
+							top:'40px',
+							right: '0%',
+							bottom: '0',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: manage_date2,
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel:  {
+								interval: 0,
+								// rotate:50,
+								show: true,
+								splitNumber: 5,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+						}],
+						yAxis: [{
+							type: 'value',
+							axisLabel: {
+								//formatter: '{value} %'
+								show:true,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1	)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							splitLine: {
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+								}
+							}
+						}],
+						series: [{
+							name: '旧日长轨',
+							type: 'line',
+							smooth: true,
+							data:income_data1,
+							symbol: 'circle',
+							symbolSize: 10,
+							smooth: true,
+							animationDuration: 2000,
+							itemStyle: {
+								normal: {
+									color: '#2f89cf',
+									shadowBlur: 0,
+									shadowColor: "#2f89cf",
+									shadowOffsetX: 0,
+									shadowOffsetY: 0
+								}
+							}
+						},{
+							name: '星河集市',
+							type: 'line',
+							symbol: 'circle',
+							symbolSize: 10,
+							smooth: true,
+							animationDuration: 2000,
+							data:income_data2,
+							itemStyle: {
+								normal: {
+									color: '#cf8427',
+									shadowBlur: 0,
+									shadowColor: "#cf8427",
+									shadowOffsetX: 0,
+									shadowOffsetY: 0
+								}
+							}
+						}
+							,{
+								name: '金沙艺术中心',
+								type: 'line',
+								smooth: true,
+								data:income_data3,
+								//
+								// itemStyle: {
+								//     normal: {
+								//         color:'#cf3b26',
+								//         opacity: 1,
+								//         barBorderRadius: 5,
+								//     }
+								// }
+								symbol: 'circle',
+								symbolSize: 10,
+								smooth: true,
+								animationDuration: 2000,
+								itemStyle: {
+									normal: {
+										color: '#cf3b26',
+										shadowBlur: 0,
+										shadowColor: "#cf3b26",
+										shadowOffsetX: 0,
+										shadowOffsetY: 0
+									}
+								}
+							}
+							,{
+								name: '灿若湖民宿',
+								type: 'line',
+								smooth: true,
+								data:income_data4,
+
+								// itemStyle: {
+								//     normal: {
+								//         color:'#4acf28',
+								//         opacity: 1,
+								//         barBorderRadius: 5,
+								//     }
+								// }
+								symbol: 'circle',
+								symbolSize: 10,
+								smooth: true,
+								animationDuration: 2000,
+								itemStyle: {
+									normal: {
+										color: '#4acf28',
+										shadowBlur: 0,
+										shadowColor: "#4acf28",
+										shadowOffsetX: 0,
+										shadowOffsetY: 0
+									}
+								}
+							}
+							,{
+								name: '活动策划',
+								type: 'line',
+								smooth: true,
+								data:income_data5,
+
+								// itemStyle: {
+								//     normal: {
+								//         color:'#f7ff2c',
+								//         opacity: 1,
+								//         barBorderRadius: 5,
+								//     }
+								// }
+								symbol: 'circle',
+								symbolSize: 10,
+								smooth: true,
+								animationDuration: 2000,
+								itemStyle: {
+									normal: {
+										color: '#f7ff2c',
+										shadowBlur: 0,
+										shadowColor: "#f7ff2c",
+										shadowOffsetX: 0,
+										shadowOffsetY: 0
+									}
+								}
+							}
+						]
+					};
+					myChart4.setOption(option4);
+
+
+					window.addEventListener("resize",function(){
+						myChart4.resize();
+					});
+
+
+
+				}else {
+					var info ='<div class="lookNo">'+res.message+'</div>';
+					$("#asset_1").html(info);
+					$("#asset_2").html(info);
+					$("#asset_3").html(info);
+					$("#asset_4").html(info);
+
+
+				}
+
+			}})
+	}
+</script>
+</html>

@@ -1,0 +1,261 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
+</head>
+
+<body>
+<div class="tit">出租率<span class="titAmount" id="letRate_now"></span><span class="titAmountRight"></span>
+	<span class="btn_right"  id="asset_3_date"></span>
+</div>
+<div class="boxnav" style="height: 80%;" id="asset_3">
+</div>
+</div>
+</body>
+<script>
+	window.onload = function() {
+			// 基于准备好的dom，初始化echarts实例
+			var myChart3 = echarts.init(document.getElementById('asset_3'));
+
+			myChart3.clear();
+			$.ajax({
+				type: "get",
+				url: "/getManageStateByCenter",
+				headers: {
+					'Authorization': localStorage.getItem("token") // 在请求头中添加token
+				},
+				success: function (res) {
+					if(res && res.code===200){
+						$("#asset_3_date").html(res.obj.rate_lastDate);
+						var manage_date =[];
+						var income_data =[];
+						var income_date =[];
+						var arrears_date =[];
+						var arrears_data =[];
+						var rate_date =[];
+						var rate_data =[];
+						var manage_date1 =[];
+						var manage_date2 =[];
+						var manage_date3 =[];
+						var manage_date4 =[];
+						var manage_date5 =[];
+						var income_data1 =[];
+						var income_data2 =[];
+						var income_data3 =[];
+						var income_data4 =[];
+						var income_data5 =[];
+						var title_data=[];
+
+						for (let i = 0; i < res.obj.list.length; i++) {
+							var manage = res.obj.list[i].manage;
+							title_data.push(manage[0].name);
+							if(manage[0].name==='旧日长轨'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date1.push(manage[i].remark+'月');
+									income_data1.push(manage[i].rentIncome);
+								}
+							}
+							if(manage[0].name==='星河集市'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date2.push(manage[i].remark+'月');
+									income_data2.push(manage[i].rentIncome);
+								}
+							}
+							if(manage[0].name==='金沙艺术中心'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date3.push(manage[i].remark+'月');
+									income_data3.push(manage[i].rentIncome);
+								}
+							}
+							if(manage[0].name==='灿若湖民宿'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date4.push(manage[i].remark+'月');
+									income_data4.push(manage[i].rentIncome);
+								}
+							}
+							if(manage[0].name==='活动策划'){
+								for (let i = 0; i < manage.length; i++) {
+									manage_date5.push(manage[i].remark+'月');
+									income_data5.push(manage[i].rentIncome);
+								}
+							}
+
+
+
+						}
+
+						for (let i = 0; i < res.obj.income.length; i++) {
+							income_date.push(res.obj.income[i].remark+'月');
+							income_data.push(res.obj.income[i].rentIncome);
+						}
+
+						for (let i = 0; i < res.obj.arrears.length; i++) {
+							arrears_date.push(res.obj.arrears[i].remark+'月');
+							arrears_data.push(res.obj.arrears[i].rentArrears);
+						}
+
+						for (let i = 0; i < res.obj.rate.length; i++) {
+							rate_date.push(res.obj.rate[i].remark+'月');
+							rate_data.push(res.obj.rate[i].letRate);
+						}
+
+
+
+
+
+						option3 = {
+							//  backgroundColor: '#00265f',
+							tooltip: {
+								trigger: 'axis',
+								axisPointer: {
+									type: 'shadow'
+								},
+								formatter: function(params) {
+
+									var axisValue = params[0].axisValue + '</br>';
+									var seriesName = params[0].seriesName + ':';
+									var unit = params[0].value + '%';
+									return axisValue+seriesName+unit;
+								}
+							},
+							toolbox: {
+								show: true,
+								feature: {
+									magicType: {
+										show: true,
+										type: ['line', 'bar']
+									}
+								}
+							},
+							legend: {
+								data: ['出租率'],
+								top:'5%',
+								textStyle: {
+									color: "#fff",
+									fontSize: '10',
+
+								},
+
+								itemGap: 35
+							},
+							grid: {
+								left: '1%',
+								top:'40px',
+								right: '1%',
+								bottom: '0',
+								containLabel: true
+							},
+							xAxis: [{
+								type: 'category',
+								data: rate_date,
+								axisLine: {
+									show: true,
+									lineStyle: {
+										color: "rgba(255,255,255,.1)",
+										width: 1,
+										type: "solid"
+									},
+								},
+								axisTick: {
+									show: false,
+								},
+								axisLabel:  {
+									interval: 0,
+									// rotate:50,
+									show: true,
+									splitNumber: 5,
+									textStyle: {
+										color: "rgba(255,255,255,.6)",
+										fontSize: '10',
+									},
+								},
+							}],
+							yAxis: [{
+								type: 'value',
+								axisLabel: {
+									formatter: '{value} %',
+									show:true,
+									textStyle: {
+										color: "rgba(255,255,255,.6)",
+										fontSize: '10',
+									},
+								},
+								axisTick: {
+									show: false,
+								},
+								axisLine: {
+									show: true,
+									lineStyle: {
+										color: "rgba(255,255,255,.1	)",
+										width: 1,
+										type: "solid"
+									},
+								},
+								splitLine: {
+									lineStyle: {
+										color: "rgba(255,255,255,.1)",
+									}
+								}
+							}],
+							series: [{
+								name: '出租率',
+								type: 'line',
+								smooth: true,
+								data:rate_data,
+								symbol: 'circle',
+								symbolSize: 10,
+								smooth: true,
+								animationDuration: 2000,
+								itemStyle: {
+									normal: {
+										color: '#cfb018',
+										shadowBlur: 0,
+										shadowColor: "#cfb018",
+										shadowOffsetX: 0,
+										shadowOffsetY: 0
+									}
+								}
+							}
+							]
+						};
+
+						//当前出租率
+						document.getElementById("letRate_now").innerText = (rate_data[rate_data.length-1]==null?rate_data[rate_data.length-2]:rate_data[rate_data.length-1])+'%';
+
+						myChart3.setOption(option3);
+
+
+
+						window.addEventListener("resize",function(){
+
+							myChart3.resize();
+
+						});
+
+
+
+					}else {
+						var info ='<div class="lookNo">'+res.message+'</div>';
+
+						$("#asset_3").html(info);
+
+
+
+					}
+
+				}})
+
+	}
+
+</script>
+</html>

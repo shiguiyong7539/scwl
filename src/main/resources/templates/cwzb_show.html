@@ -1,0 +1,284 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
+</head>
+
+<body>
+
+<div class="tit" >相关财务指标<span style="margin-left: 8%;" id="capital2Date"></span><span class="btn_right">
+					<div class="layui-inline" style="margin-right: 10%">
+                    <select style="width: 150%"  lay-filter="demo" id="rate_type">
+                     <option value="1">融资计划完成率</option>
+                     <option value="2">运营费用节约率</option>
+                     <option value="3">营业收入增长率</option>
+                     <option value="4">营业现金比率</option>
+                     <option value="5">营业成本率</option>
+                   </select>
+                  </div>
+				</span></div>
+<div class="boxnav" id="capital_2" style="height: 80%;">
+</div>
+</div>
+</body>
+<script>
+	window.onload = function(){
+		choose12(1);
+	}
+
+	$("#rate_type").on("change", function() {
+		// 在这里编写你的函数逻辑
+		var selected = $(this).val();
+		choose12(selected);
+	});
+	function choose12(rate) {
+		// 基于准备好的dom，初始化echarts实例
+		var myChart2 = echarts.init(document.getElementById('capital_2'));
+		$.ajax({
+			type: "get",
+			url: "/getCapitalByCenterShow",
+			headers: {
+				'Authorization': localStorage.getItem("token") // 在请求头中添加token
+			},
+			data:{
+				condition:rate
+			},
+			success: function (res) {
+				if(res && res.code===200){
+					$("#capital2Date").html( res.obj.rate_lastDate);
+
+					var income_date = [];
+					//可用资金
+					var useCapitalData = [];
+					//不可用资金
+					var unUseCapitalData = [];
+					//最终显示比率数据
+					var showData = [];
+					//最终显示指标数据
+					var showTagData = [];
+					var quarterly_data = [];
+					//显示title
+					var showTtile = ['融资计划完成率','区国资委考核指标'];
+					var data = res.obj.list;
+					var incomeRate = res.obj.incomeRate;
+
+					for (let i = 0; i < incomeRate.length; i++) {
+						quarterly_data.push(incomeRate[i].remark+'月');
+						if(rate==1){
+							showData.push(incomeRate[i].finishRate);
+							showTagData.push(incomeRate[i].finishRateTag);
+						}else if(rate==2){
+							showTtile = ['运营费用节约率','区国资委考核指标'];
+							showData.push(incomeRate[i].operatRate);
+							showTagData.push(incomeRate[i].operatRateTag);
+						}else if(rate==3){
+							showTtile = ['营业收入增长率','区国资委考核指标'];
+							showData.push(incomeRate[i].incomeRate);
+							showTagData.push(incomeRate[i].incomeRateTag);
+						}else if(rate==4){
+							showTtile = ['营业现金比率','区国资委考核指标'];
+							showData.push(incomeRate[i].cashRate);
+							showTagData.push(incomeRate[i].cashRateTag);
+						}else if(rate==5){
+							showTtile = ['营业成本率','区国资委考核指标'];
+							showData.push(incomeRate[i].costRate);
+							showTagData.push(incomeRate[i].costRateTag);
+						}
+
+					}
+
+					for (let i = 0; i < quarterly_data.length; i++) {
+						if (showData[i] == undefined) {
+							showData.unshift('');
+						}
+						if (showTagData[i] == undefined) {
+							showTagData.unshift('');
+						}
+					}
+					option = {
+						//  backgroundColor: '#00265f',
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'shadow'
+							} ,
+							formatter: function(params) {
+								var axisValue = params[0].axisValue + '</br>';
+								var result='';
+								params.forEach(function(item) {
+									result += item.seriesName + ': ' +item.value+ ' %<br>';
+								});
+								return axisValue+result;
+							}
+						},
+						toolbox: {
+							show: true,
+							feature: {
+								magicType: {
+									show: true,
+									type: ['line', 'bar']
+								}
+							}
+						},
+						legend: {
+							data: showTtile,
+							top:'4%',
+							textStyle: {
+								color: "#fff",
+								fontSize: '10',
+
+							},
+
+							itemGap: 5
+						},
+						grid: {
+							left: '1%',
+							top:'40px',
+							right: '1%',
+							bottom: '0',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: quarterly_data,
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel:  {
+								interval: 0,
+								// rotate:50,
+								show: true,
+								splitNumber: 5,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+						}],
+						yAxis: [{
+							type: 'value',
+							axisLabel: {
+								//formatter: '{value} %'
+								show:true,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1	)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							splitLine: {
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+								}
+							}
+						}],
+						series: [{
+							name: showTtile[0],
+							type: 'line',
+							smooth: true,
+							data:showData,
+
+							// itemStyle: {
+							//     normal: {
+							//         color:'#2f89cf',
+							//         opacity: 1,
+							//         barBorderRadius: 5,
+							//     }
+							// }
+							symbol: 'circle',
+							symbolSize: 10,
+							smooth: true,
+							animationDuration: 2000,
+							itemStyle: {
+								normal: {
+									color: '#2f89cf',
+									shadowBlur: 0,
+									shadowColor: "#2f89cf",
+									shadowOffsetX: 0,
+									shadowOffsetY: 0
+								}
+							}
+						},{
+							name: showTtile[1],
+							type: 'line',
+							smooth: true,
+							data:showTagData,
+
+							// itemStyle: {
+							//     normal: {
+							//         color:'#cf8427',
+							//         opacity: 1,
+							//         barBorderRadius: 5,
+							//     }
+							// }
+							symbol: 'circle',
+							symbolSize: 10,
+							smooth: true,
+							animationDuration: 2000,
+							itemStyle: {
+								normal: {
+									color: '#cf8427',
+									shadowBlur: 0,
+									shadowColor: "#cf8427",
+									shadowOffsetX: 0,
+									shadowOffsetY: 0
+								}
+							}
+						}
+						]
+					};
+
+					myChart2.setOption(option);
+
+
+
+					window.addEventListener("resize",function(){
+
+						myChart2.resize();
+					});
+
+				}else {
+					var info ='<div class="lookNo">'+res.message+'</div>';
+					$("#capital_2").html(info);
+				}
+
+			}
+
+
+
+		})
+
+
+
+	}
+
+</script>
+</html>

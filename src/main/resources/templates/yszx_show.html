@@ -1,0 +1,263 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
+</head>
+
+<body>
+<div class="tit">预算执行情况<span class="btn_right" style="margin-right: 5%;">
+					<span  id="fb06Date" ></span>
+	<!--					<button class="infobtnChoose"  id="now_month">当月</button>-->
+					<div class="layui-inline btn_right" >
+                    <select style="width: 100%"  lay-filter="demo" id="monthType">
+                     <option value="上月">上月</option>
+					 <option value="当年">当年</option>
+                     <option value="去年">去年</option>
+                   </select>
+                  </div>
+</div>
+<div class="boxnav" style="height: 80%">
+	<div style="height: 50%;margin-left: 25%" id="fb06"></div>
+	<div style="height: 50%;margin-left: 25%" id="fb07"></div>
+</div>
+
+</div>
+</div>
+</body>
+<script>
+	window.onload = function(){
+		echarts_123('上月');
+	}
+	$("#monthType").on("change", function() {
+		// 在这里编写你的函数逻辑
+		var selected = $(this).val();
+		echarts_123(selected);
+	});
+	function echarts_123(period) {
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('fb06'));
+		var myChart2 = echarts.init(document.getElementById('fb07'));
+		$.ajax({
+			type: "get",
+			url: "/getBudgetByCenter",
+			headers: {
+				'Authorization': localStorage.getItem("token") // 在请求头中添加token
+			},
+			data:({
+				condition:period
+			}),
+			success: function (res) {
+				if(res && res.code===200){
+					$("#fb06Date").html(res.obj.lastDate);
+					var moneyData;
+					if(period=='当月'||period=='上月'){
+						moneyData = res.obj.month;
+					}else {
+						moneyData = res.obj.year;
+					}
+					var list = res.obj.list;
+					//月度资金
+					var planTotal=res.obj.planTotal;
+					var planData = [];
+					var planTitle = [];
+					//资金实际使用情况
+					var realData=[];
+					var realTotal=res.obj.realTotal;
+					var realTitle = [];
+
+					//预算偏差率
+					var rateData=[];
+					var rateData2=[];
+					var rateData3=[];
+					var rateData4=[];
+					var rateData5=[];
+					var rateTime=[];
+					var rateTitle=[];
+
+					for (let i = 0; i < moneyData.length; i++) {
+						var  budget = moneyData[i];
+						planTitle.push(budget.department);
+						realTitle.push(budget.department);
+						planData.push({name:budget.department,value:budget.monthFunds});
+						realData.push({name:budget.department,value:budget.realFunds});
+					}
+
+					option1 = {
+						title: {
+							zlevel: 0,
+							text: ['{name|计划累计}', '{value|' + planTotal + '}{name|万元}'].join('\n'),
+							top: '35%',
+							left: '19%',
+							textAlign: 'center',
+							textStyle: {
+								rich: {
+									value: {
+										color: '#ffeb7b',
+										fontSize: 15,
+										lineHeight: 25,
+										fontWeight: 'bold'
+									},
+									name: {
+										color: 'white',
+										fontSize: 15,
+										lineHeight: 25,
+									},
+								},
+							}
+						},
+						tooltip: {
+							trigger: 'item',
+							formatter: "{a} <br/>{b}: {c} 万元 ({d}%)",
+							position:function(p){   //其中p为当前鼠标的位置
+								return [p[0] + 10, p[1] - 10];
+							},
+						},
+						legend: {
+							type: 'scroll',
+							orient: 'vertical',
+							top:'20%',
+							// right:0,
+							left:'40%',
+							itemWidth: 10,
+							itemHeight: 10,
+							data:planTitle,
+							textStyle: {
+								color: 'white',
+								fontSize:'15',
+							},
+							formatter: function(name) {
+								var data = option1.series[0].data;
+								for (let i = 0; i < data.length; i++) {
+									if(name === data[i].name){
+										var percent = (data[i].value / planTotal * 100).toFixed(2) + '%';
+										return name + ': ' +data[i].value+ '万元 (' + percent + ')';
+									}
+
+								}
+							},
+						},
+						series: [
+							{
+								name:'月度资金',
+								type:'pie',
+								center: ['20%', '50%'],
+								radius: ['65%', '75%'],
+								color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+								// 这里与方法一的label设置的一样
+								label: {
+									show:false,
+									position: 'center',
+								},
+								data:planData
+							}
+						]
+					};
+					option2 = {
+						title: {
+							zlevel: 0,
+							text: ['{name|实际累计}', '{value|' + realTotal + '}{name|万元}'].join('\n'),
+							top: '35%',
+							left: '19%',
+							textAlign: 'center',
+							textStyle: {
+								rich: {
+									value: {
+										color: '#ffeb7b',
+										fontSize: 15,
+										lineHeight: 25,
+										fontWeight: 'bold'
+									},
+									name: {
+										color: 'white',
+										fontSize: 15,
+										lineHeight: 25,
+									},
+								},
+							}
+						},
+						tooltip: {
+							trigger: 'item',
+							formatter: "{a} <br/>{b}: {c} 万元 ({d}%)",
+							position:function(p){   //其中p为当前鼠标的位置
+								return [p[0] + 10, p[1] - 10];
+							},
+						},
+						legend: {
+							type: 'scroll',
+							orient: 'vertical',
+							top:'20%',
+							left:'40%',
+							itemWidth: 10,
+							itemHeight: 10,
+							data:realTitle,
+							textStyle: {
+								color: 'white',
+								fontSize:'15',
+							},
+							formatter: function(name) {
+								var data = option2.series[0].data;
+								for (let i = 0; i < data.length; i++) {
+									if(name === data[i].name){
+										var percent = (data[i].value / planTotal * 100).toFixed(2) + '%';
+										return name + ': ' +data[i].value+ '万元 (' + percent + ')';
+									}
+
+								}
+							},
+						},
+						series: [
+							{
+								name:'资金实际使用情况',
+								type:'pie',
+								center: ['20%', '50%'],
+								radius: ['65%', '75%'],
+								color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
+								// 这里与方法一的label设置的一样
+								label: {
+									show:false,
+									position: 'center',
+								},
+								data:realData
+							}
+						]
+					};
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option1);
+					myChart2.setOption(option2);
+
+
+
+					window.addEventListener("resize",function(){
+						myChart.resize();
+						myChart2.resize();
+					});
+
+
+				}else {
+					var info = '<div class="lookNo">'+res.message+'</div>';
+					$("#fb06").html(info);
+				}
+
+			}
+
+
+
+		})
+
+
+
+	}
+
+
+</script>
+</html>

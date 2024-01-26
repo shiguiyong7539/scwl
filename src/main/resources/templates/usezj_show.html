@@ -1,0 +1,231 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style_sc.css">
+	<script type="text/javascript" src="js/layui.js"></script>
+</head>
+
+<body>
+<div class="tit" >灵活使用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元</span></br>
+	受限资金
+	<span class="titAmount" id="unUse_money"></span><span class="titAmountRight">万元</span>
+	<span class="btn_right" id="capitalDate"></span>
+</div>
+<div class="boxnav" id="capital_1" style="height: 80%;"></div>
+</div>
+</div>
+</body>
+<script>
+	window.onload = function() {
+		echarts_555(1)
+	}
+	function echarts_555(rate) {
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('capital_1'));
+		$.ajax({
+			type: "get",
+			url: "/getCapitalByCenterShow",
+			headers: {
+				'Authorization': localStorage.getItem("token") // 在请求头中添加token
+			},
+			data:{
+				condition:rate
+			},
+			success: function (res) {
+				if(res && res.code===200){
+					$("#capitalDate").html( res.obj.incom_lastDate);
+					//当前可用资金
+					document.getElementById("use_money").innerText = res.obj.use_money;
+					document.getElementById("unUse_money").innerText = res.obj.unUse_money;
+					var income_date = [];
+
+					//可用资金
+					var useCapitalData = [];
+					//不可用资金
+					var unUseCapitalData = [];
+					//最终显示比率数据
+					var showData = [];
+					//最终显示指标数据
+					var showTagData = [];
+					var quarterly_data = [];
+					//显示title
+					var showTtile = ['融资计划完成率','区国资委考核指标'];
+					var data = res.obj.list;
+					var incomeRate = res.obj.incomeRate;
+
+					for (let i = 0; i < data.length; i++) {
+						income_date.push(data[i].remark+'月');
+						useCapitalData.push(data[i].useCapital);
+						unUseCapitalData.push(data[i].unUseCapital);
+					}
+					for (let i = 0; i < income_date.length; i++) {
+						if (useCapitalData[i] == undefined) {
+							useCapitalData.unshift('');
+						}
+						if (unUseCapitalData[i] == undefined) {
+							unUseCapitalData.unshift('');
+						}
+					}
+
+					option2 = {
+						//  backgroundColor: '#00265f',
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'shadow'
+							},
+							formatter: function(params) {
+								var axisValue = params[0].axisValue + '</br>';
+								var result='';
+								params.forEach(function(item) {
+									result += item.seriesName + ': ' +item.value+ '元</br>';
+								});
+								return axisValue+result;
+							}
+						},
+						toolbox: {
+							show: true,
+							feature: {
+								magicType: {
+									show: true,
+									type: ['line', 'bar']
+								}
+								// ,dataView: { readOnly: false }
+							}
+						},
+						legend: {
+							data: ['灵活使用资金','受限资金'],
+							top:'5%',
+							textStyle: {
+								color: "#fff",
+								fontSize: '10',
+
+							},
+
+							itemGap: 35
+						},
+						grid: {
+							left: '1%',
+							top:'40px',
+							right: '1%',
+							bottom: '0',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: income_date,
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel:  {
+								interval: 0,
+								// rotate:50,
+								show: true,
+								splitNumber: 5,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+						}],
+						yAxis: [{
+							type: 'value',
+							axisLabel: {
+								//formatter: '{value} %'
+								show:true,
+								textStyle: {
+									color: "rgba(255,255,255,.6)",
+									fontSize: '10',
+								},
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: "rgba(255,255,255,.1	)",
+									width: 1,
+									type: "solid"
+								},
+							},
+							splitLine: {
+								lineStyle: {
+									color: "rgba(255,255,255,.1)",
+								}
+							}
+						}],
+						series: [{
+							name: '灵活使用资金',
+							type: 'bar',
+							smooth: true,
+							data:useCapitalData,
+
+							itemStyle: {
+								normal: {
+									color:'#2f89cf',
+									opacity: 1,
+									barBorderRadius: 5,
+								}
+							}
+						},
+							{
+								name: '受限资金',
+								type: 'bar',
+								smooth: true,
+								data:unUseCapitalData,
+
+								itemStyle: {
+									normal: {
+										color:'#2ccf0c',
+										opacity: 1,
+										barBorderRadius: 5,
+									}
+								}
+							}
+						]
+					};
+
+					myChart.setOption(option2);
+
+
+
+
+					window.addEventListener("resize",function(){
+						myChart.resize();
+
+					});
+
+				}else {
+					var info ='<div class="lookNo">'+res.message+'</div>';
+					$("#capital_1").html(info);
+				}
+
+			}
+
+
+
+		})
+
+
+
+	}
+</script>
+</html>
