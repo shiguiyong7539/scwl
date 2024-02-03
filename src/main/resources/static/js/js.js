@@ -1,120 +1,15 @@
 ﻿ $(window).load(function(){$(".loading").fadeOut()})
 $(function () {
     initData();
-    //echarts_1();
-function echarts_1() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart1'));
-        var data = [{
-        title: '**省'
-    },
-    ['本周'],
-    [{
-        name: '文本1',
-        max: 150
-    }, {
-        name: '文本2',
-        max: 150
-    }, {
-        name: '文本3',
-        max: 150
-    }, {
-        name: '文本4',
-        max: 150
-    }, {
-        name: '文本5',
-        max: 150
-    }],
-    [43, 100, 28, 3, 150],
-]
-option = {
-
-    color: ['#9DD060', '#35C96E', '#4DCEF8'],
-
-    tooltip: {},
-  
-    radar: {
-        center: ['50%', '50%'],
-	 radius: ["25%", "70%"],
-		
-        name: {
-            textStyle: {
-                color: '#72ACD1'
-            }
-        },
-
-          splitLine: {
-
-              lineStyle: {
-
-                  color: 'rgba(255,255,255,.0',
-
-                  width: 2
-
-              }
-
-          },
-          axisLine: {
-              lineStyle: {
-                  color: 'rgba(255,255,255,0.2)',
-                  width: 1,
-                  type: 'dotted'
-
-              },
-
-          },
-        splitArea: {
-            areaStyle: {
-                  color: ['rgba(255,255,255,.1)', 'rgba(255,255,255,0)']
-              }
-        },
-        indicator: data[2]
-    },
-    series: [{
-        name: '',
-        type: 'radar',
-        data: [{
-                areaStyle: {
-                    normal: {
-                        opacity: 0.3,
-                    }
-                },
-                value: data[3],
-                name: data[1][0]
-            },
-            {
-                areaStyle: {
-                    normal: {
-                        opacity: 0.3,
-                    }
-                },
-                value: data[4],
-                name: data[1][1]
-            },
-            {
-                areaStyle: {
-                    normal: {
-                        opacity: 0.3,
-                    }
-                },
-                value: data[5],
-                name: data[1][2]
-            }
-        ]
-    }]
-};
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
-    }
-function echarts_4() {
+function echarts_4(yearNum) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('asset_1'));
         var myChart2 = echarts.init(document.getElementById('asset_2'));
         var myChart3 = echarts.init(document.getElementById('asset_3'));
         var myChart4 = echarts.init(document.getElementById('asset_4'));
+        myChart.clear();
+        myChart2.clear();
+        myChart3.clear();
         myChart4.clear();
     $.ajax({
         type: "get",
@@ -122,19 +17,24 @@ function echarts_4() {
         headers: {
             'Authorization': localStorage.getItem("token") // 在请求头中添加token
         },
+        data:{
+            yearNum:yearNum
+        },
         success: function (res) {
             if(res && res.code===200){
                 //租金总收入
-                document.getElementById("rent_total").innerText = res.obj.rent_total;
-                $("#asset_1_date").html(res.obj.income_lastDate);
+                document.getElementById("rent_total").innerText = (res.obj.rent_total==undefined?'':res.obj.rent_total);
+                $("#asset_1_date").html((res.obj.income_lastDate==undefined?'':res.obj.income_lastDate));
                 //租金总欠收
-                document.getElementById("arrears_now").innerText = res.obj.arrears_now;
+                document.getElementById("arrears_now").innerText = (res.obj.arrears_now==undefined?'':res.obj.arrears_now);
                 $("#asset_2_date").html(res.obj.income_lastDate);
                 //经营业务总收入
-                document.getElementById("in_total").innerText = res.obj.in_total;
+                document.getElementById("in_total").innerText = (res.obj.in_total==undefined?'':res.obj.in_total);
                 $("#asset_4_date").html(res.obj.manage_lastDate);
                 $("#asset_3_date").html(res.obj.rate_lastDate);
-                   var manage_date =[];
+                //当前出租率
+                document.getElementById("letRate_now").innerText = (res.obj.letRate_now==undefined?'':res.obj.letRate_now);
+                var manage_date =[];
                    var income_data =[];
                    var income_date =[];
                    var arrears_date =[];
@@ -778,8 +678,7 @@ function echarts_4() {
                            }
                        ]
                    };
-                //当前出租率
-                document.getElementById("letRate_now").innerText = (rate_data[rate_data.length-1]==null?rate_data[rate_data.length-2]:rate_data[rate_data.length-1])+'%';
+
                    myChart.setOption(option);
                    myChart2.setOption(option2);
                    myChart3.setOption(option3);
@@ -812,6 +711,8 @@ function echarts_5(rate) {
         var myChart = echarts.init(document.getElementById('capital_1'));
         var myChart2 = echarts.init(document.getElementById('capital_2'));
         //   var myChart3 = echarts.init(document.getElementById('capital_3'));
+        myChart.clear();
+        myChart2.clear();
         $.ajax({
             type: "get",
             url: "/getCapitalByCenterShow",
@@ -1232,7 +1133,10 @@ function echarts_31() {
 	var myChart4 = echarts.init(document.getElementById('fb04'));
 	//var myChart5 = echarts.init(document.getElementById('myd1'));
 	// var myChart7 = echarts.init(document.getElementById('sysx'));
-
+    myChart.clear();
+    myChart2.clear();
+    myChart3.clear();
+    myChart4.clear();
     $.ajax({
         type: "get",
         url: "/getByCenter",
@@ -1449,120 +1353,6 @@ function echarts_31() {
 
 
     }
-// function echarts_32(period) {
-//         // 基于准备好的dom，初始化echarts实例
-//         var myChart = echarts.init(document.getElementById('fb05'));
-//        $.ajax({
-//         type: "get",
-//         url: "/getCostManageByCenter",
-//         headers: {
-//             'Authorization': localStorage.getItem("token") // 在请求头中添加token
-//         },
-//         data:({
-//             period:period,
-//             condition:currentDate(1)
-//         }),
-//         success: function (res) {
-//             if(res && res.code===200){
-//                 var pieData = []
-//                 var total_money=0;
-//
-//                     pieData.push({name:"工资发放",value:res.obj.payOutWage});
-//                     pieData.push({name:"房租",value:res.obj.rent});
-//                     pieData.push({name:"水电办公等",value:res.obj.hydropowerOffice});
-//                     pieData.push({name:"工会",value:res.obj.laborUnion});
-//                     total_money+=res.obj.payOutWage+res.obj.rent+res.obj.hydropowerOffice+res.obj.laborUnion;
-//
-//
-//                     option = {
-//                         title: {
-//                             zlevel: 0,
-//                             text: ['{name|累计成本}', '{value|' + total_money + '}{name|万元}'].join('\n'),
-//                             top: '35%',
-//                             left: '34%',
-//                             textAlign: 'center',
-//                             textStyle: {
-//                                 rich: {
-//                                     value: {
-//                                         color: '#cf5a1f',
-//                                         fontSize: 15,
-//                                         lineHeight: 25,
-//                                     },
-//                                     name: {
-//                                         color: '#909399',
-//                                         fontSize: 10,
-//                                         lineHeight: 25,
-//                                     },
-//                                 },
-//                             }
-//                         },
-//                         tooltip: {
-//                             trigger: 'item',
-//                             formatter: "{a} <br/>{b}: {c} 万元 ({d}%)",
-//                             position:function(p){   //其中p为当前鼠标的位置
-//                                 return [p[0] + 10, p[1] - 10];
-//                             },
-//                         },
-//                         legend: {
-//                             type: 'scroll',
-//                             orient: 'vertical',
-//                             top:'25%',
-//                             right:0,
-//                             itemWidth: 10,
-//                             itemHeight: 10,
-//                             data:['工资发放','房租','水电办公等','工会'],
-//                             textStyle: {
-//                                 color: 'rgba(255,255,255,.5)',
-//                                 fontSize:'10',
-//                             },
-//                             formatter: function(name) {
-//                                 var data = option.series[0].data;
-//                                 for (let i = 0; i < data.length; i++) {
-//                                     if(name === data[i].name){
-//                                         var percent = (data[i].value / total_money * 100).toFixed(2) + '%';
-//                                         return name + ': ' +data[i].value+ '万元 (' + percent + ')';
-//                                     }
-//
-//                                 }
-//                                 },
-//                         },
-//                         series: [
-//                             {
-//                                 name:'成本分布',
-//                                 type:'pie',
-//                                 center: ['35%', '50%'],
-//                                 radius: ['40%', '50%'],
-//                                 color: ['#62c98d', '#2f89cf', '#4cb9cf', '#e0c828','#e58c00','#eb295b'],
-//                                 // 这里与方法一的label设置的一样
-//                                 label: {
-//                                     show:false,
-//                                     position: 'center',
-//                                 },
-//                                 data:pieData
-//                             }
-//                         ]
-//                     };
-//
-//                     // 使用刚指定的配置项和数据显示图表。
-//                     myChart.setOption(option);
-//
-//
-//                     window.addEventListener("resize",function(){
-//                         myChart.resize();
-//                     });
-//
-//
-//                 }
-//
-//             }
-//
-//
-//
-//         })
-//
-//
-//
-//     }
 function getTaskTable() {
 
         $.ajax({
@@ -1665,6 +1455,7 @@ function getRiskTable() {
 
     }
 function total_manage() {
+    var yearNum = document.getElementById("yearData").value;
     var myChart = echarts.init(document.getElementById('asset_4'));
      myChart.clear();
     $.ajax({
@@ -1672,6 +1463,9 @@ function total_manage() {
         url: "/getTotalManage",
         headers: {
             'Authorization': localStorage.getItem("token") // 在请求头中添加token
+        },
+        data:{
+            yearNum:yearNum
         },
         success: function (res) {
             if(res && res.code===200){
@@ -1813,6 +1607,9 @@ function echarts_33(period) {
         var myChart = echarts.init(document.getElementById('fb06'));
         var myChart2 = echarts.init(document.getElementById('fb07'));
         var myChart3 = echarts.init(document.getElementById('fb08'));
+         myChart.clear();
+         myChart2.clear();
+         myChart3.clear();
         $.ajax({
             type: "get",
             url: "/getBudgetByCenter",
@@ -2254,38 +2051,6 @@ function echarts_33(period) {
 
 
     }
-
-
-
-
-
-//获取年月日
-function currentDate(type) {
-        var date = new Date(); // 创建Date对象
-        // 获取年、月、日、小时、分钟和秒
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1; // 月份从0开始，所以要加1
-        var day = date.getDate();
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var seconds = date.getSeconds();
-        // 将日期和时间组件组合成字符串
-        var formatteddate = year + '-' + month;
-        var formattedTime = year + '-' + month + '-' + day;
-        if(type==1){
-            return formatteddate;
-        }else {
-            return year;
-        }
-
-    }
-
-    //获取所有包含百分比转化
-    function percentage(num) {
-        var per = Number(num)*100;
-        return per +'%';
-
-    }
     function isNull(number) {
         if(null==number){
             return "";
@@ -2325,6 +2090,7 @@ function currentDate(type) {
         total_manage();
     })
     $("#in_details").on("click", function() {
+        var yearNum = document.getElementById("yearData").value;
         // 获取元素
         var element = document.getElementById("in_details");
         // 获取元素
@@ -2332,7 +2098,7 @@ function currentDate(type) {
        // 修改class
         element.className = "infobtnChoose";
         element2.className = "infobtn";
-        echarts_4();
+        echarts_4(yearNum);
     })
     $("#rate_type").on("change", function() {
         // 在这里编写你的函数逻辑
@@ -2379,7 +2145,14 @@ function initData() {
     //     box1.style.display="none";
     //
     // });
+    $("#yearData").on("change", function() {
+        var yearNum = document.getElementById("yearData").value;
+        echarts_4(yearNum);
+    })
 })
+
+
+
 
 
 

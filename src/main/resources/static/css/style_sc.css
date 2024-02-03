@@ -397,3 +397,16 @@ body .specific-popup .layui-layer-content{
     background: radial-gradient(50% 35%, farthest-corner,#034f8e,#034987,#02366d,#002353);
 
 }
+
+.yearNumSelect{
+    position: absolute;
+    top: 30%;
+    right: 1%;
+    width: 6%;
+}
+.yearNumSelectPhone{
+    position: absolute;
+    top: 30%;
+    right: 2%;
+    width: 20%;
+}

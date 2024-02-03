@@ -28,9 +28,11 @@
 </body>
 <script>
 	window.onload = function() {
-		echarts_4();
+		var yearNum = localStorage.getItem("yearNum");
+		echarts_4(yearNum);
 	}
 	function total_manage() {
+		var yearNum = localStorage.getItem("yearNum");
 		var myChart = echarts.init(document.getElementById('asset_4'));
 		myChart.clear();
 		$.ajax({
@@ -38,6 +40,9 @@
 			url: "/getTotalManage",
 			headers: {
 				'Authorization': localStorage.getItem("token") // 在请求头中添加token
+			},
+			data:{
+				yearNum:yearNum
 			},
 			success: function (res) {
 				if(res && res.code===200){
@@ -186,6 +191,7 @@
 		total_manage();
 	})
 	$("#in_details").on("click", function() {
+		var yearNum = localStorage.getItem("yearNum");
 		// 获取元素
 		var element = document.getElementById("in_details");
 		// 获取元素
@@ -193,9 +199,9 @@
 		// 修改class
 		element.className = "infobtnChoose";
 		element2.className = "infobtn";
-		echarts_4();
+		echarts_4(yearNum);
 	})
-	function echarts_4() {
+	function echarts_4(yearNum) {
 		// 基于准备好的dom，初始化echarts实例
 		var myChart4 = echarts.init(document.getElementById('asset_4'));
 		myChart4.clear();
@@ -204,6 +210,9 @@
 			url: "/getManageStateByCenter",
 			headers: {
 				'Authorization': localStorage.getItem("token") // 在请求头中添加token
+			},
+			data:{
+				yearNum:yearNum
 			},
 			success: function (res) {
 				if(res && res.code===200){

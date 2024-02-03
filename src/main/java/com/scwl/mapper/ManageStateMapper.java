@@ -41,8 +41,11 @@ public interface ManageStateMapper {
 
     List<ManageState> getAllName();
     List<ManageState> getManageStateByManage(String name);
+    List<ManageState> getManageStateByManageByYear(@Param("yearNum") Integer yearNum,@Param("name") String name);
     List<ManageState> getManageStateByTotal();
+    List<ManageState> getManageStateByTotalByYearNum(Integer yearNum);
     List<ManageState> getDataByColumn(@Param("column") String column,@Param("type") String type);
+    List<ManageState> getDataByColumnByYear(@Param("yearNum") Integer yearNum,@Param("column") String column,@Param("type") String type);
     ManageState getLastMonth(@Param("type") String type);
     ManageState getCurrentMonth(@Param("type") String type);
     ManageState getByMonth(@Param("manageState") ManageState manageState);

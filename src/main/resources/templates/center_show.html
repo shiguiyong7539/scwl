@@ -19,24 +19,25 @@
 <div class="head clearfix">
 	<div style="float: left;margin: 10px;"><a href="#" onclick="goAdmin()" title=""><img src="/images/icons/light/frames.png" alt="" /><span>管理中心</span></a></div>
 	<h1>沙磁文旅公司经营数据门户</h1>
-	<div class="time" id="showTime"></div>
-	<script>
-		var t = null;
-		t = setTimeout(time, 1000);//開始运行
-		function time() {
-			clearTimeout(t);//清除定时器
-			dt = new Date();
-			var y = dt.getFullYear();
-			var mt = dt.getMonth() + 1;
-			var day = dt.getDate();
-			var h = dt.getHours();//获取时
-			var m = dt.getMinutes();//获取分
-			var s = dt.getSeconds();//获取秒
-			document.getElementById("showTime").innerHTML = y + "/" + mt + "/" + day + " " + h + ":" + (m>=10?m:"0"+m) + ":" + (s>=10?s:"0"+s) + "";
-			t = setTimeout(time, 1000); //设定定时器，循环运行
-		}
+	<select class="yearNumSelect" id="yearData"></select>
+<!--	<div class="time" id="showTime"></div>-->
+<!--	<script>-->
+<!--		var t = null;-->
+<!--		t = setTimeout(time, 1000);//開始运行-->
+<!--		function time() {-->
+<!--			clearTimeout(t);//清除定时器-->
+<!--			dt = new Date();-->
+<!--			var y = dt.getFullYear();-->
+<!--			var mt = dt.getMonth() + 1;-->
+<!--			var day = dt.getDate();-->
+<!--			var h = dt.getHours();//获取时-->
+<!--			var m = dt.getMinutes();//获取分-->
+<!--			var s = dt.getSeconds();//获取秒-->
+<!--			document.getElementById("showTime").innerHTML = y + "/" + mt + "/" + day + " " + h + ":" + (m>=10?m:"0"+m) + ":" + (s>=10?s:"0"+s) + "";-->
+<!--			t = setTimeout(time, 1000); //设定定时器，循环运行-->
+<!--		}-->
 
-	</script>
+<!--	</script>-->
 </div>
 <div class="mainbox">
 <!--<div class="map" style="position: fixed;z-index: -1; top:50%;left:40%;" >-->
@@ -217,6 +218,8 @@
 </div>
 </body>
 <script>
+
+
 	function openRectify() {
 		layui.layer.open({
 			type:2,
@@ -248,6 +251,8 @@
 	}
 
 	function openWindow(url) {
+		var yearNum = document.getElementById("yearData").value;
+		localStorage.setItem("yearNum",yearNum);
 		layui.layer.open({
 			type:2,
 			title:"",
@@ -258,5 +263,20 @@
 			content: url
 		})
 	}
+	$(function () {
+		let currentYear = new Date().getFullYear();
+		let yearSelect = document.getElementById("yearData");
+		let option1 = document.createElement("option");
+		 option1.value = '';
+		option1.text = '年度选择';
+		option1.selected = true;
+		yearSelect.add(option1);
+		for (let i = 2023; i <= currentYear;i++) {
+			let option = document.createElement("option");
+			option.value = i;
+			option.text = i+'年';
+			yearSelect.add(option);
+		}
+	})
 </script>
 </html>

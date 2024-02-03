@@ -68,8 +68,8 @@ public class ManageStateConreoller {
      * @return
      */
     @RequestMapping("/getManageStateByCenter")
-    public Object getManageStateByCenter(HttpServletRequest request){
-        return  manageStateService.getManageStateByCenter();
+    public Object getManageStateByCenter(HttpServletRequest request,Integer yearNum){
+        return  manageStateService.getManageStateByCenter(yearNum);
     }
 
 
@@ -79,7 +79,7 @@ public class ManageStateConreoller {
      * @return
      */
     @RequestMapping("/getTotalManage")
-    public Object getTotalManage(HttpServletRequest request){
-        return  manageStateService.getTotalManage();
+    public Object getTotalManage(HttpServletRequest request,Integer yearNum){
+        return  manageStateService.getTotalManage(yearNum);
     }
 }

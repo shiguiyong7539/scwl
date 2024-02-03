@@ -14,7 +14,7 @@ public interface ManageStateService {
  ResBean addState(ManageState manageState);
  ResBean updateState(ManageState manageState);
  ResBean deleteState(String ids);
- ResBean getManageStateByCenter();
- ResBean getTotalManage();
+ ResBean getManageStateByCenter(Integer yearNum);
+ ResBean getTotalManage(Integer yearNum);
  void deductArrears(RentBill  bill, BigDecimal money);
 }
