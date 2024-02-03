@@ -34,5 +34,6 @@ public interface TaskMapper {
     List<Task> getTaskByYear(String condition);
 
     List<Task> getTaskByCenterShow();
+    List<Task> getTaskByCenterShowByYearNum(Integer yearNum);
 
 }

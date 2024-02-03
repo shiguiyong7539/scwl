@@ -63,8 +63,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public ResBean getTaskByCenterShow() {
-        List<Task> tasks =  taskMapper.getTaskByCenterShow();
-        return ResBean.success("success",tasks);
+    public ResBean getTaskByCenterShow(Integer yearNum) {
+        if(null!=yearNum){
+            List<Task> tasks =  taskMapper.getTaskByCenterShowByYearNum(yearNum);
+            return ResBean.success("success",tasks);
+        }else {
+            List<Task> tasks =  taskMapper.getTaskByCenterShow();
+            return ResBean.success("success",tasks);
+        }
     }
 }

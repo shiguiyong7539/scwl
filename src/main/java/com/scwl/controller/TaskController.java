@@ -53,8 +53,8 @@ public class TaskController {
      */
     @RequestMapping("/getTaskByCenterShow")
     @ResponseBody
-    public Object getTaskByCenterShow(HttpServletRequest request){
-        return taskService.getTaskByCenterShow();
+    public Object getTaskByCenterShow(HttpServletRequest request,Integer yearNum){
+        return taskService.getTaskByCenterShow(yearNum);
     }
 
 

@@ -1353,13 +1353,16 @@ function echarts_31() {
 
 
     }
-function getTaskTable() {
+function getTaskTable(yearNum) {
 
         $.ajax({
             type: "get",
             url: "/getTaskByCenterShow",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:{
+                yearNum:yearNum
             },
             success: function (res) {
                 if(res && res.code===200){
@@ -2148,6 +2151,7 @@ function initData() {
     $("#yearData").on("change", function() {
         var yearNum = document.getElementById("yearData").value;
         echarts_4(yearNum);
+        getTaskTable(yearNum);
     })
 })
 
