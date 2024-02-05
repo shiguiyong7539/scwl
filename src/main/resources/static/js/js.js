@@ -706,7 +706,7 @@ function echarts_4(yearNum) {
 
         }})
     }
-function echarts_5(rate) {
+function echarts_5(rate,yearNum) {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('capital_1'));
         var myChart2 = echarts.init(document.getElementById('capital_2'));
@@ -720,7 +720,7 @@ function echarts_5(rate) {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
             },
             data:{
-                condition:rate
+                yearNum:yearNum
             },
             success: function (res) {
                 if(res && res.code===200){
@@ -1125,7 +1125,7 @@ function echarts_5(rate) {
 
 
     }
-function echarts_31() {
+function echarts_31(yearNum) {
         // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('fb01'));
 	var myChart2 = echarts.init(document.getElementById('fb02'));
@@ -1143,6 +1143,7 @@ function echarts_31() {
         headers: {
             'Authorization': localStorage.getItem("token") // 在请求头中添加token
         },
+        data:{yearNum:yearNum},
         success: function (res) {
             if(res && res.code===200){
                 var total = res.obj.total;
@@ -1388,12 +1389,15 @@ function getTaskTable(yearNum) {
         })
 
     }
-function getContractTable() {
+function getContractTable(yearNum) {
         $.ajax({
             type: "get",
             url: "/getContractByCenter",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:{
+                yearNum:yearNum
             },
             success: function (res) {
                 if(res && res.code===200){
@@ -1418,12 +1422,15 @@ function getContractTable() {
         })
 
     }
-function getRiskTable() {
+function getRiskTable(yearNum) {
         $.ajax({
             type: "get",
             url: "/getRiskByCenter",
             headers: {
                 'Authorization': localStorage.getItem("token") // 在请求头中添加token
+            },
+            data:{
+                yearNum:yearNum
             },
             success: function (res) {
                 if(res && res.code===200){
@@ -2106,12 +2113,14 @@ function echarts_33(period) {
     $("#rate_type").on("change", function() {
         // 在这里编写你的函数逻辑
         var selected = $(this).val();
-        echarts_5(selected);
+        var yearNum = document.getElementById("yearData").value;
+        echarts_5(selected,yearNum);
     });
     $("#monthType").on("change", function() {
         // 在这里编写你的函数逻辑
         var selected = $(this).val();
-        echarts_33(selected);
+        var yearNum = document.getElementById("yearData").value;
+        echarts_33(selected,yearNum);
     });
 
 
@@ -2150,8 +2159,19 @@ function initData() {
     // });
     $("#yearData").on("change", function() {
         var yearNum = document.getElementById("yearData").value;
+        var rate = document.getElementById("rate_type").value;
         echarts_4(yearNum);
         getTaskTable(yearNum);
+        getRiskTable(yearNum);
+        getContractTable(yearNum);
+        echarts_31(yearNum);
+        echarts_5(rate,yearNum);
+        if(null==yearNum||yearNum==''){
+            echarts_33('上月');
+        }else {
+            echarts_33(yearNum);
+        }
+
     })
 })
 

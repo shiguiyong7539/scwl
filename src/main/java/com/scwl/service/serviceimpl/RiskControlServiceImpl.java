@@ -196,12 +196,46 @@ public class RiskControlServiceImpl implements RiskControlService {
 
 
     @Override
-    public ResBean getRiskByCenter() {
+    public ResBean getRiskByCenter(Integer yearNum) {
         ArrayList<Map> maps = new ArrayList<>();
         HashMap<String, Object> map = new HashMap<>();
         HashMap<String, Object> map2 = new HashMap<>();
         map.put("name","涉诉情况");
         map2.put("name","内部监督情况");
+        if(null!=yearNum){
+            //涉诉总件数
+            RiskControl riskControl = riskControlMapper.getTotalByYear(yearNum);
+            if(null!=riskControl){
+                map.put("num",riskControl.getNum());
+                //当年度涉诉总数
+                map.put("yearNum",riskControl.getNum());
+            }else {
+                map.put("num",0);
+                //当年度涉诉总数
+                map.put("yearNum",0);
+            }
+
+            //监督整改总件数
+            int total = supervisionRectifyMapper.getTotalByYear(yearNum);
+            map2.put("num",total);
+            map2.put("yearNum",total);
+            //当年度截至日期
+            map.put("lastDate","截至"+new SimpleDateFormat("yyyy年MM月dd日").format(new Date()));
+            map2.put("lastDate","截至"+new SimpleDateFormat("yyyy年MM月dd日").format(new Date()));
+            RiskControl lastDate = riskControlMapper.getLastDateByYear(yearNum);
+            SupervisionRectify lastDate1 = supervisionRectifyMapper.getLastDateByYear(yearNum);
+            if(lastDate!=null&&lastDate1!=null&&lastDate.getAddTime().compareTo(lastDate1.getAddTime())>0){
+                String str = new SimpleDateFormat("yyyy年MM月dd日").format(lastDate.getAddTime());
+                map.put("lastDate","截至"+str);
+                map2.put("lastDate","截至"+str);
+            }else {
+                if(lastDate1!=null){
+                    String str = new SimpleDateFormat("yyyy年MM月dd日").format(lastDate1.getAddTime());
+                    map.put("lastDate","截至"+str);
+                    map2.put("lastDate","截至"+str);
+                }
+            }
+        }else {
         //涉诉总件数
         RiskControl riskControl = riskControlMapper.getTotal();
         map.put("num",riskControl.getNum());
@@ -227,9 +261,11 @@ public class RiskControlServiceImpl implements RiskControlService {
             map.put("lastDate","截至"+str);
             map2.put("lastDate","截至"+str);
         }
+        }
         maps.add(map);
         maps.add(map2);
         return  ResBean.success("success",maps);
+
     }
 
 

@@ -394,4 +394,10 @@
   <select id="getLastDate" parameterType="java.lang.String" resultMap="BaseResultMap">
    select add_time  from supervision_rectify  ORDER BY add_time DESC LIMIT 1
   </select>
+  <select id="getTotalByYear" resultType="java.lang.Integer">
+  select count(id) as num from supervision_rectify where YEAR(start_time) =#{yearNum}
+  </select>
+  <select id="getLastDateByYear" resultMap="BaseResultMap">
+   select add_time  from supervision_rectify  where YEAR(start_time) =#{yearNum}  ORDER BY add_time DESC LIMIT 1
+  </select>
 </mapper>

@@ -84,27 +84,56 @@ public class CapitalServiceImpl implements CapitalService {
     }
 
     @Override
-    public ResBean getCapitalByCenterShow() {
+    public ResBean getCapitalByCenterShow(Integer yearNum) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        //可用和不可用资金
-        List<Capital> income  = capitalMapper.getIncome();
-        //比率
-        List<Capital> incomeRate  = capitalMapper.getIncomeRate();
-        hashMap.put("list",income);
-        hashMap.put("incomeRate",incomeRate);
-        if(income.size()>0){
-            hashMap.put("use_money",income.get(income.size()-1).getUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
-            hashMap.put("unUse_money",income.get(income.size()-1).getUnUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
-        }else {
-            hashMap.put("use_money","");
-            hashMap.put("unUse_money","");
-        }
-        //截至日期
-        Capital incom_lastDate = capitalMapper.getLastDate(1);
-        Capital rate_lastDate = capitalMapper.getLastDate(2);
+        if(null!= yearNum){
+            //可用和不可用资金
+            List<Capital> income  = capitalMapper.getIncomeByYear(yearNum);
+            //比率
+            List<Capital> incomeRate  = capitalMapper.getIncomeRateByYear(yearNum);
+            hashMap.put("list",income);
+            hashMap.put("incomeRate",incomeRate);
+            if(income.size()>0){
+                hashMap.put("use_money",income.get(income.size()-1).getUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+                hashMap.put("unUse_money",income.get(income.size()-1).getUnUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+            }else {
+                hashMap.put("use_money","");
+                hashMap.put("unUse_money","");
+            }
+            //截至日期
+            Capital incom_lastDate = capitalMapper.getLastDateByYear(1,yearNum);
+            Capital rate_lastDate = capitalMapper.getLastDateByYear(2,yearNum);
+            hashMap.put("incom_lastDate",new SimpleDateFormat("yyyy年MM月dd日").format(new Date()));
+            hashMap.put("rate_lastDate",new SimpleDateFormat("yyyy年MM月dd日").format(new Date()));
+           if(null!=incom_lastDate){
+               hashMap.put("incom_lastDate",getDate(incom_lastDate.getQuarterly()));
+           }
+            if(null!=rate_lastDate){
+                hashMap.put("rate_lastDate",getDate(rate_lastDate.getQuarterly()));
+            }
 
-        hashMap.put("incom_lastDate",getDate(incom_lastDate.getQuarterly()));
-        hashMap.put("rate_lastDate",getDate(rate_lastDate.getQuarterly()));
+        }else {
+            //可用和不可用资金
+            List<Capital> income  = capitalMapper.getIncome();
+            //比率
+            List<Capital> incomeRate  = capitalMapper.getIncomeRate();
+            hashMap.put("list",income);
+            hashMap.put("incomeRate",incomeRate);
+            if(income.size()>0){
+                hashMap.put("use_money",income.get(income.size()-1).getUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+                hashMap.put("unUse_money",income.get(income.size()-1).getUnUseCapital().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
+            }else {
+                hashMap.put("use_money","");
+                hashMap.put("unUse_money","");
+            }
+            //截至日期
+            Capital incom_lastDate = capitalMapper.getLastDate(1);
+            Capital rate_lastDate = capitalMapper.getLastDate(2);
+
+            hashMap.put("incom_lastDate",getDate(incom_lastDate.getQuarterly()));
+            hashMap.put("rate_lastDate",getDate(rate_lastDate.getQuarterly()));
+        }
+
         return ResBean.success("success",hashMap);
     }
 

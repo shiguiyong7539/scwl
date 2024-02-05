@@ -330,4 +330,15 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotalByYear"  resultMap="BaseResultMap">
+    select count(id) as total_num,department from contract where   YEAR(start_time) = #{yearNum} group by department
+  </select>
+
+  <select id="getContinueTotalByYear"   resultType="java.lang.Integer">
+    select count(id)  from contract where type = '履行中'  and  department=#{department} and YEAR(start_time) = #{yearNum}
+  </select>
+  <select id="getOverTotalByYear"  resultType="java.lang.Integer">
+    select count(id)  from contract where type = '履行完毕' and  department=#{department} and YEAR(start_time) = #{yearNum}
+  </select>
 </mapper>

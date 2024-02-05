@@ -13,6 +13,6 @@ public interface EmployeeService {
     ResBean addEmployee(Employee employee);
     ResBean updateMember(Employee employee);
     ResBean deleteMember(String ids);
-    ResBean getByCenter();
+    ResBean getByCenter(Integer yearNum);
     ResBean uploadMemberFile( List<String[]> data) throws ParseException;
 }

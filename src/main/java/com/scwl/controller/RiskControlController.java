@@ -172,7 +172,7 @@ public class RiskControlController {
      * @return
      */
     @RequestMapping("/getRiskByCenter")
-    public Object getRiskByCenter(HttpServletRequest request){
-        return  riskControlService.getRiskByCenter();
+    public Object getRiskByCenter(HttpServletRequest request,Integer yearNum){
+        return  riskControlService.getRiskByCenter(yearNum);
     }
 }

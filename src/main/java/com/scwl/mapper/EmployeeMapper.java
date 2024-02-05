@@ -31,14 +31,16 @@ public interface EmployeeMapper {
     int updateByPrimaryKey(Employee record);
 
     int getTotal();
+    int getTotalByYear(Integer yeaNum);
 
-    List<Map> getByAgeGroup();
+    List<Map> getByAgeGroup(Integer yearNum);
 
-    List<Map> getByEduGroup();
+    List<Map> getByEduGroup(Integer yearNum);
     //按职称分组
-    List<Map> getByRankGroup();
+    List<Map> getByRankGroup(Integer yearNum);
     //按用工方式分组
-    List<Map>  getByModeGroup();
+    List<Map>  getByModeGroup(Integer yearNum);
 
-    Employee getLastDate();
+    Employee getLastDate(Integer yearNum);
+
 }

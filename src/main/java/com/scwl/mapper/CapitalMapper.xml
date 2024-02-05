@@ -438,4 +438,28 @@
   <select id="getLastDate" parameterType="java.lang.Integer" resultMap="BaseResultMap">
        select quarterly  from capital where type=#{type}  ORDER BY quarterly DESC LIMIT 1
   </select>
+
+  <select id="getIncomeByYear" resultMap="BaseResultMap">
+      select use_capital,un_use_capital,
+      MONTH(quarterly)  as remark
+    from capital
+   where type=1 and  YEAR(quarterly) = #{yearNum}
+     GROUP BY DATE_FORMAT(quarterly,'%Y-%m')
+     ORDER BY DATE_FORMAT(quarterly,'%Y-%m')
+  </select>
+
+  <select id="getIncomeRateByYear"  resultMap="BaseResultMap">
+      select
+       finish_rate,finish_rate_tag,operat_rate,operat_rate_tag,income_rate,income_rate_Tag,
+       cash_rate,cash_rate_tag,cost_rate,cost_rate_tag,quarterly,
+      MONTH(quarterly)  as remark
+    from capital
+    where type=2 and    YEAR(quarterly) = #{yearNum}
+     GROUP BY quarterly
+     ORDER BY DATE_FORMAT(quarterly,'%Y-%m')
+  </select>
+
+  <select id="getLastDateByYear"  resultMap="BaseResultMap">
+       select quarterly  from capital where type=#{type} and    YEAR(quarterly) = #{yearNum} ORDER BY quarterly DESC LIMIT 1
+  </select>
 </mapper>

@@ -143,45 +143,8 @@
 
 <script type="text/javascript">
     $(function () {
-        initData();
         rectifyList(1);
     } );
-    function initData() {
-        var token = localStorage.getItem("token");
-        if(token){
-            $.ajax({
-                type: "get",
-                url: "/isLogin",
-                headers: {
-                    'Authorization': token // 在请求头中添加token
-                },
-                success: function (res) {
-                    if(res.code === 200) {
-                       // JSON.stringify()
-                        document.getElementById("loginUser").innerHTML = "您好！"+res.obj.name;
-                        document.getElementById("idNo").innerHTML = "ID号："+res.obj.id;
-                        document.getElementById("idName").innerHTML = "姓名："+res.obj.name;
-                        document.getElementById("idPhone").innerHTML = "手机："+res.obj.phone;
-                    }else {
-                        layui.layer.msg(res.message,{icon:2},{time:1000},function(){
-                            layer.close(); //再执行关闭
-                            location.reload();
-                        });
-                    }
-                },
-                error:function (res) {
-                    layui.layer.msg(res.message,{icon:2},{time:1000},function(){
-                        layer.close(); //再执行关闭
-                        location.reload();
-                    });
-                }
-            })
-        }else {
-            var info ="您还未登录，暂时无法显示当前页面的敏感数据哟！"+"<a href='#' onclick='login()'>立即登录</a>";
-            document.getElementById("messages").innerHTML = info;
-        }
-    }
-
     function rectifyList(pageNum) {
 
         $.ajax({

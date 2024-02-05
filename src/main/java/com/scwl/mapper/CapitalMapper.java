@@ -38,6 +38,9 @@ public interface CapitalMapper {
     List<Capital> getIncomeRate();
     Capital getLastDate(Integer type);
 
+    List<Capital> getIncomeByYear(Integer yearNum);
+    List<Capital> getIncomeRateByYear(Integer yearNum);
+    Capital getLastDateByYear(Integer type,Integer yearNum);
 
 
 }

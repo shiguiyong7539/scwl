@@ -357,6 +357,9 @@
     SELECT FLOOR(TIMESTAMPDIFF(YEAR, birthday, CURDATE())  / 10) * 10 AS age_group, COUNT(id) AS count
     FROM employee
     where is_delete = 0
+    <if test="yearNum !=null">
+      and YEAR(add_time) = #{yearNum}
+    </if>
     GROUP BY age_group
     ORDER BY age_group desc
   </select>
@@ -365,6 +368,9 @@
     SELECT education, COUNT(id) AS count
     FROM employee
     where is_delete = 0
+    <if test="yearNum !=null">
+      and YEAR(add_time) = #{yearNum}
+    </if>
     GROUP BY education
     ORDER BY education desc
   </select>
@@ -373,6 +379,9 @@
     SELECT rank, COUNT(id) AS count
     FROM employee
     where is_delete = 0
+    <if test="yearNum !=null">
+      and YEAR(add_time) = #{yearNum}
+    </if>
     GROUP BY rank
   </select>
 
@@ -381,9 +390,20 @@
     SELECT employment_mode, COUNT(id) AS count
     FROM employee
     where is_delete = 0
+    <if test="yearNum !=null">
+      and YEAR(add_time) = #{yearNum}
+    </if>
     GROUP BY employment_mode
   </select>
-  <select id="getLastDate" parameterType="java.lang.String" resultMap="BaseResultMap">
-   select add_time  from employee where is_delete = 0  ORDER BY add_time DESC LIMIT 1
+  <select id="getLastDate"  resultMap="BaseResultMap">
+   select add_time  from employee where is_delete = 0
+    <if test="yearNum !=null">
+      and YEAR(add_time) = #{yearNum}
+    </if>
+    ORDER BY add_time DESC LIMIT 1
+  </select>
+
+  <select id="getTotalByYear" resultType="java.lang.Integer">
+    select count(id) from employee where is_delete = 0 and YEAR(add_time) = #{yearNum}
   </select>
 </mapper>

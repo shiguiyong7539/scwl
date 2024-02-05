@@ -25,7 +25,9 @@
 </body>
 <script>
 	window.onload = function(){
-		echarts_321('上月');
+		var yearNum = localStorage.getItem("yearNum");
+		if(null==yearNum||yearNum==''){yearNum='上月';}
+		echarts_321(yearNum);
 	}
 
 	function echarts_321(period) {

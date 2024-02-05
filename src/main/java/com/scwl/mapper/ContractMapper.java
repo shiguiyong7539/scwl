@@ -30,9 +30,11 @@ public interface ContractMapper {
 
 
     List<Contract> getTotal();
+    List<Contract> getTotalByYear(Integer yearNum);
     int getContinueTotal(String department);
     int getOverTotal(String department);
-
+    int getContinueTotalByYear(String department,Integer yearNum);
+    int getOverTotalByYear(String department,Integer yearNum);
     int update(Contract contract);
 
 

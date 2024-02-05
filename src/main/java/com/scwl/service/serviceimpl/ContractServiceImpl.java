@@ -84,8 +84,20 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public ResBean getContractByCenter() {
+    public ResBean getContractByCenter(Integer yearNum) {
         //合同总数
+        if(null!=yearNum){
+            List<Contract> list = contractMapper.getTotalByYear(yearNum);
+            for (Contract contract : list) {
+                //履行踪的总数
+                int continueTotal = contractMapper.getContinueTotalByYear(contract.getDepartment(),yearNum);
+                contract.setUnfinishNum(continueTotal);
+                //履行完毕总数
+                int overTotal = contractMapper.getOverTotalByYear(contract.getDepartment(),yearNum);
+                contract.setFinishNum(overTotal);
+            }
+            return  ResBean.success("success",list);
+        }else {
         List<Contract> list = contractMapper.getTotal();
         for (Contract contract : list) {
             //履行踪的总数
@@ -95,7 +107,6 @@ public class ContractServiceImpl implements ContractService {
             int overTotal = contractMapper.getOverTotal(contract.getDepartment());
             contract.setFinishNum(overTotal);
         }
-
-        return  ResBean.success("success",list);
+        return  ResBean.success("success",list);}
     }
 }

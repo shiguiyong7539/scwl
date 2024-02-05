@@ -74,8 +74,8 @@ public class EmployeeController {
      */
     @RequestMapping("/getByCenter")
     @ResponseBody
-    public Object getByCenter(){
-        return employeeService.getByCenter();
+    public Object getByCenter(Integer yearNum){
+        return employeeService.getByCenter(yearNum);
     }
 
     @RequestMapping("/uploadMemberFile")

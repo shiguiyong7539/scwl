@@ -110,41 +110,86 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ResBean getByCenter() {
+    public ResBean getByCenter(Integer yearNum) {
+        HashMap<String, Object> map = new HashMap<>();
+        if (null!=yearNum) {
+            //总人数
+            int total = employeeMapper.getTotalByYear(yearNum);
+            //截至日期
+            Employee employee = employeeMapper.getLastDate(yearNum);
+
+            //按年龄分组
+            List<Map> byAgeGroup = employeeMapper.getByAgeGroup(yearNum);
+            if(byAgeGroup.size()>0){
+            for (int i = 0; i < byAgeGroup.size(); i++) {
+                Map map2 = byAgeGroup.get(i);
+                BigDecimal age = (BigDecimal) map2.get("age_group");
+                if (age.compareTo(new BigDecimal(60)) > 1) {
+                    map2.put("age_range", "60岁以上");
+                } else {
+                    BigDecimal ageHigh = age.add(new BigDecimal(9));
+                    map2.put("age_range", age + "-" + ageHigh + "岁");
+                }
+
+            }}
+            //按学历分组
+            List<Map> byEduGroup = employeeMapper.getByEduGroup(yearNum);
+            //按职称分组
+            List<Map> byRankGroup = employeeMapper.getByRankGroup(yearNum);
+            byRankGroup = sort(byRankGroup, 1);
+            //按用工方式分组
+            List<Map> byModeGroup = employeeMapper.getByModeGroup(yearNum);
+            byModeGroup = sort(byModeGroup, 2);
+            map.put("age", byAgeGroup);
+            map.put("edu", byEduGroup);
+            map.put("rank", byRankGroup);
+            map.put("mode", byModeGroup);
+            map.put("total", total);
+            if(null!=employee){
+                String str = new SimpleDateFormat("yyyy年MM月dd日").format(employee.getAddTime());
+                map.put("latDate", "截至" + str);
+            }else {
+                String str = new SimpleDateFormat("yyyy年MM月dd日").format(new Date());
+                map.put("latDate", "截至" + str);
+            }
+
+            return ResBean.success("success", map);
+        } else {
         //总人数
         int total = employeeMapper.getTotal();
         //截至日期
-        Employee employee = employeeMapper.getLastDate();
+        Employee employee = employeeMapper.getLastDate(null);
         //按年龄分组
-        List<Map> byAgeGroup = employeeMapper.getByAgeGroup();
+        List<Map> byAgeGroup = employeeMapper.getByAgeGroup(null);
+        if(byAgeGroup.size()>0){
         for (int i = 0; i < byAgeGroup.size(); i++) {
-            Map map = byAgeGroup.get(i);
-            BigDecimal age = (BigDecimal) map.get("age_group");
-            if(age.compareTo(new BigDecimal(60))>1){
-                map.put("age_range","60岁以上");
-            }else {
+            Map map1 = byAgeGroup.get(i);
+            BigDecimal age = (BigDecimal) map1.get("age_group");
+            if (age.compareTo(new BigDecimal(60)) > 1) {
+                map1.put("age_range", "60岁以上");
+            } else {
                 BigDecimal ageHigh = age.add(new BigDecimal(9));
-                map.put("age_range",age+"-"+ageHigh+"岁");
+                map1.put("age_range", age + "-" + ageHigh + "岁");
             }
 
-        }
+        }}
         //按学历分组
-        List<Map> byEduGroup = employeeMapper.getByEduGroup();
+        List<Map> byEduGroup = employeeMapper.getByEduGroup(null);
         //按职称分组
-        List<Map> byRankGroup = employeeMapper.getByRankGroup();
+        List<Map> byRankGroup = employeeMapper.getByRankGroup(null);
         byRankGroup = sort(byRankGroup, 1);
         //按用工方式分组
-        List<Map> byModeGroup = employeeMapper.getByModeGroup();
-        byModeGroup = sort(byModeGroup,2);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("age",byAgeGroup);
-        map.put("edu",byEduGroup);
-        map.put("rank",byRankGroup);
-        map.put("mode",byModeGroup);
-        map.put("total",total);
+        List<Map> byModeGroup = employeeMapper.getByModeGroup(null);
+        byModeGroup = sort(byModeGroup, 2);
+        map.put("age", byAgeGroup);
+        map.put("edu", byEduGroup);
+        map.put("rank", byRankGroup);
+        map.put("mode", byModeGroup);
+        map.put("total", total);
         String str = new SimpleDateFormat("yyyy年MM月dd日").format(employee.getAddTime());
-        map.put("latDate", "截至"+str);
-        return ResBean.success("success",map);
+        map.put("latDate", "截至" + str);
+        return ResBean.success("success", map);
+    }
     }
 
     @Override

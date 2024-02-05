@@ -16,9 +16,9 @@
 
 <body>
 <div class="tit">预算执行情况<span class="btn_right" style="margin-right: 5%;">
-					<span  id="fb06Date" ></span>
+					<span class="btn_right" id="fb06Date" ></span>
 	<!--					<button class="infobtnChoose"  id="now_month">当月</button>-->
-					<div class="layui-inline btn_right" >
+					<div hidden class="layui-inline " >
                     <select style="width: 100%"  lay-filter="demo" id="monthType">
                      <option value="上月">上月</option>
 					 <option value="当年">当年</option>
@@ -36,13 +36,15 @@
 </body>
 <script>
 	window.onload = function(){
-		echarts_123('上月');
+		var yearNum = localStorage.getItem("yearNum");
+		if(null==yearNum||yearNum==''){yearNum='上月';}
+		echarts_123(yearNum);
 	}
-	$("#monthType").on("change", function() {
-		// 在这里编写你的函数逻辑
-		var selected = $(this).val();
-		echarts_123(selected);
-	});
+	// $("#monthType").on("change", function() {
+	// 	// 在这里编写你的函数逻辑
+	// 	var selected = $(this).val();
+	// 	echarts_123(selected);
+	// });
 	function echarts_123(period) {
 		// 基于准备好的dom，初始化echarts实例
 		var myChart = echarts.init(document.getElementById('fb06'));

@@ -104,13 +104,25 @@ public class BudGetServiceImpl implements BudGetService {
                 realTotal=realTotal.add(budget.getRealFunds());
             }
             map.put("month",budgetByMonth);
-
+            map.put("planTotal",planTotal);
+            map.put("realTotal",realTotal);
+            //近期12月的偏差率
+            List<Map<String,Object>> list = new ArrayList<>();
+            List<Budget> departments = budgetMapper.getDepartment();
+            for (Budget department : departments) {
+                List<Budget> budgets = budgetMapper.getBudgetByDepartment(department.getDepartment());
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("budgets",budgets);
+                list.add(hashMap);
+            }
+            //截至日期
+            Budget lastDate = budgetMapper.getLastDate();
+            map.put("list",list);
+            map.put("lastDate", "截至"+new SimpleDateFormat("yyyy年MM月dd日").format(lastDate.getMonthDate()));
 
         }else {
          //当年月度资金/当年资金实际使用情况
-
-            if(condition.equals("去年")){num = 1;}
-            List<Budget> budgetByYear = budgetMapper.getBudgetByYear(num);
+            List<Budget> budgetByYear = budgetMapper.getBudgetByYear(Integer.parseInt(condition));
             for (Budget budget : budgetByYear) {
                 budget.setMonthFunds(budget.getMonthFunds().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
                 budget.setRealFunds(budget.getRealFunds().divide(new BigDecimal(10000),2,RoundingMode.HALF_UP));
@@ -119,22 +131,26 @@ public class BudGetServiceImpl implements BudGetService {
             }
             map.put("year",budgetByYear);
 
+            map.put("planTotal",planTotal);
+            map.put("realTotal",realTotal);
+            //当年12月的偏差率
+            List<Map<String,Object>> list = new ArrayList<>();
+            List<Budget> departments = budgetMapper.getDepartment();
+            for (Budget department : departments) {
+                List<Budget> budgets = budgetMapper.getBudgetByDepartmentByYear(department.getDepartment(),Integer.parseInt(condition));
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("budgets",budgets);
+                list.add(hashMap);
+            }
+            //截至日期
+            map.put("lastDate", "截至"+new SimpleDateFormat("yyyy年MM月dd日").format(new Date()));
+            Budget lastDate = budgetMapper.getLastDateByYear(Integer.parseInt(condition));
+            map.put("list",list);
+            if(null!=lastDate){
+                map.put("lastDate", "截至"+new SimpleDateFormat("yyyy年MM月dd日").format(lastDate.getMonthDate()));
+            }
         }
-        map.put("planTotal",planTotal);
-        map.put("realTotal",realTotal);
-        //近期12月的偏差率
-        List<Map<String,Object>> list = new ArrayList<>();
-        List<Budget> departments = budgetMapper.getDepartment();
-        for (Budget department : departments) {
-            List<Budget> budgets = budgetMapper.getBudgetByDepartment(department.getDepartment());
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("budgets",budgets);
-            list.add(hashMap);
-        }
-        //截至日期
-        Budget lastDate = budgetMapper.getLastDate();
-        map.put("list",list);
-        map.put("lastDate", "截至"+new SimpleDateFormat("yyyy年MM月dd日").format(lastDate.getMonthDate()));
+
         return  ResBean.success("查詢成功",map);
     }
 }

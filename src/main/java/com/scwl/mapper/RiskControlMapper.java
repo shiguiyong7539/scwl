@@ -29,6 +29,8 @@ public interface RiskControlMapper {
     int updateByPrimaryKey(RiskControl record);
 
     RiskControl getTotal();
+    RiskControl getTotalByYear(@Param("yearNum")Integer yearNum);
     int getTotalYear();
     RiskControl getLastDate();
+    RiskControl getLastDateByYear(@Param("yearNum")Integer yearNum);
 }

@@ -11,5 +11,5 @@ public interface ContractService {
     ResBean addContract(Contract contract);
     ResBean updateContract(Contract contract);
     ResBean deleteContract(String ids);
-    ResBean getContractByCenter();
+    ResBean getContractByCenter(Integer yearNum);
 }

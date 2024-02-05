@@ -76,8 +76,10 @@ public interface BudgetMapper {
     int updateByPrimaryKey(Budget record);
 
     List<Budget> getBudgetByMonth(int monthNum);
-    List<Budget> getBudgetByYear(int yearNum);
+    List<Budget> getBudgetByYear(Integer yearNum);
     List<Budget> getDepartment();
     List<Budget> getBudgetByDepartment(String department);
+    List<Budget> getBudgetByDepartmentByYear(String department,Integer yearNum);
     Budget getLastDate();
+    Budget getLastDateByYear(Integer yearNum);
 }

@@ -79,8 +79,10 @@ public interface SupervisionRectifyMapper {
 
 
     int getTotal();
+    int getTotalByYear(Integer yearNum);
     int getTotalYear();
 
     SupervisionRectify getLastDate();
+    SupervisionRectify getLastDateByYear(Integer yearNum);
 
 }

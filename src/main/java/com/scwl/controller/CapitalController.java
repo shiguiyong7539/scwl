@@ -60,8 +60,8 @@ public class CapitalController {
      * @return
      */
     @RequestMapping("/getCapitalByCenterShow")
-    public Object getCapitalByCenterShow(HttpServletRequest request){
-        return  capitalService.getCapitalByCenterShow();
+    public Object getCapitalByCenterShow(HttpServletRequest request,Integer yearNum){
+        return  capitalService.getCapitalByCenterShow(yearNum);
     }
     @RequestMapping("/updateCapital")
     public Object updateCapital(HttpServletRequest request,Capital capital){

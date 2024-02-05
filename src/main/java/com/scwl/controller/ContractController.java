@@ -69,8 +69,8 @@ public class ContractController {
      * @return
      */
     @RequestMapping("/getContractByCenter")
-    public Object getContractByCenter(HttpServletRequest request){
-        return  contractService.getContractByCenter();
+    public Object getContractByCenter(HttpServletRequest request,Integer yearNum){
+        return  contractService.getContractByCenter(yearNum);
     }
 
 }

@@ -251,7 +251,7 @@
   <select id="getBudgetByYear" resultMap="BaseResultMap">
    select department,IFNULL(SUM(month_funds),0) as month_funds,IFNULL(SUM(real_funds),0) as real_funds,YEAR(month_date) as remark
    from budget
-   where YEAR(month_date) = YEAR(CURDATE()) - #{yearNum}
+   where YEAR(month_date) =  #{yearNum}
    group by department
   </select>
   <select id="getDepartment"  resultMap="BaseResultMap">
@@ -265,5 +265,15 @@
   </select>
   <select id="getLastDate" resultMap="BaseResultMap">
   select month_date from budget order by month_date desc limit 1
+  </select>
+
+  <select id="getBudgetByDepartmentByYear"   resultMap="BaseResultMap">
+   select id,department,deviation_rate,MONTH(month_date) as remark from budget
+   where department=#{department} and YEAR(month_date) =  #{yearNum}
+   group by MONTH(month_date)
+   ORDER BY month_date
+  </select>
+  <select id="getLastDateByYear" resultMap="BaseResultMap">
+  select month_date from budget  where YEAR(month_date) =  #{yearNum} order by month_date desc limit 1
   </select>
 </mapper>

@@ -21,5 +21,5 @@ public interface RiskControlService {
     ResBean getMatterList(String id);
     ResBean addProject(RectifyProject project);
     ResBean addMatter(RectifyMatter matter);
-    ResBean getRiskByCenter();
+    ResBean getRiskByCenter(Integer yearNum);
 }
