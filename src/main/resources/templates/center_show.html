@@ -52,7 +52,7 @@
 		<li class="left_size">
 			<div class="box" >
 				<div class="tit">任务管理（模块搭建中）
-					<img src="/images/big1.png" style="width:5%;height: 5%;" onclick="openBigWindow('task_open')"/>
+					<img src="/images/big1.png" style="width:5%;height: 5%;float: right" onclick="openBigWindow('task_open')"/>
 				</div>
 				<div id="task_open" class="boxnav" style="height: 235px;">
 					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -73,7 +73,7 @@
 			</div>
 			<div class="box">
 				<div class="tit">风控管理
-					<img src="/images/big1.png" style="width:5%;height: 5%;" onclick="openBigWindow('fk_open')"/>
+					<img src="/images/big1.png" style="width:5%;height: 5%;float: right" onclick="openBigWindow('fk_open')"/>
 					<span class="btn_right" id="fkdate"></span>
 				</div>
 				<div id="fk_open" class="boxnav" style="height: 150px;">
@@ -92,7 +92,7 @@
 			</div>
 			<div class="box">
 				<div class="tit">合同履行（模块搭建中）
-					<img src="/images/big1.png" style="width:5%;height: 5%;" onclick="openBigWindow('ht_open')"/>
+					<img src="/images/big1.png" style="width:5%;height: 5%;float: right" onclick="openBigWindow('ht_open')"/>
 				</div>
 				<div id="ht_open" class="boxnav" style="height: 203px;">
 					<table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -111,10 +111,10 @@
 				</div>
 			</div>
 			<div class="box">
-				<div class="tit" >人员情况<span class="titAmount" id="person_total"></span><span class="titAmountRight">人	<img src="/images/big1.png" style="width:5%;height: 5%;" onclick="openWindow('/renYuanShow')"/></span>
-					<span class="btn_right" id="personDate">
-
+				<div class="tit" >人员情况<span class="titAmount" id="person_total"></span><span class="titAmountRight">人</span>
+					<span style="margin-left: 25%;" id="personDate">
 					</span>
+					<img src="/images/big1.png" style="width:5%;height: 5%;float: right;" onclick="openWindow('/renYuanShow')"/>
 				</div>
 				<div class="boxnav" style="height: 360px;">
 					<div style="float: left; width: 45%; height: 170px" id="fb01"></div>
@@ -137,35 +137,38 @@
 						<div class="box">
 							<div class="box">
 								<div class="tit" >经营收入<span class="titAmount" id="in_total"></span><span class="titAmountRight">万元
-								<img src="/images/big1.png" style="width:4%;height: 4%;" onclick="openWindow('/jysrShow')"/>
 								</span>
-									<span class="btn_right">
+									<span style="margin-left: 35%;">
 										<span id="asset_4_date" class="asset_4_date"></span>
 <!--										<button class="infobtnChoose"  id="in_details">详情</button>-->
 <!--										<button class="infobtn"  id="total_manage">总收入</button>-->
 									</span>
+									<img src="/images/big1.png" style="width:4%;height: 4%;float: right" onclick="openWindow('/jysrShow')"/>
 								</div>
 								<div class="boxnav" style="height: 250px;" id="asset_4">
 								</div>
 							</div>
 							<div class="tit">租金收入<span class="titAmount" id="rent_total"></span><span class="titAmountRight">万元
-								<img src="/images/big1.png" style="width:4%;height: 4%;" onclick="openWindow('/zjsrShow')"/>
+
 							</span>
-								<span class="btn_right"  id="asset_1_date"></span>
+								<span  style="margin-left: 35%;" id="asset_1_date"></span>
+								<img src="/images/big1.png" style="width:4%;height: 4%;float: right" onclick="openWindow('/zjsrShow')"/>
 							</div>
 							<div class="boxnav" style="height: 200px;" id="asset_1">
 							</div>
 							<div class="tit">欠缴租金<span class="titAmount" id="arrears_now"></span><span class="titAmountRight">万元
-								<img src="/images/big1.png" style="width:4%;height: 4%;" onclick="openWindow('/qjzjShow')"/>
+
 							</span>
-								<span class="btn_right"  id="asset_2_date"></span>
+								<span style="margin-left: 45%;"  id="asset_2_date"></span>
+								<img src="/images/big1.png" style="width:4%;height: 4%;float: right;" onclick="openWindow('/qjzjShow')"/>
 							</div><br>
 							<div class="fboxnavtechart" style="height: 200px;" id="asset_2">
 							</div>
 							<div class="tit" >出租率<span class="titAmount" id="letRate_now"></span><span class="titAmountRight">
-										<img src="/images/big1.png" style="width:4%;height: 4%;" onclick="openWindow('/czlShow')"/>
+
 							</span>
-								<span class="btn_right"  id="asset_3_date"></span>
+								<span style="margin-left: 47%;"   id="asset_3_date"></span>
+								<img src="/images/big1.png" style="width:4%;height: 4%;float: right" onclick="openWindow('/czlShow')"/>
 							</div>
 							<div class="boxnav" style="height: 200px;" id="asset_3">
 							</div>
@@ -180,14 +183,16 @@
 				<div class="tit">灵活使用资金<span class="titAmount" id="use_money"></span><span class="titAmountRight">万元</span></br>
 				受 限 　资 金
 				    <span class="titAmount" id="unUse_money"></span><span class="titAmountRight">万元</span>
-					<img src="/images/big1.png" style="width:5%;height: 5%;" onclick="openWindow('/usezjShow')"/>
 
-					<span class="btn_right" id="capitalDate"></span>
+
+					<span style="margin-left: 4%;"  id="capitalDate"></span>
+					<img src="/images/big1.png" style="width:5%;height: 5%;float: right" onclick="openWindow('/usezjShow')"/>
 				</div>
 				<div class="boxnav" id="capital_1" style="height: 213px;"></div>
 				<div class="tit">相关财务指标
-					<img src="/images/big1.png" style="width:5%;height: 5%;" onclick="openWindow('/cwzbShow')"/>
-					<span class="btn_right"  id="capital2Date"></span>
+
+					<span style="margin-left: 31%;"  id="capital2Date"></span>
+					<img src="/images/big1.png" style="width:5%;height: 5%;float: right;" onclick="openWindow('/cwzbShow')"/>
 					<span hidden>
 					<div class="layui-inline" >
                     <select  lay-filter="demo" id="rate_type">
@@ -209,10 +214,11 @@
 
 			<div class="box">
 				<div class="tit" >预算执行情况
-					<img src="/images/big1.png" style="width:5%;height: 5%;" onclick="openWindow('/yszxShow')"/>
-					<span class="btn_right">
-					<span class="btn_right"  id="fb06Date"></span>
+
+					<span >
+					<span style="margin-left: 31%;"  id="fb06Date"></span>
 <!--					<button class="infobtnChoose"  id="now_month">当月</button>-->
+							<img src="/images/big1.png" style="width:5%;height: 5%;float: right;" onclick="openWindow('/yszxShow')"/>
 					<div hidden class="layui-inline">
                     <select style="width: 100%"  lay-filter="demo" id="monthType">
                      <option value="上月">上月</option>
@@ -228,8 +234,9 @@
 			</div>
 			<div class="box">
 				<div class="tit">预算偏差率
-					<img src="/images/big1.png" style="width:5%;height: 5%;" onclick="openWindow('/yspcShow')"/>
-					<span class="btn_right" id="fb08Date"></span>
+					<span  style="margin-left: 35%;"  id="fb08Date"></span>
+					<img src="/images/big1.png" style="width:5%;height: 5%;float: right" onclick="openWindow('/yspcShow')"/>
+
 				</div>
 				<div class="boxnav" style="height: 213px;" id="fb08"></div>
 			</div>
