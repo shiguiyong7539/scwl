@@ -1406,8 +1406,8 @@ function getContractTable(yearNum) {
                     for (let i = 0; i < data.length; i++) {
                         str_info+='<tr><td>'+data[i].department+'</td>';
                         str_info+='<td><span class="text-w">'+isNull(data[i].totalNum)+'</span></td>';
-                        str_info+='<td><span class="text-b">'+isNull(data[i].finishNum)+'</span></td>';
-                        str_info+='<td><div class="text-d">'+isNull(data[i].unfinishNum)+'</div></td></tr>';
+                        str_info+='<td><span class="text-b">'+isNull(data[i].unfinishNum)+'</span></td>';
+                        str_info+='<td><div class="text-d">'+isNull(data[i].finishNum)+'</div></td></tr>';
                     }
                     $("#contract_table").html(str_info);
                 }else {
