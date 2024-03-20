@@ -1655,6 +1655,7 @@ function echarts_33(period) {
                     var rateData3=[];
                     var rateData4=[];
                     var rateData5=[];
+                    var rateData6=[];
                     var rateTime=[];
                     var rateTitle=[];
 
@@ -1672,7 +1673,7 @@ function echarts_33(period) {
                                 rateTime.push(budgets[i].remark+'月');
                                 rateData.push(budgets[i].deviationRate);
                             }
-                        }else if(budgets[0].department==='市场拓展部'){
+                        }else if(budgets[0].department==='市场经营部'){
                             for (let i = 0; i < budgets.length; i++) {
                                 rateData2.push(budgets[i].deviationRate);
                             }
@@ -1688,6 +1689,11 @@ function echarts_33(period) {
                         }else if(budgets[0].department==='金沙艺术中心'){
                             for (let i = 0; i < budgets.length; i++) {
                                 rateData5.push(budgets[i].deviationRate);
+                            }
+                        }
+                        else if(budgets[0].department==='招商引资部'){
+                            for (let i = 0; i < budgets.length; i++) {
+                                rateData6.push(budgets[i].deviationRate);
                             }
                         }
                         rateTitle.push(budgets[0].department);
@@ -1709,6 +1715,9 @@ function echarts_33(period) {
                         }
                         if (rateData5[i] == undefined) {
                             rateData5.unshift('');
+                        }
+                        if (rateData6[i] == undefined) {
+                            rateData6.unshift('');
                         }
                     }
 
@@ -1956,7 +1965,7 @@ function echarts_33(period) {
                                 }
                             }
                         },{
-                            name: '市场拓展部',
+                            name: '市场经营部',
                             type: 'line',
                             smooth: true,
                             data:rateData2,
@@ -2026,6 +2035,25 @@ function echarts_33(period) {
                                         color: '#f7ff2c',
                                         shadowBlur: 0,
                                         shadowColor: "#f7ff2c",
+                                        shadowOffsetX: 0,
+                                        shadowOffsetY: 0
+                                    }
+                                }
+                            }
+                            ,{
+                                name: '招商引资部',
+                                type: 'line',
+                                smooth: true,
+                                data:rateData6,
+                                symbol: 'circle',
+                                symbolSize: 10,
+                                smooth: true,
+                                animationDuration: 2000,
+                                itemStyle: {
+                                    normal: {
+                                        color: '#50acfa',
+                                        shadowBlur: 0,
+                                        shadowColor: "#50acfa",
                                         shadowOffsetX: 0,
                                         shadowOffsetY: 0
                                     }
